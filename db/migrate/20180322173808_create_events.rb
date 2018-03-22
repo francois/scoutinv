@@ -1,6 +1,6 @@
-class CreateReservations < ActiveRecord::Migration[5.2]
+class CreateEvents < ActiveRecord::Migration[5.2]
   def change
-    create_table :reservations do |t|
+    create_table :events do |t|
       t.belongs_to :group, null: false, foreign_key: true
       t.string :title, null: false
       t.text :notes

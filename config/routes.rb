@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :reservations
+  resources :events
   resources :products
   resources :users
   resources :groups

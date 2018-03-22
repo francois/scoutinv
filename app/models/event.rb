@@ -1,4 +1,4 @@
-class Reservation < ApplicationRecord
+class Event < ApplicationRecord
   include HasSlug
   belongs_to :group
 
@@ -8,6 +8,6 @@ class Reservation < ApplicationRecord
 
   def ends_after_it_starts
     return unless start_on && end_on
-    errors.add("Reservations must end on or after they start") unless end_on >= start_on
+    errors.add("Events must end on or after they start") unless end_on >= start_on
   end
 end
