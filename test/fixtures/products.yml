@@ -1,0 +1,17 @@
+tent_4x5_10eme:
+  group: 10eme
+  name: "Tent, 4x5'"
+  description: "A smaller tent, 4x5 feet. Enough space for 5 kids."
+  slug: 1debh4g5
+
+cooking_plate_10eme:
+  group: 10eme
+  name: "Cooking Plate"
+  description: "A 2x3 feet cooking plate, enough to cook 20 fried eggs simultaneously"
+  slug: uw7e45t6
+
+prospector_tent_41eme:
+  group: 41eme
+  name: "Prospector Tent"
+  description: "A very large prospector tent"
+  slug: fsjnzvo1
