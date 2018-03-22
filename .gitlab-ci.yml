@@ -27,8 +27,10 @@ before_script:
 
 rails:
   variables:
+    RAILS_ENV: "test"
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
+  - rails db:create
   - rails db:schema:load
   - rails test
 
