@@ -2,7 +2,11 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @events = current_group.events.by_date.all
+    @after = params[:after].present? ? params[:after].to_date : 1.month.ago
+
+    @events = current_group.events.by_date
+    @events = @events.after(@after)
+    @events = @events.all
   end
 
   def show

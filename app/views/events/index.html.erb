@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Events</h1>
+<%= form_tag events_path, method: :get do %>
+  <%= label_tag :after %>
+  <%= date_field_tag :after, @after.to_date.to_formatted_s(:iso8601) %>
+  <%= submit_tag "Search" %>
+<% end %>
 
 <table>
   <thead>
@@ -13,6 +18,9 @@
   </thead>
 
   <tbody>
+    <tr>
+      <td colspan="6"><%= link_to "Include previous year", events_path(after: (@after - 1.year).to_formatted_s(:iso8601)) %></td>
+    </tr>
     <% @events.each do |event| %>
       <tr>
         <td><%= event.title %></td>
