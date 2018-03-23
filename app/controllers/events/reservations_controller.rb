@@ -2,7 +2,12 @@ class Events::ReservationsController < ApplicationController
   before_action :set_event
 
   def index
-    @products     = current_group.products.with_reservations.all
+    @filter       = params[:filter]
+
+    @products     = current_group.products.with_reservations.by_name
+    @products     = @products.search(@filter) if @filter.present?
+    @products     = @products.all
+
     @reservations = @event.reservations.with_product.all
   end
 

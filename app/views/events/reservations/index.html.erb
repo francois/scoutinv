@@ -1,3 +1,9 @@
+<%= form_tag reservations_path(@event), method: :get do %>
+  <%= label_tag :filter %>
+  <%= text_field_tag :filter, @filter %>
+  <%= submit_tag "Search" %>
+<% end %>
+
 <%= form_tag reservations_path(@event), method: :post do %>
   <table>
     <thead>

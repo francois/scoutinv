@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = current_group.products.all
+    @products = current_group.products.by_name.all
   end
 
   def show
