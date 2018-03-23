@@ -45,7 +45,7 @@ class EventsController < ApplicationController
   private
 
   def set_event
-    @event = current_group.events.includes(:group).find_by!(slug: params[:id])
+    @event = current_group.events.includes(:group, reservations: :product).find_by!(slug: params[:id])
   end
 
   def event_params

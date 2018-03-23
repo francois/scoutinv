@@ -28,3 +28,10 @@
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %> |
 <%= link_to 'Reservations', reservations_path(@event) %>
+
+<h2>Bill of materials</h2>
+<ol>
+  <% @event.reservations.map(&:product).each do |product| %>
+    <li><%= link_to product.name, product_path(product) %></li>
+  <% end %>
+</ol>
