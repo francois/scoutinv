@@ -31,7 +31,7 @@
 
 <h2>Bill of materials</h2>
 <ol>
-  <% @event.reservations.map(&:product).each do |product| %>
+  <% @event.reservations.map(&:product).sort_by(&:sort_key).each do |product| %>
     <li><%= link_to product.name, product_path(product) %></li>
   <% end %>
 </ol>
