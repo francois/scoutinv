@@ -4,6 +4,7 @@ class Event < ApplicationRecord
   belongs_to :group
   has_many :reservations, autosave: true
 
+  scope :by_date, -> { order(:start_on, :id) }
   scope :with_reservations, ->{ includes(reservations: :products) }
 
   validates :title, presence: true, length: { minimum: 2 }
