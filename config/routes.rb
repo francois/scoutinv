@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  resources :events
+  resources :events do
+    member do
+      resources :reservations, only: %i[ index create destroy ], controller: "events/reservations"
+    end
+  end
+
   resources :products
   resources :users
   resources :groups
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -20,4 +20,9 @@ class EventTest < ActiveSupport::TestCase
 
     assert_equal old_slug, event.slug
   end
+
+  test "#date_range" do
+    event = events(:summer_camp_911_10eme)
+    assert_equal Date.new(2018, 8, 8) .. Date.new(2018, 8, 15), event.date_range
+  end
 end

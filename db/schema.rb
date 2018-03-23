@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_22_173808) do
+ActiveRecord::Schema.define(version: 2018_03_23_021501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,19 @@ ActiveRecord::Schema.define(version: 2018_03_22_173808) do
     t.index ["slug"], name: "index_products_on_slug", unique: true
   end
 
+  create_table "reservations", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "event_id", null: false
+    t.date "returned_on"
+    t.string "slug", limit: 8, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_reservations_on_event_id"
+    t.index ["product_id", "event_id"], name: "index_reservations_on_product_id_and_event_id", unique: true
+    t.index ["product_id"], name: "index_reservations_on_product_id"
+    t.index ["slug"], name: "index_reservations_on_slug", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.bigint "group_id", null: false
     t.string "name", null: false
@@ -62,5 +75,7 @@ ActiveRecord::Schema.define(version: 2018_03_22_173808) do
 
   add_foreign_key "events", "groups"
   add_foreign_key "products", "groups"
+  add_foreign_key "reservations", "events"
+  add_foreign_key "reservations", "products"
   add_foreign_key "users", "groups"
 end

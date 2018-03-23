@@ -1,0 +1,27 @@
+<%= form_tag reservations_path(@event), method: :post do %>
+  <table>
+    <thead>
+      <th></th>
+      <th>Product</th>
+      <th>Reservation</th>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td>
+            <%= check_box_tag "products[#{product.slug}]", value="1", checked=false %>
+          </td>
+          <td><%= link_to product.name, product_path(product) %></td>
+          <td>
+            <% product.reservations.select{|res| res.dates_overlap?(@event)}.each do |reservation| %>
+              <%= reservation.event.title %><br>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= submit_tag "Add to reservation",      name: "add" %>
+  <%= submit_tag "Remove from reservation", name: "remove" %>
+<% end %>
