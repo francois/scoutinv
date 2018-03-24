@@ -1,0 +1,11 @@
+tent_4x5_10eme_in_tent:
+  product: tent_4x5_10eme
+  category: tent
+
+cooking_plate_10eme_in_kitchen:
+  product: cooking_plate_10eme
+  category: kitchen
+
+prospector_tent_41eme_in_tent:
+  product: prospector_tent_41eme
+  category: tent

@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_23_021501) do
+ActiveRecord::Schema.define(version: 2018_03_24_014458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.string "slug", limit: 8, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_categories_on_slug", unique: true
+  end
 
   create_table "events", force: :cascade do |t|
     t.bigint "group_id", null: false
@@ -34,6 +42,16 @@ ActiveRecord::Schema.define(version: 2018_03_23_021501) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_groups_on_slug", unique: true
+  end
+
+  create_table "product_categories", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_product_categories_on_category_id"
+    t.index ["product_id", "category_id"], name: "index_product_categories_on_product_id_and_category_id", unique: true
+    t.index ["product_id"], name: "index_product_categories_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -74,6 +92,8 @@ ActiveRecord::Schema.define(version: 2018_03_23_021501) do
   end
 
   add_foreign_key "events", "groups"
+  add_foreign_key "product_categories", "categories"
+  add_foreign_key "product_categories", "products"
   add_foreign_key "products", "groups"
   add_foreign_key "reservations", "events"
   add_foreign_key "reservations", "products"

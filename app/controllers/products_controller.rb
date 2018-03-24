@@ -1,8 +1,16 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :load_categories, except: %i[ destroy ]
 
   def index
-    @products = current_group.products.by_name.all
+    @filter = params[:filter]
+
+    @selected_category = @categories.detect{|category| category.slug == params[:category]}
+
+    @products   = current_group.products.by_name.with_categories
+    @products   = @products.search(@filter) if @filter.present?
+    @products   = @products.in_category(@selected_category) if @selected_category
+    @products   = @products.all
   end
 
   def show
@@ -45,6 +53,10 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description)
+    params.require(:product).permit(:name, :description, category_slugs: [])
+  end
+
+  def load_categories
+    @categories = Category.by_name.to_a
   end
 end
