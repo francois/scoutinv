@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products
-  resources :users
   resources :groups
+  resources :products
+  resources :sessions, only: %i[ index new create show destroy ]
+  resources :users
 end

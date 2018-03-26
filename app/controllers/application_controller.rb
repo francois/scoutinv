@@ -1,8 +1,18 @@
 class ApplicationController < ActionController::Base
 
-  before_action :__dev_set_user if Rails.env.development?
+  before_action :authenticate_user!
+  helper_method :user_signed_in?, :current_user, :current_group
 
   private
+
+  def authenticate_user!
+    return if user_signed_in?
+    redirect_to new_session_url
+  end
+
+  def user_signed_in?
+    session[:user_id].present?
+  end
 
   def current_user
     @_current_user ||= User.includes(:group).find(session[:user_id])
@@ -10,9 +20,5 @@ class ApplicationController < ActionController::Base
 
   def current_group
     current_user.group
-  end
-
-  def __dev_set_user
-    session[:user_id] ||= User.first.id
   end
 end
