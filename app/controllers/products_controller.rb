@@ -3,6 +3,8 @@ class ProductsController < ApplicationController
   before_action :load_categories, except: %i[ destroy ]
 
   def index
+    @page_title = "Products"
+
     @filter = params[:filter]
 
     @selected_category = @categories.detect{|category| category.slug == params[:category]}
@@ -14,13 +16,16 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @page_title = @product.name
   end
 
   def new
+    @page_title = "New Product"
     @product = current_group.products.build
   end
 
   def edit
+    @page_title = "Edit #{@product.name}"
   end
 
   def create
@@ -29,6 +34,7 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
     else
+      @page_title = "New Product"
       render :new
     end
   end
@@ -37,6 +43,7 @@ class ProductsController < ApplicationController
     if @product.update(product_params)
       redirect_to @product, notice: 'Product was successfully updated.'
     else
+      @page_title = "Edit #{@product.name}"
       render :edit
     end
   end

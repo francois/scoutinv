@@ -1,39 +1,53 @@
-<h1>Products</h1>
+<div class="grid-x grid-padding-x">
+  <div class="cell large-10 medium-12">
+    <%= form_tag products_path, method: :get do %>
+      <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+          <div class="medium-shrink cell">
+            <%= label_tag :filter %>
+          </div>
+          <div class="medium-shrink cell">
+            <%= text_field_tag :filter, @filter %>
+          </div>
 
-<%= form_tag products_path, method: :get do %>
-  <%= label_tag :filter %>
-  <%= text_field_tag :filter, @filter %>
+          <div class="medium-shrink cell">
+            <%= label_tag :category %>
+          </div>
+          <div class="medium-shrink cell">
+            <%= select_tag :category, options_from_collection_for_select(@categories, :slug, :name, @selected_category ? @selected_category.slug : nil), include_blank: true %>
+          </div>
 
-  <%= label_tag :category %>
-  <%= select_tag :category, options_from_collection_for_select(@categories, :slug, :name, @selected_category ? @selected_category.slug : nil), include_blank: true %>
-
-  <%= submit_tag "Search" %>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Categories</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= product.name %></td>
-        <td><%= product.description %></td>
-        <td><%= product.categories.map(&:name).to_sentence %></td>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+          <div class="medium-auto cell">
+            <%= submit_tag "Search", class: "button" %> <%= link_to "View all", products_path, class: "button secondary" %>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
 
-<br>
+    <%= link_to "New Product", new_product_path, class: "button large hide-for-large" %>
 
-<%= link_to 'New Product', new_product_path %>
+    <table class="hover stack">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Categories</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td><%= link_to product.name, product %></td>
+            <td><%= product.description %></td>
+            <td><%= product.categories.map(&:name).to_sentence %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cell large-2 medium-12 show-for-large">
+    <%= link_to "New Product", new_product_path, class: "button expanded" %>
+  </div>
+</div>

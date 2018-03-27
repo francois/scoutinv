@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js" lang="en" dir="ltr">
   <head>
-    <title>Scoutin</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= page_title.blank? ? nil : page_title + " – ".html_safe %>Scoutin</title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload" %>
   </head>
-
   <body>
-    <p id="notice"><%= notice %></p>
-    <p id="alert"><%= alert %></p>
+    <div class="grid-container">
+      <div class="grid-x grid-padding-x">
+        <div class="large-12 cell">
+          <h1><%= page_title || "Scoutin" %></h1>
+        </div>
+      </div>
 
-    <%= yield %>
+      <div class="grid-x grid-padding-x">
+        <div class="large-12 cell">
+          <p id="notice"><%= notice %></p>
+          <p id="alert"><%= alert %></p>
+        </div>
+      </div>
 
-    <% if user_signed_in? %>
-      <p><%= button_to "Logout", session_path(current_user.slug), method: :delete %></p>
-    <% end %>
+      <%= yield %>
+
+      <% if user_signed_in? %>
+        <p><%= button_to "Logout", session_path(current_user.slug), class: "button secondary", method: :delete %></p>
+      <% end %>
+    </div>
+
+    <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
   </body>
 </html>
