@@ -81,6 +81,7 @@ GEM
     ffi (1.9.23-x86-mingw32)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    hookup (1.2.4)
     i18n (1.0.0)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
@@ -221,6 +222,7 @@ DEPENDENCIES
   byebug
   capybara (~> 2.15)
   chromedriver-helper
+  hookup
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   pg
