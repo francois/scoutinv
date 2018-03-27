@@ -4,14 +4,14 @@
       <div class="grid-container">
         <div class="grid-x grid-padding-x">
           <div class="medium-shrink cell">
-            <%= label_tag :filter %>
+            <%= label_tag :filter, "Filter", class: "middle" %>
           </div>
           <div class="medium-shrink cell">
             <%= text_field_tag :filter, @filter %>
           </div>
 
           <div class="medium-shrink cell">
-            <%= label_tag :category %>
+            <%= label_tag :category, "Category", class: "middle" %>
           </div>
           <div class="medium-shrink cell">
             <%= select_tag :category, options_from_collection_for_select(@categories, :slug, :name, @selected_category ? @selected_category.slug : nil), include_blank: true %>
