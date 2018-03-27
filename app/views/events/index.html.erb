@@ -1,37 +1,48 @@
-<h1>Events</h1>
-<%= form_tag events_path, method: :get do %>
-  <%= label_tag :after %>
-  <%= date_field_tag :after, @after.to_date.to_formatted_s(:iso8601) %>
-  <%= submit_tag "Search" %>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Start on</th>
-      <th>End on</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr>
-      <td colspan="6"><%= link_to "Include previous year", events_path(after: (@after - 1.year).to_formatted_s(:iso8601)) %></td>
-    </tr>
-    <% @events.each do |event| %>
-      <tr>
-        <td><%= event.title %></td>
-        <td><%= event.start_on %></td>
-        <td><%= event.end_on %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="grid-x grid-padding-x">
+  <div class="cell large-10 medium-12">
+    <%= form_tag events_path, method: :get do %>
+      <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+          <div class="medium-shrink cell">
+            <%= label_tag :after %>
+          </div>
+          <div class="medium-shrink cell">
+            <%= date_field_tag :after, @after.to_date.to_formatted_s(:iso8601) %>
+          </div>
+          <div class="medium-auto cell">
+            <%= submit_tag "Search", class: "button" %> <%= link_to "View all", events_path, class: "button secondary" %>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
 
-<br>
+    <%= link_to "New Event", new_event_path, class: "button hide-for-large" %>
 
-<%= link_to 'New Event', new_event_path %>
+    <table class="hover stack">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Start on</th>
+          <th>End on</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td colspan="6"><%= link_to "&laquo; Include previous year".html_safe, events_path(after: (@after - 1.year).to_formatted_s(:iso8601)) %></td>
+        </tr>
+        <% @events.each do |event| %>
+          <tr>
+            <td><%= link_to event.title, event %></td>
+            <td><%= event.start_on %></td>
+            <td><%= event.end_on %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cell large-2 medium-12 show-for-large">
+    <%= link_to "New Event", new_product_path, class: "button expanded" %>
+  </div>
+</div>

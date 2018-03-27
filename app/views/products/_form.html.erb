@@ -26,7 +26,10 @@
       </div>
 
       <div class="small-12 cell">
-        <%= form.collection_check_boxes :category_slugs, @categories, :slug, :name %>
+        <fieldset class="fieldset">
+          <legend>Categories</legend>
+          <%= form.collection_check_boxes :category_slugs, @categories, :slug, :name %>
+        </fieldset>
       </div>
 
       <div class="small-12 cell">

@@ -26,7 +26,7 @@
       <%= yield %>
 
       <% if user_signed_in? %>
-        <p><%= button_to "Logout", session_path(current_user.slug), class: "button secondary", method: :delete %></p>
+        <p><%= button_to "Logout", session_path(current_user.slug), class: "button secondary tiny", method: :delete %></p>
       <% end %>
     </div>
 
