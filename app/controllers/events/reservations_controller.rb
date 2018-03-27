@@ -2,6 +2,8 @@ class Events::ReservationsController < ApplicationController
   before_action :set_event
 
   def index
+    @page_title = "Reservations for #{@event.title}"
+
     @filter = params[:filter]
 
     @categories = Category.by_name.to_a
