@@ -1,8 +1,14 @@
-<h1>Authenticate</h1>
-
 <%= form_tag sessions_path, method: :post do %>
-  <%= label_tag :email %>
-  <%= email_field_tag :email %>
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <div class="small-12 cell">
+        <%= label_tag :email %>
+        <%= email_field_tag :email %>
+      </div>
 
-  <%= submit_tag %>
+      <div class="small-12 cell">
+        <%= submit_tag "Send authentication email", class: "button primary large" %>
+      </div>
+    </div>
+  </div>
 <% end %>

@@ -1,37 +1,49 @@
 <%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <% if user.errors.any? %>
+        <div class="small-12 cell">
+          <div id="error_explanation">
+            <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+            <ul>
+              <% user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
       <% end %>
-      </ul>
+
+      <div class="small-12 cell">
+        <%= form.label :name %>
+        <%= form.text_field :name %>
+      </div>
+
+      <div class="small-12 cell">
+        <%= form.label :email %>
+        <%= form.text_field :email %>
+      </div>
+
+      <div class="small-12 cell">
+        <%= form.label :password %>
+        <%= form.text_field :password %>
+      </div>
+
+      <div class="small-12 cell">
+        <%= form.label :password_confirmation %>
+        <%= form.text_field :password_confirmation %>
+      </div>
+
+      <div class="small-12 cell">
+        <%= form.submit class: "button primary" %>
+        or
+        <% if @user.new_record? %>
+          <%= link_to "Cancel", users_path, class: "button secondary" %>
+        <% else %>
+          <%= link_to "Cancel", @user, class: "button secondary" %>
+        <% end %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
   </div>
 <% end %>

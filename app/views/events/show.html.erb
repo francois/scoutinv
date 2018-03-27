@@ -1,35 +1,43 @@
-<p>
-  <strong>Group:</strong>
-  <%= @event.group.name %>
-</p>
+<div class="grid-container">
+  <div class="grid-x grid-padding-x">
+    <div class="large-10 medium-12 cell">
+      <%= link_to "Edit reservations", reservations_path(@event), class: "button large hide-for-large" %>
+      <%= link_to "Edit", edit_event_path(@event), class: "button large hide-for-large" %>
+      <%= link_to "Back to list", events_path, class: "button secondary large hide-for-large" %>
 
-<p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
+      <div>
+        <strong>Group:</strong>
+        <%= @event.group.name %>
+      </div>
 
-<p>
-  <strong>Notes:</strong>
-  <%= @event.notes %>
-</p>
+      <div>
+        <strong>Title:</strong>
+        <%= @event.title %>
+      </div>
 
-<p>
-  <strong>Start on:</strong>
-  <%= @event.start_on %>
-</p>
+      <div>
+        <strong>Notes:</strong>
+        <%= simple_format @event.notes %>
+      </div>
 
-<p>
-  <strong>End on:</strong>
-  <%= @event.end_on %>
-</p>
+      <div>
+        <strong>Dates:</strong>
+        <%= @event.start_on %> –  <%= @event.end_on %>
+      </div>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %> |
-<%= link_to 'Edit reservations', reservations_path(@event) %>
+      <h2>Bill of materials</h2>
+      <ol>
+        <% @event.reservations.map(&:product).sort_by(&:sort_key).each do |product| %>
+          <li><%= link_to product.name, product_path(product) %></li>
+        <% end %>
+      </ol>
+    </div>
 
-<h2>Bill of materials</h2>
-<ol>
-  <% @event.reservations.map(&:product).sort_by(&:sort_key).each do |product| %>
-    <li><%= link_to product.name, product_path(product) %></li>
-  <% end %>
-</ol>
+    <div class="large-2 medium-12 cell show-for-large">
+      <%= link_to "Edit reservations", reservations_path(@event), class: "button expanded" %>
+
+      <%= link_to "Edit", edit_event_path(@event), class: "button expanded" %>
+      <%= link_to "Back to list", events_path, class: "button secondary expanded" %>
+    </div>
+  </div>
+</div>

@@ -2,17 +2,21 @@ class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   def index
+    @page_title = "Groups"
     @groups = Group.all
   end
 
   def show
+    @page_title = @group.name
   end
 
   def new
+    @page_title = "New Group"
     @group = Group.new
   end
 
   def edit
+    @page_title = "Edit #{@group.name}"
   end
 
   def create
@@ -21,6 +25,7 @@ class GroupsController < ApplicationController
     if @group.save
       redirect_to @group, notice: 'Group was successfully created.'
     else
+      @page_title = "Groups"
       render :new
     end
   end
@@ -29,6 +34,7 @@ class GroupsController < ApplicationController
     if @group.update(group_params)
       redirect_to @group, notice: 'Group was successfully updated.'
     else
+      @page_title = "Edit #{@group.name}"
       render :edit
     end
   end

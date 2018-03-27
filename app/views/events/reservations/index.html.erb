@@ -1,37 +1,55 @@
-<%= form_tag reservations_path(@event), method: :get do %>
-  <%= label_tag :filter %>
-  <%= text_field_tag :filter, @filter %>
+<div class="grid-x grid-padding-x">
+  <div class="cell large-10 medium-12">
+    <%= form_tag reservations_path(@event), method: :get do %>
+      <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+          <div class="medium-shrink cell">
+            <%= label_tag :filter, "Filter", class: "middle" %>
+          </div>
+          <div class="medium-shrink cell">
+            <%= text_field_tag :filter, @filter %>
+          </div>
 
-  <%= label_tag :category %>
-  <%= select_tag :category, options_from_collection_for_select(@categories, :slug, :name, @selected_category ? @selected_category.slug : nil), include_blank: true %>
+          <div class="medium-shrink cell">
+            <%= label_tag :category, "Category", class: "middle" %>
+          </div>
+          <div class="medium-shrink cell">
+            <%= select_tag :category, options_from_collection_for_select(@categories, :slug, :name, @selected_category ? @selected_category.slug : nil), include_blank: true %>
+          </div>
 
-  <%= submit_tag "Search" %>
-<% end %>
+          <div class="medium-auto cell">
+            <%= submit_tag "Search", class: "button" %> <%= link_to "View all", reservations_path(@event), class: "button secondary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
 
-<%= form_tag reservations_path(@event), method: :post do %>
-  <table>
-    <thead>
-      <th></th>
-      <th>Product</th>
-      <th>Reservation</th>
-    </thead>
-    <tbody>
-      <% @products.each do |product| %>
-        <tr>
-          <td>
-            <%= check_box_tag "products[#{product.slug}]", value="1", checked=false %>
-          </td>
-          <td><%= link_to product.name, product_path(product) %></td>
-          <td>
-            <% product.reservations.select{|res| res.dates_overlap?(@event)}.each do |reservation| %>
-              <%= reservation.event.title %><br>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    <%= form_tag reservations_path(@event), method: :post do %>
+      <table class="hover stack">
+        <thead>
+          <th></th>
+          <th>Product</th>
+          <th>Reservation</th>
+        </thead>
+        <tbody>
+          <% @products.each do |product| %>
+            <tr>
+              <td>
+                <%= check_box_tag "products[#{product.slug}]", value="1", checked=false %>
+              </td>
+              <td><%= link_to product.name, product_path(product) %></td>
+              <td>
+                <% product.reservations.select{|res| res.dates_overlap?(@event)}.each do |reservation| %>
+                  <%= reservation.event.title %><br>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
-  <%= submit_tag "Add to reservation",      name: "add" %>
-  <%= submit_tag "Remove from reservation", name: "remove" %>
-<% end %>
+      <%= submit_tag "Add to reservation",      name: "add", class: "button primary" %>
+      <%= submit_tag "Remove from reservation", name: "remove", class: "button warning" %>
+    <% end %>
+  </div>
+</div>

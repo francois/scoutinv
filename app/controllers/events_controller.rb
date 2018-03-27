@@ -2,6 +2,8 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
+    @page_title = "Events"
+
     @after = params[:after].present? ? params[:after].to_date : 1.month.ago
 
     @events = current_group.events.by_date
@@ -10,13 +12,16 @@ class EventsController < ApplicationController
   end
 
   def show
+    @page_title = @event.title
   end
 
   def new
+    @page_title = "New Event"
     @event = Event.new
   end
 
   def edit
+    @page_title = "Edit #{@event.title}"
   end
 
   def create
@@ -25,6 +30,7 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to @event, notice: 'Event was successfully created.'
     else
+      @page_title = "New Event"
       render :new
     end
   end
@@ -33,6 +39,7 @@ class EventsController < ApplicationController
     if @event.update(event_params)
       redirect_to @event, notice: 'Event was successfully updated.'
     else
+      @page_title = "Edit #{@event.title}"
       render :edit
     end
   end

@@ -3,7 +3,7 @@ class Product < ApplicationRecord
 
   belongs_to :group
   has_many :reservations
-  has_many :product_categories
+  has_many :product_categories, dependent: :delete_all
   has_many :categories, through: :product_categories
 
   scope :by_name, ->{ order(Arel.sql("LOWER(#{quoted_table_name}.name), #{quoted_table_name}.id")) }

@@ -2,10 +2,12 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[ index new create show ]
 
   def index
+    @page_title = "Authenticating"
     render
   end
 
   def new
+    @page_title = "Authenticate"
     render
   end
 
