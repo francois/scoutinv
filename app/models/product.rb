@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
   include HasSlug
 
+  has_many_attached :images
+
   belongs_to :group
   has_many :reservations
   has_many :product_categories, dependent: :delete_all

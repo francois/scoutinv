@@ -22,14 +22,22 @@
 
       <div>
         <strong>Dates:</strong>
-        <%= @event.start_on %> –  <%= @event.end_on %>
+        <%= format_date_range @event.date_range %>
       </div>
 
       <h2>Bill of materials</h2>
       <ol>
         <% @event.reservations.map(&:product).sort_by(&:sort_key).each do |product| %>
-          <li><%= link_to product.name, product_path(product) %> <%= [ product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ") %></li>
-        <% end %>
+          <li>
+            <% if product.images.first %>
+              <%= link_to image_tag(product.images.first, alt: "", size: "80x80"), product.images.first %>
+            <% else %>
+              <%= image_tag "http://via.placeholder.com/80x80?text=%20", alt: "", size: "80x80" %>
+            <% end %>
+
+          <%= link_to product.name, product_path(product) %> <%= [ product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ") %>
+        </li>
+      <% end %>
       </ol>
     </div>
 

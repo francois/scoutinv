@@ -21,6 +21,11 @@
       </div>
 
       <div class="small-12 cell">
+        <%= form.label :images %>
+        <%= form.file_field :images, multiple: true %><br>
+      </div>
+
+      <div class="small-12 cell">
         <fieldset class="fieldset">
           <legend>Location</legend>
           <%= form.label :aisle %>

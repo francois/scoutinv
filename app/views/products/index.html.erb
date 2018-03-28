@@ -39,7 +39,10 @@
       <tbody>
         <% @products.each do |product| %>
           <tr>
-            <td><%= link_to product.name, product %></td>
+            <td>
+              <%= image_tag product.images.first, alt: "", size: "80x80" if product.images.first %>
+              <%= link_to product.name, product %>
+            </td>
             <td><%= [ product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ") %></td>
             <td><%= product.description %></td>
             <td><%= product.categories.map(&:name).to_sentence %></td>

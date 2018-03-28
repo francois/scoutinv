@@ -39,7 +39,10 @@
               <td>
                 <%= check_box_tag "products[#{product.slug}]", value="1", checked=false %>
               </td>
-              <td><%= link_to product.name, product_path(product) %></td>
+              <td>
+                <%= image_tag product.images.first, alt: "", size: "80x80" if product.images.first %>
+                <%= link_to product.name, product_path(product) %>
+              </td>
               <td>
                 <% product.reservations.select{|res| res.dates_overlap?(@event)}.each do |reservation| %>
                   <span title="<%= format_date_range(reservation.date_range) %>"><%= reservation.event.title %></span><br>
