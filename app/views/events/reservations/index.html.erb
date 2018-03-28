@@ -31,18 +31,18 @@
         <thead>
           <th></th>
           <th>Product</th>
-          <th>Reservation</th>
+          <th>Reservations</th>
         </thead>
         <tbody>
           <% @products.each do |product| %>
-            <tr>
+            <tr class="<%= product_reservation_css_class(@event, product) %>">
               <td>
                 <%= check_box_tag "products[#{product.slug}]", value="1", checked=false %>
               </td>
               <td><%= link_to product.name, product_path(product) %></td>
               <td>
                 <% product.reservations.select{|res| res.dates_overlap?(@event)}.each do |reservation| %>
-                  <%= reservation.event.title %><br>
+                  <span title="<%= format_date_range(reservation.date_range) %>"><%= reservation.event.title %></span><br>
                 <% end %>
               </td>
             </tr>

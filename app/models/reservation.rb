@@ -9,9 +9,9 @@ class Reservation < ApplicationRecord
   validates :product, :event, presence: true
   validates :product, uniqueness: { scope: :event }
 
+  delegate :date_range, to: :event
+
   def dates_overlap?(other_event)
-    my_event_dates = self.event.date_range
-    other_event_dates = other_event.date_range
-    my_event_dates.overlaps?(other_event_dates)
+    date_range.overlaps?(other_event.date_range)
   end
 end

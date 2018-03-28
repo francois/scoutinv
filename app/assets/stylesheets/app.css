@@ -1,1 +1,14 @@
-/* app.css */
+.product-busy-self * {
+}
+
+.product-busy-other * {
+  color: rgba(0%, 0%, 0%, 0.33);
+}
+
+.product-busy-many * {
+  color: white;
+  background-color: #f73b61;
+}
+
+.product-available * {
+}
