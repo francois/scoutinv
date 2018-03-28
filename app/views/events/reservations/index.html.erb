@@ -27,7 +27,7 @@
     <%= link_to "Back to Event", @event, class: "button hide-for-large" %>
 
     <%= form_tag reservations_path(@event), method: :post do %>
-      <table class="hover stack">
+      <table class="hover stack product-list">
         <thead>
           <th></th>
           <th>Product</th>
@@ -40,8 +40,12 @@
                 <%= check_box_tag "products[#{product.slug}]", value="1", checked=false %>
               </td>
               <td>
-                <%= image_tag product.images.first, alt: "", size: "80x80" if product.images.first %>
-                <%= link_to product.name, product_path(product) %>
+                <%= link_to product.name, product %> <br>
+                <% if product.images.first %>
+                  <%= image_tag product.images.first, alt: "", class: "product-image" %>
+                <% else %>
+                  <%= image_tag "http://via.placeholder.com/100x100?text=%20", alt: "", class: "product-image" %>
+                <% end %>
               </td>
               <td>
                 <% product.reservations.select{|res| res.dates_overlap?(@event)}.each do |reservation| %>

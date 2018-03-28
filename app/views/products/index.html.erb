@@ -26,7 +26,7 @@
 
     <%= link_to "New Product", new_product_path, class: "button hide-for-large" %>
 
-    <table class="hover stack">
+    <table class="hover stack product-list">
       <thead>
         <tr>
           <th>Name</th>
@@ -40,12 +40,16 @@
         <% @products.each do |product| %>
           <tr>
             <td>
-              <%= image_tag product.images.first, alt: "", size: "80x80" if product.images.first %>
-              <%= link_to product.name, product %>
+              <%= link_to product.name, product %> <br>
+              <% if product.images.first %>
+                <%= image_tag product.images.first, alt: "", class: "product-image" %>
+              <% else %>
+                <%= image_tag "http://via.placeholder.com/100x100?text=%20", alt: "", class: "product-image" %>
+              <% end %>
             </td>
-            <td><%= [ product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ") %></td>
+            <td><%= format_product_location(product) %></td>
             <td><%= product.description %></td>
-            <td><%= product.categories.map(&:name).to_sentence %></td>
+            <td><%= product.categories.map(&:name).sort_by(&:downcase).to_sentence %></td>
           </tr>
         <% end %>
       </tbody>

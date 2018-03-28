@@ -30,7 +30,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = current_group.products.build(product_params)
-    @product.images.attach(params[:product][:images])
+    @product.images.attach(params[:product][:images]) if params[:product][:images].present?
 
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
@@ -42,7 +42,7 @@ class ProductsController < ApplicationController
 
   def update
     @product.attributes = product_params
-    @product.images.attach(params[:product][:images])
+    @product.images.attach(params[:product][:images]) if params[:product][:images].present?
 
     if @product.save
       redirect_to @product, notice: 'Product was successfully updated.'

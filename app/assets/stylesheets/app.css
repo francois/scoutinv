@@ -12,3 +12,17 @@
 
 .product-available * {
 }
+
+.product-location {
+  white-space: nowrap;
+}
+
+.product-list .product-image {
+  max-width: 133px;
+  height: 100px;
+}
+
+.bill-of-materials .product-image {
+  max-width: 333px;
+  height: 250px;
+}

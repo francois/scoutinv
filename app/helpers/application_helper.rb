@@ -26,4 +26,10 @@ module ApplicationHelper
       "product-available"
     end
   end
+
+  def format_product_location(product)
+    content_tag :span, class: "product-location" do
+      [ product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ")
+    end
+  end
 end
