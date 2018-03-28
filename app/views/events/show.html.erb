@@ -28,7 +28,7 @@
       <h2>Bill of materials</h2>
       <ol>
         <% @event.reservations.map(&:product).sort_by(&:sort_key).each do |product| %>
-          <li><%= link_to product.name, product_path(product) %></li>
+          <li><%= link_to product.name, product_path(product) %> <%= [ product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ") %></li>
         <% end %>
       </ol>
     </div>

@@ -60,7 +60,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, category_slugs: [])
+    params.require(:product).permit(:name, :description, :aisle, :shelf, :unit, category_slugs: [])
   end
 
   def load_categories

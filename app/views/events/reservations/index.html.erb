@@ -24,6 +24,8 @@
       </div>
     <% end %>
 
+    <%= link_to "Back to Event", @event, class: "button hide-for-large" %>
+
     <%= form_tag reservations_path(@event), method: :post do %>
       <table class="hover stack">
         <thead>
@@ -51,5 +53,9 @@
       <%= submit_tag "Add to reservation",      name: "add", class: "button primary" %>
       <%= submit_tag "Remove from reservation", name: "remove", class: "button warning" %>
     <% end %>
+  </div>
+
+  <div class="cell large-2 medium-12 show-for-large">
+    <%= link_to "Back to Event", @event, class: "button expanded" %>
   </div>
 </div>

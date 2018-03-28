@@ -5,13 +5,18 @@
       <%= link_to "Back to list", products_path, class: "button secondary large hide-for-large" %>
 
       <div>
-      <strong>Name:</strong>
-      <%= @product.name %>
+        <strong>Name:</strong>
+        <%= @product.name %>
       </div>
 
       <div>
-      <strong>Description:</strong>
-      <%= simple_format @product.description %>
+        <strong>Location:</strong>
+        <%= [ @product.aisle, @product.shelf, @product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ") %>
+      </div>
+
+      <div>
+        <strong>Description:</strong>
+        <%= simple_format @product.description %>
       </div>
     </div>
 
