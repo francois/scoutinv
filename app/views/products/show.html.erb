@@ -18,6 +18,22 @@
         <strong>Description:</strong>
         <%= simple_format @product.description %>
       </div>
+
+      <h2>Product Reservation History</h2>
+      <table class="hover">
+        <thead>
+          <th>Dates</th>
+          <th>Event</th>
+        </thead>
+        <tbody>
+          <% @product.reservations.sort_by(&:start_on).reverse.each do |reservation| %>
+            <tr>
+              <td><%= format_date_range(reservation.date_range) %></td>
+              <td><%= link_to reservation.title, reservations_path(reservation.event) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
     <div class="large-2 medium-12 cell show-for-large">

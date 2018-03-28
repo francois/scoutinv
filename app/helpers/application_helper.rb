@@ -6,11 +6,11 @@ module ApplicationHelper
     last  = dates.last
 
     if first.year == last.year && first.month == last.month
-      first.strftime("%b %-d-#{last.day}, %Y")
+      first.strftime("%b %-d&mdash;#{last.day}, %Y").html_safe
     elsif first.year == last.year
-      first.strftime("%b %-d-#{last.strftime("%b-%-d")}, %Y")
+      first.strftime("%b %-d&mdash;#{last.strftime("%b %-d")}, %Y").html_safe
     else
-      [first.strftime("%b %-d, %Y"), " to ", last.strftime("%b %-d, %Y")].join
+      [first.strftime("%b %-d, %Y"), " to ", last.strftime("%b %-d, %Y")].join.html_safe
     end
   end
 
