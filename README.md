@@ -79,3 +79,23 @@ go on an expedition:
 
 This is a Ruby on Rails 5.2 application, running on Ruby 2.5 and using PostgreSQL 10.x.
 It is deployed to Heroku, on the free tier (10k rows, 18 hours of uptime per day).
+
+## Development
+
+Clone this repository, then run `bundle install`. Make sure you have a PostgreSQL database
+available somewhere, and then run:
+
+    # Clone the repository
+    git clone https://gitlab.com/francoisb/scoutin.git
+    cd scoutin
+
+    # Install dependencies
+    bundle install
+
+    # Setup the database
+    # NOTE: This is the default database URL, change as you see fit
+    export DATABASE_URL=postgresql://localhost:5432/scoutin_development
+    rails db:create db:migrate db:seed
+    rails server
+
+After that, visit http://localhost:3000/ and start coding.
