@@ -38,6 +38,6 @@ class Events::ReservationsController < ApplicationController
   private
 
   def set_event
-    @event = current_group.events.find_by!(slug: params[:id])
+    @event = current_group.events.find_by!(slug: params[:event_id])
   end
 end
