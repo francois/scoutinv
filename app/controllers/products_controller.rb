@@ -17,6 +17,7 @@ class ProductsController < ApplicationController
 
   def show
     @page_title = @product.name
+    @note = @product.notes.build
   end
 
   def new

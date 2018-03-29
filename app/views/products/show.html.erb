@@ -44,5 +44,42 @@
   <div class="large-3 medium-12 cell show-for-large">
     <%= link_to "Edit", edit_product_path(@product), class: "button expanded" %>
     <%= link_to "Back to list", products_path, class: "button secondary expanded" %>
+
+    <hr>
+
+    <h3>Notes</h3>
+
+    <%= form_for @note, url: product_notes_path(@product) do |form| %>
+      <%= form.label :body, "Add note:" %>
+      <%= form.text_area :body, size: "10x3" %>
+      <%= form.submit "Save", class: "button primary small" %>
+    <% end %>
+
+    <% if @product.notes.reject(&:new_record?).any? %>
+      <% @product.notes.reject(&:new_record?).sort_by(&:created_at).reverse.each do |note| %>
+        <hr>
+        <%= simple_format note.body %>
+        <p><small>by <%= note.author_name %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= time_ago_in_words note.created_at %></span> ago</small></p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="small-12 cell hide-for-large">
+    <hr>
+    <h3>Notes</h3>
+
+    <%= form_for @note, url: product_notes_path(@product) do |form| %>
+      <%= form.label :body, "Add note:" %>
+      <%= form.text_area :body, size: "10x3" %>
+      <%= form.submit "Save", class: "button primary small" %>
+    <% end %>
+
+    <% if @product.notes.reject(&:new_record?).any? %>
+      <% @product.notes.reject(&:new_record?).sort_by(&:created_at).reverse.each do |note| %>
+        <hr>
+        <%= simple_format note.body %>
+        <p><small>by <%= note.author_name %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= time_ago_in_words note.created_at %></span> ago</small></p>
+      <% end %>
+    <% end %>
   </div>
 </div>

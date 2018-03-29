@@ -7,6 +7,7 @@ class Product < ApplicationRecord
   has_many :reservations
   has_many :product_categories, dependent: :delete_all
   has_many :categories, through: :product_categories
+  has_many :notes, as: :parent, autosave: true
 
   scope :by_name, ->{ order(Arel.sql("LOWER(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
   scope :search, ->(string){ where("POSITION(? IN LOWER(#{quoted_table_name}.name || ' ' || COALESCE(#{quoted_table_name}.description, ''))) > 0", string) }
