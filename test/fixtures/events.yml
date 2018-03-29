@@ -2,8 +2,8 @@ summer_camp_911_10eme:
   group: 10eme
   title: Summer Camp (9-11)
   notes: ""
-  start_on: 2018-08-09
-  end_on: 2018-08-14
+  start_on: <%= 20.days.from_now.to_date %>
+  end_on: <%= 24.days.from_now.to_date %>
   slug: 8p1adklv
 
 summer_camp_911_41eme:

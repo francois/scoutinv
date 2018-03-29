@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: "home#show"
+
   resources :events do
     member do
       resources :reservations, only: %i[ index create destroy ], controller: "events/reservations"

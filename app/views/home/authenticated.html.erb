@@ -1,0 +1,24 @@
+<div class="grid-x grid-margin-x">
+  <div class="small-12 medium-6 cell">
+    <h2>Future Events</h2>
+    <ul>
+      <% @events.each do |event| %>
+        <li>
+          <%= link_to event.title, reservations_path(event) %>
+          <small><%= format_date_range(event.date_range) %></small>
+        </li>
+      <% end %>
+    </ul>
+    <%= button_to "New Event", new_event_path, class: "button small" %>
+  </div>
+
+  <div class="small-12 medium-6 cell">
+    <h2>Old gadgets in our inventory</h2>
+    <ul>
+      <% @products.each do |product| %>
+        <li><%= product.name %></li>
+      <% end %>
+    </ul>
+    <%= button_to "New Product", new_product_path, class: "button small" %>
+  </div>
+</div>

@@ -1,18 +1,16 @@
-<div class="grid-container">
-  <div class="grid-x grid-padding-x">
-    <div class="large-10 medium-12 cell">
-      <%= link_to "Edit", edit_group_path(@group), class: "button large hide-for-large" %>
-      <%= link_to "Back to list", groups_path, class: "button secondary large hide-for-large" %>
+<div class="grid-x grid-margin-x">
+  <div class="large-10 medium-12 cell">
+    <%= link_to "Edit", edit_group_path(@group), class: "button large hide-for-large" %>
+    <%= link_to "Back to list", groups_path, class: "button secondary large hide-for-large" %>
 
-      <div>
-        <strong>Name:</strong>
-        <%= @group.name %>
-      </div>
+    <div>
+      <strong>Name:</strong>
+      <%= @group.name %>
     </div>
+  </div>
 
-    <div class="large-2 medium-12 cell show-for-large">
-      <%= link_to "Edit", edit_group_path(@group), class: "button expanded" %>
-      <%= link_to "Back to list", groups_path, class: "button secondary expanded" %>
-    </div>
+  <div class="large-2 medium-12 cell show-for-large">
+    <%= link_to "Edit", edit_group_path(@group), class: "button expanded" %>
+    <%= link_to "Back to list", groups_path, class: "button secondary expanded" %>
   </div>
 </div>

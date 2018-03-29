@@ -4,7 +4,7 @@ class Event < ApplicationRecord
   belongs_to :group
   has_many :reservations, autosave: true
 
-  scope :after, ->(date) { where("start_on >= ?", date) }
+  scope :after, ->(date) { where("start_on >= ?", date).order(:start_on) }
   scope :by_date, -> { order(:start_on, :id) }
   scope :with_reservations, ->{ includes(reservations: :products) }
 

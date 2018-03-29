@@ -18,6 +18,7 @@
       <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu>
           <li class="menu-text">Scoutin</li>
+          <li><%= link_to "Home", root_path %></li>
           <% if user_signed_in? %>
             <li><%= link_to "Events", events_path %></li>
             <li><%= link_to "Products", products_path %></li>
@@ -35,14 +36,12 @@
     </div>
 
     <div class="grid-container">
-      <div class="grid-x grid-padding-x">
+      <div class="grid-x grid-margin-x">
         <div class="large-12 cell">
           <h1><%= page_title || "Scoutin" %></h1>
         </div>
-      </div>
 
-      <% if alert.present? || notice.present? %>
-        <div class="grid-x grid-padding-x">
+        <% if alert.present? || notice.present? %>
           <div class="large-12 cell">
             <% if notice.present? %>
               <div class="callout success" data-closeable>
@@ -55,15 +54,36 @@
               </div>
             <% end %>
           </div>
-        </div>
-      <% end %>
-
-      <%= yield %>
-
-      <% if user_signed_in? %>
-        <p><%= button_to "Logout", session_path(current_user.slug), class: "button secondary tiny", method: :delete %></p>
-      <% end %>
+        <% end %>
+      </div>
     </div>
+
+    <div class="grid-container">
+      <%= yield %>
+    </div>
+
+    <footer>
+      <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+          <div class="small-12 cell">
+            <hr>
+          </div>
+
+          <div class="auto cell">
+            <p>
+            Scoutin is a tool released under the GPLv2 open-source license, built by <%= mail_to "francois@teksol.info", "François Beausoleil" %>.
+            Find Scoutin on <%= link_to "GitHub", "https://github.com/francois/scouting" %>.
+            </p>
+            <p>&copy; 2018<%= Date.today.year > 2018 ? " - #{Date.today.year}" : nil %> François Beausoleil. All rights reserved.</p>
+          </div>
+          <div class="shrink cell">
+            <% if user_signed_in? %>
+              <%= button_to "Logout", session_path(current_user.slug), class: "button secondary tiny", method: :delete %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
   </body>

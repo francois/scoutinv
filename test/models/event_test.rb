@@ -22,7 +22,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "#date_range" do
-    event = events(:summer_camp_911_10eme)
-    assert_equal Date.new(2018, 8, 8) .. Date.new(2018, 8, 15), event.date_range
+    event = events(:summer_camp_911_41eme)
+    assert_equal Date.new(2018, 8, 5) .. Date.new(2018, 8, 11), event.date_range
   end
 end

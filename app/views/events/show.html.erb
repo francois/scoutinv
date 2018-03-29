@@ -1,60 +1,58 @@
-<div class="grid-container">
-  <div class="grid-x grid-padding-x">
-    <div class="large-10 medium-12 cell">
-      <%= link_to "Edit reservations", reservations_path(@event), class: "button large hide-for-large" %>
-      <%= link_to "Edit", edit_event_path(@event), class: "button large hide-for-large" %>
-      <%= link_to "Back to list", events_path, class: "button secondary large hide-for-large" %>
+<div class="grid-x grid-margin-x">
+  <div class="large-10 medium-12 cell">
+    <%= link_to "Edit reservations", reservations_path(@event), class: "button large hide-for-large" %>
+    <%= link_to "Edit", edit_event_path(@event), class: "button large hide-for-large" %>
+    <%= link_to "Back to list", events_path, class: "button secondary large hide-for-large" %>
 
-      <div>
-        <strong>Group:</strong>
-        <%= @event.group.name %>
-      </div>
+    <div>
+      <strong>Group:</strong>
+      <%= @event.group.name %>
+    </div>
 
-      <div>
-        <strong>Title:</strong>
-        <%= @event.title %>
-      </div>
+    <div>
+      <strong>Title:</strong>
+      <%= @event.title %>
+    </div>
 
-      <div>
-        <strong>Notes:</strong>
-        <%= simple_format @event.notes %>
-      </div>
+    <div>
+      <strong>Notes:</strong>
+      <%= simple_format @event.notes %>
+    </div>
 
-      <div>
-        <strong>Dates:</strong>
-        <%= format_date_range @event.date_range %>
-      </div>
+    <div>
+      <strong>Dates:</strong>
+      <%= format_date_range @event.date_range %>
+    </div>
 
-      <h2>Bill of materials</h2>
-      <div class="grid-container bill-of-materials">
-        <div class="grid-x grid-padding-x small-up-2 medium-up-3">
-          <% @event.reservations.map(&:product).sort_by(&:sort_key_for_pickup).each do |product| %>
-            <div class="cell">
-              <div class="card" style="">
-                <div class="card-divider">
-                  <h4><%= link_to product.name, product_path(product) %></h4>
-                </div>
-                <% if product.images.first %>
-                  <%= link_to image_tag(product.images.first, alt: "", class: "product-image"), product.images.first %>
-                <% else %>
-                  <%= image_tag "http://via.placeholder.com/250x250?text=%20", alt: "", class: "product-image" %>
-                <% end %>
-                <div class="card-section">
-                  <p><strong>Location</strong>: <%= format_product_location(product) %></p>
-                  <%= simple_format product.description %>
-                </div>
+    <h2>Bill of materials</h2>
+    <div class="grid-container bill-of-materials">
+      <div class="grid-x grid-padding-x small-up-2 medium-up-3">
+        <% @event.reservations.map(&:product).sort_by(&:sort_key_for_pickup).each do |product| %>
+          <div class="cell">
+            <div class="card" style="">
+              <div class="card-divider">
+                <h4><%= link_to product.name, product_path(product) %></h4>
+              </div>
+              <% if product.images.first %>
+                <%= link_to image_tag(product.images.first, alt: "", class: "product-image"), product.images.first %>
+              <% else %>
+                <%= image_tag "http://via.placeholder.com/250x250?text=%20", alt: "", class: "product-image" %>
+              <% end %>
+              <div class="card-section">
+                <p><strong>Location</strong>: <%= format_product_location(product) %></p>
+                <%= simple_format product.description %>
               </div>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     </div>
+  </div>
 
-    <div class="large-2 medium-12 cell show-for-large">
-      <%= link_to "Edit reservations", reservations_path(@event), class: "button expanded" %>
+  <div class="large-2 medium-12 cell show-for-large">
+    <%= link_to "Edit reservations", reservations_path(@event), class: "button expanded" %>
 
-      <%= link_to "Edit", edit_event_path(@event), class: "button expanded" %>
-      <%= link_to "Back to list", events_path, class: "button secondary expanded" %>
-    </div>
+    <%= link_to "Edit", edit_event_path(@event), class: "button expanded" %>
+    <%= link_to "Back to list", events_path, class: "button secondary expanded" %>
   </div>
 </div>

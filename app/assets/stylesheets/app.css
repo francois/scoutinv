@@ -18,11 +18,24 @@
 }
 
 .product-list .product-image {
-  max-width: 133px;
   height: 100px;
+  max-width: 133px;
 }
 
 .bill-of-materials .product-image {
-  max-width: 333px;
   height: 250px;
+  max-width: 333px;
+}
+
+.post-signup-message {
+  margin-left: 1rem;
+}
+
+footer {
+  padding-top: 5rem;
+}
+
+footer p {
+  font-size: 80%;
+  line-height: 80%;
 }

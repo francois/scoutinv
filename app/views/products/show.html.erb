@@ -1,50 +1,48 @@
-<div class="grid-container">
-  <div class="grid-x grid-padding-x">
-    <div class="large-10 medium-12 cell">
-      <%= link_to "Edit", edit_product_path(@product), class: "button large hide-for-large" %>
-      <%= link_to "Back to list", products_path, class: "button secondary large hide-for-large" %>
+<div class="grid-x grid-margin-x">
+  <div class="large-10 medium-12 cell">
+    <%= link_to "Edit", edit_product_path(@product), class: "button large hide-for-large" %>
+    <%= link_to "Back to list", products_path, class: "button secondary large hide-for-large" %>
 
-      <div>
-        <% @product.images.each do |image| %>
-          <%= link_to image_tag(image, alt: "", size: "300x225"), image %>
+    <div>
+      <% @product.images.each do |image| %>
+        <%= link_to image_tag(image, alt: "", size: "300x225"), image %>
+      <% end %>
+    </div>
+
+    <div>
+      <strong>Name:</strong>
+      <%= @product.name %>
+    </div>
+
+    <div>
+      <strong>Location:</strong>
+      <%= [ @product.aisle, @product.shelf, @product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ") %>
+    </div>
+
+    <div>
+      <strong>Description:</strong>
+      <%= simple_format @product.description %>
+    </div>
+
+    <h2>Product Reservation History</h2>
+    <table class="hover">
+      <thead>
+        <th>Dates</th>
+        <th>Event</th>
+      </thead>
+      <tbody>
+        <% @product.reservations.sort_by(&:start_on).reverse.each do |reservation| %>
+          <tr>
+            <td><%= format_date_range(reservation.date_range) %></td>
+            <td><%= link_to reservation.title, reservations_path(reservation.event) %></td>
+          </tr>
         <% end %>
-      </div>
+      </tbody>
+    </table>
+  </div>
 
-      <div>
-        <strong>Name:</strong>
-        <%= @product.name %>
-      </div>
-
-      <div>
-        <strong>Location:</strong>
-        <%= [ @product.aisle, @product.shelf, @product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ") %>
-      </div>
-
-      <div>
-        <strong>Description:</strong>
-        <%= simple_format @product.description %>
-      </div>
-
-      <h2>Product Reservation History</h2>
-      <table class="hover">
-        <thead>
-          <th>Dates</th>
-          <th>Event</th>
-        </thead>
-        <tbody>
-          <% @product.reservations.sort_by(&:start_on).reverse.each do |reservation| %>
-            <tr>
-              <td><%= format_date_range(reservation.date_range) %></td>
-              <td><%= link_to reservation.title, reservations_path(reservation.event) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="large-2 medium-12 cell show-for-large">
-      <%= link_to "Edit", edit_product_path(@product), class: "button expanded" %>
-      <%= link_to "Back to list", products_path, class: "button secondary expanded" %>
-    </div>
+  <div class="large-2 medium-12 cell show-for-large">
+    <%= link_to "Edit", edit_product_path(@product), class: "button expanded" %>
+    <%= link_to "Back to list", products_path, class: "button secondary expanded" %>
   </div>
 </div>

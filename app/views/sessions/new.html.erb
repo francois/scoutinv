@@ -1,14 +1,5 @@
-<%= form_tag sessions_path, method: :post do %>
-  <div class="grid-container">
-    <div class="grid-x grid-padding-x">
-      <div class="small-12 cell">
-        <%= label_tag :email %>
-        <%= email_field_tag :email %>
-      </div>
-
-      <div class="small-12 cell">
-        <%= submit_tag "Send authentication email", class: "button primary large" %>
-      </div>
-    </div>
+<div class="grid-x grid-margin-x">
+  <div class="cell">
+    <%= render partial: "authentication_form" %>
   </div>
-<% end %>
+</div>

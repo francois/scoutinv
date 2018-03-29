@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
     redirect_to new_session_url
   end
 
+  def sign_in_user!(user)
+    session[:user_id] = user.id
+  end
+
   def user_signed_in?
     session[:user_id].present?
   end
