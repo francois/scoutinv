@@ -78,7 +78,11 @@ go on an expedition:
 # Technical Notes
 
 This is a Ruby on Rails 5.2 application, running on Ruby 2.5 and using PostgreSQL 10.x.
-It is deployed to Heroku, on the free tier (10k rows, 18 hours of uptime per day).
+The application is styled using [ZURB Foundation 6.4.3](https://foundation.zurb.com/sites/docs/index.html).
+
+The application is deployed to Heroku, on the free tier (10k rows, 18 hours of uptime per day).
+
+Because of the open source nature of Scoutin, you are free to host your own copy.
 
 ## Development
 
