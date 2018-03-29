@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, except: [:index, :new, :create]
 
   def index
     @page_title = "Events"
@@ -14,6 +14,10 @@ class EventsController < ApplicationController
   def show
     @page_title = @event.title
     @note  = @event.notes.build
+  end
+
+  def print
+    @page_title = "#{@event.title} (Print)"
   end
 
   def new

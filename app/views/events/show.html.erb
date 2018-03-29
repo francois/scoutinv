@@ -1,7 +1,8 @@
 <div class="grid-x grid-margin-x">
   <div class="large-9 medium-12 cell">
     <%= link_to "Edit reservations", event_reservations_path(@event), class: "button large hide-for-large" %>
-    <%= link_to "Edit", edit_event_path(@event), class: "button large hide-for-large" %>
+    <%= link_to "Edit this event", edit_event_path(@event), class: "button large hide-for-large" %>
+    <%= link_to "Print this event", print_event_path(@event), class: "button large hide-for-large" %>
     <%= link_to "Back to list", events_path, class: "button secondary large hide-for-large" %>
 
     <div>
@@ -26,7 +27,7 @@
 
     <h2>Bill of materials</h2>
     <div class="grid-container bill-of-materials">
-      <div class="grid-x grid-padding-x small-up-2 medium-up-3">
+      <div class="grid-x grid-margin-x small-up-2 medium-up-3">
         <% @event.reservations.map(&:product).sort_by(&:sort_key_for_pickup).each do |product| %>
           <div class="cell">
             <div class="card" style="">
@@ -53,6 +54,7 @@
     <%= link_to "Edit reservations", event_reservations_path(@event), class: "button expanded" %>
 
     <%= link_to "Edit this event", edit_event_path(@event), class: "button expanded" %>
+    <%= link_to "Print this event", print_event_path(@event), class: "button expanded" %>
     <%= link_to "Back to list", events_path, class: "button secondary expanded" %>
 
     <hr>
@@ -69,7 +71,7 @@
       <% @event.notes.reject(&:new_record?).sort_by(&:created_at).reverse.each do |note| %>
         <hr>
         <%= simple_format note.body %>
-        <p><small>by <%= note.author_name %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= time_ago_in_words note.created_at %></span> ago</small></p>
+        <p class="signature"><small>by <%= note.author_name %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= time_ago_in_words note.created_at %></span> ago</small></p>
       <% end %>
     <% end %>
   </div>
@@ -88,7 +90,7 @@
       <% @event.notes.reject(&:new_record?).sort_by(&:created_at).reverse.each do |note| %>
         <hr>
         <%= simple_format note.body %>
-        <p><small>by <%= note.author_name %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= time_ago_in_words note.created_at %></span> ago</small></p>
+        <p class="signature"><small>by <%= note.author_name %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= time_ago_in_words note.created_at %></span> ago</small></p>
       <% end %>
     <% end %>
   </div>

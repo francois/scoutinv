@@ -1,0 +1,38 @@
+<div class="grid-x grid-margin-x">
+  <div class="small-12 cell">
+    <h2><%= format_date_range(@event.date_range) %></h2>
+
+    <h4>Printed by <%= current_user.name %> on <%= Date.today %></h4>
+
+    <%= simple_format @event.description %>
+  </div>
+
+  <div class="small-12 cell">
+    <table class="unstriped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Product</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @event.reservations.sort_by(&:product_sort_key_for_pickup).each do |reservation| %>
+          <tr>
+            <td></td>
+            <td><%= link_to reservation.product_name, reservation.product %></td>
+            <td><%= format_product_location reservation.product %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="small-12 cell">
+    <h3>Notes</h3>
+    <% @event.notes.each do |note| %>
+      <%= simple_format note.body %>
+      <p class="signature"><small>By <%= note.author_name %>, at <%= note.created_at.to_formatted_s(:long) %></small></p>
+    <% end %>
+  </div>
+</div>

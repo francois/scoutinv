@@ -1,3 +1,9 @@
+@media print {
+  #responsive-menu, footer .button {
+    display: none;
+  }
+}
+
 .product-busy-self * {
 }
 
@@ -29,6 +35,10 @@
 
 .post-signup-message {
   margin-left: 1rem;
+}
+
+.signature {
+  margin-top: -1rem;
 }
 
 footer {
