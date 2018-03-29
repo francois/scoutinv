@@ -1,3 +1,4 @@
 #!/bin/bash
 git push heroku HEAD:master
 heroku run rails db:migrate
+heroku ps:restart
