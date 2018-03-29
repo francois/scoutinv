@@ -13,6 +13,7 @@ class EventsController < ApplicationController
 
   def show
     @page_title = @event.title
+    @note  = @event.notes.build
   end
 
   def new
@@ -52,7 +53,7 @@ class EventsController < ApplicationController
   private
 
   def set_event
-    @event = current_group.events.includes(:group, reservations: :product).find_by!(slug: params[:id])
+    @event = current_group.events.includes(:group, notes: :author, reservations: :product).find_by!(slug: params[:id])
   end
 
   def event_params

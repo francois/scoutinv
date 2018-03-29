@@ -1,6 +1,6 @@
 <div class="grid-x grid-margin-x">
-  <div class="cell large-10 medium-12">
-    <%= form_tag reservations_path(@event), method: :get do %>
+  <div class="large-9 medium-12 cell">
+    <%= form_tag event_reservations_path(@event), method: :get do %>
       <div class="grid-container">
         <div class="grid-x grid-padding-x">
           <div class="medium-shrink cell">
@@ -18,7 +18,7 @@
           </div>
 
           <div class="medium-auto cell">
-            <%= submit_tag "Search", class: "button" %> <%= link_to "View all", reservations_path(@event), class: "button secondary" %>
+            <%= submit_tag "Search", class: "button" %> <%= link_to "View all", event_reservations_path(@event), class: "button secondary" %>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
 
     <%= link_to "Back to Event", @event, class: "button hide-for-large" %>
 
-    <%= form_tag reservations_path(@event), method: :post do %>
+    <%= form_tag event_reservations_path(@event), method: :post do %>
       <table class="hover stack product-list">
         <thead>
           <th></th>
@@ -62,7 +62,7 @@
     <% end %>
   </div>
 
-  <div class="cell large-2 medium-12 show-for-large">
+  <div class="large-3 medium-12 cell show-for-large">
     <%= link_to "Back to Event", @event, class: "button expanded" %>
   </div>
 </div>

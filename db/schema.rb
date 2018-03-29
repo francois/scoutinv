@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_28_034100) do
+ActiveRecord::Schema.define(version: 2018_03_29_155019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2018_03_28_034100) do
   create_table "events", force: :cascade do |t|
     t.bigint "group_id", null: false
     t.string "title", null: false
-    t.text "notes"
+    t.text "description"
     t.date "start_on", null: false
     t.date "end_on", null: false
     t.string "slug", limit: 8, null: false
@@ -63,6 +63,19 @@ ActiveRecord::Schema.define(version: 2018_03_28_034100) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_groups_on_slug", unique: true
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.string "parent_type", null: false
+    t.bigint "parent_id", null: false
+    t.bigint "author_id", null: false
+    t.text "body", null: false
+    t.string "slug", limit: 8, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_notes_on_author_id"
+    t.index ["parent_type", "parent_id"], name: "index_notes_on_parent_type_and_parent_id"
+    t.index ["slug"], name: "index_notes_on_slug", unique: true
   end
 
   create_table "product_categories", force: :cascade do |t|
@@ -124,6 +137,7 @@ ActiveRecord::Schema.define(version: 2018_03_28_034100) do
   end
 
   add_foreign_key "events", "groups"
+  add_foreign_key "notes", "users", column: "author_id"
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
   add_foreign_key "products", "groups"

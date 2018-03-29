@@ -1,5 +1,5 @@
 <div class="grid-x grid-margin-x">
-  <div class="large-10 medium-12 cell">
+  <div class="large-9 medium-12 cell">
     <%= link_to "Edit", edit_product_path(@product), class: "button large hide-for-large" %>
     <%= link_to "Back to list", products_path, class: "button secondary large hide-for-large" %>
 
@@ -34,14 +34,14 @@
         <% @product.reservations.sort_by(&:start_on).reverse.each do |reservation| %>
           <tr>
             <td><%= format_date_range(reservation.date_range) %></td>
-            <td><%= link_to reservation.title, reservations_path(reservation.event) %></td>
+            <td><%= link_to reservation.title, event_reservations_path(reservation.event) %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
 
-  <div class="large-2 medium-12 cell show-for-large">
+  <div class="large-3 medium-12 cell show-for-large">
     <%= link_to "Edit", edit_product_path(@product), class: "button expanded" %>
     <%= link_to "Back to list", products_path, class: "button secondary expanded" %>
   </div>

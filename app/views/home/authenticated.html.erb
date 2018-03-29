@@ -4,12 +4,12 @@
     <ul>
       <% @events.each do |event| %>
         <li>
-          <%= link_to event.title, reservations_path(event) %>
+          <%= link_to event.title, event_reservations_path(event) %>
           <small><%= format_date_range(event.date_range) %></small>
         </li>
       <% end %>
     </ul>
-    <%= button_to "New Event", new_event_path, class: "button small" %>
+    <%= link_to "New Event", new_event_path, class: "button small" %>
   </div>
 
   <div class="small-12 medium-6 cell">
@@ -19,6 +19,6 @@
         <li><%= product.name %></li>
       <% end %>
     </ul>
-    <%= button_to "New Product", new_product_path, class: "button small" %>
+    <%= link_to "New Product", new_product_path, class: "button small" %>
   </div>
 </div>

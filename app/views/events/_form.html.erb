@@ -1,6 +1,6 @@
 <%= form_with(model: event, local: true) do |form| %>
   <div class="grid-container">
-    <div class="grid-x">
+    <div class="grid-x grid-margin-x">
       <% if event.errors.any? %>
         <div class="small-12 cell">
           <div id="error_explanation">
@@ -21,8 +21,8 @@
       </div>
 
       <div class="small-12 cell">
-        <%= form.label :notes %>
-        <%= form.text_area :notes, size: "10x5" %>
+        <%= form.label :description %>
+        <%= form.text_area :description, size: "10x5" %>
       </div>
 
       <div class="small-12 cell">

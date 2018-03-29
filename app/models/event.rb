@@ -3,6 +3,7 @@ class Event < ApplicationRecord
 
   belongs_to :group
   has_many :reservations, autosave: true
+  has_many :notes, as: :parent, autosave: true
 
   scope :after, ->(date) { where("start_on >= ?", date).order(:start_on) }
   scope :by_date, -> { order(:start_on, :id) }
