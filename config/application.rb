@@ -15,5 +15,9 @@ module Scoutin
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    Raven.configure do |config|
+      config.dsn = 'https://453f6e82841e487593a372a137f20cca:3582b51cb338411b8f5b59bb264bdb92@sentry.io/812041'
+    end
   end
 end
