@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= page_title.blank? ? nil : page_title + " – ".html_safe %>Scoutin</title>
+    <title><%= page_title.blank? ? nil : page_title + " – ".html_safe %>Scoutinv</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload" %>
   </head>
@@ -12,7 +12,7 @@
     <div class="top-bar" id="responsive-menu">
       <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu>
-          <li class="menu-text">Scoutin</li>
+          <li class="menu-text">Scoutinv</li>
           <li><%= link_to "Home", root_path %></li>
           <% if user_signed_in? %>
             <li><%= link_to "Events", events_path %></li>
@@ -33,7 +33,7 @@
     <div class="grid-container">
       <div class="grid-x grid-margin-x">
         <div class="large-12 cell">
-          <h1><%= page_title || "Scoutin" %></h1>
+          <h1><%= page_title || "Scoutinv" %></h1>
         </div>
 
         <% if alert.present? || notice.present? %>
@@ -66,8 +66,8 @@
 
           <div class="auto cell">
             <p>
-            Scoutin is a tool released under the GPLv2 open-source license, built by <%= mail_to "francois@teksol.info", "François Beausoleil" %>.
-            Find Scoutin on <%= link_to "GitHub", "https://github.com/francois/scouting" %>.
+            Scoutinv is a tool released under the GPLv2 open-source license, built by <%= mail_to "francois@teksol.info", "François Beausoleil" %>.
+            Find Scoutinv on <%= link_to "GitHub", "https://gitlab.com/francoisb/scoutinv" %>.
             </p>
             <p>&copy; 2018<%= Date.today.year > 2018 ? " - #{Date.today.year}" : nil %> François Beausoleil. All rights reserved.</p>
           </div>

@@ -1,4 +1,4 @@
-# Scoutin
+# Scoutinv
 
 This application enables a Scout Group to manage their inventory. Scout Troop Masters create events
 (camps) and reserve products. The application is responsible for flagging overlapping reservations
@@ -82,7 +82,7 @@ The application is styled using [ZURB Foundation 6.4.3](https://foundation.zurb.
 
 The application is deployed to Heroku, on the free tier (10k rows, 18 hours of uptime per day).
 
-Because of the open source nature of Scoutin, you are free to host your own copy.
+Because of the open source nature of Scoutinv, you are free to host your own copy.
 
 ## Development
 
@@ -90,15 +90,15 @@ Clone this repository, then run `bundle install`. Make sure you have a PostgreSQ
 available somewhere, and then run:
 
     # Clone the repository
-    git clone https://gitlab.com/francoisb/scoutin.git
-    cd scoutin
+    git clone https://gitlab.com/francoisb/scoutinv.git
+    cd scoutinv
 
     # Install dependencies
     bundle install
 
     # Setup the database
     # NOTE: This is the default database URL, change as you see fit
-    export DATABASE_URL=postgresql://localhost:5432/scoutin_development
+    export DATABASE_URL=postgresql://localhost:5432/scoutinv_development
     rails db:create db:migrate db:seed
     rails server
 
