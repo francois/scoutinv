@@ -37,7 +37,7 @@
               <% if product.images.first %>
                 <%= link_to image_tag(product.images.first, alt: "", class: "product-image"), product.images.first %>
               <% else %>
-                <%= image_tag "http://via.placeholder.com/250x250?text=%20", alt: "", class: "product-image" %>
+                <%= image_tag "https://via.placeholder.com/250x250?text=%20", alt: "", class: "product-image" %>
               <% end %>
               <div class="card-section">
                 <p><strong>Location</strong>: <%= format_product_location(product) %></p>
