@@ -28,11 +28,13 @@
     </table>
   </div>
 
-  <div class="small-12 cell">
-    <h3>Notes</h3>
-    <% @event.notes.each do |note| %>
-      <%= simple_format note.body %>
-      <p class="signature"><small>By <%= note.author_name %>, at <%= note.created_at.to_formatted_s(:long) %></small></p>
-    <% end %>
-  </div>
+  <% if @event.notes.reject(&:new_record?).any? %>
+    <div class="small-12 cell">
+      <h3>Notes</h3>
+      <% @event.notes.each do |note| %>
+        <%= simple_format note.body %>
+        <p class="signature"><small>By <%= note.author_name %>, at <%= note.created_at.to_formatted_s(:long) %></small></p>
+      <% end %>
+    </div>
+  <% end %>
 </div>
