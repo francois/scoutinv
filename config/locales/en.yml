@@ -1,33 +1,40 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  footer:
+    logout: Logout
+  home:
+    page_title: Home
+    authenticated:
+      future_events: Future Events
+      new_event: New Event
+      new_product: New Product
+      old_gadgets: Old gadgets in our inventory
+    registration_form:
+      email_label: Email
+      email_placeholder: bagheera@example.com
+      group_label: Group
+      group_placeholder: 43rd Scout Groupe of Herforshire
+      name_label: Name
+      name_placeholder: Sheila Hammond
+      phone_label: Phone
+      phone_placeholder: "514 555-1212"
+      post_signup_instructions: "Après vous être inscrit, vous pourrez inviter les autres membres de votre groupe à vous rejoindre."
+      post_signup_instructions: "After signing up, you will be able to invite other people to your Scout Group."
+      sign_up: "Sign Up"
+      terms_of_service: "I agree to the Terms of Service"
+  sessions:
+    authentication_form:
+      email: Email
+      send_authentication_email: Send authentication email
+  top-bar:
+    events: Events
+    groups: Groups
+    home: Home
+    products: Products
+
+  date:
+    formats:
+      range_same_year_and_month: "%b %-d–%{last_day}, %Y"
+      range_same_year: "%b %-d–%{last_day}, %Y"
+      range_other: "%b %-d %Y to %{last_day}"
+      no_year: "%b %-d"
+      with_year: "%b %-d %Y"

@@ -6,11 +6,11 @@ module ApplicationHelper
     last  = dates.last
 
     if first.year == last.year && first.month == last.month
-      first.strftime("%b %-d&mdash;#{last.day}, %Y").html_safe
+      l(first, format: :range_same_year_and_month, last_day: last.day)
     elsif first.year == last.year
-      first.strftime("%b %-d&mdash;#{last.strftime("%b %-d")}, %Y").html_safe
+      l(first, format: :range_same_year, last_day: l(last, format: :no_year))
     else
-      [first.strftime("%b %-d, %Y"), " to ", last.strftime("%b %-d, %Y")].join.html_safe
+      l(first, format: :range_other, last_day: l(last, format: :with_year))
     end
   end
 
@@ -31,5 +31,21 @@ module ApplicationHelper
     content_tag :span, class: "product-location" do
       [ product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ")
     end
+  end
+
+  def on_home_page?
+    current_page?(root_path)
+  end
+
+  def on_events_page?
+    %w(events events/reservations).include?(params[:controller])
+  end
+
+  def on_products_page?
+    %w(products).include?(params[:controller])
+  end
+
+  def on_groups_page?
+    %w(groups users).include?(params[:controller])
   end
 end

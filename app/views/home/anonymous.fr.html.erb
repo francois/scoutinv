@@ -1,0 +1,22 @@
+<div class="grid-container">
+  <div class="grid-x">
+    <div class="small-12 medium-9 cell">
+      <h3>Qu'est-ce que Scoutinv?</h3>
+      <p>Scoutinv est un outil conçu pour permettre à un groupe Scout de mieux travailler ensemble. Chaque groupe a son propre espace de travail.</p>
+
+      <h3>Pourquoi?</h3>
+      <h4>Gestion de votre inventaire</h4>
+      <h4>Empêcher deux unités de louer le même matériel en même temps</h4>
+      <h4>Améliorer les communications</h4>
+
+      <h3>S'enregistrer</h3>
+      <p>Pour enregistrer votre groupe scout, veuillez remplir ce formulaire. Tous les champs sont requis.</p>
+      <%= render partial: "registration_form" %>
+    </div>
+
+    <div class="small-12 medium-3 cell">
+      <h2>S'identifier</h2>
+      <%= render partial: "sessions/authentication_form" %>
+    </div>
+  </div>
+</div>

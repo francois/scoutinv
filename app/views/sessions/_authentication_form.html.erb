@@ -2,12 +2,12 @@
   <div class="grid-container">
     <div class="grid-x grid-padding-x">
       <div class="small-12 cell">
-        <%= label_tag :email %>
-        <%= email_field_tag :email %>
+        <%= label_tag :email, t(".email") %>
+        <%= email_field_tag :email, "", placeholder: "baloo@exemple.org", required: true %>
       </div>
 
       <div class="small-12 cell">
-        <%= submit_tag "Send authentication email", class: "button primary large" %>
+        <%= submit_tag t(".send_authentication_email"), class: "button primary large" %>
       </div>
     </div>
   </div>

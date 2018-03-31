@@ -1,0 +1,39 @@
+fr:
+  footer:
+    logout: Fermer la session
+  home:
+    page_title: Départ
+    authenticated:
+      future_events: Événements futurs
+      new_event: Nouvel événement
+      new_product: Nouveau produit
+      old_gadgets: Vieux trucs dans l'inventaire
+    registration_form:
+      email_label: Adresse courriel
+      email_placeholder: bagheera@example.com
+      group_label: Groupe scout
+      group_placeholder: 43ème Groupe Scout de Herefordshire
+      name_label: Nom
+      name_placeholder: Jean Tremblay
+      phone_label: Téléphone
+      phone_placeholder: "819 555-1212"
+      post_signup_instructions: "Après vous être inscrit, vous pourrez inviter les autres membres de votre groupe à vous rejoindre."
+      sign_up: "S'enregistrer"
+      terms_of_service: "J'accepte les termes de service"
+  sessions:
+    authentication_form:
+      email: Adresse courriel
+      send_authentication_email: Envoyer le courriel d'authentification
+  top-bar:
+    events: Événements
+    groups: Groupes
+    home: Départ
+    products: Inventaire
+
+  date:
+    formats:
+      range_same_year_and_month: "%-d au %{last_day} %B %Y"
+      range_same_year: "%-d %B au %{last_day} %Y"
+      range_other: "%-d %B %Y au %{last_day}"
+      no_year: "%-d %B"
+      with_year: "%-d %B %Y"

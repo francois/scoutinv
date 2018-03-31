@@ -1,6 +1,6 @@
 <div class="grid-x grid-margin-x">
   <div class="small-12 medium-6 cell">
-    <h2>Future Events</h2>
+    <h2><%= t ".future_events" %></h2>
     <ul>
       <% @events.each do |event| %>
         <li>
@@ -9,16 +9,16 @@
         </li>
       <% end %>
     </ul>
-    <%= link_to "New Event", new_event_path, class: "button small" %>
+    <%= link_to t(".new_event"), new_event_path, class: "button small" %>
   </div>
 
   <div class="small-12 medium-6 cell">
-    <h2>Old gadgets in our inventory</h2>
+    <h2><%= t ".old_gadgets" %></h2>
     <ul>
       <% @products.each do |product| %>
         <li><%= link_to product.name, product %></li>
       <% end %>
     </ul>
-    <%= link_to "New Product", new_product_path, class: "button small" %>
+    <%= link_to t(".new_product"), new_product_path, class: "button small" %>
   </div>
 </div>

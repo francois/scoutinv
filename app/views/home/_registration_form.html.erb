@@ -1,0 +1,33 @@
+<%= form_tag "#", method: :post do %>
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <div class="small-12 cell">
+        <%= label_tag :name, t(".name_label") %>
+        <%= text_field_tag :name, "", placeholder: t(".name_placeholder") %>
+      </div>
+
+      <div class="small-8 cell">
+        <%= label_tag :email, t(".email_label") %>
+        <%= email_field_tag :email, "", placeholder: t(".email_placeholder") %>
+      </div>
+
+      <div class="small-4 cell">
+        <%= label_tag :phone, t(".phone_label") %>
+        <%= phone_field_tag :phone, "", placeholder: t(".phone_placeholder") %>
+      </div>
+
+      <div class="small-12 cell">
+        <%= label_tag :group, t(".group_label") %>
+        <%= text_field_tag :group, "", placeholder: t(".group_placeholder") %>
+      </div>
+    </div>
+
+    <div class="small-12 cell">
+      <div>
+        <%= check_box_tag :terms_of_service, false %> <%= label_tag :terms_of_service, t(".terms_of_service") %>
+      </div>
+      <%= submit_tag t(".sign_up"), class: "button primary large" %>
+      <span class="post-signup-message h5"><%= t(".post_signup_instructions") %></span>
+    </div>
+  </div>
+<% end %>
