@@ -8,6 +8,7 @@ class GroupsController < ApplicationController
 
   def show
     @page_title = @group.name
+    @user       = @group.users.build
   end
 
   def new

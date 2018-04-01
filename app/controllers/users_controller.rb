@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @page_title = "Users"
+    @page_title = t(".page_title")
     @users = current_group.users.all
   end
 
@@ -11,37 +11,37 @@ class UsersController < ApplicationController
   end
 
   def new
-    @page_title = "New User"
+    @page_title = t(".page_title")
     @user = current_group.users.build
   end
 
   def edit
-    @page_title = "Edit #{@user.name}"
+    @page_title = t(".page_title", user_name: @user.name)
   end
 
   def create
     @user = current_user.group.users.build(user_params)
 
     if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
+      redirect_to current_group, notice: t(".user_successfully_created")
     else
-      @page_title = "New User"
+      @page_title = t(".page_title")
       render :new
     end
   end
 
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+      redirect_to current_group, notice: t(".user_successfully_updated")
     else
-      @page_title = "Edit #{@user.name}"
+      @page_title = t(".page_title", user_name: @user.name)
       render :edit
     end
   end
 
   def destroy
     @user.destroy
-    redirect_to users_url, notice: 'User was successfully destroyed.'
+    redirect_to current_group, notice: t(".user_successfully_destroyed")
   end
 
   private
@@ -51,6 +51,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email)
   end
 end

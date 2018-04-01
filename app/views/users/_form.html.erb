@@ -26,22 +26,12 @@
       </div>
 
       <div class="small-12 cell">
-        <%= form.label :password %>
-        <%= form.text_field :password %>
-      </div>
-
-      <div class="small-12 cell">
-        <%= form.label :password_confirmation %>
-        <%= form.text_field :password_confirmation %>
-      </div>
-
-      <div class="small-12 cell">
         <%= form.submit class: "button primary" %>
-        or
+        <%= t(".or") %>
         <% if @user.new_record? %>
-          <%= link_to "Cancel", users_path, class: "button secondary" %>
+          <%= link_to t(".cancel_button_label"), users_path, class: "button secondary" %>
         <% else %>
-          <%= link_to "Cancel", @user, class: "button secondary" %>
+          <%= link_to t(".cancel_button_label"), @user, class: "button secondary" %>
         <% end %>
       </div>
     </div>

@@ -3,14 +3,40 @@
     <%= link_to t(".edit_button_label"), edit_group_path(@group), class: "button large hide-for-large" %>
     <%= link_to t(".back_to_list"), groups_path, class: "button secondary large hide-for-large" %>
 
-    <div>
-      <strong><%= t("activerecord.attributes.group.name") %>:</strong>
-      <%= @group.name %>
-    </div>
+    <h2><%= t(".users") %></h2>
+    <table class="hover stack">
+      <thead>
+        <tr>
+          <th><%= t(".name_header") %></th>
+          <th><%= t(".email_header") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @group.users.reject(&:new_record?).sort_by(&:sort_key).each do |user| %>
+          <tr>
+            <td><%= link_to user.name, edit_user_path(user) %></td>
+            <td><%= mail_to user.email %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 
   <div class="large-3 medium-12 cell show-for-large">
     <%= link_to t(".edit_button_label"), edit_group_path(@group), class: "button expanded" %>
     <%= link_to t(".back_to_list_button_label"), groups_path, class: "button secondary expanded" %>
+
+    <hr>
+
+    <h3><%= t(".add_user_header") %></h3>
+    <%= form_for @user, url: group_users_path(@group) do |form| %>
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+
+      <%= form.label :email %>
+      <%= form.email_field :email %>
+
+      <%= form.submit class: "button primary" %>
+    <% end %>
   </div>
 </div>

@@ -31,6 +31,10 @@ class User < ApplicationRecord
     user_session.user.tap(&:delete_pending_sessions)
   end
 
+  def sort_key
+    name.to_s.downcase
+  end
+
   private
 
   def assign_password
