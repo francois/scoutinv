@@ -50,7 +50,7 @@ fr:
       edit_button_label: Modifier
       email_header: Adresse courriel
       name_header: Nom civil
-      users: Personnes faisant partie du groupe
+      users: Membres du groupe
     update:
       group_successfully_updated: Groupe mis à jour avec succès
       page_title: "Modifier %{group_name}"
