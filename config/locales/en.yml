@@ -1,4 +1,16 @@
 en:
+  activerecord:
+    models:
+      product: Product
+    attributes:
+      product:
+        aisle: Aisle
+        categories: Categories
+        description: Description
+        images: Images
+        name: Name
+        shelf: Shelf
+        unit: Unit
   footer:
     logout: Logout
   home:
@@ -21,6 +33,36 @@ en:
       post_signup_instructions: "After signing up, you will be able to invite other people to your Scout Group."
       sign_up: "Sign Up"
       terms_of_service: "I agree to the Terms of Service"
+  products:
+    form:
+      cancel_button_label: Cancel
+      categories_label: Categories
+      location_label: Location
+      or: or
+    index:
+      categories_header: Categories
+      category_label: Category
+      description_header: Description
+      filter_label: Filter
+      location_header: Location
+      name_header: Name
+      new_product_button_label: New Product
+      page_title: Products
+      search_button_label: Search
+      view_all_button_label: View All
+    edit:
+      page_title: "Edit %{product_name}"
+    show:
+      back_to_list_button_label: Back to list
+      dates_header: Dates
+      edit_button_label: Edit
+      event_header: Event
+      product_reservation_history_header: Product Reservation History
+      notes: Notes
+      add_note_label: Add Note
+      by_author_name: by %{author_name}
+    new:
+      page_title: "New Product"
   sessions:
     authentication_form:
       email: Email
@@ -38,3 +80,4 @@ en:
       range_other: "%b %-d %Y to %{last_day}"
       no_year: "%b %-d"
       with_year: "%b %-d %Y"
+      time_ago: "%{date} ago"

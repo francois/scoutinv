@@ -27,7 +27,7 @@
 
       <div class="small-12 cell">
         <fieldset class="fieldset">
-          <legend>Location</legend>
+          <legend><%= t(".location_label") %></legend>
           <%= form.label :aisle %>
           <%= form.text_field :aisle %>
 
@@ -46,18 +46,18 @@
 
       <div class="small-12 cell">
         <fieldset class="fieldset">
-          <legend>Categories</legend>
+          <legend><%= t(".categories_label") %></legend>
           <%= form.collection_check_boxes :category_slugs, @categories, :slug, :name %>
         </fieldset>
       </div>
 
       <div class="small-12 cell">
         <%= form.submit class: "button primary" %>
-        or
+        <%= t(".or") %>
         <% if @product.new_record? %>
-          <%= link_to "Cancel", products_path, class: "button secondary" %>
+          <%= link_to t(".cancel_button_label"), products_path, class: "button secondary" %>
         <% else %>
-          <%= link_to "Cancel", @product, class: "button secondary" %>
+          <%= link_to t(".cancel_button_label"), @product, class: "button secondary" %>
         <% end %>
       </div>
     </div>

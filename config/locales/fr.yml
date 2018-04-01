@@ -1,4 +1,16 @@
 fr:
+  activerecord:
+    models:
+      product: Produit
+    attributes:
+      product:
+        aisle: Allée
+        categories: Catégories
+        description: Description
+        images: Images
+        name: Nom
+        shelf: Tablette
+        unit: Unité
   footer:
     logout: Fermer la session
   home:
@@ -20,6 +32,36 @@ fr:
       post_signup_instructions: "Après vous être inscrit, vous pourrez inviter les autres membres de votre groupe à vous rejoindre."
       sign_up: "S'enregistrer"
       terms_of_service: "J'accepte les termes de service"
+  products:
+    form:
+      cancel_button_label: Annuler
+      categories_label: Catégories
+      location_label: Localisation
+      or: ou
+    index:
+      categories_header: Catégories
+      category_label: Categorie
+      description_header: Description
+      filter_label: Filtre
+      location_header: Localisation
+      name_header: Nom
+      new_product_button_label: Nouveau produit
+      page_title: Inventaire
+      search_button_label: Chercher
+      view_all_button_label: Voir tout
+    edit:
+      page_title: "Modification de %{product_name}"
+    show:
+      back_to_list_button_label: Retour à la liste
+      dates_header: Dates
+      edit_button_label: Modifier
+      event_header: Événement
+      product_reservation_history_header: Historique de réservation du produit
+      notes: Notes
+      add_note_label: Ajouter une note
+      by_author_name: par %{author_name}
+    new:
+      page_title: "Nouveau produit"
   sessions:
     authentication_form:
       email: Adresse courriel
@@ -37,3 +79,4 @@ fr:
       range_other: "%-d %B %Y au %{last_day}"
       no_year: "%-d %B"
       with_year: "%-d %B %Y"
+      time_ago: "il y a %{date}"

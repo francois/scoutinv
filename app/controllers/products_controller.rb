@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   before_action :load_categories, except: %i[ destroy ]
 
   def index
-    @page_title = "Products"
+    @page_title = t(".page_title")
 
     @filter = params[:filter]
 
@@ -21,12 +21,12 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @page_title = "New Product"
+    @page_title = t(".page_title")
     @product = current_group.products.build
   end
 
   def edit
-    @page_title = "Edit #{@product.name}"
+    @page_title = t(".page_title", product_name: @product.name)
   end
 
   def create
