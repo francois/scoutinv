@@ -18,9 +18,5 @@ module Scoutinv
 
     config.i18n.available_locales = [ :fr, :en ]
     config.i18n.default_locale = :fr
-
-    Raven.configure do |config|
-      config.dsn = 'https://453f6e82841e487593a372a137f20cca:3582b51cb338411b8f5b59bb264bdb92@sentry.io/812041'
-    end
   end
 end
