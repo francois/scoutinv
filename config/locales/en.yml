@@ -101,7 +101,21 @@ en:
   sessions:
     authentication_form:
       email: Email
+      email_placeholder: baloo@example.org
       send_authentication_email: Send authentication email
+    create:
+      unknown_email_address: Unknown email address
+    index:
+      page_title: Authenticate
+    new:
+      page_title: Authenticating
+    show:
+      failed_to_authenticate: Failed to authenticate
+      event_starts_today: "Today is the day! %{event_title} starts!"
+      event_starts_tomorrow: "%{event_title} starts tomorrow!"
+      event_starts_shortly: "Only %{remaining_days} days left until %{event_title} starts"
+      event_starts_in_the_future: "There are %{remaining_weeks} weeks until %{event_title} starts"
+      welcome: Welcome! %{extra}
   shared:
     notes:
       add_note: Add note

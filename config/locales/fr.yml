@@ -100,7 +100,21 @@ fr:
   sessions:
     authentication_form:
       email: Adresse courriel
+      email_placeholder: baloo@example.org
       send_authentication_email: Envoyer le courriel d'authentification
+    create:
+      unknown_email_address: Adresse courriel inconnue
+    index:
+      page_title: Identification
+    new:
+      page_title: Identifiez-vous
+    show:
+      failed_to_authenticate: Impossible de vous identifier
+      event_starts_today: "C'est aujourd'hui le jour! %{event_title} commence!"
+      event_starts_tomorrow: "%{event_title} commence demain!"
+      event_starts_shortly: "Plus que %{remaining_days} jours avant que %{event_title} ne commence"
+      event_starts_in_the_future: "Il reste %{remaining_weeks} semaines avant que  %{event_title} ne commence"
+      welcome: Bienvenue! %{extra}
   shared:
     notes:
       add_note_label: Ajouter une note

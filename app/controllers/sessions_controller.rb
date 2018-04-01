@@ -2,12 +2,12 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[ index new create show ]
 
   def index
-    @page_title = "Authenticating"
+    @page_title = t(".page_title")
     render
   end
 
   def new
-    @page_title = "Authenticate"
+    @page_title = t(".page_title")
     render
   end
 
@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
 
     redirect_to sessions_path
   rescue ActiveRecord::RecordNotFound
-    redirect_to new_session_path, alert: "Unknown email address"
+    redirect_to new_session_path, alert: t(".unknown_email_address")
   end
 
   def show
@@ -33,19 +33,19 @@ class SessionsController < ApplicationController
       remaining_days = next_event.date_range.first - Date.today
       case remaining_days
       when 0
-        extra = "Today is the day! #{next_event.title} starts!"
+        extra = t(".event_starts_today", event_title: next_event.title)
       when 1
-        extra = "#{next_event.title} starts tomorrow!"
+        extra = t(".event_starts_tomorrow", event_title: next_event.title)
       when 2..15
-        extra = "Only #{remaining_days.to_i} days left until #{next_event.title} starts"
+        extra = t(".event_starts_shortly", event_title: next_event.title, remaining_days: remaining_days.to_i)
       else
-        extra = "There are #{remaining_days.to_i} days until #{next_event.title} starts"
+        extra = t(".event_starts_in_the_future", event_title: next_event.title, remaining_weeks: (remaining_days / 7).floor)
       end
     end
 
-    redirect_to root_path, notice: "Welcome! #{extra}"
+    redirect_to root_path, notice: t(".welcome", extra: extra)
   rescue ActiveRecord::RecordNotFound
-    redirect_to new_session_path, alert: "Failed to authenticate"
+    redirect_to new_session_path, alert: t(".failed_to_authenticate")
   end
 
   def destroy
