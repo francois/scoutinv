@@ -1,31 +1,26 @@
 <div class="grid-x grid-margin-x">
   <div class="large-9 medium-12 cell">
-    <%= link_to "Edit reservations", event_reservations_path(@event), class: "button large hide-for-large" %>
-    <%= link_to "Edit this event", edit_event_path(@event), class: "button large hide-for-large" %>
-    <%= link_to "Print this event", print_event_path(@event), class: "button large hide-for-large" %>
-    <%= link_to "Back to list", events_path, class: "button secondary large hide-for-large" %>
+    <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button large hide-for-large" %>
+    <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button large hide-for-large" %>
+    <%= link_to t(".print_button_label"), print_event_path(@event), class: "button large hide-for-large" %>
+    <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary large hide-for-large" %>
 
     <div>
-      <strong>Group:</strong>
-      <%= @event.group.name %>
-    </div>
-
-    <div>
-      <strong>Title:</strong>
+      <strong><%= t("title", scope: "activerecord.attributes.event") %>:</strong>
       <%= @event.title %>
     </div>
 
     <div>
-      <strong>Description:</strong>
+      <strong><%= t("description", scope: "activerecord.attributes.event") %>:</strong>
       <%= simple_format @event.description %>
     </div>
 
     <div>
-      <strong>Dates:</strong>
+      <strong><%= t("dates", scope: "activerecord.attributes.event") %>:</strong>
       <%= format_date_range @event.date_range %>
     </div>
 
-    <h2>Bill of materials</h2>
+    <h2><%= t(".bill_of_materials") %></h2>
     <div class="grid-container bill-of-materials">
       <div class="grid-x grid-margin-x small-up-2 medium-up-3">
         <% @event.reservations.map(&:product).sort_by(&:sort_key_for_pickup).each do |product| %>
@@ -40,7 +35,7 @@
                 <%= image_tag "https://via.placeholder.com/250x250?text=%20", alt: "", class: "product-image" %>
               <% end %>
               <div class="card-section">
-                <p><strong>Location</strong>: <%= format_product_location(product) %></p>
+                <p><strong><%= t("activerecord.attributes.product.location") %></strong>: <%= format_product_location(product) %></p>
                 <%= simple_format product.description %>
               </div>
             </div>
@@ -51,47 +46,18 @@
   </div>
 
   <div class="large-3 medium-12 cell show-for-large">
-    <%= link_to "Edit reservations", event_reservations_path(@event), class: "button expanded" %>
-
-    <%= link_to "Edit this event", edit_event_path(@event), class: "button expanded" %>
-    <%= link_to "Print this event", print_event_path(@event), class: "button expanded" %>
-    <%= link_to "Back to list", events_path, class: "button secondary expanded" %>
+    <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button expanded" %>
+    <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button expanded" %>
+    <%= link_to t(".print_button_label"), print_event_path(@event), class: "button expanded" %>
+    <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary expanded" %>
 
     <hr>
 
-    <h3>Notes</h3>
-
-    <%= form_for @note, url: event_notes_path(@event) do |form| %>
-      <%= form.label :body, "Add note:" %>
-      <%= form.text_area :body, size: "10x3" %>
-      <%= form.submit "Save", class: "button primary small" %>
-    <% end %>
-
-    <% if @event.notes.reject(&:new_record?).any? %>
-      <% @event.notes.reject(&:new_record?).sort_by(&:created_at).reverse.each do |note| %>
-        <hr>
-        <%= simple_format note.body %>
-        <p class="signature"><small>by <%= note.author_name %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= time_ago_in_words note.created_at %></span> ago</small></p>
-      <% end %>
-    <% end %>
+    <%= render partial: "shared/notes", locals: { parent: @event, note: @note, create_note_path: event_notes_path(@event) } %>
   </div>
 
   <div class="small-12 cell hide-for-large">
     <hr>
-    <h3>Notes</h3>
-
-    <%= form_for @note, url: event_notes_path(@event) do |form| %>
-      <%= form.label :body, "Add note:" %>
-      <%= form.text_area :body, size: "10x3" %>
-      <%= form.submit "Save", class: "button primary small" %>
-    <% end %>
-
-    <% if @event.notes.reject(&:new_record?).any? %>
-      <% @event.notes.reject(&:new_record?).sort_by(&:created_at).reverse.each do |note| %>
-        <hr>
-        <%= simple_format note.body %>
-        <p class="signature"><small>by <%= note.author_name %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= time_ago_in_words note.created_at %></span> ago</small></p>
-      <% end %>
-    <% end %>
+    <%= render partial: "shared/notes", locals: { parent: @event, note: @note, create_note_path: event_notes_path(@event) } %>
   </div>
 </div>

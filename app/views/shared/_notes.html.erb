@@ -1,0 +1,15 @@
+<h3><%= t(".notes_header") %></h3>
+
+<%= form_for note, url: create_note_path do |form| %>
+  <%= form.label :body, t(".add_note_label") %>
+  <%= form.text_area :body, size: "10x3" %>
+  <%= form.submit t(".save_button_label"), class: "button primary small" %>
+<% end %>
+
+<% if parent.notes.reject(&:new_record?).any? %>
+  <% parent.notes.reject(&:new_record?).sort_by(&:created_at).reverse.each do |note| %>
+    <hr>
+    <%= simple_format note.body %>
+    <p><small><%= t(".by_author_name", author_name: note.author_name) %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= t("date.formats.time_ago", date: time_ago_in_words(note.created_at)) %></span></small></p>
+  <% end %>
+<% end %>

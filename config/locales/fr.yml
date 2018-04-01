@@ -1,8 +1,15 @@
 fr:
   activerecord:
     models:
+      event: Événement
       product: Produit
     attributes:
+      event:
+        dates: Dates
+        description: Description
+        end_on: Termine le
+        start_on: Commence le
+        title: Titre
       product:
         aisle: Allée
         categories: Catégories
@@ -32,6 +39,26 @@ fr:
       post_signup_instructions: "Après vous être inscrit, vous pourrez inviter les autres membres de votre groupe à vous rejoindre."
       sign_up: "S'enregistrer"
       terms_of_service: "J'accepte les termes de service"
+  events:
+    form:
+      cancel_button_label: Annuler
+      or: ou
+    index:
+      end_on_header: Se termine le
+      include_previous_year_html: "&laquo; Inclure l'année précédente"
+      new_event_button_label: Nouvel événement
+      on_or_after_label: Le ou après le
+      search_button_label: Chercher
+      start_on_header: Commence le
+      title_header: Titre de l'événement
+      view_all_button_label: Voir tout
+    show:
+      back_to_list_button_label: Retour à la liste
+      bill_of_materials: Liste de matériel
+      edit_button_label: Modifier
+      edit_reservation_button_label: Modifer les réservations
+      notes_header: Notes
+      print_button_label: Imprimer
   products:
     form:
       cancel_button_label: Annuler
@@ -57,15 +84,19 @@ fr:
       edit_button_label: Modifier
       event_header: Événement
       product_reservation_history_header: Historique de réservation du produit
-      notes: Notes
-      add_note_label: Ajouter une note
-      by_author_name: par %{author_name}
     new:
       page_title: "Nouveau produit"
   sessions:
     authentication_form:
       email: Adresse courriel
       send_authentication_email: Envoyer le courriel d'authentification
+  shared:
+    notes:
+      add_note_label: Ajouter une note
+      by_author_name: par %{author_name}
+      notes: Notes
+      notes_header: Notes
+      save_button_label: Enregistrer
   top-bar:
     events: Événements
     groups: Groupes
