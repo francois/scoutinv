@@ -52,6 +52,17 @@ en:
       start_on_header: Start on
       title_header: Event Title
       view_all_button_label: View All
+    reservations:
+      index:
+        add_to_reservation_button_label: Add to reservation
+        back_to_event: Back to event
+        category: Category
+        filter: Filter
+        product_header: Product
+        remove_from_reservation_button_label: Remove from reservation
+        reservations_header: Reservations
+        search_button_label: Search
+        view_all_button_label: View all
     show:
       back_to_list_button_label: Back to list
       bill_of_materials: Bill of materials
