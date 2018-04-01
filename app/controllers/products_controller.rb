@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
     @product.images.attach(params[:product][:images]) if params[:product][:images].present?
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      redirect_to @product, notice: t(".product_successfully_created")
     else
       @page_title = "New Product"
       render :new
@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
     @product.images.attach(params[:product][:images]) if params[:product][:images].present?
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully updated.'
+      redirect_to @product, notice: t(".product_succesfully_updated")
     else
       @page_title = "Edit #{@product.name}"
       render :edit
@@ -55,7 +55,7 @@ class ProductsController < ApplicationController
 
   def destroy
     @product.destroy
-    redirect_to products_url, notice: 'Product was successfully destroyed.'
+    redirect_to products_url, notice: t(".product_successfully_destroyed")
   end
 
   private

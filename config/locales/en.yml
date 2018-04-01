@@ -76,6 +76,10 @@ en:
       categories_label: Categories
       location_label: Location
       or: or
+    create:
+      product_successfully_created: Product successfully created
+    destroy:
+      product_successfully_destroyed: Product successfully destroyed
     index:
       categories_header: Categories
       category_label: Category
@@ -89,6 +93,8 @@ en:
       view_all_button_label: View All
     edit:
       page_title: "Edit %{product_name}"
+    new:
+      page_title: "New Product"
     show:
       add_note_label: Add Note
       back_to_list_button_label: Back to list
@@ -96,8 +102,8 @@ en:
       edit_button_label: Edit
       event_header: Event
       product_reservation_history_header: Product Reservation History
-    new:
-      page_title: "New Product"
+    update:
+      product_successfully_updated: Product successfully updated
   sessions:
     authentication_form:
       email: Email
