@@ -165,6 +165,9 @@ fr:
     groups: Groupes
     home: Départ
     products: Inventaire
+  user_mailer:
+    send_authentication:
+      subject: "[SCOUTINV] Identification"
 
   date:
     formats:

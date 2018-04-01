@@ -160,6 +160,9 @@ en:
     groups: Groups
     home: Home
     products: Products
+  user_mailer:
+    send_authentication:
+      subject: "[SCOUTINV] Authentication"
 
   date:
     formats:
