@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   def index
-    @page_title = "Groups"
+    @page_title = t(".page_title")
     @groups = Group.all
   end
 
@@ -11,30 +11,30 @@ class GroupsController < ApplicationController
   end
 
   def new
-    @page_title = "New Group"
+    @page_title = t(".page_title")
     @group = Group.new
   end
 
   def edit
-    @page_title = "Edit #{@group.name}"
+    @page_title = t(".page_title", group_name: @group.name)
   end
 
   def create
     @group = Group.new(group_params)
 
     if @group.save
-      redirect_to @group, notice: 'Group was successfully created.'
+      redirect_to @group, notice: t(".group_successfully_created")
     else
-      @page_title = "Groups"
+      @page_title = t(".page_title")
       render :new
     end
   end
 
   def update
     if @group.update(group_params)
-      redirect_to @group, notice: 'Group was successfully updated.'
+      redirect_to @group, notice: t(".group_successfully_updated")
     else
-      @page_title = "Edit #{@group.name}"
+      @page_title = t(".page_title", group_name: @group.name)
       render :edit
     end
   end
@@ -42,7 +42,7 @@ class GroupsController < ApplicationController
   def destroy
     @group.destroy
     respond_to do |format|
-      redirect_to groups_url, notice: 'Group was successfully destroyed.'
+      redirect_to groups_url, notice: t(".group_successfully_destroyed")
     end
   end
 

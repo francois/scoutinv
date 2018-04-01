@@ -2,6 +2,7 @@ fr:
   activerecord:
     models:
       event: Événement
+      group: Groupe
       product: Produit
     attributes:
       event:
@@ -10,6 +11,8 @@ fr:
         end_on: Termine le
         start_on: Commence le
         title: Titre
+      group:
+        name: Nom
       product:
         aisle: Allée
         categories: Catégories
@@ -20,6 +23,29 @@ fr:
         unit: Unité
   footer:
     logout: Fermer la session
+  groups:
+    create:
+      group_successfully_created: Groupe créé avec succès
+      page_title: Nouveau groupe
+    destroy:
+      group_successfully_destroyed: Groupe détruit avec succès
+    edit:
+      page_title: "Modifier %{group_name}"
+    form:
+      cancel_button_label: Annuler
+      or: ou
+    index:
+      name_header: Nom
+      new_group_button_label: Nouveau groupe
+      page_title: Groupes
+    new:
+      page_title: Nouveau groupe
+    show:
+      back_to_list_button_label: Retour à la liste
+      edit_button_label: Modifier
+    update:
+      group_successfully_updated: Groupe modifié avec succès
+      page_title: "Modifier %{group_name}"
   home:
     page_title: Départ
     authenticated:

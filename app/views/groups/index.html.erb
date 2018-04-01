@@ -1,11 +1,11 @@
 <div class="grid-x grid-padding-x">
   <div class="cell large-9 medium-12">
-    <%= link_to "New Group", new_group_path, class: "button hide-for-large" %>
+    <%= link_to t(".new_group_button_label") , new_group_path, class: "button hide-for-large" %>
 
     <table class="hover stack">
       <thead>
         <tr>
-          <th>Name</th>
+          <th><%= t(".name_header") %></th>
         </tr>
       </thead>
 
@@ -20,6 +20,6 @@
   </div>
 
   <div class="cell large-3 medium-12 show-for-large">
-    <%= link_to "New Group", new_group_path, class: "button expanded" %>
+    <%= link_to t(".new_group_button_label"), new_group_path, class: "button expanded" %>
   </div>
 </div>

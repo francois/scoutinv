@@ -22,11 +22,11 @@
 
       <div class="small-12 cell">
         <%= form.submit class: "button primary" %>
-        or
+        <%= t(".or") %>
         <% if @group.new_record? %>
-          <%= link_to "Cancel", groups_path, class: "button secondary" %>
+          <%= link_to t(".cancel_button_label"), groups_path, class: "button secondary" %>
         <% else %>
-          <%= link_to "Cancel", @group, class: "button secondary" %>
+          <%= link_to t(".cancel_button_label"), @group, class: "button secondary" %>
         <% end %>
       </div>
     </div>

@@ -1,16 +1,16 @@
 <div class="grid-x grid-margin-x">
   <div class="large-9 medium-12 cell">
-    <%= link_to "Edit", edit_group_path(@group), class: "button large hide-for-large" %>
-    <%= link_to "Back to list", groups_path, class: "button secondary large hide-for-large" %>
+    <%= link_to t(".edit_button_label"), edit_group_path(@group), class: "button large hide-for-large" %>
+    <%= link_to t(".back_to_list"), groups_path, class: "button secondary large hide-for-large" %>
 
     <div>
-      <strong>Name:</strong>
+      <strong><%= t("activerecord.attributes.group.name") %>:</strong>
       <%= @group.name %>
     </div>
   </div>
 
   <div class="large-3 medium-12 cell show-for-large">
-    <%= link_to "Edit", edit_group_path(@group), class: "button expanded" %>
-    <%= link_to "Back to list", groups_path, class: "button secondary expanded" %>
+    <%= link_to t(".edit_button_label"), edit_group_path(@group), class: "button expanded" %>
+    <%= link_to t(".back_to_list_button_label"), groups_path, class: "button secondary expanded" %>
   </div>
 </div>
