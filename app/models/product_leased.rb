@@ -1,0 +1,2 @@
+class ProductLeased < DomainEvent
+end

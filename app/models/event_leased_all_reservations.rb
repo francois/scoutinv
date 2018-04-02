@@ -1,0 +1,2 @@
+class EventLeasedAllReservations < DomainEvent
+end

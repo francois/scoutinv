@@ -100,11 +100,17 @@ fr:
         back_to_event: Retour à l'événement
         category: Catégorie
         filter: Filtre
+        lease_all_button_label: Tout prêter à l'unité
+        lease_product_button_label: Prêter à l'unité
+        only_show_reserved_products_label: N'afficher que les produits réservés
         product_header: Produit
         remove_from_reservation_button_label: Ne plus réserver
         reservations_header: Réservations
+        return_product_button_label: Retourner à l'inventaire
         search_button_label: Chercher
         view_all_button_label: Voir tout
+        leased_on_header: Prêté le
+        returned_on_header: Retourné le
     show:
       back_to_list_button_label: Retour à la liste
       bill_of_materials: Liste de matériel
@@ -140,6 +146,7 @@ fr:
     new:
       page_title: "Nouveau produit"
     show:
+      add_note_label: Ajouter une note
       back_to_list_button_label: Retour à la liste
       dates_header: Dates
       edit_button_label: Modifier

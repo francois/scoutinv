@@ -62,6 +62,50 @@ class Event < ApplicationRecord
     end
   end
 
+  def lease_all(date=Date.today, metadata: {})
+    unleased = reservations.reject(&:leased?)
+    unleased.each do |reservation|
+      reservation.lease(date)
+    end
+
+    domain_events << EventLeasedAllReservations.new(
+      data: {
+        event_slug: slug,
+        leased_on: date,
+        product_slugs: reservations.map(&:product_slug),
+      },
+      metadata: metadata
+    )
+  end
+
+  def lease(products, date: Date.today, metadata: {})
+    reservations.each do |reservation|
+      reservation.lease(date) if products.include?(reservation.product)
+      domain_events << ProductLeased.new(
+        data: {
+          event_slug: slug,
+          lease_on: reservation.product_slug,
+          lease_date: date,
+        },
+        metadata: metadata
+      )
+    end
+  end
+
+  def return(products, date: Date.today, metadata: {})
+    reservations.each do |reservation|
+      reservation.return(date) if products.include?(reservation.product)
+      domain_events << ProductReturned.new(
+        data: {
+          event_slug: slug,
+          return_on: date,
+          product_slug: reservation.product_slug,
+        },
+        metadata: metadata
+      )
+    end
+  end
+
   def real_date_range
     start_on .. end_on
   end

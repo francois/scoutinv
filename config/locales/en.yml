@@ -90,17 +90,27 @@ en:
       start_on_header: Start on
       title_header: Event Title
       view_all_button_label: View All
+    create:
+      event_successfully_created: Event created with success
+    destroy:
+      event_successfully_destroyed: Event destroyed with success
     reservations:
       index:
         add_to_reservation_button_label: Add to reservation
         back_to_event: Back to event
         category: Category
         filter: Filter
+        lease_all_button_label: Lease all products
+        lease_product_button_label: Lease
+        only_show_reserved_products_label: Only show reserved products
         product_header: Product
         remove_from_reservation_button_label: Remove from reservation
         reservations_header: Reservations
+        return_product_button_label: Return
         search_button_label: Search
         view_all_button_label: View all
+        leased_on_header: Leased on
+        returned_on_header: Leased on
     show:
       back_to_list_button_label: Back to list
       bill_of_materials: Bill of materials
@@ -108,6 +118,8 @@ en:
       edit_reservation_button_label: Edit reservations
       notes_header: Notes
       print_button_label: Print
+    update:
+      event_successfully_updated: Event successfully updated
   products:
     form:
       cancel_button_label: Cancel

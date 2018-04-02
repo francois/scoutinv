@@ -1,0 +1,2 @@
+class ProductReturned < DomainEvent
+end

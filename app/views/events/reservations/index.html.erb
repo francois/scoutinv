@@ -2,7 +2,7 @@
   <div class="large-9 medium-12 cell">
     <%= form_tag event_reservations_path(@event), method: :get do %>
       <div class="grid-container">
-        <div class="grid-x grid-padding-x">
+        <div class="grid-x grid-margin-x">
           <div class="medium-shrink cell">
             <%= label_tag :filter, t(".filter"), class: "middle" %>
           </div>
@@ -17,6 +17,11 @@
             <%= select_tag :category, options_from_collection_for_select(@categories, :slug, ->(category){ t(category.name, scope: "categories") }, @selected_category ? @selected_category.slug : nil), include_blank: true %>
           </div>
 
+          <div class="cell">
+            <%= check_box_tag :only_show_reserved_products, "1", @only_show_reserved_products %>
+            <%= label_tag :only_show_reserved_products, t(".only_show_reserved_products_label") %>
+          </div>
+
           <div class="medium-auto cell">
             <%= submit_tag t(".search_button_label"), class: "button" %> <%= link_to t(".view_all_button_label"), event_reservations_path(@event), class: "button secondary" %>
           </div>
@@ -24,41 +29,85 @@
       </div>
     <% end %>
 
-    <%= link_to t(".back_to_event"), @event, class: "button hide-for-large" %>
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <div class="cell">
+          <%= link_to t(".back_to_event"), @event, class: "button hide-for-large" %>
+        </div>
+      </div>
+    </div>
 
     <%= form_tag event_reservations_path(@event), method: :post do %>
-      <table class="hover stack product-list">
-        <thead>
-          <th></th>
-          <th><%= t(".product_header") %></th>
-          <th><%= t(".reservations_header") %></th>
-        </thead>
-        <tbody>
-          <% @products.each do |product| %>
-            <tr class="<%= product_reservation_css_class(@event, product) %>">
-              <td>
-                <%= check_box_tag "products[#{product.slug}]", value="1", checked=false %>
-              </td>
-              <td>
-                <%= link_to product.name, product %> <br>
-                <% if product.images.first %>
-                  <%= image_tag product.images.first, alt: "", class: "product-image" %>
-                <% else %>
-                  <%= image_tag "https://via.placeholder.com/100x100?text=%20", alt: "", class: "product-image" %>
+      <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+          <div class="cell">
+            <table class="hover stack product-list">
+              <thead>
+                <th></th>
+                <th><%= t(".product_header") %></th>
+                <th><%= t(".reservations_header") %></th>
+                <th><%= t(".leased_on_header") %></th>
+                <th><%= t(".returned_on_header") %></th>
+              </thead>
+              <tbody>
+                <% @products.each do |product| %>
+                  <tr class="<%= product_reservation_css_class(@event, product) %>">
+                    <td>
+                      <%= check_box_tag "products[#{product.slug}]", value="1", checked=false %>
+                    </td>
+                    <td>
+                      <%= link_to product.name, product %> <br>
+                      <% if product.images.first %>
+                        <%= image_tag product.images.first, alt: "", class: "product-image" %>
+                      <% else %>
+                        <%= image_tag "https://via.placeholder.com/100x100?text=%20", alt: "", class: "product-image" %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% product.reservations.select{|res| res.dates_overlap?(@event)}.each do |reservation| %>
+                        <span title="<%= format_date_range(reservation.date_range) %>"><%= reservation.event.title %></span><br>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if leased_on = @event.reservations.detect{|reservation| reservation.product == product}&.leased_on %>
+                        <span class="hide-for-large"><%= t(".leased_on_header") %></span> <%= l leased_on, format: :default %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if returned_on = @event.reservations.detect{|reservation| reservation.product == product}&.returned_on %>
+                        <span class="hide-for-large"><%= t(".returned_on_header") %></span> <%= l returned_on, format: :default %>
+                      <% end %>
+                    </td>
+                  </tr>
                 <% end %>
-              </td>
-              <td>
-                <% product.reservations.select{|res| res.dates_overlap?(@event)}.each do |reservation| %>
-                  <span title="<%= format_date_range(reservation.date_range) %>"><%= reservation.event.title %></span><br>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-      <%= submit_tag t(".add_to_reservation_button_label"),      name: "add", class: "button primary" %>
-      <%= submit_tag t(".remove_from_reservation_button_label"), name: "remove", class: "button warning" %>
+      <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+          <div class="small-12 medium-auto cell">
+            <%= submit_tag t(".add_to_reservation_button_label"),      name: "add",       class: "button expanded primary" %>
+          </div>
+          <div class="small-12 medium-auto cell">
+            <%= submit_tag t(".remove_from_reservation_button_label"), name: "remove",    class: "button expanded warning" %>
+          </div>
+          <div class="small-12 medium-auto cell">
+            <%= submit_tag t(".lease_all_button_label"),               name: "lease_all", class: "button expanded success" %>
+          </div>
+          <div class="cell">
+            <hr>
+          </div>
+          <div class="small-12 medium-auto cell">
+            <%= submit_tag t(".lease_product_button_label"),           name: "lease",     class: "button expanded success" %>
+          </div>
+          <div class="small-12 medium-auto cell">
+            <%= submit_tag t(".return_product_button_label"),          name: "return",    class: "button expanded secondary" %>
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
 
