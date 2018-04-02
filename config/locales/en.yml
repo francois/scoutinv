@@ -19,6 +19,7 @@ en:
         categories: Categories
         description: Description
         images: Images
+        location: Location
         name: Name
         shelf: Shelf
         unit: Unit

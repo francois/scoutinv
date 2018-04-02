@@ -19,6 +19,7 @@ fr:
         categories: Catégories
         description: Description
         images: Images
+        location: Localisation
         name: Nom
         shelf: Tablette
         unit: Unité

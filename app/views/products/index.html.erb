@@ -24,36 +24,48 @@
       </div>
     <% end %>
 
-    <%= link_to t(".new_product_button_label"), new_product_path, class: "button hide-for-large" %>
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <div class="cell">
+          <%= link_to t(".new_product_button_label"), new_product_path, class: "button hide-for-large" %>
+        </div>
+      </div>
+    </div>
 
-    <table class="hover stack product-list">
-      <thead>
-        <tr>
-          <th><%= t(".name_header") %></th>
-          <th><%= t(".location_header") %></th>
-          <th><%= t(".description_header") %></th>
-          <th><%= t(".categories_header") %></th>
-        </tr>
-      </thead>
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <div class="cell">
+          <table class="hover stack product-list">
+            <thead>
+              <tr>
+                <th><%= t(".name_header") %></th>
+                <th><%= t(".location_header") %></th>
+                <th><%= t(".description_header") %></th>
+                <th><%= t(".categories_header") %></th>
+              </tr>
+            </thead>
 
-      <tbody>
-        <% @products.each do |product| %>
-          <tr>
-            <td>
-              <%= link_to product.name, product %> <br>
-              <% if product.images.first %>
-                <%= link_to image_tag(product.images.first, alt: "", class: "product-image"), product %>
-              <% else %>
-                <%= link_to image_tag("https://via.placeholder.com/100x100?text=%20", alt: "", class: "product-image"), product %>
+            <tbody>
+              <% @products.each do |product| %>
+                <tr>
+                  <td>
+                    <%= link_to product.name, product %> <br>
+                    <% if product.images.first %>
+                      <%= link_to image_tag(product.images.first, alt: "", class: "product-image"), product %>
+                    <% else %>
+                      <%= link_to image_tag("https://via.placeholder.com/100x100?text=%20", alt: "", class: "product-image"), product %>
+                    <% end %>
+                  </td>
+                  <td><%= format_product_location(product) %></td>
+                  <td><%= product.description %></td>
+                  <td><%= product.categories.map(&:name).map{|name| t(name, scope: "categories") }.sort_by(&:downcase).to_sentence %></td>
+                </tr>
               <% end %>
-            </td>
-            <td><%= format_product_location(product) %></td>
-            <td><%= product.description %></td>
-            <td><%= product.categories.map(&:name).map{|name| t(name, scope: "categories") }.sort_by(&:downcase).to_sentence %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="large-3 medium-12 cell show-for-large">

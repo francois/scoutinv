@@ -1,7 +1,7 @@
 <div class="grid-x grid-margin-x">
   <div class="large-9 medium-12 cell">
-    <%= link_to t(".edit_button_label"), edit_product_path(@product), class: "button large hide-for-large" %>
-    <%= link_to t(".back_to_list_button_label"), products_path, class: "button secondary large hide-for-large" %>
+    <%= link_to t(".edit_button_label"), edit_product_path(@product), class: "button small hide-for-large" %>
+    <%= link_to t(".back_to_list_button_label"), products_path, class: "button secondary small hide-for-large" %>
 
     <div>
       <% @product.images.each do |image| %>
@@ -53,5 +53,9 @@
   <div class="small-12 cell hide-for-large">
     <hr>
     <%= render partial: "shared/notes", locals: { parent: @product, note: @note, create_note_path: product_notes_path(@product) } %>
+  </div>
+
+  <div class="small-12 cell hide-for-large">
+    <%= link_to t(".back_to_list_button_label"), products_path, class: "button secondary small hide-for-large" %>
   </div>
 </div>
