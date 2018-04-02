@@ -1,0 +1,2 @@
+class ProductLocationChanged < DomainEvent
+end

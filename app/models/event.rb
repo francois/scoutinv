@@ -5,6 +5,8 @@ class Event < ApplicationRecord
   has_many :reservations, autosave: true
   has_many :notes, as: :parent, autosave: true
 
+  has_many :domain_events, as: :model, autosave: true
+
   scope :after, ->(date) { where("start_on >= ?", date).order(:start_on) }
   scope :by_date, -> { order(:start_on, :id) }
   scope :with_reservations, ->{ includes(reservations: :products) }
@@ -13,21 +15,59 @@ class Event < ApplicationRecord
   validates :start_on, :end_on, presence: true
   validate :ends_after_it_starts
 
-  def date_range
-    (start_on - 1) .. (end_on + 1)
+  def add_note(attributes, metadata: {})
+    notes.build(attributes).tap do |new_note|
+      domain_events << NoteAddedToEvent.new(
+        data: {
+          author_slug: new_note.author_slug,
+          body: new_note.body,
+          event_slug: slug,
+        },
+        metadata: metadata
+      )
+    end
   end
 
-  def add(products)
+  def change_information(attributes, metadata: {})
+    self.attributes = attributes
+    domain_events << EventIdentificationChanged.new(data: {event_slug: slug, title: title, description: description}, metadata: metadata) if title_changed? || description_changed?
+    domain_events << EventDatesChanged.new(data: {event_slug: slug, start_on: start_on, end_on: end_on}, metadata: metadata)              if start_on_changed? || end_on_changed?
+    save
+  end
+
+  def add(products, metadata: {})
     missing = products - reservations.map(&:product)
     missing.each do |product|
       reservations.build(product: product)
+      domain_events << ProductReserved.new(
+        data: {
+          event_slug: slug,
+          product_slug: product.slug
+        },
+        metadata: metadata
+      )
     end
   end
 
-  def remove(products)
+  def remove(products, metadata: {})
     reservations.each do |reservation|
       reservation.mark_for_destruction if products.include?(reservation.product)
+      domain_events << ProductReleased.new(
+        data: {
+          event_slug: slug,
+          product_slug: reservation.product_slug,
+        },
+        metadata: metadata
+      )
     end
+  end
+
+  def real_date_range
+    start_on .. end_on
+  end
+
+  def date_range
+    (start_on - 1) .. (end_on + 1)
   end
 
   def ends_after_it_starts

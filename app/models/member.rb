@@ -4,9 +4,27 @@ class Member < ApplicationRecord
   belongs_to :group
   has_many :sessions, class_name: "MemberSession", dependent: :delete_all
 
+  has_many :domain_events, as: :model, autosave: true
+
   validates :email,    presence: true, length: { minimum: 4 }, format: /\A.+@.+[.]\w{2,}\z/
   validates :group,    presence: true
   validates :name,     presence: true, length: { minimum: 2 }
+
+  def change_member_identification(attributes, metadata: {})
+    transaction do
+      self.attributes = attributes
+      domain_events << MemberIdentificationChanged.new(
+        data: {
+          email: email_changed? ? attributes.fetch(:email) : nil,
+          name:  name_changed?  ? attributes.fetch(:name)  : nil,
+          user_slug: slug,
+        }.compact,
+        metadata: metadata,
+      )
+
+      save
+    end
+  end
 
   def create_session_token!
     delete_pending_sessions

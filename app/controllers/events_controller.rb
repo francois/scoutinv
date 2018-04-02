@@ -30,22 +30,26 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = current_group.events.build(event_params)
+    current_group.transaction do
+      @event = current_group.register_new_event(event_params, metadata: domain_event_metadata)
 
-    if @event.save
-      redirect_to @event, notice: t(".event_successfully_created")
-    else
-      @page_title = "New Event"
-      render :new
+      if current_group.save
+        redirect_to @event, notice: t(".event_successfully_created")
+      else
+        @page_title = "New Event"
+        render :new
+      end
     end
   end
 
   def update
-    if @event.update(event_params)
-      redirect_to @event, notice: t(".event_successfully_updated")
-    else
-      @page_title = "Edit #{@event.title}"
-      render :edit
+    current_group.transaction do
+      if @event.change_information(event_params, metadata: domain_event_metadata)
+        redirect_to @event, notice: t(".event_successfully_updated")
+      else
+        @page_title = "Edit #{@event.title}"
+        render :edit
+      end
     end
   end
 

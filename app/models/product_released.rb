@@ -1,0 +1,2 @@
+class ProductReleased < DomainEvent
+end

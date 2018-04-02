@@ -17,7 +17,7 @@
 
     <div>
       <strong><%= t("dates", scope: "activerecord.attributes.event") %>:</strong>
-      <%= format_date_range @event.date_range %>
+      <%= format_date_range @event.real_date_range %>
     </div>
 
     <h2><%= t(".bill_of_materials") %></h2>

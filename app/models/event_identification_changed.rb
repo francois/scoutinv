@@ -1,0 +1,2 @@
+class EventIdentificationChanged < DomainEvent
+end

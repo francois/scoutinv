@@ -4,10 +4,12 @@ class Product < ApplicationRecord
   has_many_attached :images
 
   belongs_to :group
-  has_many :reservations
-  has_many :product_categories, dependent: :delete_all
-  has_many :categories, through: :product_categories
+  has_many :reservations, autosave: true
+  has_many :product_categories, dependent: :delete_all, autosave: true
+  has_many :categories, through: :product_categories, autosave: true
   has_many :notes, as: :parent, autosave: true
+
+  has_many :domain_events, as: :model, autosave: true
 
   scope :by_name, ->{ order(Arel.sql("LOWER(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
   scope :search, ->(string){ where("POSITION(? IN LOWER(#{quoted_table_name}.name || ' ' || COALESCE(#{quoted_table_name}.description, ''))) > 0", string) }
@@ -17,6 +19,26 @@ class Product < ApplicationRecord
   scope :not_recently_reserved, ->{ joins("LEFT JOIN reservations ON reservations.product_id = products.id").where("reservations.created_at IS NULL OR reservations.created_at < ?", 12.months.ago).order(Arel.sql("random()")) }
 
   validates :name, presence: true, length: { minimum: 2 }
+
+  def add_note(attributes, metadata: {})
+    notes.build(attributes).tap do |new_note|
+      domain_events << NoteAddedToProduct.new(
+        data: {
+          author_slug: new_note.author_slug,
+          body: new_note.body,
+          product_slug: slug,
+        },
+        metadata: metadata
+      )
+    end
+  end
+
+  def change_data(attributes, metadata: {})
+    self.attributes = attributes
+    domain_events << ProductNameChanged.new(data: {product_slug: slug, name: name, description: description}, metadata: metadata)       if name_changed? || description_changed?
+    domain_events << ProductLocationChanged.new(data: {product_slug: slug, aisle: aisle, shelf: shelf, unit: unit}, metadata: metadata) if aisle_changed? || shelf_changed? || unit_changed?
+    # domain_events << ProductCategoriesChanged.new(data: {product_slug: slug, categories: categories.map(&:name)}, metadata: metadata)
+  end
 
   def category_slugs
     categories.map(&:slug)

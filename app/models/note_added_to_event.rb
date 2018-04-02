@@ -1,0 +1,2 @@
+class NoteAddedToEvent < DomainEvent
+end

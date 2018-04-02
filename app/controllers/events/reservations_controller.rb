@@ -9,7 +9,7 @@ class Events::ReservationsController < ApplicationController
     @categories = Category.by_name.to_a
     @selected_category = @categories.detect{|category| category.slug == params[:category]}
 
-    @products     = current_group.products.with_categories.with_reservations.by_name
+    @products     = current_group.products.with_attached_images.with_categories.with_reservations.by_name
     @products     = @products.search(@filter) if @filter.present?
     @products     = @products.in_category(@selected_category) if @selected_category
     @products     = @products.all
@@ -17,21 +17,24 @@ class Events::ReservationsController < ApplicationController
   end
 
   def create
-    products = current_group.products.where(slug: params[:products].keys).to_a
+    current_group.transaction do
+      products = current_group.products.where(slug: params[:products].keys).to_a
 
-    if params[:add].blank? && params[:remove].blank?
-      # NOP
-    elsif params[:add].present? && params[:present].present?
-      # NOP
-    elsif params[:add].present?
-      @event.add(products)
-    elsif params[:remove].present?
-      @event.remove(products)
-    else
-      raise "ASSERTION ERROR: One of add and remove were supposed to be filled in, none were?!?"
+      if params[:add].blank? && params[:remove].blank?
+        # NOP
+      elsif params[:add].present? && params[:present].present?
+        # NOP
+      elsif params[:add].present?
+        @event.add(products, metadata: domain_event_metadata)
+      elsif params[:remove].present?
+        @event.remove(products, metadata: domain_event_metadata)
+      else
+        raise "ASSERTION ERROR: One of add and remove were supposed to be filled in, none were?!?"
+      end
+
+      @event.save!
     end
 
-    @event.save!
     redirect_to action: :index
   end
 

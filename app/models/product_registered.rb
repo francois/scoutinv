@@ -1,0 +1,2 @@
+class ProductRegistered < DomainEvent
+end

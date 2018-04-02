@@ -1,0 +1,2 @@
+class EventRegistered < DomainEvent
+end

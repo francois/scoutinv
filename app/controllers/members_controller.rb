@@ -20,28 +20,27 @@ class MembersController < ApplicationController
   end
 
   def create
-    @member = current_member.group.members.build(member_params)
+    current_group.transaction do
+      current_group.register_new_member(member_params, metadata: domain_event_metadata)
 
-    if @member.save
-      redirect_to current_group, notice: t(".member_successfully_created")
-    else
-      @page_title = t(".page_title")
-      render :new
+      if current_group.save
+        redirect_to current_group, notice: t(".member_successfully_created")
+      else
+        @page_title = t(".page_title")
+        render :new
+      end
     end
   end
 
   def update
-    if @member.update(member_params)
-      redirect_to current_group, notice: t(".member_successfully_updated")
-    else
-      @page_title = t(".page_title", member_name: @member.name)
-      render :edit
+    current_group.transaction do
+      if @member.change_member_identification(member_params, metadata: domain_event_metadata)
+        redirect_to current_group, notice: t(".member_successfully_updated")
+      else
+        @page_title = t(".page_title", member_name: @member.name)
+        render :edit
+      end
     end
-  end
-
-  def destroy
-    @member.destroy
-    redirect_to current_group, notice: t(".member_successfully_destroyed")
   end
 
   private

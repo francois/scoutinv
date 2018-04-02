@@ -1,0 +1,2 @@
+class EventDatesChanged < DomainEvent
+end

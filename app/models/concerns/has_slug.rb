@@ -1,6 +1,6 @@
 module HasSlug
   def self.included(base)
-    base.before_create :assign_slug
+    base.after_initialize :assign_slug
   end
 
   def to_key

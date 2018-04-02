@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
 
     @selected_category = @categories.detect{|category| category.slug == params[:category]}
 
-    @products   = current_group.products.by_name.with_categories
+    @products   = current_group.products.with_attached_images.by_name.with_categories
     @products   = @products.search(@filter) if @filter.present?
     @products   = @products.in_category(@selected_category) if @selected_category
     @products   = @products.all
@@ -30,26 +30,30 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = current_group.products.build(product_params)
-    @product.images.attach(params[:product][:images]) if params[:product][:images].present?
+    current_group.transaction do
+      @product = current_group.register_new_product(product_params, metadata: domain_event_metadata)
+      @product.images.attach(params[:product][:images]) if params[:product][:images].present?
 
-    if @product.save
-      redirect_to @product, notice: t(".product_successfully_created")
-    else
-      @page_title = "New Product"
-      render :new
+      if current_group.save
+        redirect_to @product, notice: t(".product_successfully_created")
+      else
+        @page_title = "New Product"
+        render :new
+      end
     end
   end
 
   def update
-    @product.attributes = product_params
-    @product.images.attach(params[:product][:images]) if params[:product][:images].present?
+    current_group.transaction do
+      @product.change_data(product_params, metadata: domain_event_metadata)
+      @product.images.attach(params[:product][:images]) if params[:product][:images].present?
 
-    if @product.save
-      redirect_to @product, notice: t(".product_succesfully_updated")
-    else
-      @page_title = "Edit #{@product.name}"
-      render :edit
+      if @product.save
+        redirect_to @product, notice: t(".product_successfully_updated")
+      else
+        @page_title = "Edit #{@product.name}"
+        render :edit
+      end
     end
   end
 

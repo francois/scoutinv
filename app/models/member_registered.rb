@@ -1,0 +1,2 @@
+class MemberRegistered < DomainEvent
+end

@@ -1,0 +1,2 @@
+class MemberIdentificationChanged < DomainEvent
+end

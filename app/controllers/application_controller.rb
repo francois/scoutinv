@@ -48,4 +48,14 @@ class ApplicationController < ActionController::Base
   def current_group
     current_member.group
   end
+
+  def domain_event_metadata
+    {
+      current_group: current_group.slug,
+      current_member: current_member.slug,
+      remote_ip: request.remote_ip,
+      request_id: request.request_id,
+      user_agent: request.env["HTTP_USER_AGENT"],
+    }
+  end
 end

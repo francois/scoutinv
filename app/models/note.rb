@@ -7,5 +7,5 @@ class Note < ApplicationRecord
   validates :author, :parent, :body, presence: true
   validates :body, length: { minimum: 2 }
 
-  delegate :name, prefix: :author, to: :author
+  delegate :name, :slug, prefix: :author, to: :author
 end

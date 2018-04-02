@@ -1,7 +1,10 @@
 class Products::NotesController < ApplicationController
   def create
-    @product = current_group.products.find_by!(slug: params[:product_id])
-    @product.notes.create(note_params.merge(author: current_member))
+    current_group.transaction do
+      @product = current_group.products.find_by!(slug: params[:product_id])
+      @product.add_note(note_params.merge(author: current_member), metadata: domain_event_metadata)
+      @product.save!
+    end
 
     redirect_to product_path(@product)
   end
