@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[ index new create show ]
+  skip_before_action :authenticate_member!, only: %i[ index new create show ]
 
   def index
     @page_title = t(".page_title")
@@ -13,9 +13,9 @@ class SessionsController < ApplicationController
 
   def create
     reset_session
-    user = User.find_by!(email: params[:email])
-    token = user.create_session_token!
-    UserMailer.send_authentication(user.email, session_url(token, user_id: user.slug)).deliver_now
+    member = Member.find_by!(email: params[:email])
+    token = member.create_session_token!
+    MemberMailer.send_authentication(member.email, session_url(token, member_id: member.slug)).deliver_now
 
     redirect_to sessions_path
   rescue ActiveRecord::RecordNotFound
@@ -24,11 +24,11 @@ class SessionsController < ApplicationController
 
   def show
     reset_session
-    user = User.authenticate!(slug: params[:user_id], token: params[:id])
-    user.delete_pending_sessions
-    sign_in_user!(user)
+    member = Member.authenticate!(slug: params[:member_id], token: params[:id])
+    member.delete_pending_sessions
+    sign_in_member!(member)
 
-    next_event = user.group.events.after(Date.today + 1).first
+    next_event = member.group.events.after(Date.today + 1).first
     if next_event
       remaining_days = next_event.date_range.first - Date.today
       case remaining_days

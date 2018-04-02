@@ -1,0 +1,21 @@
+<div class="grid-x grid-margin-x">
+  <div class="large-9 medium-12 cell">
+    <%= link_to "Edit", edit_member_path(@member), class: "button large hide-for-large" %>
+    <%= link_to "Back to list", members_path, class: "button secondary large hide-for-large" %>
+
+    <div>
+      <strong>Name:</strong>
+      <%= @member.name %>
+    </div>
+
+    <div>
+      <strong>Email:</strong>
+      <%= mail_to @member.email, @member.email %>
+    </div>
+  </div>
+
+  <div class="large-3 medium-12 cell show-for-large">
+    <%= link_to "Edit", edit_member_path(@member), class: "button expanded" %>
+    <%= link_to "Back to list", members_path, class: "button secondary expanded" %>
+  </div>
+</div>

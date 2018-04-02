@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_29_155019) do
+ActiveRecord::Schema.define(version: 2018_04_02_015341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,26 @@ ActiveRecord::Schema.define(version: 2018_03_29_155019) do
     t.index ["slug"], name: "index_groups_on_slug", unique: true
   end
 
+  create_table "member_sessions", force: :cascade do |t|
+    t.bigint "member_id", null: false
+    t.string "token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_member_sessions_on_member_id"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "slug", limit: 8, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_members_on_email", unique: true
+    t.index ["group_id"], name: "index_members_on_group_id"
+    t.index ["slug"], name: "index_members_on_slug", unique: true
+  end
+
   create_table "notes", force: :cascade do |t|
     t.string "parent_type", null: false
     t.bigint "parent_id", null: false
@@ -115,34 +135,13 @@ ActiveRecord::Schema.define(version: 2018_03_29_155019) do
     t.index ["slug"], name: "index_reservations_on_slug", unique: true
   end
 
-  create_table "user_sessions", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "token", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_user_sessions_on_user_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.bigint "group_id", null: false
-    t.string "name", null: false
-    t.string "email", null: false
-    t.string "encrypted_password", null: false
-    t.string "slug", limit: 8, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["group_id"], name: "index_users_on_group_id"
-    t.index ["slug"], name: "index_users_on_slug", unique: true
-  end
-
   add_foreign_key "events", "groups"
-  add_foreign_key "notes", "users", column: "author_id"
+  add_foreign_key "member_sessions", "members"
+  add_foreign_key "members", "groups"
+  add_foreign_key "notes", "members", column: "author_id"
   add_foreign_key "product_categories", "categories"
   add_foreign_key "product_categories", "products"
   add_foreign_key "products", "groups"
   add_foreign_key "reservations", "events"
   add_foreign_key "reservations", "products"
-  add_foreign_key "user_sessions", "users"
-  add_foreign_key "users", "groups"
 end

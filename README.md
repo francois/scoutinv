@@ -5,25 +5,25 @@ This application enables a Scout Group to manage their inventory. Scout Troop Ma
 and letting humans take care of the rest. Inventory Masters are responsible for managing the actual
 data-entry of the inventory: pictures, description, etc.
 
-Security is minimal: beyond being associated with a single Scout Group, all Users in the same Group
+Security is minimal: beyond being associated with a single Scout Group, all Members in the same Group
 can do everything: manage inventory, reserve products, create events, etc.
 
 ## Main Use Cases
 
-* User adds Product to inventory
+* Member adds Product to inventory
     - Products belong to 0..N categories
     - Products have a description
     - Products may have 0..N pictures
-* User adds User to Group
+* Member adds Member to Group
     - Email, password, name
-* User removes User from Group
-    - Last user can't be removed
+* Member removes Member from Group
+    - Last member can't be removed
     - Can't remove self
-    - Can't remove a user that doesn't belong to the user's group
-* User registers Event
+    - Can't remove a member that doesn't belong to the member's group
+* Member registers Event
     - Events have a name/description
     - Events start and end on specific dates
-* User browses Products
+* Member browses Products
     - Products that are already reserved for the same date range are dimmed, to
         indicate unavailability
     - The product list may be filtered to a single Category
@@ -31,37 +31,37 @@ can do everything: manage inventory, reserve products, create events, etc.
         searching for: "ten" return "4x10 winter tent" and "gluten free rope"
     - Reserving an already reserved Product is allowed, as the tool is only there
         to help planning
-* User can view a single Product's history
+* Member can view a single Product's history
     - Displays a history of this product's reservations
     - Displays any notes associated with each reservation
-* User reserves Product for Event
+* Member reserves Product for Event
     - Actual dates for reservation are -1 .. +1, meaning if the event is from
         Thu to Sat, the products will be flagged busy from Wed to Sun
-* User sends reservation request
+* Member sends reservation request
     - The reservation request is sent to one or more people
     - The reservation request email has a link to see the list of products
     - The reservation request email can be printed as a check list for easy
         on-the-ground marking and note taking
     - The reservation request contains a short alpha-numeric string that identifies
         it and can be used to return to the same list later (think bit.ly short code)
-* User browses list of Events
+* Member browses list of Events
     - List displays events that have closed in the past two weeks and all future events
-* User prints a reservation list for a specific Event
+* Member prints a reservation list for a specific Event
     - Each product on the list has a checkbox, for easy bookkeeping while on-site
-* User adds a Note on a Product in an Event
+* Member adds a Note on a Product in an Event
     - Indicates future repairs or things that may have happened to the Product
     - It may be easier to display the reservation list and have a Notes field
         next to each event
-* User adds a Note on a Product
+* Member adds a Note on a Product
     - The Note is not tied to any specific Event
 * Admin adds Product Category
-* User registers Group
-    - Must provide both Group and User details in one screen, so that the
-        Group and it's first User can be bootstrapped
+* Member registers Group
+    - Must provide both Group and Member details in one screen, so that the
+        Group and it's first Member can be bootstrapped
 * Admin adds Group
-* Admin registers first User in Group
+* Admin registers first Member in Group
     - Email, password, name
-* Admin removes User from Group
+* Admin removes Member from Group
 
 ## Product Examples
 

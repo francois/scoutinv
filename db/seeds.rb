@@ -4,8 +4,8 @@ chauffage   = Category.create(name: "Chauffage")
 divers      = Category.create(name: "Divers")
 
 fleurimont  = Group.create!(name: "10ème Groupe Scout Est-Calade")
-francois    = fleurimont.users.create!(email: "francois@teksol.info",  name: "Le Chouette Baloo", password: "monkey", password_confirmation: "monkey")
-claudette   = fleurimont.users.create!(email: "claudette@teksol.info", name: "Claudette",         password: "monkey", password_confirmation: "monkey")
+francois    = fleurimont.members.create!(email: "francois@teksol.info",  name: "Le Chouette Baloo", password: "monkey", password_confirmation: "monkey")
+claudette   = fleurimont.members.create!(email: "claudette@teksol.info", name: "Claudette",         password: "monkey", password_confirmation: "monkey")
 
 tente1 = fleurimont.products.create!(name: "Tente 4x5 6 personnes (#1)")
 tente1.categories = [ tentes ]

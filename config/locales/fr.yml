@@ -4,7 +4,7 @@ fr:
       event: Événement
       group: Groupe
       product: Produit
-      user: Membre
+      member: Membre
     attributes:
       event:
         dates: Dates
@@ -22,7 +22,7 @@ fr:
         name: Nom
         shelf: Tablette
         unit: Unité
-      user:
+      member:
         email: Adresse courriel
         name: Nom civil
   footer:
@@ -45,12 +45,12 @@ fr:
     new:
       page_title: Nouveau groupe
     show:
-      add_user_header: "Ajouter un membre"
+      add_member_header: "Ajouter un membre"
       back_to_list_button_label: Retour à la liste
       edit_button_label: Modifier
       email_header: Adresse courriel
       name_header: Nom civil
-      users: Membres du groupe
+      members: Membres du groupe
     update:
       group_successfully_updated: Groupe mis à jour avec succès
       page_title: "Modifier %{group_name}"
@@ -173,10 +173,10 @@ fr:
     groups: Groupes
     home: Départ
     products: Inventaire
-  user_mailer:
+  member_mailer:
     send_authentication:
       subject: "[SCOUTINV] Identification"
-  users:
+  members:
     form:
       cancel_button_label: Annuler
       or: ou
@@ -184,16 +184,16 @@ fr:
       page_title: Membres
     create:
       page_title: Nouveau membre
-      user_successfully_created: Membre créé avec succès
+      member_successfully_created: Membre créé avec succès
     destroy:
-      user_successfully_destroyed: Membre détruit avec succès
+      member_successfully_destroyed: Membre détruit avec succès
     edit:
-      page_title: "Modifier %{user_name}"
+      page_title: "Modifier %{member_name}"
     new:
       page_title: Nouveau membre
     update:
-      page_title: "Modifier %{user_name}"
-      user_successfully_updated: Membre mis à jour avec succès
+      page_title: "Modifier %{member_name}"
+      member_successfully_updated: Membre mis à jour avec succès
 
   date:
     formats:

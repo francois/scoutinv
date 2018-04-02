@@ -13,10 +13,10 @@ Rails.application.routes.draw do
   end
 
   resources :groups do
-    resource :users, only: %i[ create ]
+    resource :members, only: %i[ create ]
   end
 
-  resources :users, only: %i[ edit update destroy ]
+  resources :members, only: %i[ edit update destroy ]
 
   resources :products do
     resources :notes, only: %i[ create ], controller: "products/notes"

@@ -11,13 +11,13 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get new_session_path
     assert_response :success
 
-    post sessions_path, params: {email: users(:baloo_10eme).email}
+    post sessions_path, params: {email: members(:baloo_10eme).email}
     follow_redirect!
     assert_response :success
     assert_equal sessions_path, path
 
-    session = users(:baloo_10eme).sessions.first
-    get session_path(session.token, user_id: users(:baloo_10eme).slug)
+    session = members(:baloo_10eme).sessions.first
+    get session_path(session.token, member_id: members(:baloo_10eme).slug)
     follow_redirect!
 
     assert_response :success

@@ -4,7 +4,7 @@ en:
       event: Event
       group: Group
       product: Product
-      user: User
+      member: Member
     attributes:
       event:
         dates: Dates
@@ -22,7 +22,7 @@ en:
         name: Name
         shelf: Shelf
         unit: Unit
-      user:
+      member:
         email: Email
         name: Name
   footer:
@@ -45,12 +45,12 @@ en:
     new:
       page_title: New Group
     show:
-      add_user_header: "Add a member"
+      add_member_header: "Add a member"
       back_to_list_button_label: Back to list
       edit_button_label: Edit
       email_header: Email
       name_header: Name
-      users: People in this Group
+      members: People in this Group
     update:
       group_successfully_updated: Group updated successfully
       page_title: "Edit %{group_name}"
@@ -168,27 +168,27 @@ en:
     groups: Groups
     home: Home
     products: Products
-  user_mailer:
+  member_mailer:
     send_authentication:
       subject: "[SCOUTINV] Authentication"
-  users:
+  members:
     form:
       cancel_button_label: Cancel
       or: or
     index:
-      page_title: Users
+      page_title: Members
     create:
-      page_title: New User
-      user_successfully_created: User successfully created
+      page_title: New Member
+      member_successfully_created: Member successfully created
     destroy:
-      user_successfully_destroyed: User successfully destroyed
+      member_successfully_destroyed: Member successfully destroyed
     edit:
-      page_title: "Edit %{user_name}"
+      page_title: "Edit %{member_name}"
     new:
-      page_title: New User
+      page_title: New Member
     update:
-      page_title: "Edit %{user_name}"
-      user_successfully_updated: User successfully updated
+      page_title: "Edit %{member_name}"
+      member_successfully_updated: Member successfully updated
 
   date:
     formats:

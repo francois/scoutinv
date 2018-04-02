@@ -46,6 +46,6 @@ module ApplicationHelper
   end
 
   def on_groups_page?
-    %w(groups users).include?(params[:controller])
+    %w(groups members).include?(params[:controller])
   end
 end

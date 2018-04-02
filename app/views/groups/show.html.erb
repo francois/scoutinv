@@ -3,7 +3,7 @@
     <%= link_to t(".edit_button_label"), edit_group_path(@group), class: "button large hide-for-large" %>
     <%= link_to t(".back_to_list"), groups_path, class: "button secondary large hide-for-large" %>
 
-    <h2><%= t(".users") %></h2>
+    <h2><%= t(".members") %></h2>
     <table class="hover stack">
       <thead>
         <tr>
@@ -12,10 +12,10 @@
         </tr>
       </thead>
       <tbody>
-        <% @group.users.reject(&:new_record?).sort_by(&:sort_key).each do |user| %>
+        <% @group.members.reject(&:new_record?).sort_by(&:sort_key).each do |member| %>
           <tr>
-            <td><%= link_to user.name, edit_user_path(user) %></td>
-            <td><%= mail_to user.email %></td>
+            <td><%= link_to member.name, edit_member_path(member) %></td>
+            <td><%= mail_to member.email %></td>
           </tr>
         <% end %>
       </tbody>
@@ -28,8 +28,8 @@
 
     <hr>
 
-    <h3><%= t(".add_user_header") %></h3>
-    <%= form_for @user, url: group_users_path(@group) do |form| %>
+    <h3><%= t(".add_member_header") %></h3>
+    <%= form_for @member, url: group_members_path(@group) do |form| %>
       <%= form.label :name %>
       <%= form.text_field :name %>
 

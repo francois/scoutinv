@@ -1,7 +1,7 @@
 class Products::NotesController < ApplicationController
   def create
     @product = current_group.products.find_by!(slug: params[:product_id])
-    @product.notes.create(note_params.merge(author: current_user))
+    @product.notes.create(note_params.merge(author: current_member))
 
     redirect_to product_path(@product)
   end

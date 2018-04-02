@@ -1,6 +1,6 @@
 <div class="grid-x grid-margin-x">
   <div class="large-9 medium-12 cell">
-    <%= link_to "New User", new_user_path, class: "button hide-for-large" %>
+    <%= link_to "New Member", new_member_path, class: "button hide-for-large" %>
 
     <table class="hover stack">
       <thead>
@@ -11,10 +11,10 @@
       </thead>
 
       <tbody>
-        <% @users.each do |user| %>
+        <% @members.each do |member| %>
           <tr>
-            <td><%= link_to user.name, user %></td>
-            <td><%= user.email %></td>
+            <td><%= link_to member.name, member %></td>
+            <td><%= member.email %></td>
           </tr>
         <% end %>
       </tbody>
@@ -22,6 +22,6 @@
   </div>
 
   <div class="large-3 medium-12 cell show-for-large">
-    <%= link_to "New User", new_user_path, class: "button expanded" %>
+    <%= link_to "New Member", new_member_path, class: "button expanded" %>
   </div>
 </div>

@@ -2,8 +2,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_timezone
   before_action :set_locale
-  before_action :authenticate_user!
-  helper_method :user_signed_in?, :current_user, :current_group
+  before_action :authenticate_member!
+  helper_method :member_signed_in?, :current_member, :current_group
 
   private
 
@@ -28,24 +28,24 @@ class ApplicationController < ActionController::Base
     request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
   end
 
-  def authenticate_user!
-    return if user_signed_in?
+  def authenticate_member!
+    return if member_signed_in?
     redirect_to new_session_url
   end
 
-  def sign_in_user!(user)
-    session[:user_id] = user.id
+  def sign_in_member!(member)
+    session[:member_id] = member.id
   end
 
-  def user_signed_in?
-    session[:user_id].present?
+  def member_signed_in?
+    session[:member_id].present?
   end
 
-  def current_user
-    @_current_user ||= User.includes(:group).find(session[:user_id])
+  def current_member
+    @_current_member ||= Member.includes(:group).find(session[:member_id])
   end
 
   def current_group
-    current_user.group
+    current_member.group
   end
 end
