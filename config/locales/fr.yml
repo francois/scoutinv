@@ -25,6 +25,10 @@ fr:
       member:
         email: Adresse courriel
         name: Nom civil
+  categories:
+    kitchen: Cuisine
+    miscellaneous: Divers
+    tent: Tente
   footer:
     logout: Fermer la session
   groups:

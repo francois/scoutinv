@@ -14,7 +14,7 @@
             <%= label_tag :category, t(".category"), class: "middle" %>
           </div>
           <div class="medium-shrink cell">
-            <%= select_tag :category, options_from_collection_for_select(@categories, :slug, :name, @selected_category ? @selected_category.slug : nil), include_blank: true %>
+            <%= select_tag :category, options_from_collection_for_select(@categories, :slug, ->(category){ t(category.name, scope: "categories") }, @selected_category ? @selected_category.slug : nil), include_blank: true %>
           </div>
 
           <div class="medium-auto cell">

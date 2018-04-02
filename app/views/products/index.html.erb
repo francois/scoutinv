@@ -14,7 +14,7 @@
             <%= label_tag :category, t(".category_label"), class: "middle" %>
           </div>
           <div class="medium-shrink cell">
-            <%= select_tag :category, options_from_collection_for_select(@categories, :slug, :name, @selected_category ? @selected_category.slug : nil), include_blank: true %>
+            <%= select_tag :category, options_from_collection_for_select(@categories, :slug, ->(category){ t(category.name, scope: "categories") }, @selected_category ? @selected_category.slug : nil), include_blank: true %>
           </div>
 
           <div class="medium-auto cell">
@@ -49,7 +49,7 @@
             </td>
             <td><%= format_product_location(product) %></td>
             <td><%= product.description %></td>
-            <td><%= product.categories.map(&:name).sort_by(&:downcase).to_sentence %></td>
+            <td><%= product.categories.map(&:name).map{|name| t(name, scope: "categories") }.sort_by(&:downcase).to_sentence %></td>
           </tr>
         <% end %>
       </tbody>

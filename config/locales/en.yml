@@ -25,6 +25,10 @@ en:
       member:
         email: Email
         name: Name
+  categories:
+    kitchen: Kitchen
+    miscellaneous: Misc
+    tent: Tent
   footer:
     logout: Logout
   groups:
