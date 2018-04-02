@@ -31,7 +31,7 @@
         <% if @member.new_record? %>
           <%= link_to t(".cancel_button_label"), members_path, class: "button secondary" %>
         <% else %>
-          <%= link_to t(".cancel_button_label"), @member, class: "button secondary" %>
+          <%= link_to t(".cancel_button_label"), current_group, class: "button secondary" %>
         <% end %>
       </div>
     </div>
