@@ -7,6 +7,7 @@
     <title><%= page_title.blank? ? nil : page_title + " – ".html_safe %>Scoutinv</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
   </head>
   <body>
     <div class="top-bar" id="responsive-menu">
@@ -75,7 +76,5 @@
         </div>
       </div>
     </footer>
-
-    <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
   </body>
 </html>
