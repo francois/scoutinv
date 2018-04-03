@@ -128,8 +128,8 @@ fr:
     form:
       cancel_button_label: Annuler
       categories_label: Catégories
+      help_on_images: "Tapez sur le bouton pour prendre une photo (sur un cellulaire), ou sélectionnez une photo à partir de votre ordinateur. Si vous clonez un produit, les images seront aussi copiées."
       location_label: Localisation
-      or: ou
     create:
       product_successfully_created: Produit enregistré avec succès
     destroy:
@@ -153,6 +153,7 @@ fr:
     show:
       add_note_label: Ajouter une note
       back_to_list_button_label: Retour à la liste
+      clone_button_label: Copier ce produit
       dates_header: Dates
       edit_button_label: Modifier ce produit
       event_header: Événement

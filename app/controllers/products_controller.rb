@@ -22,7 +22,21 @@ class ProductsController < ApplicationController
 
   def new
     @page_title = t(".page_title")
-    @product = current_group.products.build
+    @product =
+      if params[:clone_from].present?
+        @clone_from = current_group.products.find_by!(slug: params[:clone_from])
+        current_group.products.build(
+          aisle: @clone_from.aisle,
+          categories: @clone_from.categories,
+          description: @clone_from.description,
+          images: @clone_from.images,
+          name: @clone_from.name,
+          shelf: @clone_from.shelf,
+          unit: @clone_from.unit,
+        )
+      else
+        current_group.products.build
+      end
   end
 
   def edit
@@ -33,6 +47,12 @@ class ProductsController < ApplicationController
     current_group.transaction do
       @product = current_group.register_new_product(product_params, metadata: domain_event_metadata)
       @product.images.attach(params[:product][:images]) if params[:product][:images].present?
+      if params[:clone_from].present?
+        @clone_from = current_group.products.find_by!(slug: params[:clone_from])
+        @clone_from.images.each do |attachment|
+          @product.images.build(blob: attachment.blob)
+        end
+      end
 
       if current_group.save
         redirect_to @product, notice: t(".product_successfully_created")

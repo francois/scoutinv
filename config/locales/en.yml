@@ -128,8 +128,8 @@ en:
     form:
       cancel_button_label: Cancel
       categories_label: Categories
+      help_on_images: "Tap the button to take a picture (if on mobile), or attach any picture from your computer. If you are cloning a product, it's images will be cloned as well."
       location_label: Location
-      or: or
     create:
       product_successfully_created: Product successfully created
     destroy:
@@ -153,6 +153,7 @@ en:
     show:
       add_note_label: Add Note
       back_to_list_button_label: Back to list
+      clone_button_label: Clone this product
       dates_header: Dates
       edit_button_label: Edit this product
       event_header: Event

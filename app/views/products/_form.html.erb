@@ -1,4 +1,5 @@
 <%= form_with(model: product, local: true) do |form| %>
+  <%= hidden_field_tag :clone_from, @clone_from&.to_param %>
   <div class="grid-container">
     <div class="grid-x grid-padding-x">
       <% if product.errors.any? %>
@@ -22,7 +23,8 @@
 
       <div class="small-12 cell">
         <%= form.label :images %>
-        <%= form.file_field :images, multiple: true %><br>
+        <%= form.file_field :images, :multiple => true, :"aria-describedby" => "help-on-images" %><br>
+        <p id="help-on-images" class="help-text"><%= t(".help_on_images") %></p>
       </div>
 
       <div class="small-12 cell">
