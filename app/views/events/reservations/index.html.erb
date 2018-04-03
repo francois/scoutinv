@@ -50,6 +50,11 @@
                 <th><%= t(".returned_on_header") %></th>
               </thead>
               <tbody>
+              <% if @products.empty? %>
+                <tr>
+                  <td colspan="5"><%= t(".sorry_no_elements") %></td>
+                </tr>
+              <% end %>
                 <% @products.each do |product| %>
                   <tr class="<%= product_reservation_css_class(@event, product) %>">
                     <td>
@@ -86,28 +91,30 @@
         </div>
       </div>
 
-      <div class="grid-container">
-        <div class="grid-x grid-margin-x">
-          <div class="small-12 medium-auto cell">
-            <%= submit_tag t(".add_to_reservation_button_label"),      name: "add",       class: "button expanded primary" %>
-          </div>
-          <div class="small-12 medium-auto cell">
-            <%= submit_tag t(".remove_from_reservation_button_label"), name: "remove",    class: "button expanded warning" %>
-          </div>
-          <div class="small-12 medium-auto cell">
-            <%= submit_tag t(".lease_all_button_label"),               name: "lease_all", class: "button expanded success" %>
-          </div>
-          <div class="cell">
-            <hr>
-          </div>
-          <div class="small-12 medium-auto cell">
-            <%= submit_tag t(".lease_product_button_label"),           name: "lease",     class: "button expanded success" %>
-          </div>
-          <div class="small-12 medium-auto cell">
-            <%= submit_tag t(".return_product_button_label"),          name: "return",    class: "button expanded secondary" %>
+      <% if @products.any? %>
+        <div class="grid-container">
+          <div class="grid-x grid-margin-x">
+            <div class="small-12 medium-auto cell">
+              <%= submit_tag t(".add_to_reservation_button_label"), name: "add", class: "button expanded primary" %>
+            </div>
+            <div class="small-12 medium-auto cell">
+              <%= submit_tag t(".remove_from_reservation_button_label"), name: "remove", class: "button expanded warning" %>
+            </div>
+            <div class="small-12 medium-auto cell">
+              <%= submit_tag t(".lease_all_button_label"), name: "lease_all", class: "button expanded success" %>
+            </div>
+            <div class="cell">
+              <hr>
+            </div>
+            <div class="small-12 medium-auto cell">
+              <%= submit_tag t(".lease_product_button_label"), name: "lease", class: "button expanded success" %>
+            </div>
+            <div class="small-12 medium-auto cell">
+              <%= submit_tag t(".return_product_button_label"), name: "return", class: "button expanded secondary" %>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 

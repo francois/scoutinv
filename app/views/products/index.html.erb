@@ -46,6 +46,11 @@
             </thead>
 
             <tbody>
+              <% if @products.empty? %>
+                <tr>
+                  <td colspan="4"><%= t(".sorry_no_elements") %></td>
+                </tr>
+              <% end %>
               <% @products.each do |product| %>
                 <tr>
                   <td>

@@ -40,6 +40,11 @@
               <tr>
                 <td colspan="6"><%= link_to t(".include_previous_year_html"), events_path(after: (@after - 1.year).to_formatted_s(:iso8601)) %></td>
               </tr>
+              <% if @events.empty? %>
+                <tr>
+                  <td colspan="3"><%= t(".sorry_no_elements") %></td>
+                </tr>
+              <% end %>
               <% @events.each do |event| %>
                 <tr>
                   <td><%= link_to event.title, event %></td>

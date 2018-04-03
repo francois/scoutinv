@@ -88,6 +88,7 @@ fr:
       new_event_button_label: Ajouter un événement
       on_or_after_label: Le ou après le
       search_button_label: Chercher
+      sorry_no_elements: Désolé, aucun produit ne correspond à vos critères de recherche
       start_on_header: Commence le
       title_header: Titre de l'événement
       view_all_button_label: Afficher tout
@@ -108,6 +109,7 @@ fr:
         remove_from_reservation_button_label: Ne plus réserver
         reservations_header: Réservations
         return_product_button_label: Retourner à l'inventaire
+        sorry_no_elements: Désolé, aucun produit ne correspond à vos critères de recherche
         search_button_label: Chercher
         view_all_button_label: Afficher tout
         leased_on_header: Prêté le
@@ -140,6 +142,7 @@ fr:
       name_header: Nom
       new_product_button_label: Ajouter un produit
       page_title: Inventaire
+      sorry_no_elements: Désolé, aucun produit ne correspond à vos critères de recherche
       search_button_label: Chercher
       view_all_button_label: Afficher tout
     edit:

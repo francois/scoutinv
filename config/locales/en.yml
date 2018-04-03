@@ -88,6 +88,7 @@ en:
       new_event_button_label: Add an Event
       on_or_after_label: On or after
       search_button_label: Search
+      sorry_no_elements: Sorry, no products correspond to your search criterias
       start_on_header: Start on
       title_header: Event Title
       view_all_button_label: View All
@@ -109,6 +110,7 @@ en:
         reservations_header: Reservations
         return_product_button_label: Return
         search_button_label: Search
+        sorry_no_elements: Sorry, no products correspond to your search criterias
         view_all_button_label: View all
         leased_on_header: Leased on
         returned_on_header: Leased on
@@ -140,6 +142,7 @@ en:
       name_header: Name
       new_product_button_label: Add a Product
       page_title: Products
+      sorry_no_elements: Sorry, no products correspond to your search criterias
       search_button_label: Search
       view_all_button_label: View All
     edit:
