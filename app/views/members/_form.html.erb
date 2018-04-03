@@ -27,7 +27,7 @@
 
       <div class="small-12 cell">
         <%= form.submit class: "button primary" %>
-        <%= t(".or") %>
+        <%= render partial: "shared/or" %>
         <% if @member.new_record? %>
           <%= link_to t(".cancel_button_label"), members_path, class: "button secondary" %>
         <% else %>
