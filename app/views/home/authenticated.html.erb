@@ -1,6 +1,7 @@
 <div class="grid-x grid-margin-x">
   <div class="small-12 medium-6 cell">
     <h2><%= t ".future_events" %></h2>
+    <%= link_to t(".new_event"), new_event_path, class: "button small" %>
     <ul>
       <% @events.each do |event| %>
         <li>
@@ -9,16 +10,38 @@
         </li>
       <% end %>
     </ul>
-    <%= link_to t(".new_event"), new_event_path, class: "button small" %>
   </div>
 
   <div class="small-12 medium-6 cell">
     <h2><%= t ".old_gadgets" %></h2>
-    <ul>
-      <% @products.each do |product| %>
-        <li><%= link_to product.name, product %></li>
-      <% end %>
-    </ul>
     <%= link_to t(".new_product"), new_product_path, class: "button small" %>
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x small-up-2 medium-up-2 large-up-3">
+        <% @products.each do |product| %>
+          <div class="card" style="">
+            <div class="card-divider">
+              <h4><%= link_to product.name, product_path(product) %></h4>
+            </div>
+            <%= link_to product do %>
+              <% if product.images.first %>
+                <%= image_tag(product.images.first, alt: "", class: "product-image") %>
+              <% else %>
+                <%= image_tag("https://via.placeholder.com/250x250?text=%20", alt: "", class: "product-image") %>
+              <% end %>
+            <% end %>
+            <% if product.aisle.present? || product.shelf.present? || product.unit.present? || product.description.present? %>
+              <div class="card-section">
+                <% if product.aisle.present? || product.shelf.present? || product.unit.present? %>
+                  <p><strong><%= t("activerecord.attributes.product.location") %></strong>: <%= format_product_location(product) %></p>
+                <% end %>
+                <% if product.description.present? %>
+                  <%= simple_format product.description %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

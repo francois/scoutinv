@@ -29,15 +29,23 @@
               <div class="card-divider">
                 <h4><%= link_to product.name, product_path(product) %></h4>
               </div>
-              <% if product.images.first %>
-                <%= link_to image_tag(product.images.first, alt: "", class: "product-image"), product.images.first %>
-              <% else %>
-                <%= image_tag "https://via.placeholder.com/250x250?text=%20", alt: "", class: "product-image" %>
+              <%= link_to product do %>
+                <% if product.images.first %>
+                  <%= image_tag(product.images.first, alt: "", class: "product-image") %>
+                <% else %>
+                  <%= image_tag("https://via.placeholder.com/250x250?text=%20", alt: "", class: "product-image") %>
+                <% end %>
               <% end %>
-              <div class="card-section">
-                <p><strong><%= t("activerecord.attributes.product.location") %></strong>: <%= format_product_location(product) %></p>
-                <%= simple_format product.description %>
-              </div>
+              <% if product.aisle.present? || product.shelf.present? || product.unit.present? || product.description.present? %>
+                <div class="card-section">
+                  <% if product.aisle.present? || product.shelf.present? || product.unit.present? %>
+                    <p><strong><%= t("activerecord.attributes.product.location") %></strong>: <%= format_product_location(product) %></p>
+                  <% end %>
+                  <% if product.description.present? %>
+                    <%= simple_format product.description %>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
           </div>
         <% end %>
