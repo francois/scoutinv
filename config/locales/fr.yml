@@ -179,7 +179,7 @@ fr:
       by_author_name: par %{author_name}
       notes: Notes
       notes_header: Notes
-      save_button_label: Enregistrer
+      create_note_button_label: Enregistrer la note
   top-bar:
     events: Événements
     groups: Groupes

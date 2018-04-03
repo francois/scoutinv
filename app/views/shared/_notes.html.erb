@@ -3,7 +3,7 @@
 <%= form_for note, url: create_note_path do |form| %>
   <%= form.label :body, t(".add_note_label") %>
   <%= form.text_area :body, size: "10x3" %>
-  <%= form.submit t(".save_button_label"), class: "button primary small" %>
+  <%= form.submit t(".create_note_button_label"), class: "button primary small" %>
 <% end %>
 
 <% if parent.notes.reject(&:new_record?).any? %>
