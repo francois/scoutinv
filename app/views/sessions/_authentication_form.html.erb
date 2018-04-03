@@ -1,13 +1,13 @@
 <%= form_tag sessions_path, method: :post do %>
   <div class="grid-container">
-    <div class="grid-x grid-padding-x">
+    <div class="grid-x grid-margin-x">
       <div class="small-12 cell">
         <%= label_tag :email, t(".email") %>
         <%= email_field_tag :email, "", placeholder: t(".email_placeholder"), required: true %>
       </div>
 
       <div class="small-12 cell">
-        <%= submit_tag t(".send_authentication_email"), class: "button primary large" %>
+        <%= submit_tag t(".send_authentication_email_button_label"), class: "button primary large" %>
       </div>
     </div>
   </div>

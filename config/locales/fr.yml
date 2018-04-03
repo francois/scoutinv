@@ -164,7 +164,7 @@ fr:
     authentication_form:
       email: Adresse courriel
       email_placeholder: baloo@example.org
-      send_authentication_email: Envoyer le courriel d'authentification
+      send_authentication_email_button_label: Envoyer le courriel d'ouverture de session
     create:
       unknown_email_address: Adresse courriel inconnue
     index:

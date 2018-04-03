@@ -1,6 +1,11 @@
 <div class="grid-container">
-  <div class="grid-x">
-    <div class="small-12 medium-9 cell">
+  <div class="grid-x grid-margin-x">
+    <div class="small-12 cell hide-on-large">
+      <h2>Authenticate</h2>
+      <%= render partial: "sessions/authentication_form" %>
+    </div>
+
+    <div class="small-12 medium-8 cell">
       <h3>What is Scoutinv?</h3>
       <p>Scoutinv is a tool designed to enable a scouts group to better work together. Each scout group has their own workspace.</p>
 
@@ -14,7 +19,7 @@
       <%= render partial: "registration_form" %>
     </div>
 
-    <div class="small-12 medium-3 cell">
+    <div class="small-12 medium-4 cell show-for-large">
       <h2>Authenticate</h2>
       <%= render partial: "sessions/authentication_form" %>
     </div>
