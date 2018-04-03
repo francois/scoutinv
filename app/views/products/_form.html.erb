@@ -47,7 +47,15 @@
       <div class="small-12 cell">
         <fieldset class="fieldset">
           <legend><%= t(".categories_label") %></legend>
-          <%= form.collection_check_boxes :category_slugs, @categories, :slug, ->(category){ t(category.name, scope: "categories") } %>
+          <div class="grid-container">
+            <div class="grid-x grid-margin-x small-up-3 medium-up-4">
+              <%= form.collection_check_boxes :category_slugs, @categories, :slug, ->(category){ t(category.name, scope: "categories") } do |b| %>
+                <div class="cell">
+                  <%= b.check_box %> <%= b.label %>
+                </div>
+              <% end %>
+            </div>
+          </div>
         </fieldset>
       </div>
 
