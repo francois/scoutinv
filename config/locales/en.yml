@@ -184,6 +184,8 @@ en:
       notes: Notes
       notes_header: Notes
       create_note_button_label: Record note
+    or:
+      or: or
   top-bar:
     events: Events
     groups: Groups

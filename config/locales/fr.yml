@@ -184,6 +184,8 @@ fr:
       notes: Notes
       notes_header: Notes
       create_note_button_label: Enregistrer la note
+    or:
+      or: ou
   top-bar:
     events: Événements
     groups: Groupes
