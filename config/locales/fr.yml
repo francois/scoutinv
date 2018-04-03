@@ -117,10 +117,10 @@ fr:
     show:
       back_to_list_button_label: Retour à la liste
       bill_of_materials: Liste de matériel
-      edit_button_label: Modifier
+      edit_button_label: Modifier cet événement
       edit_reservation_button_label: Modifer les réservations
       notes_header: Notes
-      print_button_label: Imprimer
+      print_button_label: Imprimer la liste de matériel
     update:
       event_successfully_updated: Événement mis à jour avec succès
   products:
@@ -153,7 +153,7 @@ fr:
       add_note_label: Ajouter une note
       back_to_list_button_label: Retour à la liste
       dates_header: Dates
-      edit_button_label: Modifier
+      edit_button_label: Modifier ce produit
       event_header: Événement
       product_reservation_history_header: Historique de réservation du produit
     update:

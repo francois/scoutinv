@@ -117,10 +117,10 @@ en:
     show:
       back_to_list_button_label: Back to list
       bill_of_materials: Bill of materials
-      edit_button_label: Edit
+      edit_button_label: Edit this event
       edit_reservation_button_label: Edit reservations
       notes_header: Notes
-      print_button_label: Print
+      print_button_label: Print the bill of materials
     update:
       event_successfully_updated: Event successfully updated
   products:
@@ -153,7 +153,7 @@ en:
       add_note_label: Add Note
       back_to_list_button_label: Back to list
       dates_header: Dates
-      edit_button_label: Edit
+      edit_button_label: Edit this product
       event_header: Event
       product_reservation_history_header: Product Reservation History
     update:
