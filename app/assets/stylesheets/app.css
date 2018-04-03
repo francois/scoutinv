@@ -11,6 +11,8 @@ body {
   background:    -ms-linear-gradient(top, #94e5ff, #dbe7eb);
   background:     -o-linear-gradient(top, #94e5ff, #dbe7eb);
   background:        linear-gradient(to bottom, #94e5ff, #dbe7eb);
+
+  min-height: 60rem;
 }
 
 .product-busy-self * {
