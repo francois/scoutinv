@@ -148,9 +148,9 @@ en:
     select:
       prompt: Please select
     submit:
-      create: Create %{model}
+      create: Save %{model}
       submit: Save %{model}
-      update: Update %{model}
+      update: Save %{model}
   number:
     currency:
       format:

@@ -45,7 +45,7 @@ en:
       or: or
     index:
       name_header: Name
-      new_group_button_label: New Group
+      new_group_button_label: Add a Group
       page_title: Groups
     new:
       page_title: New Group
@@ -63,8 +63,8 @@ en:
     page_title: Home
     authenticated:
       future_events: Future Events
-      new_event: New Event
-      new_product: New Product
+      new_event: Add an Event
+      new_product: Add a Product
       old_gadgets: Old gadgets in our inventory
     registration_form:
       email_label: Email
@@ -85,7 +85,7 @@ en:
     index:
       end_on_header: End On
       include_previous_year_html: "&laquo; Include previous year"
-      new_event_button_label: New Event
+      new_event_button_label: Add an Event
       on_or_after_label: On or after
       search_button_label: Search
       start_on_header: Start on
@@ -138,14 +138,14 @@ en:
       filter_label: Filter
       location_header: Location
       name_header: Name
-      new_product_button_label: New Product
+      new_product_button_label: Add a Product
       page_title: Products
       search_button_label: Search
       view_all_button_label: View All
     edit:
       page_title: "Edit %{product_name}"
     new:
-      page_title: "New Product"
+      page_title: New Product
     show:
       add_note_label: Add Note
       back_to_list_button_label: Back to list

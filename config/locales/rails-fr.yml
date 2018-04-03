@@ -147,9 +147,13 @@ fr:
     select:
       prompt: Veuillez sélectionner
     submit:
-      create: Créer un %{model}
+      create: Enregistrer ce %{model}
       submit: Enregistrer ce %{model}
-      update: Modifier ce %{model}
+      update: Enregistrer ce %{model}
+      event:
+        create: Enregistrer cet %{model}
+        submit: Enregistrer cet %{model}
+        update: Enregistrer cet %{model}
   number:
     currency:
       format:
