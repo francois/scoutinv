@@ -1,16 +1,16 @@
 <div class="grid-x grid-margin-x">
   <div class="large-9 medium-12 cell">
-    <%= form_tag event_reservations_path(@event), method: :get do %>
+    <%= form_tag event_reservations_path(@event), method: :get, class: "search-form" do %>
       <div class="grid-container">
         <div class="grid-x grid-margin-x">
-          <div class="medium-shrink cell">
-            <%= label_tag :filter, t(".filter"), class: "middle" %>
+          <div class="medium-shrink cell show-for-sr">
+            <%= label_tag :filter, t(".filter_label"), class: "middle" %>
           </div>
           <div class="medium-shrink cell">
-            <%= text_field_tag :filter, @filter %>
+            <%= text_field_tag :filter, @filter, placeholder: t(".filter_label") %>
           </div>
 
-          <div class="medium-shrink cell">
+          <div class="medium-shrink cell show-for-sr">
             <%= label_tag :category, t(".category"), class: "middle" %>
           </div>
           <div class="medium-shrink cell">

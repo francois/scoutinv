@@ -100,7 +100,7 @@ fr:
         add_to_reservation_button_label: Ajouter aux réservations
         back_to_event: Retour à l'événement
         category: Catégorie
-        filter: Filtre
+        filter_label: Filtre
         lease_all_button_label: Tout prêter à l'unité
         lease_product_button_label: Prêter à l'unité
         only_show_reserved_products_label: N'afficher que les produits réservés

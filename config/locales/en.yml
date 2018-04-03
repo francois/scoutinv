@@ -100,7 +100,7 @@ en:
         add_to_reservation_button_label: Add to reservation
         back_to_event: Back to event
         category: Category
-        filter: Filter
+        filter_label: Filter
         lease_all_button_label: Lease all products
         lease_product_button_label: Lease
         only_show_reserved_products_label: Only show reserved products
