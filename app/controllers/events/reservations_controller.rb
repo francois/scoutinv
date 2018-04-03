@@ -6,6 +6,7 @@ class Events::ReservationsController < ApplicationController
 
     @filter = params[:filter]
     @only_show_reserved_products = params[:only_show_reserved_products] == "1"
+    @only_show_leased_products = params[:only_show_leased_products] == "1"
 
     @categories = Category.by_name.to_a
     @selected_category = @categories.detect{|category| category.slug == params[:category]}
@@ -16,8 +17,10 @@ class Events::ReservationsController < ApplicationController
     @products     = @products.all
     @reservations = @event.reservations.with_product.all
     reserved_products = @reservations.map(&:product)
+    leased_products = @reservations.select(&:leased?).map(&:product)
 
     @products = @products.select{|product| reserved_products.include?(product)} if @only_show_reserved_products
+    @products = @products.select{|product| leased_products.include?(product)} if @only_show_leased_products
   end
 
   def create
