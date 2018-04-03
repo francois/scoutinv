@@ -18,12 +18,12 @@
 
       <div class="small-12 cell">
         <%= form.label :name %>
-        <%= form.text_field :name %>
+        <%= form.text_field :name, autocomplete: false %>
       </div>
 
       <div class="small-12 cell">
         <%= form.label :images %>
-        <%= form.file_field :images, :multiple => true, :"aria-describedby" => "help-on-images" %><br>
+        <%= form.file_field :images, :multiple => true, :"aria-describedby" => "help-on-images", :autocomplete => false %><br>
         <p id="help-on-images" class="help-text"><%= t(".help_on_images") %></p>
       </div>
 
@@ -31,13 +31,13 @@
         <fieldset class="fieldset">
           <legend><%= t(".location_label") %></legend>
           <%= form.label :aisle %>
-          <%= form.text_field :aisle %>
+          <%= form.text_field :aisle, autocomplete: false %>
 
           <%= form.label :shelf %>
-          <%= form.text_field :shelf %>
+          <%= form.text_field :shelf, autocomplete: false %>
 
           <%= form.label :unit %>
-          <%= form.text_field :unit %>
+          <%= form.text_field :unit, autocomplete: false %>
         </fieldset>
       </div>
 

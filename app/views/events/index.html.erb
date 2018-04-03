@@ -7,7 +7,7 @@
             <%= label_tag :after, t(".on_or_after_label"), class: "middle" %>
           </div>
           <div class="medium-shrink cell">
-            <%= date_field_tag :after, @after.to_date.to_formatted_s(:iso8601) %>
+            <%= date_field_tag :after, @after.to_date.to_formatted_s(:iso8601), autocomplete: false %>
           </div>
           <div class="medium-auto cell">
             <%= submit_tag t(".search_button_label"), class: "button" %>

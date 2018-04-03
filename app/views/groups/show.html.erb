@@ -31,10 +31,10 @@
     <h3><%= t(".add_member_header") %></h3>
     <%= form_for @member, url: group_members_path(@group) do |form| %>
       <%= form.label :name %>
-      <%= form.text_field :name %>
+      <%= form.text_field :name, autocomplete: false %>
 
       <%= form.label :email %>
-      <%= form.email_field :email %>
+      <%= form.email_field :email, autocomplete: false %>
 
       <%= form.submit class: "button primary" %>
     <% end %>

@@ -7,7 +7,7 @@
             <%= label_tag :filter, t(".filter_label"), class: "middle" %>
           </div>
           <div class="medium-shrink cell">
-            <%= text_field_tag :filter, @filter, placeholder: t(".filter_label") %>
+            <%= text_field_tag :filter, @filter, placeholder: t(".filter_label"), autocomplete: false %>
           </div>
 
           <div class="medium-shrink cell show-for-sr">
