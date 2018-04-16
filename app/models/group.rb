@@ -1,11 +1,10 @@
 class Group < ApplicationRecord
   include HasSlug
 
-  has_many :products, inverse_of: :group, autosave: true
-  has_many :events,   inverse_of: :group, autosave: true
-  has_many :members,  inverse_of: :group, autosave: true
-
-  has_many :domain_events, as: :model, autosave: true
+  has_many :products,      dependent: :delete_all, autosave: true
+  has_many :events,        dependent: :delete_all, autosave: true
+  has_many :members,       dependent: :delete_all, autosave: true
+  has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
 
   validates :name, presence: true, length: { minimum: 2 }
 

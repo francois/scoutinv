@@ -2,10 +2,9 @@ class Event < ApplicationRecord
   include HasSlug
 
   belongs_to :group
-  has_many :reservations, autosave: true
-  has_many :notes, as: :parent, autosave: true
-
-  has_many :domain_events, as: :model, autosave: true
+  has_many :reservations,  dependent: :delete_all, autosave: true
+  has_many :notes,         dependent: :delete_all, autosave: true, as: :parent
+  has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
 
   scope :after, ->(date) { where("start_on >= ?", date).order(:start_on) }
   scope :by_date, -> { order(:start_on, :id) }

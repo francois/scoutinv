@@ -2,9 +2,8 @@ class Member < ApplicationRecord
   include HasSlug
 
   belongs_to :group
-  has_many :sessions, class_name: "MemberSession", dependent: :delete_all
-
-  has_many :domain_events, as: :model, autosave: true
+  has_many :sessions,      dependent: :delete_all, autosave: true,            class_name: "MemberSession", dependent: :delete_all
+  has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
 
   validates :email,    presence: true, length: { minimum: 4 }, format: /\A.+@.+[.]\w{2,}\z/
   validates :group,    presence: true

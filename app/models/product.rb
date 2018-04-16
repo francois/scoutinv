@@ -4,12 +4,11 @@ class Product < ApplicationRecord
   has_many_attached :images
 
   belongs_to :group
-  has_many :reservations, autosave: true
+  has_many :reservations,       dependent: :delete_all, autosave: true
   has_many :product_categories, dependent: :delete_all, autosave: true
-  has_many :categories, through: :product_categories, autosave: true
-  has_many :notes, as: :parent, autosave: true
-
-  has_many :domain_events, as: :model, autosave: true
+  has_many :notes,              dependent: :delete_all, autosave: true, as: :parent
+  has_many :domain_events,      dependent: :delete_all, autosave: true, as: :model
+  has_many :categories,         dependent: :delete_all, autosave: true,              through: :product_categories
 
   scope :by_name, ->{ order(Arel.sql("LOWER(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
   scope :search, ->(string){ where("POSITION(? IN LOWER(#{quoted_table_name}.name || ' ' || COALESCE(#{quoted_table_name}.description, ''))) > 0", string) }

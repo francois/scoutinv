@@ -4,7 +4,7 @@ class Reservation < ApplicationRecord
   belongs_to :product
   belongs_to :event
 
-  has_many :domain_events, as: :model, autosave: true
+  has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
 
   scope :with_product, ->{ includes(:product) }
 

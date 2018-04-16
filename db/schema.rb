@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_02_205947) do
+ActiveRecord::Schema.define(version: 2018_04_16_132155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,13 +147,13 @@ ActiveRecord::Schema.define(version: 2018_04_02_205947) do
     t.index ["slug"], name: "index_reservations_on_slug", unique: true
   end
 
-  add_foreign_key "events", "groups"
-  add_foreign_key "member_sessions", "members"
-  add_foreign_key "members", "groups"
-  add_foreign_key "notes", "members", column: "author_id"
+  add_foreign_key "events", "groups", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "member_sessions", "members", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "members", "groups", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "notes", "members", column: "author_id", on_update: :cascade, on_delete: :cascade
   add_foreign_key "product_categories", "categories"
-  add_foreign_key "product_categories", "products"
-  add_foreign_key "products", "groups"
-  add_foreign_key "reservations", "events"
-  add_foreign_key "reservations", "products"
+  add_foreign_key "product_categories", "products", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "products", "groups", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "reservations", "events", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "reservations", "products", on_update: :cascade, on_delete: :cascade
 end
