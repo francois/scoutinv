@@ -21,7 +21,15 @@ class ApplicationController < ActionController::Base
       when params[:locale] == "en"
         :en
       else
-        extract_locale_from_accept_language_header || I18n.default_locale
+        locale = extract_locale_from_accept_language_header || I18n.default_locale
+        case locale.to_s
+        when "fr"
+          :fr
+        when "en"
+          :en
+        else
+          :en
+        end
       end
   end
 
