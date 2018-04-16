@@ -24,6 +24,8 @@ class Events::ReservationsController < ApplicationController
   end
 
   def create
+    return redirect_to(action: :index) if params[:products].blank?
+
     current_group.transaction do
       products = current_group.products.where(slug: params[:products].keys).to_a
 
