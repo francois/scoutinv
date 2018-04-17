@@ -14,10 +14,12 @@ class EventsController < ApplicationController
   def show
     @page_title = @event.title
     @note  = @event.notes.build
-  end
 
-  def print
-    @page_title = "#{@event.title} (Print)"
+    if params[:print].blank?
+      render action: :show
+    else
+      render action: :print
+    end
   end
 
   def new

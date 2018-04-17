@@ -4,10 +4,6 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[ index new create show destroy ]
 
   resources :events do
-    member do
-      get :print
-    end
-
     resources :reservations, only: %i[ index create destroy ], controller: "events/reservations"
     resources :notes, only: %i[ create ], controller: "events/notes"
   end

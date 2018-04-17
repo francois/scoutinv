@@ -2,7 +2,7 @@
   <div class="large-9 medium-12 cell">
     <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button hide-for-large" %>
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button hide-for-large" %>
-    <%= link_to t(".print_button_label"), print_event_path(@event), class: "button hide-for-large" %>
+    <%= link_to t(".print_button_label"), event_path(@event, print: 1), class: "button hide-for-large", target: "blank" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary hide-for-large" %>
 
     <div>
@@ -56,7 +56,7 @@
   <div class="large-3 medium-12 cell show-for-large">
     <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button expanded" %>
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button expanded" %>
-    <%= link_to t(".print_button_label"), print_event_path(@event), class: "button expanded" %>
+    <%= link_to t(".print_button_label"), event_path(@event, print: 1), class: "button expanded", target: "blank" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary expanded" %>
 
     <hr>
