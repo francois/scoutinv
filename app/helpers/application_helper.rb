@@ -48,4 +48,12 @@ module ApplicationHelper
   def on_groups_page?
     %w(groups members).include?(params[:controller])
   end
+
+  def product_image(product, height: 250)
+    if product.images.first
+      link_to(image_tag(product.images.first.variant(resize: "x#{height}"), height: height, alt: "", class: "product-image"), product)
+    else
+      link_to(image_tag("https://via.placeholder.com/#{height}x#{height}?text=%20", alt: "", class: "product-image"), product)
+    end
+  end
 end

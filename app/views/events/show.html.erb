@@ -30,11 +30,7 @@
                 <h4><%= link_to product.name, product_path(product) %></h4>
               </div>
               <%= link_to product do %>
-                <% if product.images.first %>
-                  <%= image_tag(product.images.first, alt: "", class: "product-image") %>
-                <% else %>
-                  <%= image_tag("https://via.placeholder.com/250x250?text=%20", alt: "", class: "product-image") %>
-                <% end %>
+                <%= product_image product, height: 250 %>
               <% end %>
               <% if product.aisle.present? || product.shelf.present? || product.unit.present? || product.description.present? %>
                 <div class="card-section">
