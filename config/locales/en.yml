@@ -101,11 +101,14 @@ en:
     reservations:
       index:
         add_to_reservation_button_label: Add to reservation
+        animators_people: Animators
         back_to_event: Back to event
         category: Category
         filter_label: Filter
+        inventory_people: Inventory
         lease_all_button_label: Lease all products
         lease_product_button_label: Lease
+        leased_on_header: Leased on
         only_show_available_products_label: Only show available products
         only_show_leased_products_label: Only show leased products
         only_show_my_reserved_products_label: Only show products reserved on this event
@@ -114,11 +117,10 @@ en:
         remove_from_reservation_button_label: Remove from reservation
         reservations_header: Reservations
         return_product_button_label: Return
+        returned_on_header: Leased on
         search_button_label: Search
         sorry_no_elements: Sorry, no reservations correspond to your search criterias
         view_all_button_label: View all
-        leased_on_header: Leased on
-        returned_on_header: Leased on
     show:
       back_to_list_button_label: Back to list
       bill_of_materials: Bill of materials
