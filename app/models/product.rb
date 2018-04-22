@@ -16,6 +16,9 @@ class Product < ApplicationRecord
   scope :with_categories, ->{ includes(:categories) }
   scope :in_category, ->(category){ includes(:categories).where(categories: { slug: category.slug }) }
   scope :not_recently_reserved, ->{ joins("LEFT JOIN reservations ON reservations.product_id = products.id").where("reservations.created_at IS NULL OR reservations.created_at < ?", 12.months.ago).order(Arel.sql("random()")) }
+  scope :leased,    ->{ includes(:reservations).references(:reservations).where(reservations: {returned_on: nil}).where.not(reservations: {leased_on: nil}) }
+  scope :reserved,  ->{ includes(:reservations).references(:reservations).where.not(reservations: {id: nil}) }
+  scope :available, ->{ includes(:reservations).references(:reservations).where(reservations: {id: nil}) }
 
   validates :name, presence: true, length: { minimum: 2 }
 

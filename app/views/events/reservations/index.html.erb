@@ -18,6 +18,9 @@
           </div>
 
           <div class="cell">
+            <%= check_box_tag :only_show_available_products, "1", @only_show_available_products %>
+            <%= label_tag :only_show_available_products, t(".only_show_available_products_label") %>
+
             <%= check_box_tag :only_show_reserved_products, "1", @only_show_reserved_products %>
             <%= label_tag :only_show_reserved_products, t(".only_show_reserved_products_label") %>
 
@@ -90,6 +93,7 @@
                 <% end %>
               </tbody>
             </table>
+            <%= paginate @products %>
           </div>
         </div>
       </div>

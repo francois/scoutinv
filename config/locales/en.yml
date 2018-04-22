@@ -104,8 +104,9 @@ en:
         filter_label: Filter
         lease_all_button_label: Lease all products
         lease_product_button_label: Lease
-        only_show_reserved_products_label: Only show reserved products
+        only_show_available_products_label: Only show available products
         only_show_leased_products_label: Only show leased products
+        only_show_reserved_products_label: Only show reserved products
         product_header: Product
         remove_from_reservation_button_label: Remove from reservation
         reservations_header: Reservations
@@ -213,6 +214,23 @@ en:
     update:
       page_title: "Edit %{member_name}"
       member_successfully_updated: Member successfully updated
+
+  views:
+    pagination:
+      first: "&laquo; First"
+      last: "Last &raquo;"
+      previous: "&lsaquo; Prev"
+      next: "Next &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "No %{entry_name} found"
+          one: "Displaying <b>1</b> %{entry_name}"
+          other: "Displaying <b>all %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Displaying %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> in total"
 
   date:
     formats:

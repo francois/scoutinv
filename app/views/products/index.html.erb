@@ -18,7 +18,7 @@
           </div>
 
           <div class="medium-auto cell">
-            <%= submit_tag t(".search_button_label"), class: "button" %> <%= link_to t(".view_all_button_label"), products_path, class: "button secondary" %>
+            <%= submit_tag t(".search_button_label"), name: nil, class: "button" %> <%= link_to t(".view_all_button_label"), products_path, class: "button secondary" %>
           </div>
         </div>
       </div>
@@ -68,6 +68,7 @@
               <% end %>
             </tbody>
           </table>
+          <%= paginate @products %>
         </div>
       </div>
     </div>

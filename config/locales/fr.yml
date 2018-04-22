@@ -104,6 +104,7 @@ fr:
         filter_label: Filtre
         lease_all_button_label: Tout prêter à l'unité
         lease_product_button_label: Prêter à l'unité
+        only_show_available_products_label: N'afficher que les produits disponibles
         only_show_reserved_products_label: N'afficher que les produits réservés
         only_show_leased_products_label: N'afficher que les produits prêtés
         product_header: Produit
@@ -213,6 +214,23 @@ fr:
     update:
       page_title: "Modifier %{member_name}"
       member_successfully_updated: Membre mis à jour avec succès
+
+  views:
+    pagination:
+      first: "&laquo; Première"
+      last: "Dernière &raquo;"
+      previous: "&lsaquo; Préc."
+      next: "Suivant &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Aucun %{entry_name} trouvé"
+          one: "Affiche <b>1</b> %{entry_name}"
+          other: "Affiche <b>tout %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Affiche %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> de <b>%{total}</b> au total"
 
   date:
     formats:
