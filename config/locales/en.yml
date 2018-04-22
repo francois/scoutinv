@@ -106,6 +106,7 @@ en:
         lease_product_button_label: Lease
         only_show_available_products_label: Only show available products
         only_show_leased_products_label: Only show leased products
+        only_show_my_reserved_products_label: Only show products reserved on this event
         only_show_reserved_products_label: Only show reserved products
         product_header: Product
         remove_from_reservation_button_label: Remove from reservation
