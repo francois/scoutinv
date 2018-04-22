@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_16_132155) do
+ActiveRecord::Schema.define(version: 2018_04_22_132241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -129,6 +130,7 @@ ActiveRecord::Schema.define(version: 2018_04_16_132155) do
     t.text "aisle"
     t.text "shelf"
     t.text "unit"
+    t.index "to_tsvector('fr'::regconfig, (((((((((COALESCE(name, ''::character varying))::text || ' '::text) || COALESCE(description, ''::text)) || ' '::text) || COALESCE(aisle, ' '::text)) || ' '::text) || COALESCE(shelf, ' '::text)) || ' '::text) || COALESCE(unit, ' '::text)))", name: "index_products_on_name", using: :gin
     t.index ["group_id"], name: "index_products_on_group_id"
     t.index ["slug"], name: "index_products_on_slug", unique: true
   end

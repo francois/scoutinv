@@ -11,7 +11,6 @@ class Product < ApplicationRecord
   has_many :categories,         dependent: :delete_all, autosave: true,              through: :product_categories
 
   scope :by_name, ->{ order(Arel.sql("LOWER(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
-  scope :search, ->(string){ where("POSITION(? IN LOWER(#{quoted_table_name}.name || ' ' || COALESCE(#{quoted_table_name}.description, ''))) > 0", string) }
   scope :with_reservations, ->{ includes(reservations: :event) }
   scope :with_categories, ->{ includes(:categories) }
   scope :in_category, ->(category){ includes(:categories).where(categories: { slug: category.slug }) }
@@ -24,6 +23,11 @@ class Product < ApplicationRecord
     else
       includes(:reservations).references(:reservations).where.not(reservations: {event_id: nil})
     end
+  }
+  scope :search, ->(string){
+    vector = "to_tsvector('fr', coalesce(name, '') || ' ' || coalesce(description, '') || ' ' || coalesce(aisle, ' ') || ' ' || coalesce(shelf, ' ') || ' ' || coalesce(unit, ' '))"
+    query = "plainto_tsquery('fr', :string)"
+    where("#{vector} @@ #{query}", string: string).order(Arel.sql("ts_rank(#{vector}, #{query.sub(":string", Product.connection.quote(string))})"))
   }
 
   validates :name, presence: true, length: { minimum: 2 }

@@ -13,14 +13,16 @@ class Events::ReservationsController < ApplicationController
     @categories = Category.by_name.to_a
     @selected_category = @categories.detect{|category| category.slug == params[:category]}
 
-    @products     = current_group.products.with_attached_images.with_categories.with_reservations.by_name
+    @products     = current_group.products.with_attached_images.with_categories.with_reservations
     @products     = @products.search(@filter)                 if @filter.present?
     @products     = @products.in_category(@selected_category) if @selected_category
     @products     = @products.available                       if @only_show_available_products
     @products     = @products.leased                          if @only_show_leased_products
     @products     = @products.reserved                        if @only_show_reserved_products
     @products     = @products.reserved(@event)                if @only_show_my_reserved_products
+    @products     = @products.by_name
     @products     = @products.page(params[:page])
+
     @reservations = @event.reservations.with_product.all
   end
 
