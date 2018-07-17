@@ -14,7 +14,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'aws-sdk-s3'
 gem 'kaminari', '~> 1.1.1'
-gem 'dotenv-rails'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
@@ -28,6 +27,7 @@ gem 'sentry-raven'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'dotenv-rails'
   gem 'hookup'
 end
 
@@ -40,6 +40,6 @@ end
 
 group :test do
   gem 'capybara', '~> 2.15'
-  gem 'selenium-webdriver'
   gem 'chromedriver-helper'
+  gem 'selenium-webdriver'
 end

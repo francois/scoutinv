@@ -1,7 +1,8 @@
 class Reservation < ApplicationRecord
   include HasSlug
 
-  belongs_to :product
+  belongs_to :instance
+  has_one :product, through: :instance
   belongs_to :event
 
   has_many :domain_events, dependent: :delete_all, autosave: true, as: :model

@@ -321,6 +321,39 @@ ALTER SEQUENCE public.groups_id_seq OWNED BY public.groups.id;
 
 
 --
+-- Name: instances; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.instances (
+    id bigint NOT NULL,
+    product_id bigint NOT NULL,
+    serial_no character varying NOT NULL,
+    slug character varying(8) NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: instances_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.instances_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: instances_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.instances_id_seq OWNED BY public.instances.id;
+
+
+--
 -- Name: member_sessions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -496,7 +529,7 @@ ALTER SEQUENCE public.products_id_seq OWNED BY public.products.id;
 
 CREATE TABLE public.reservations (
     id bigint NOT NULL,
-    product_id bigint NOT NULL,
+    instance_id bigint NOT NULL,
     event_id bigint NOT NULL,
     returned_on date,
     slug character varying(8) NOT NULL,
@@ -574,6 +607,13 @@ ALTER TABLE ONLY public.events ALTER COLUMN id SET DEFAULT nextval('public.event
 --
 
 ALTER TABLE ONLY public.groups ALTER COLUMN id SET DEFAULT nextval('public.groups_id_seq'::regclass);
+
+
+--
+-- Name: instances id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.instances ALTER COLUMN id SET DEFAULT nextval('public.instances_id_seq'::regclass);
 
 
 --
@@ -672,6 +712,14 @@ ALTER TABLE ONLY public.events
 
 ALTER TABLE ONLY public.groups
     ADD CONSTRAINT groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: instances instances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.instances
+    ADD CONSTRAINT instances_pkey PRIMARY KEY (id);
 
 
 --
@@ -787,6 +835,27 @@ CREATE UNIQUE INDEX index_groups_on_slug ON public.groups USING btree (slug);
 
 
 --
+-- Name: index_instances_on_product_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_instances_on_product_id ON public.instances USING btree (product_id);
+
+
+--
+-- Name: index_instances_on_product_id_and_serial_no; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_instances_on_product_id_and_serial_no ON public.instances USING btree (product_id, serial_no);
+
+
+--
+-- Name: index_instances_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_instances_on_slug ON public.instances USING btree (slug);
+
+
+--
 -- Name: index_member_sessions_on_member_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -885,17 +954,17 @@ CREATE INDEX index_reservations_on_event_id ON public.reservations USING btree (
 
 
 --
--- Name: index_reservations_on_product_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_reservations_on_instance_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_reservations_on_product_id ON public.reservations USING btree (product_id);
+CREATE INDEX index_reservations_on_instance_id ON public.reservations USING btree (instance_id);
 
 
 --
--- Name: index_reservations_on_product_id_and_event_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_reservations_on_instance_id_and_event_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_reservations_on_product_id_and_event_id ON public.reservations USING btree (product_id, event_id);
+CREATE UNIQUE INDEX index_reservations_on_instance_id_and_event_id ON public.reservations USING btree (instance_id, event_id);
 
 
 --
@@ -914,11 +983,11 @@ ALTER TABLE ONLY public.product_categories
 
 
 --
--- Name: reservations fk_rails_0f53bd073e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: reservations fk_rails_105ead2389; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.reservations
-    ADD CONSTRAINT fk_rails_0f53bd073e FOREIGN KEY (product_id) REFERENCES public.products(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT fk_rails_105ead2389 FOREIGN KEY (instance_id) REFERENCES public.instances(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -951,6 +1020,14 @@ ALTER TABLE ONLY public.events
 
 ALTER TABLE ONLY public.member_sessions
     ADD CONSTRAINT fk_rails_7a5931b641 FOREIGN KEY (member_id) REFERENCES public.members(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: instances fk_rails_85c17470c8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.instances
+    ADD CONSTRAINT fk_rails_85c17470c8 FOREIGN KEY (product_id) REFERENCES public.products(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1000,6 +1077,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180402020351'),
 ('20180402205947'),
 ('20180416132155'),
-('20180422132241');
+('20180422132241'),
+('20180717004049'),
+('20180731025753');
 
 
