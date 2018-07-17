@@ -88,7 +88,7 @@ en:
       new_event_button_label: Add an Event
       on_or_after_label: On or after
       search_button_label: Search
-      sorry_no_elements: Sorry, no products correspond to your search criterias
+      sorry_no_elements: Sorry, no events correspond to your search criterias
       start_on_header: Start on
       title_header: Event Title
       view_all_button_label: View All
@@ -113,13 +113,14 @@ en:
         reservations_header: Reservations
         return_product_button_label: Return
         search_button_label: Search
-        sorry_no_elements: Sorry, no products correspond to your search criterias
+        sorry_no_elements: Sorry, no reservations correspond to your search criterias
         view_all_button_label: View all
         leased_on_header: Leased on
         returned_on_header: Leased on
     show:
       back_to_list_button_label: Back to list
       bill_of_materials: Bill of materials
+      delete_button_label: Delete this event
       edit_button_label: Edit this event
       edit_reservation_button_label: Edit reservations
       notes_header: Notes

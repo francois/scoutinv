@@ -4,6 +4,7 @@
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button hide-for-large" %>
     <%= link_to t(".print_button_label"), event_path(@event, print: 1), class: "button hide-for-large", target: "blank" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary hide-for-large" %>
+    <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button secondary alert hide-for-large" %>
 
     <div>
       <strong><%= t("title", scope: "activerecord.attributes.event") %>:</strong>
@@ -54,6 +55,10 @@
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button expanded" %>
     <%= link_to t(".print_button_label"), event_path(@event, print: 1), class: "button expanded", target: "blank" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary expanded" %>
+
+    <hr>
+
+    <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button expanded alert" %>
 
     <hr>
 
