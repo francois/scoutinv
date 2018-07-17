@@ -157,6 +157,7 @@ fr:
       back_to_list_button_label: Retour à la liste
       clone_button_label: Copier ce produit
       dates_header: Dates
+      delete_button_label: Détruire ce produit
       edit_button_label: Modifier ce produit
       event_header: Événement
       product_reservation_history_header: Historique de réservation du produit
