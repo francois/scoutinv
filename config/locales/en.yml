@@ -27,9 +27,11 @@ en:
         email: Email
         name: Name
   categories:
+    camping: Encampment
     kitchen: Kitchen
     miscellaneous: Misc
     tent: Tent
+    tools: Tools
   footer:
     logout: Logout
   groups:

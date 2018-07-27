@@ -27,9 +27,11 @@ fr:
         email: Adresse courriel
         name: Nom civil
   categories:
+    camping: Campement
     kitchen: Cuisine
     miscellaneous: Divers
     tent: Tente
+    tools: Outils
   footer:
     logout: Fermer la session
   groups:
