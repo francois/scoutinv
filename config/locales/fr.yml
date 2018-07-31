@@ -151,8 +151,9 @@ fr:
       name_header: Nom
       new_product_button_label: Ajouter un produit
       page_title: Inventaire
-      sorry_no_elements: Désolé, aucun produit ne correspond à vos critères de recherche
+      quantity_header: Quantité
       search_button_label: Chercher
+      sorry_no_elements: Désolé, aucun produit ne correspond à vos critères de recherche
       view_all_button_label: Afficher tout
     edit:
       page_title: "Modification de %{product_name}"

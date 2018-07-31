@@ -151,8 +151,9 @@ en:
       name_header: Name
       new_product_button_label: Add a Product
       page_title: Products
-      sorry_no_elements: Sorry, no products correspond to your search criterias
+      quantity_header: Quantity
       search_button_label: Search
+      sorry_no_elements: Sorry, no products correspond to your search criterias
       view_all_button_label: View All
     edit:
       page_title: "Edit %{product_name}"

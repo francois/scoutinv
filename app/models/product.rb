@@ -14,6 +14,7 @@ class Product < ApplicationRecord
   scope :by_name,               ->{ order(Arel.sql("LOWER(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
   scope :with_reservations,     ->{ includes(reservations: :event) }
   scope :with_categories,       ->{ includes(:categories) }
+  scope :with_instances,        ->{ includes(:instances) }
   scope :not_recently_reserved, ->{ joins("LEFT JOIN instances ON instances.product_id = products.id LEFT JOIN reservations ON reservations.instance_id = instances.id").where("reservations.created_at IS NULL OR reservations.created_at < ?", 12.months.ago).order(Arel.sql("random()")) }
   scope :leased,                ->{ includes(:reservations).references(:reservations).where(reservations: {returned_on: nil}).where.not(reservations: {leased_on: nil}) }
   scope :available,             ->{ includes(:reservations).references(:reservations).where(reservations: {id: nil}) }

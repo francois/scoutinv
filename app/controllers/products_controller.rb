@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
 
     @selected_category = @categories.detect{|category| category.slug == params[:category]}
 
-    @products = current_group.products.with_attached_images.with_categories
+    @products = current_group.products.with_attached_images.with_categories.with_instances
     @products = @products.search(@filter) if @filter.present?
     @products = @products.in_category(@selected_category) if @selected_category
     @products = @products.by_name

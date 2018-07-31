@@ -39,6 +39,7 @@
             <thead>
               <tr>
                 <th><%= t(".name_header") %></th>
+                <th><%= t(".quantity_header") %></th>
                 <th><%= t(".location_header") %></th>
                 <th><%= t(".description_header") %></th>
                 <th><%= t(".categories_header") %></th>
@@ -48,7 +49,7 @@
             <tbody>
               <% if @products.empty? %>
                 <tr>
-                  <td colspan="4"><%= t(".sorry_no_elements") %></td>
+                  <td colspan="5"><%= t(".sorry_no_elements") %></td>
                 </tr>
               <% end %>
               <% @products.each do |product| %>
@@ -57,6 +58,7 @@
                     <%= link_to product.name, product %> <br>
                     <%= product_image product, height: 250 %>
                   </td>
+                  <td><%= number_with_delimiter product.instances.size %></td>
                   <td><%= format_product_location(product) %></td>
                   <td><%= product.description %></td>
                   <td><%= product.categories.map(&:name).map{|name| t(name, scope: "categories") }.sort_by(&:downcase).to_sentence %></td>
