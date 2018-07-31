@@ -14,6 +14,7 @@ class Reservation < ApplicationRecord
 
   delegate :title, :start_on, :end_on, :date_range, to: :event
   delegate :name, :slug, :sort_key_for_pickup, prefix: :product, to: :product
+  delegate :serial_no, to: :instance
 
   def leased?
     returned_on.blank? && leased_on

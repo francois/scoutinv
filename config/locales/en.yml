@@ -21,6 +21,7 @@ en:
         images: Images
         location: Location
         name: Name
+        num_instances: Quantity
         shelf: Shelf
         unit: Unit
       member:
@@ -166,6 +167,7 @@ en:
       edit_button_label: Edit this product
       event_header: Event
       product_reservation_history_header: Product Reservation History
+      serial_no_header: Serial No
     update:
       product_successfully_updated: Product successfully updated
   sessions:

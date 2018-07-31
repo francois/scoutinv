@@ -21,6 +21,7 @@ fr:
         images: Images
         location: Localisation
         name: Nom
+        num_instances: Quantité
         shelf: Tablette
         unit: Unité
       member:
@@ -166,6 +167,7 @@ fr:
       edit_button_label: Modifier ce produit
       event_header: Événement
       product_reservation_history_header: Historique de réservation du produit
+      serial_no_header: No série
     update:
       product_successfully_updated: Produit mis à jour avec succès
   sessions:

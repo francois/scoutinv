@@ -22,6 +22,11 @@
     </div>
 
     <div>
+      <strong><%= t("num_instances", scope: "activerecord.attributes.product") %>:</strong>
+      <%= number_with_delimiter @product.instances.size %>
+    </div>
+
+    <div>
       <strong><%= t("description", scope: "activerecord.attributes.product") %>:</strong>
       <%= simple_format @product.description %>
     </div>
@@ -29,12 +34,14 @@
     <h3><%= t(".product_reservation_history_header") %></h3>
     <table class="hover">
       <thead>
+        <th><%= t(".serial_no_header") %></th>
         <th><%= t(".dates_header") %></th>
         <th><%= t(".event_header") %></th>
       </thead>
       <tbody>
-        <% @product.reservations.sort_by(&:start_on).reverse.each do |reservation| %>
+        <% @product.reservations.sort_by{|reservation| [reservation.serial_no.to_i, reservation.serial_no, reservation.start_on]}.reverse.each do |reservation| %>
           <tr>
+            <td><%= reservation.serial_no %></td>
             <td><%= format_date_range(reservation.date_range) %></td>
             <td><%= link_to reservation.title, event_reservations_path(reservation.event) %></td>
           </tr>
