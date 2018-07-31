@@ -18,5 +18,7 @@ module Scoutinv
 
     config.i18n.available_locales = [ :fr, :en ]
     config.i18n.default_locale = :fr
+
+    config.active_record.schema_format = :sql
   end
 end
