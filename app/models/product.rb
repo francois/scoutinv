@@ -25,8 +25,8 @@ class Product < ApplicationRecord
     end
   }
   scope :search, ->(string){
-    vector = "to_tsvector('fr', coalesce(name, '') || ' ' || coalesce(description, '') || ' ' || coalesce(aisle, ' ') || ' ' || coalesce(shelf, ' ') || ' ' || coalesce(unit, ' '))"
-    query = "plainto_tsquery('fr', :string)"
+    vector = "to_tsvector('french', coalesce(name, '') || ' ' || coalesce(description, '') || ' ' || coalesce(aisle, ' ') || ' ' || coalesce(shelf, ' ') || ' ' || coalesce(unit, ' '))"
+    query = "plainto_tsquery('french', :string)"
     where("#{vector} @@ #{query}", string: string).order(Arel.sql("ts_rank(#{vector}, #{query.sub(":string", Product.connection.quote(string))})"))
   }
 
