@@ -21,7 +21,7 @@ en:
         images: Images
         location: Location
         name: Name
-        num_instances: Quantity
+        quantity: Quantity
         shelf: Shelf
         unit: Unit
       member:

@@ -18,9 +18,9 @@ class Product < ApplicationRecord
   scope :not_recently_reserved, ->{ joins("LEFT JOIN instances ON instances.product_id = products.id LEFT JOIN reservations ON reservations.instance_id = instances.id").where("reservations.created_at IS NULL OR reservations.created_at < ?", 12.months.ago).order(Arel.sql("random()")) }
   scope :leased,                ->{ includes(:reservations).references(:reservations).where(reservations: {returned_on: nil}).where.not(reservations: {leased_on: nil}) }
   scope :available,             ->{ includes(:reservations).references(:reservations).where(reservations: {id: nil}) }
-  scope :search,  						  ->(string){ where("POSITION(? IN LOWER(#{quoted_table_name}.name || ' ' || COALESCE(#{quoted_table_name}.description, ''))) > 0", string) }
-  scope :in_category, 					->(category){ includes(:categories).where(categories: { slug: category.slug }) }
-  scope :reserved,    					->(on_event=nil){
+  scope :search,                ->(string){ where("POSITION(? IN LOWER(#{quoted_table_name}.name || ' ' || COALESCE(#{quoted_table_name}.description, ''))) > 0", string) }
+  scope :in_category,           ->(category){ includes(:categories).where(categories: { slug: category.slug }) }
+  scope :reserved,              ->(on_event=nil){
     if on_event
       includes(:reservations).references(:reservations).where(reservations: {event_id: on_event.id})
     else
@@ -34,6 +34,10 @@ class Product < ApplicationRecord
   }
 
   validates :name, presence: true, length: { minimum: 2 }
+  validates :quantity, numericality: { only_integer: true, greater_than: 0, less_than: 100 }
+
+  before_save :manage_instances
+  after_touch :update_instances_count
 
   def add_note(attributes, metadata: {})
     notes.build(attributes).tap do |new_note|
@@ -72,5 +76,53 @@ class Product < ApplicationRecord
 
   def sort_key_for_pickup
     [aisle, shelf, unit, name, id].map(&:to_s).join(":")
+  end
+
+  private
+
+  def manage_instances
+    if new_record?
+      manage_instances_on_create
+    else
+      manage_instances_on_update
+    end
+  end
+
+  def manage_instances_on_create
+    quantity.times.each do |n|
+      instances.build(serial_no: 1 + n)
+    end
+  end
+
+  def manage_instances_on_update
+    return unless quantity_changed?
+
+    if quantity_was > quantity
+      manage_instance_removal
+    else
+      manage_instance_additions
+    end
+  end
+
+  def quantity_delta
+    (quantity - quantity_was).abs
+  end
+
+  def manage_instance_removal
+    candidates = instances.select(&:has_no_reservations?)
+    candidates.first(quantity_delta).each(&:destroy)
+    return if quantity_delta <= candidates.size
+
+    # We have to remove instances that have had reservations
+    # This is unfortunate, but we accept it
+    instances.reject(&:destroyed?).first(quantity_delta - candidates.size).each(&:destroy)
+  end
+
+  def manage_instance_additions
+    quantity_delta.times{|n| instances.build(serial_no: 1 + quantity + n) }
+  end
+
+  def update_instances_count
+    update_attribute(:quantity, instances.reload.size)
   end
 end

@@ -21,7 +21,7 @@ fr:
         images: Images
         location: Localisation
         name: Nom
-        num_instances: Quantité
+        quantity: Quantité
         shelf: Tablette
         unit: Unité
       member:

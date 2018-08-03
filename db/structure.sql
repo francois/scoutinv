@@ -500,7 +500,8 @@ CREATE TABLE public.products (
     updated_at timestamp with time zone NOT NULL,
     aisle text,
     shelf text,
-    unit text
+    unit text,
+    quantity integer DEFAULT 1 NOT NULL
 );
 
 
@@ -1079,6 +1080,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180416132155'),
 ('20180422132241'),
 ('20180717004049'),
-('20180731025753');
+('20180731025753'),
+('20180803024849');
 
 

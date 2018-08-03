@@ -47,6 +47,11 @@
       </div>
 
       <div class="small-12 cell">
+        <%= form.label :quantity %>
+        <%= form.number_field :quantity %>
+      </div>
+
+      <div class="small-12 cell">
         <fieldset class="fieldset">
           <legend><%= t(".categories_label") %></legend>
           <div class="grid-container">

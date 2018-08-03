@@ -86,11 +86,11 @@ class ProductsController < ApplicationController
   private
 
   def set_product
-    @product = current_group.products.find_by!(slug: params[:id])
+    @product = current_group.products.with_reservations.find_by!(slug: params[:id])
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :aisle, :shelf, :unit, category_slugs: [])
+    params.require(:product).permit(:name, :description, :aisle, :shelf, :unit, :quantity, category_slugs: [])
   end
 
   def load_categories
