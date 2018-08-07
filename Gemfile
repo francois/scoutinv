@@ -14,6 +14,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'aws-sdk-s3'
 gem 'kaminari', '~> 1.1.1'
+gem 'dotenv-rails'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
