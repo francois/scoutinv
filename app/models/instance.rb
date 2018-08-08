@@ -10,4 +10,8 @@ class Instance < ApplicationRecord
   def has_no_reservations?
     reservations.empty?
   end
+
+  def reserved_on?(dates)
+    reservations.any?{|reservation| reservation.overlaps?(dates)}
+  end
 end

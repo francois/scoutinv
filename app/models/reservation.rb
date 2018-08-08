@@ -9,8 +9,8 @@ class Reservation < ApplicationRecord
 
   scope :with_product, ->{ includes(:product) }
 
-  validates :product, :event, presence: true
-  validates :product, uniqueness: { scope: :event }
+  validates :instance, :event, presence: true
+  validates :instance, uniqueness: { scope: :event }
 
   delegate :title, :start_on, :end_on, :date_range, to: :event
   delegate :name, :slug, :sort_key_for_pickup, prefix: :product, to: :product

@@ -37,7 +37,7 @@ class Event < ApplicationRecord
   def add(products, metadata: {})
     missing = products - reservations.map(&:product)
     missing.each do |product|
-      reservations.build(product: product)
+      reservations.build(instance: product.instances.reject{|instance| instance.reserved_on?(date_range)}.first)
       domain_events << ProductReserved.new(
         data: {
           event_slug: slug,
