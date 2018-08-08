@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def product_reservation_css_class(event, product)
-    overlapping_events = product.reservations.select{|res| res.dates_overlap?(event)}.map(&:event)
+    overlapping_events = product.reservations.select{|res| res.event_overlaps?(event)}.map(&:event)
     if overlapping_events.include?(event) && overlapping_events.size > 1
       "product-busy-many"
     elsif overlapping_events.include?(event) && overlapping_events.size == 1

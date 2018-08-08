@@ -33,7 +33,11 @@ class Reservation < ApplicationRecord
     self.returned_on = date
   end
 
-  def dates_overlap?(other_event)
-    date_range.overlaps?(other_event.date_range)
+  def event_overlaps?(other_event)
+    overlaps?(other_event.date_range)
+  end
+
+  def overlaps?(other_date_range)
+    date_range.overlaps?(other_date_range)
   end
 end

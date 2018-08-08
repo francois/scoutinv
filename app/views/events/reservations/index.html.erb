@@ -83,7 +83,7 @@
                       <%= product_image product, height: 100 %>
                     </td>
                     <td>
-                      <% product.reservations.select{|res| res.dates_overlap?(@event)}.each do |reservation| %>
+                      <% product.reservations.select{|res| res.event_overlaps?(@event)}.each do |reservation| %>
                         <span title="<%= format_date_range(reservation.date_range) %>"><%= reservation.event.title %></span><br>
                       <% end %>
                     </td>
