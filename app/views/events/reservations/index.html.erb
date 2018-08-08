@@ -79,7 +79,7 @@
                       <%= check_box_tag "products[#{product.slug}]", value="1", checked=false %>
                     </td>
                     <td>
-                      <%= link_to product.name, product %> <br>
+                      (<%= number_with_delimiter product.quantity %>) <%= link_to product.name, product %> <br>
                       <%= product_image product, height: 100 %>
                     </td>
                     <td>
