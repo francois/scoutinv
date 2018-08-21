@@ -161,6 +161,7 @@ fr:
       page_title: "Nouveau produit"
     show:
       add_note_label: Ajouter une note
+      add_to_cart_label: Réserver pour cet événement
       back_to_list_button_label: Retour à la liste
       clone_button_label: Copier ce produit
       dates_header: Dates

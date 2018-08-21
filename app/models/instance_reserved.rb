@@ -1,0 +1,2 @@
+class InstanceReserved < DomainEvent
+end

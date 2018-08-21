@@ -161,6 +161,7 @@ en:
       page_title: New Product
     show:
       add_note_label: Add Note
+      add_to_cart_label: Reserve for this event
       back_to_list_button_label: Back to list
       clone_button_label: Clone this product
       dates_header: Dates

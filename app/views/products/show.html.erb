@@ -1,5 +1,8 @@
 <div class="grid-x grid-margin-x">
   <div class="large-9 medium-12 cell">
+    <%= form_tag event_reservations_path(@event, @product) do %>
+      <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button small hide-for-large" %>
+    <% end if @event %>
     <%= link_to t(".edit_button_label"), edit_product_path(@product), class: "button small hide-for-large" %>
     <%= link_to t(".clone_button_label"), new_product_path(clone_from: @product), class: "button small hide-for-large" %>
     <%= link_to t(".back_to_list_button_label"), products_path, class: "button secondary small hide-for-large" %>
@@ -42,7 +45,7 @@
         <% @product.reservations.sort_by{|reservation| [reservation.serial_no.to_i, reservation.serial_no, reservation.start_on]}.reverse.each do |reservation| %>
           <tr>
             <td><%= reservation.serial_no %></td>
-            <td><%= format_date_range(reservation.date_range) %></td>
+            <td><%= format_date_range(reservation.real_date_range) %></td>
             <td><%= link_to reservation.title, event_reservations_path(reservation.event) %></td>
           </tr>
         <% end %>
@@ -51,6 +54,13 @@
   </div>
 
   <div class="large-3 medium-12 cell show-for-large">
+    <%= form_tag event_reservations_path(@event, @product) do %>
+      <h4><%= @event.title %></h4>
+      <h6><%= format_date_range(@event.real_date_range) %></h6>
+      <%= hidden_field_tag "products[#{@product.slug}]", "1" %>
+      <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button expanded" %>
+      <hr>
+    <% end if @event %>
     <%= link_to t(".edit_button_label"), edit_product_path(@product), class: "button expanded" %>
     <%= link_to t(".clone_button_label"), new_product_path(clone_from: @product), class: "button expanded" %>
     <%= link_to t(".back_to_list_button_label"), products_path, class: "button secondary expanded" %>

@@ -35,13 +35,23 @@ class Event < ApplicationRecord
   end
 
   def add(products, metadata: {})
-    missing = products - reservations.map(&:product)
-    missing.each do |product|
-      reservations.build(instance: product.instances.reject{|instance| instance.reserved_on?(date_range)}.first)
-      domain_events << ProductReserved.new(
+    products.each do |product|
+      # Attempt to find a free instance, one that isn't reserved for the event's date range
+      reservation = reservations.build(instance: product.instances.reject{|instance| instance.reserved_on?(date_range)}.sample)
+
+      # If we couldn't find a free instance, fallback to any instance
+      # It is a conscious decision to let humans take the correct decision in this case
+      # The UI will inform people that an instance is double booked
+      #
+      # If we decide to change this decision, we could raise a DoubleBookingError error
+      # and let the human take a decision at that time
+      reservation = reservations.build(instance: product.instances.sample) unless reservation
+
+      domain_events << InstanceReserved.new(
         data: {
           event_slug: slug,
-          product_slug: product.slug
+          instance_slug: reservation.instance_slug,
+          product_slug: product.slug,
         },
         metadata: metadata
       )

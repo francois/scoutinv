@@ -12,8 +12,9 @@ class Reservation < ApplicationRecord
   validates :instance, :event, presence: true
   validates :instance, uniqueness: { scope: :event }
 
-  delegate :title, :start_on, :end_on, :date_range, to: :event
+  delegate :title, :start_on, :end_on, :date_range, :real_date_range, to: :event
   delegate :name, :slug, :sort_key_for_pickup, prefix: :product, to: :product
+  delegate :slug, prefix: :instance, to: :instance
   delegate :serial_no, to: :instance
 
   def leased?
