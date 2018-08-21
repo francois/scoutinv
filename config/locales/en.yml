@@ -244,6 +244,7 @@ en:
       range_same_year_and_month: "%b %-d–%{last_day}, %Y"
       range_same_year: "%b %-d–%{last_day}, %Y"
       range_other: "%b %-d %Y to %{last_day}"
+      same_day: "%b %-d %Y"
       no_year: "%b %-d"
       with_year: "%b %-d %Y"
       time_ago: "%{date} ago"
