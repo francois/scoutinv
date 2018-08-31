@@ -1,0 +1,2 @@
+class InstanceReleased < DomainEvent
+end

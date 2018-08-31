@@ -60,10 +60,13 @@ class Event < ApplicationRecord
 
   def remove(products, metadata: {})
     reservations.each do |reservation|
-      reservation.mark_for_destruction if products.include?(reservation.product)
-      domain_events << ProductReleased.new(
+      next unless products.include?(reservation.product)
+      reservation.mark_for_destruction
+      products = products - [ reservation.product ]
+      domain_events << InstanceReleased.new(
         data: {
           event_slug: slug,
+          instance_slug: reservation.instance_slug,
           product_slug: reservation.product_slug,
         },
         metadata: metadata
