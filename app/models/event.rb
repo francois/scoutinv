@@ -59,18 +59,27 @@ class Event < ApplicationRecord
   end
 
   def remove(products, metadata: {})
+    double_booking_errors = Product.double_booked(self).to_a
+
+    # When removing a product, we attempt to remove any double
+    # booked instances first
     reservations.each do |reservation|
       next unless products.include?(reservation.product)
-      reservation.mark_for_destruction
-      products = products - [ reservation.product ]
-      domain_events << InstanceReleased.new(
-        data: {
-          event_slug: slug,
-          instance_slug: reservation.instance_slug,
-          product_slug: reservation.product_slug,
-        },
-        metadata: metadata
-      )
+      if index = double_booking_errors.find_index(reservation.product)
+        next unless double_booking_errors[index].double_booked_instance_ids.include?(reservation.instance_id)
+        products = remove_reservation(reservation, products, metadata)
+        break if products.empty? # performance optimization
+      end
+
+      return if products.empty?
+
+      # If we still have to remove products, then we fallback to
+      # removing any instance
+      reservations.each do |reservation|
+        next unless products.include?(reservation.product)
+        products = remove_reservation(reservation, products, metadata)
+        break if products.empty? # performance optimization
+      end
     end
   end
 
@@ -129,5 +138,21 @@ class Event < ApplicationRecord
   def ends_after_it_starts
     return unless start_on && end_on
     errors.add("Events must end on or after they start") unless end_on >= start_on
+  end
+
+  private
+
+  def remove_reservation(reservation, products, metadata)
+    reservation.mark_for_destruction
+    domain_events << InstanceReleased.new(
+      data: {
+        event_slug: slug,
+        instance_slug: reservation.instance_slug,
+        product_slug: reservation.product_slug,
+      },
+      metadata: metadata
+    )
+
+    products = products - [ reservation.product ]
   end
 end
