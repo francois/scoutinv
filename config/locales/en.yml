@@ -122,13 +122,23 @@ en:
         search_button_label: Search
         sorry_no_elements: Sorry, no reservations correspond to your search criterias
         view_all_button_label: View all
+      create:
+        added: "%{num} products added to event"
+        leased: "%{num} products leased"
+        leased_all: "All products leased"
+        removed: "%{num} products removed from event"
+        returned: "%{num} products returned"
     show:
       back_to_list_button_label: Back to list
       bill_of_materials: Bill of materials
       delete_button_label: Delete this event
       edit_button_label: Edit this event
       edit_reservation_button_label: Edit reservations
+      minus_one: "-1"
+      minus_one_hover: Reserves one less instance of this product
       notes_header: Notes
+      plus_one: "+1"
+      plus_one_hover: Reserves one more instance of this product
       print_button_label: Print the bill of materials
     print:
       location_header: Location

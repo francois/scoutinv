@@ -122,13 +122,23 @@ fr:
         search_button_label: Chercher
         sorry_no_elements: Désolé, aucune réservation ne correspond à vos critères de recherche
         view_all_button_label: Afficher tout
+      create:
+        added: "%{num} produit(s) ajouté(s) à l'événement"
+        leased: "%{num} produit(s) prêté(s)"
+        leased_all: "Prêté tous les produits"
+        removed: "%{num} produit(s) retiré(s) de l'événement"
+        returned: "%{num} produit(s) retourné(s)"
     show:
       back_to_list_button_label: Retour à la liste
       bill_of_materials: Liste de matériel
       delete_button_label: Détruire cet événement
       edit_button_label: Modifier cet événement
       edit_reservation_button_label: Modifer les réservations
+      minus_one: "-1"
+      minus_one_hover: Réserve une instance de moins de ce produit
       notes_header: Notes
+      plus_one: "+1"
+      plus_one_hover: Réserve une instance de plus de ce produit
       print_button_label: Imprimer la liste de matériel
     print:
       location_header: Localisation

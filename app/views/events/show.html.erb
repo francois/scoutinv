@@ -38,13 +38,36 @@
               <%= link_to product do %>
                 <%= product_image product, height: 250 %>
               <% end %>
+              <div class="grid-x grid-margin-x">
+                <div class="small-2 cell">&nbsp;</div>
+                <div class="auto cell">
+                  <%= form_tag event_reservations_path(@event), method: :post do %>
+                    <%= hidden_field_tag "products[#{product.slug}]", "1" %>
+                    <%= hidden_field_tag "back_to_event", "1" %>
+                    <%= submit_tag t(".plus_one"), title: t(".plus_one_hover"), class: "button primary small expanded", name: "add" %>
+                  <% end %>
+                </div>
+                <div class="auto cell">
+                  <%= form_tag event_reservations_path(@event), method: :post do %>
+                    <%= hidden_field_tag "products[#{product.slug}]", "1" %>
+                    <%= hidden_field_tag "back_to_event", "1" %>
+                    <%= submit_tag t(".minus_one"), title: t(".minus_one_hover"), class: "button secondary small expanded", name: "remove" %>
+                  <% end %>
+                </div>
+                <div class="small-2 cell">&nbsp;</div>
+              </div>
               <% if product.aisle.present? || product.shelf.present? || product.unit.present? || product.description.present? %>
                 <div class="card-section">
-                  <% if product.aisle.present? || product.shelf.present? || product.unit.present? %>
-                    <p><strong><%= t("activerecord.attributes.product.location") %></strong>: <%= format_product_location(product) %></p>
-                  <% end %>
                   <% if product.description.present? %>
                     <%= simple_format product.description %>
+                  <% end %>
+                  <% if product.aisle.present? || product.shelf.present? || product.unit.present? %>
+                    <p>
+                    <small>
+                      <strong><%= t("activerecord.attributes.product.location") %></strong>:
+                      <%= format_product_location(product) %>
+                    </small>
+                    </p>
                   <% end %>
                 </div>
               <% end %>

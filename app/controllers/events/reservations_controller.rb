@@ -36,14 +36,19 @@ class Events::ReservationsController < ApplicationController
         # NOP
       elsif params[:add].present?
         @event.add(products, metadata: domain_event_metadata)
+        flash[:notice] = t(:added, scope: "events.reservations.create", num: products.size)
       elsif params[:remove].present?
         @event.remove(products, metadata: domain_event_metadata)
+        flash[:notice] = t(:removed, scope: "events.reservations.create", num: products.size)
       elsif params[:lease].present?
         @event.lease(products, metadata: domain_event_metadata)
+        flash[:notice] = t(:leased, scope: "events.reservations.create", num: products.size)
       elsif params[:lease_all].present?
         @event.lease_all(metadata: domain_event_metadata)
+        flash[:notice] = t(:leased_all, scope: "events.reservations.create", num: products.size)
       elsif params[:return].present?
         @event.return(products, metadata: domain_event_metadata)
+        flash[:notice] = t(:returned, scope: "events.reservations.create", num: products.size)
       else
         raise "ASSERTION ERROR: One of add and remove were supposed to be filled in, none were?!?"
       end
@@ -51,7 +56,11 @@ class Events::ReservationsController < ApplicationController
       @event.save!
     end
 
-    redirect_to action: :index
+    if params[:back_to_event].blank?
+      redirect_to action: :index
+    else
+      redirect_to event_path(@event)
+    end
   end
 
   private
