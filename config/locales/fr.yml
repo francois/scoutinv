@@ -143,11 +143,12 @@ fr:
       print_button_label: Imprimer la liste de matériel
     print:
       location_header: Localisation
+      note_by_on: Par %{by} le %{on}
       notes_header: Notes
       printed_by_on: Imprimé le %{on} par %{by}
       product_header: Produit
       quantity_header: Quantité
-      note_by_on: Par %{by} le %{on}
+      serial_number: "N/S:%{no}"
     update:
       event_successfully_updated: Événement mis à jour avec succès
   products:

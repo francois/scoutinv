@@ -23,7 +23,18 @@
             <td></td>
             <td><%= number_with_delimiter reservations.size %></td>
             <td><%= link_to product.name, product %></td>
-            <td><%= format_product_location product %></td>
+            <td>
+              <%= format_product_location product %>
+              <% if product.instances.size > 1 %>
+                <div class="grid-x grid-margin-x small-up-4 medium-up-6">
+                  <% reservations.sort_by(&:serial_no).each do |reservation| %>
+                    <div class="auto cell">
+                      <%= t(".serial_number", no: reservation.serial_no) %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
