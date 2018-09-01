@@ -25,67 +25,7 @@
     <div class="grid-container bill-of-materials">
       <div class="grid-x grid-margin-x small-up-2 medium-up-3">
         <% @event.reservations.group_by(&:product).sort_by{|product, _| product.sort_key_for_pickup}.each do |product, reservations| %>
-          <div class="cell">
-            <div class="card">
-              <div class="card-divider">
-                <h4 class="auto cell">
-                <% if @double_booked_products.include?(product) %>
-                  <div class="float-right double-booked-icon">
-                    <span title="<%= t(".double_booked_hover") %>">X</span>
-                  </div>
-                <% end %>
-                  <% if reservations.size > 1 %>
-                    (<%= number_with_delimiter reservations.size %>)
-                  <% end %>
-                  <%= link_to product.name, product_path(product) %>
-                </h4>
-              </div>
-              <%= link_to product do %>
-                <%= product_image product, height: 250 %>
-              <% end %>
-              <div class="grid-x grid-margin-x">
-                <div class="small-2 cell">&nbsp;</div>
-                <div class="auto cell">
-                  <%= form_tag event_reservations_path(@event), method: :post do %>
-                    <%= hidden_field_tag "products[#{product.slug}]", "1" %>
-                    <%= hidden_field_tag "back_to_event", "1" %>
-                    <%= hidden_field_tag "add", "1" %>
-                    <%= button_tag class: "button primary small expanded",
-                      disabled: @double_booked_products.include?(product) || product.quantity == reservations.size,
-                      title: t(".plus_one_hover") do %>
-                      <%= t(".plus_one") %>
-                    <% end %>
-                  <% end %>
-                </div>
-                <div class="auto cell">
-                  <%= form_tag event_reservations_path(@event), method: :post do %>
-                    <%= hidden_field_tag "products[#{product.slug}]", "1" %>
-                    <%= hidden_field_tag "back_to_event", "1" %>
-                    <%= hidden_field_tag "remove", "1" %>
-                    <%= button_tag title: t(".minus_one_hover"), class: "button secondary small expanded" do %>
-                      <%= t(".minus_one") %>
-                    <% end %>
-                  <% end %>
-                </div>
-                <div class="small-2 cell">&nbsp;</div>
-              </div>
-              <% if product.aisle.present? || product.shelf.present? || product.unit.present? || product.description.present? %>
-                <div class="card-section">
-                  <% if product.description.present? %>
-                    <%= simple_format product.description %>
-                  <% end %>
-                  <% if product.aisle.present? || product.shelf.present? || product.unit.present? %>
-                    <p>
-                    <small>
-                      <strong><%= t("activerecord.attributes.product.location") %></strong>:
-                      <%= format_product_location(product) %>
-                    </small>
-                    </p>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          </div>
+          <%= render partial: "product", locals: { product: product, reservations: reservations } %>
         <% end %>
       </div>
     </div>

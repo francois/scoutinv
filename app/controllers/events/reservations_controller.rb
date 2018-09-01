@@ -71,6 +71,12 @@ class Events::ReservationsController < ApplicationController
         # We must reload products because we worked on the event's products instead
         # This is a limitation of the ActiveRecord implementation
         @products = current_group.products.includes(reservations: [:event, :instance]).where(slug: params[:products].keys).to_a
+
+        # Don't prepare a flash, because we won't need to show it: the UI updates
+        # immediately and the end-user can't be surprised. What would be surprising
+        # is getting a flash message when they navigate away from the page.
+        flash[:notice] = nil
+
         render
       end
     end

@@ -135,6 +135,10 @@ class Event < ApplicationRecord
     end
   end
 
+  def reservations_of(product)
+    reservations.select{|reservation| reservation.product == product}
+  end
+
   def real_date_range
     start_on .. end_on
   end

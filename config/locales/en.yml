@@ -133,19 +133,6 @@ en:
         plus_one_hover: Reserves one more instance of this product
         minus_one: "-1"
         minus_one_hover: Reserves one less instance of this product
-    show:
-      back_to_list_button_label: Back to list
-      bill_of_materials: Bill of materials
-      delete_button_label: Delete this event
-      double_booked_hover: "Double reservation error; more than one event reserves the same instance of this product"
-      edit_button_label: Edit this event
-      edit_reservation_button_label: Edit reservations
-      minus_one: "-1"
-      minus_one_hover: Reserves one less instance of this product
-      notes_header: Notes
-      plus_one: "+1"
-      plus_one_hover: Reserves one more instance of this product
-      print_button_label: Print the bill of materials
     print:
       location_header: Location
       note_by_on: By %{by} on %{on}
@@ -153,6 +140,20 @@ en:
       printed_by_on: Printed by %{by} on %{on}
       product_header: Product
       quantity_header: Quantity
+    product:
+      minus_one: "-1"
+      minus_one_hover: Reserves one less instance of this product
+      plus_one: "+1"
+      plus_one_hover: Reserves one more instance of this product
+    show:
+      back_to_list_button_label: Back to list
+      bill_of_materials: Bill of materials
+      delete_button_label: Delete this event
+      double_booked_hover: "Double reservation error; more than one event reserves the same instance of this product"
+      edit_button_label: Edit this event
+      edit_reservation_button_label: Edit reservations
+      notes_header: Notes
+      print_button_label: Print the bill of materials
     update:
       event_successfully_updated: Event successfully updated
   products:

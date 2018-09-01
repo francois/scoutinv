@@ -1,4 +1,4 @@
-<tr id="product-<%= product.slug %>" class="<%= product_reservation_css_class(@event, product) %>">
+<tr id="product-row-<%= product.slug %>" class="<%= product_reservation_css_class(@event, product) %>">
   <td>
     (<%= number_with_delimiter product.quantity %>) <%= link_to product.name, event_product_path(@event, product) %> <br>
     <%= product_image product, height: 100 %>
