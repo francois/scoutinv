@@ -15,6 +15,8 @@ class EventsController < ApplicationController
     @page_title = @event.title
     @note  = @event.notes.build
 
+    @double_booked_products = Product.double_booked(@event).to_set
+
     if params[:print].blank?
       render action: :show
     else

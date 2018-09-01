@@ -45,7 +45,7 @@ class Event < ApplicationRecord
       #
       # If we decide to change this decision, we could raise a DoubleBookingError error
       # and let the human take a decision at that time
-      reservation = reservations.build(instance: product.instances.sample) unless reservation
+      reservation.instance = product.instances.sample unless reservation.instance
 
       domain_events << InstanceReserved.new(
         data: {

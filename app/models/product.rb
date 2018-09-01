@@ -27,6 +27,24 @@ class Product < ApplicationRecord
       includes(:reservations).references(:reservations).where.not(reservations: {event_id: nil})
     end
   }
+  scope :double_booked,         ->(event) {
+    select(<<~EOSQL)
+              products.*
+            , events.id       AS double_booked_event_id
+            , events.slug     AS double_booked_event_slug
+            , events.title    AS double_booked_event_title
+            , events.start_on AS double_booked_event_start_on
+            , events.end_on   AS double_booked_event_end_on
+            , array_agg(instances.id) AS double_booked_instance_ids
+            EOSQL
+              .joins("JOIN instances    ON instances.product_id     = products.id".squish)
+              .joins("JOIN reservations ON reservations.instance_id = instances.id".squish)
+              .joins("JOIN events       ON events.id                = reservations.event_id".squish)
+              .where.not(reservations: { event_id: event.id })
+              .where("reservations.instance_id IN (SELECT instance_id FROM reservations WHERE event_id = ?)", event.id)
+              .where("daterange(events.start_on - 1, events.end_on + 1, '[]') && daterange(date :start_on - 1, date :end_on + 1, '[]')", start_on: event.start_on, end_on: event.end_on)
+              .group("products.id", "events.id")
+  }
   scope :search, ->(string){
     vector = "to_tsvector('fr', coalesce(name, '') || ' ' || coalesce(description, '') || ' ' || coalesce(aisle, ' ') || ' ' || coalesce(shelf, ' ') || ' ' || coalesce(unit, ' '))"
     query = "plainto_tsquery('fr', :string)"

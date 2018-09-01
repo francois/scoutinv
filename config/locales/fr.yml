@@ -132,6 +132,7 @@ fr:
       back_to_list_button_label: Retour à la liste
       bill_of_materials: Liste de matériel
       delete_button_label: Détruire cet événement
+      double_booked_hover: "Produit réservé en double; plus d'un événement réserve la même instance de ce produit"
       edit_button_label: Modifier cet événement
       edit_reservation_button_label: Modifer les réservations
       minus_one: "-1"

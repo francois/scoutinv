@@ -132,6 +132,7 @@ en:
       back_to_list_button_label: Back to list
       bill_of_materials: Bill of materials
       delete_button_label: Delete this event
+      double_booked_hover: "Double reservation error; more than one event reserves the same instance of this product"
       edit_button_label: Edit this event
       edit_reservation_button_label: Edit reservations
       minus_one: "-1"
