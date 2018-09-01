@@ -24,6 +24,7 @@ class Events::ReservationsController < ApplicationController
     @products     = @products.page(params[:page])
 
     @reservations = @event.reservations.with_product.all
+    @double_booked_products = Product.double_booked(@event).to_set
   end
 
   def create

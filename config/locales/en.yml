@@ -110,10 +110,14 @@ en:
         lease_all_button_label: Lease all products
         lease_product_button_label: Lease
         leased_on_header: Leased on
+        minus_one: "-1"
+        minus_one_hover: Reserves one less instance of this product
         only_show_available_products_label: Only show available products
         only_show_leased_products_label: Only show leased products
         only_show_my_reserved_products_label: Only show products reserved on this event
         only_show_reserved_products_label: Only show reserved products
+        plus_one: "+1"
+        plus_one_hover: Reserves one more instance of this product
         product_header: Product
         remove_from_reservation_button_label: Remove from reservation
         reservations_header: Reservations
