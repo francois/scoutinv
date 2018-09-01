@@ -18,7 +18,6 @@ class Product < ApplicationRecord
   scope :not_recently_reserved, ->{ joins("LEFT JOIN instances ON instances.product_id = products.id LEFT JOIN reservations ON reservations.instance_id = instances.id").where("reservations.created_at IS NULL OR reservations.created_at < ?", 12.months.ago).order(Arel.sql("random()")) }
   scope :leased,                ->{ includes(:reservations).references(:reservations).where(reservations: {returned_on: nil}).where.not(reservations: {leased_on: nil}) }
   scope :available,             ->{ includes(:reservations).references(:reservations).where(reservations: {id: nil}) }
-  scope :search,                ->(string){ where("POSITION(? IN LOWER(#{quoted_table_name}.name || ' ' || COALESCE(#{quoted_table_name}.description, ''))) > 0", string) }
   scope :in_category,           ->(category){ includes(:categories).where(categories: { slug: category.slug }) }
   scope :reserved,              ->(on_event=nil){
     if on_event
@@ -46,7 +45,7 @@ class Product < ApplicationRecord
               .group("products.id", "events.id")
   }
   scope :search, ->(string){
-    vector = "to_tsvector('fr', coalesce(name, '') || ' ' || coalesce(description, '') || ' ' || coalesce(aisle, ' ') || ' ' || coalesce(shelf, ' ') || ' ' || coalesce(unit, ' '))"
+    vector = "to_tsvector('fr', coalesce(products.name, '') || ' ' || coalesce(products.description, '') || ' ' || coalesce(products.aisle, ' ') || ' ' || coalesce(products.shelf, ' ') || ' ' || coalesce(products.unit, ' '))"
     query = "plainto_tsquery('fr', :string)"
     where("#{vector} @@ #{query}", string: string).order(Arel.sql("ts_rank(#{vector}, #{query.sub(":string", Product.connection.quote(string))})"))
   }
