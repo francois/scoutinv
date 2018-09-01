@@ -90,6 +90,7 @@ fr:
       include_previous_year_html: "&laquo; Inclure l'année précédente"
       new_event_button_label: Ajouter un événement
       on_or_after_label: Le ou après le
+      page_title: "Événements"
       search_button_label: Chercher
       sorry_no_elements: Désolé, aucun événement ne correspond à vos critères de recherche
       start_on_header: Commence le
@@ -99,6 +100,10 @@ fr:
       event_successfully_created: Événement créé avec succès
     destroy:
       event_successfully_destroyed: Événement détruit avec succès
+    edit:
+      page_title: "Modification de %{event}"
+    new:
+      page_title: "Nouvel événement"
     reservations:
       create:
         added: "%{num} produit(s) ajouté(s) à l'événement"
@@ -120,6 +125,7 @@ fr:
         only_show_leased_products_label: N'afficher que les produits prêtés
         only_show_my_reserved_products_label: N'afficher que les produits réservés sur cet événement
         only_show_reserved_products_label: N'afficher que les produits réservés
+        page_title: "Réservations pour l'événement %{event}"
         product_header: Produit
         remove_from_reservation_button_label: Ne plus réserver
         reservations_header: Réservations

@@ -8,12 +8,12 @@ class GroupsController < ApplicationController
 
   def show
     @page_title = @group.name
-    @member       = @group.members.build
+    @member     = @group.members.build
   end
 
   def new
     @page_title = t(".page_title")
-    @group = Group.new
+    @group      = Group.new
   end
 
   def edit

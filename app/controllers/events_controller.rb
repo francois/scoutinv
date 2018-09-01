@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_action :set_event, except: [:index, :new, :create]
 
   def index
-    @page_title = "Events"
+    @page_title = I18n.t("events.index.page_title")
 
     @after = params[:after].present? ? params[:after].to_date : 1.month.ago
 
@@ -25,12 +25,12 @@ class EventsController < ApplicationController
   end
 
   def new
-    @page_title = "New Event"
+    @page_title = I18n.t("events.new.page_title")
     @event = Event.new
   end
 
   def edit
-    @page_title = "Edit #{@event.title}"
+    @page_title = I18n.t("events.edit.page_title", event: @event.title)
   end
 
   def create

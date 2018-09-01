@@ -90,6 +90,7 @@ en:
       include_previous_year_html: "&laquo; Include previous year"
       new_event_button_label: Add an Event
       on_or_after_label: On or after
+      page_title: Events
       search_button_label: Search
       sorry_no_elements: Sorry, no events correspond to your search criterias
       start_on_header: Start on
@@ -99,6 +100,10 @@ en:
       event_successfully_created: Event created with success
     destroy:
       event_successfully_destroyed: Event destroyed with success
+    edit:
+      page_title: "Editing %{event}"
+    new:
+      page_title: "New Event"
     reservations:
       create:
         added: "%{num} products added to event"
@@ -120,6 +125,7 @@ en:
         only_show_leased_products_label: Only show leased products
         only_show_my_reserved_products_label: Only show products reserved on this event
         only_show_reserved_products_label: Only show reserved products
+        page_title: "Reservations for event %{event}"
         product_header: Product
         remove_from_reservation_button_label: Remove from reservation
         reservations_header: Reservations

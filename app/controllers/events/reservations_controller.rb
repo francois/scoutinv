@@ -2,12 +2,12 @@ class Events::ReservationsController < ApplicationController
   before_action :set_event
 
   def index
-    @page_title = "Reservations for #{@event.title}"
+    @page_title = I18n.t("events.reservations.index.page_title", event: @event.title)
 
     @filter = params[:filter]
-    @only_show_available_products   = params[:only_show_available_products]       == "1"
-    @only_show_leased_products      = params[:only_show_leased_products]          == "1"
-    @only_show_reserved_products    = params[:only_show_reserved_products]        == "1"
+    @only_show_available_products   = params[:only_show_available_products]   == "1"
+    @only_show_leased_products      = params[:only_show_leased_products]      == "1"
+    @only_show_reserved_products    = params[:only_show_reserved_products]    == "1"
     @only_show_my_reserved_products = params[:only_show_my_reserved_products] == "1"
 
     @categories = Category.by_name.to_a
