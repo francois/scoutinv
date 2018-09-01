@@ -1,0 +1,3 @@
+<% @products.each do |product| %>
+    $("<%= escape_javascript(render partial: "product", locals: {product: product}) %>").replaceAll("#product-<%= product.slug %>");
+<% end %>
