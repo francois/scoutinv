@@ -36,8 +36,13 @@ class Event < ApplicationRecord
 
   def add(products, metadata: {})
     products.each do |product|
-      # Attempt to find a free instance, one that isn't reserved for the event's date range
-      reservation = reservations.build(instance: product.instances.reject{|instance| instance.reserved_on?(date_range)}.sample)
+      # Attempt to find a free instance, e.g. one that isn't reserved for this event's date range
+      my_reserved_instances          = reservations.map(&:instance)
+      instances_busy_on_other_events = product.instances.reject{|instance| instance.reserved_on?(date_range)}
+
+      candidates = product.instances
+      candidates = candidates - my_reserved_instances
+      candidates = candidates - instances_busy_on_other_events
 
       # If we couldn't find a free instance, fallback to any instance
       # It is a conscious decision to let humans take the correct decision in this case
@@ -45,8 +50,10 @@ class Event < ApplicationRecord
       #
       # If we decide to change this decision, we could raise a DoubleBookingError error
       # and let the human take a decision at that time
-      reservation.instance = product.instances.sample unless reservation.instance
+      Rails.logger.debug "For product #{product.name} (#{product.slug}), falling back to a busy instance because none are free" if candidates.empty?
+      candidates = product.instances if candidates.empty?
 
+      reservation = reservations.build(instance: candidates.sample)
       domain_events << InstanceReserved.new(
         data: {
           event_slug: slug,
