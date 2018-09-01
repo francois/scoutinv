@@ -49,14 +49,22 @@
                   <%= form_tag event_reservations_path(@event), method: :post do %>
                     <%= hidden_field_tag "products[#{product.slug}]", "1" %>
                     <%= hidden_field_tag "back_to_event", "1" %>
-                    <%= submit_tag t(".plus_one"), title: t(".plus_one_hover"), class: "button primary small expanded", disabled: @double_booked_products.include?(product), name: "add" %>
+                    <%= hidden_field_tag "add", "1" %>
+                    <%= button_tag class: "button primary small expanded",
+                      disabled: @double_booked_products.include?(product) || product.quantity == reservations.size,
+                      title: t(".plus_one_hover") do %>
+                      <%= t(".plus_one") %>
+                    <% end %>
                   <% end %>
                 </div>
                 <div class="auto cell">
                   <%= form_tag event_reservations_path(@event), method: :post do %>
                     <%= hidden_field_tag "products[#{product.slug}]", "1" %>
                     <%= hidden_field_tag "back_to_event", "1" %>
-                    <%= submit_tag t(".minus_one"), title: t(".minus_one_hover"), class: "button secondary small expanded", name: "remove" %>
+                    <%= hidden_field_tag "remove", "1" %>
+                    <%= button_tag title: t(".minus_one_hover"), class: "button secondary small expanded" do %>
+                      <%= t(".minus_one") %>
+                    <% end %>
                   <% end %>
                 </div>
                 <div class="small-2 cell">&nbsp;</div>
