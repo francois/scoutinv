@@ -53,9 +53,9 @@ module ApplicationHelper
 
   def product_image(product, height: 250)
     if product.images.first&.blob
-      link_to(image_tag(product.images.first.variant(resize: "x#{height}"), height: height, alt: "", class: "product-image"), product)
+      link_to(image_tag(product.images.first.variant(resize: "x#{height}"), height: height, alt: "", class: "product-image"), product, class: "float-center")
     else
-      link_to(image_tag("https://via.placeholder.com/#{height}x#{height}?text=%20", alt: "", class: "product-image"), product)
+      link_to(image_tag("https://via.placeholder.com/#{height}x#{height}?text=%20", alt: "", class: "product-image"), product, class: "float-center")
     end
   end
 end
