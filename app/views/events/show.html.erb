@@ -24,11 +24,16 @@
     <h2><%= t(".bill_of_materials") %></h2>
     <div class="grid-container bill-of-materials">
       <div class="grid-x grid-margin-x small-up-2 medium-up-3">
-        <% @event.reservations.map(&:product).sort_by(&:sort_key_for_pickup).each do |product| %>
+        <% @event.reservations.group_by(&:product).sort_by{|product, _| product.sort_key_for_pickup}.each do |product, reservations| %>
           <div class="cell">
             <div class="card" style="">
               <div class="card-divider">
-                <h4><%= link_to product.name, product_path(product) %></h4>
+                <h4>
+                  <% if reservations.size > 1 %>
+                  (<%= number_with_delimiter reservations.size %>)
+                <% end %>
+                <%= link_to product.name, product_path(product) %>
+                </h4>
               </div>
               <%= link_to product do %>
                 <%= product_image product, height: 250 %>

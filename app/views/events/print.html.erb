@@ -2,7 +2,7 @@
   <div class="small-12 cell">
     <h2><%= format_date_range(@event.date_range) %></h2>
 
-    <h4>Printed by <%= current_member.name %> on <%= Date.today %></h4>
+    <h4><%= t(".printed_by_on", by: current_member.name, on: l(Date.today, format: :short)) %></h4>
 
     <%= simple_format @event.description %>
   </div>
@@ -12,16 +12,18 @@
       <thead>
         <tr>
           <th></th>
-          <th>Product</th>
-          <th>Location</th>
+          <th><%= t(".quantity_header") %></th>
+          <th><%= t(".product_header") %></th>
+          <th><%= t(".location_header") %></th>
         </tr>
       </thead>
       <tbody>
-        <% @event.reservations.sort_by(&:product_sort_key_for_pickup).each do |reservation| %>
+        <% @event.reservations.group_by(&:product).sort_by{|product, _| product.sort_key_for_pickup}.each do |product, reservations| %>
           <tr>
             <td></td>
-            <td><%= link_to reservation.product_name, reservation.product %></td>
-            <td><%= format_product_location reservation.product %></td>
+            <td><%= number_with_delimiter reservations.size %></td>
+            <td><%= link_to product.name, product %></td>
+            <td><%= format_product_location product %></td>
           </tr>
         <% end %>
       </tbody>
@@ -30,18 +32,24 @@
 
   <% if @event.notes.reject(&:new_record?).any? %>
     <div class="small-12 cell">
-      <h3>Notes</h3>
+      <h3><%= t(".notes_header") %></h3>
       <% @event.notes.reject(&:new_record?).each do |note| %>
         <%= simple_format note.body %>
-        <p class="signature"><small>By <%= note.author_name %>, at <%= note.created_at.to_formatted_s(:long) %></small></p>
+        <p class="signature">
+        <small>
+          <%= t(".note_by_on", by: note.author_name, on: l(note.created_at, format: :long)) %>
+        </small>
+        </p>
       <% end %>
     </div>
   <% end %>
 </div>
 
+<% unless Rails.env.development? %>
 <%= javascript_tag do %>
   window.print();
   setTimeout(function() {
     window.close();
   }, 100);
+<% end %>
 <% end %>

@@ -130,6 +130,13 @@ en:
       edit_reservation_button_label: Edit reservations
       notes_header: Notes
       print_button_label: Print the bill of materials
+    print:
+      location_header: Location
+      notes_header: Notes
+      printed_by_on: Printed by %{by} on %{on}
+      product_header: Product
+      quantity_header: Quantity
+      note_by_on: By %{by} on %{on}
     update:
       event_successfully_updated: Event successfully updated
   products:

@@ -130,6 +130,13 @@ fr:
       edit_reservation_button_label: Modifer les réservations
       notes_header: Notes
       print_button_label: Imprimer la liste de matériel
+    print:
+      location_header: Localisation
+      notes_header: Notes
+      printed_by_on: Imprimé le %{on} par %{by}
+      product_header: Produit
+      quantity_header: Quantité
+      note_by_on: Par %{by} le %{on}
     update:
       event_successfully_updated: Événement mis à jour avec succès
   products:
