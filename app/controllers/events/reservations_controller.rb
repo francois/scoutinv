@@ -30,7 +30,7 @@ class Events::ReservationsController < ApplicationController
     return redirect_to(action: :index) if params[:products].blank?
 
     current_group.transaction do
-      products = current_group.products.where(slug: params[:products].keys).to_a
+      products = current_group.products.includes(reservations: [:event, :instance]).where(slug: params[:products].keys).to_a
 
       if %i[ add remove lease lease_all return ].all?{|key| params[key].blank?}
         # NOP
@@ -66,6 +66,6 @@ class Events::ReservationsController < ApplicationController
   private
 
   def set_event
-    @event = current_group.events.find_by!(slug: params[:event_id])
+    @event = current_group.events.includes(reservations: [:instance, :product]).find_by!(slug: params[:event_id])
   end
 end
