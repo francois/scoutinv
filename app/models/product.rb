@@ -108,7 +108,7 @@ class Product < ApplicationRecord
 
   def manage_instances_on_create
     quantity.times.each do |n|
-      instances.build(serial_no: 1 + n)
+      instances.build
     end
   end
 
@@ -137,7 +137,7 @@ class Product < ApplicationRecord
   end
 
   def manage_instance_additions
-    quantity_delta.times{|n| instances.build(serial_no: 1 + quantity + n) }
+    quantity_delta.times{|n| instances.build }
   end
 
   def update_instances_count

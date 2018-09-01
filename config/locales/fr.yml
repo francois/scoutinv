@@ -148,7 +148,6 @@ fr:
       printed_by_on: Imprimé le %{on} par %{by}
       product_header: Produit
       quantity_header: Quantité
-      serial_number: "N/S:%{no}"
     update:
       event_successfully_updated: Événement mis à jour avec succès
   products:
@@ -187,6 +186,7 @@ fr:
       delete_button_label: Détruire ce produit
       edit_button_label: Modifier ce produit
       event_header: Événement
+      instance_serial_nos_header: Numéros de série des instances
       product_reservation_history_header: Historique de réservation du produit
       serial_no_header: No série
     update:
@@ -271,3 +271,5 @@ fr:
       no_year: "%-d %B"
       with_year: "%-d %B %Y"
       time_ago: "il y a %{date}"
+
+  serial_number: "N/S:%{no}"

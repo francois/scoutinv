@@ -13,10 +13,13 @@ class HarmonizeDuplicateProducts < ActiveRecord::Migration[5.2]
     products.each do |(name, ids)|
       ids = ids.gsub(/[{}]/, "").split(",").map(&:to_i)
       execute "DELETE FROM products WHERE id IN (#{ids[1..-1].join(", ")})"
-      rows = ids[1..-1].each_with_index.map do |_, index|
-        [ids.first, 2 + index, SecureRandom.base58(8).downcase, Time.current, Time.current].map{|value| quote(value)}.join(", ").insert(0, "(").insert(-1, ")")
+      rows = ids[1..-1].map do |_|
+        [ids.first, SecureRandom.alphanumeric(3).upcase, SecureRandom.alphanumeric(8).downcase, Time.current, Time.current].map{|value| quote(value)}.join(", ").insert(0, "(").insert(-1, ")")
       end
       execute "INSERT INTO instances(product_id, serial_no, slug, created_at, updated_at) VALUES #{rows.join(", ")}"
     end
+
+    values = select_rows "SELECT id, serial_no FROM instances WHERE serial_no ~* '[+/]'"
+    raise "Generated serial numbers contain invalid URL characters: #{values.inspect}" if values.any?
   end
 end

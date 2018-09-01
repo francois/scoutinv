@@ -34,6 +34,24 @@
       <%= simple_format @product.description %>
     </div>
 
+    <% if @product.instances.size > 1 %>
+      <h3><%= t(".instance_serial_nos_header") %></h3>
+      <table class="hover">
+        <thead>
+          <tr>
+            <th><%= t(".serial_no_header") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @product.instances.each do |instance| %>
+            <tr>
+              <td><%= format_serial_no(instance.serial_no) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
     <h3><%= t(".product_reservation_history_header") %></h3>
     <table class="hover">
       <thead>
@@ -42,9 +60,9 @@
         <th><%= t(".event_header") %></th>
       </thead>
       <tbody>
-        <% @product.reservations.sort_by{|reservation| [reservation.serial_no.to_i, reservation.serial_no, reservation.start_on]}.reverse.each do |reservation| %>
+        <% @product.reservations.sort_by{|reservation| [reservation.serial_no, reservation.start_on]}.reverse.each do |reservation| %>
           <tr>
-            <td><%= reservation.serial_no %></td>
+            <td><%= format_serial_no(reservation.serial_no) %></td>
             <td><%= format_date_range(reservation.real_date_range) %></td>
             <td><%= link_to reservation.title, event_reservations_path(reservation.event) %></td>
           </tr>

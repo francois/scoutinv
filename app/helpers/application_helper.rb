@@ -1,6 +1,10 @@
 module ApplicationHelper
   attr_reader :page_title
 
+  def format_serial_no(serial_no)
+    t("serial_number", no: serial_no)
+  end
+
   def format_date_range(dates)
     first = dates.first
     last  = dates.last

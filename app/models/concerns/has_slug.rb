@@ -16,7 +16,7 @@ module HasSlug
   end
 
   def generate_slug
-    SecureRandom.base58(slug_size).downcase
+    SecureRandom.alphanumeric(slug_size).downcase
   end
 
   def slug_size

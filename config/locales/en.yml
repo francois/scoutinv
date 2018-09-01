@@ -148,7 +148,6 @@ en:
       printed_by_on: Printed by %{by} on %{on}
       product_header: Product
       quantity_header: Quantity
-      serial_number: "N/S:%{no}"
     update:
       event_successfully_updated: Event successfully updated
   products:
@@ -187,6 +186,7 @@ en:
       delete_button_label: Delete this product
       edit_button_label: Edit this product
       event_header: Event
+      instance_serial_nos_header: Instance Serial Numbers
       product_reservation_history_header: Product Reservation History
       serial_no_header: Serial No
     update:
@@ -271,3 +271,5 @@ en:
       no_year: "%b %-d"
       with_year: "%b %-d %Y"
       time_ago: "%{date} ago"
+
+  serial_number: "N/S:%{no}"

@@ -12,10 +12,19 @@ class CreateInstances < ActiveRecord::Migration[5.2]
     execute "CREATE EXTENSION pgcrypto"
     execute <<-EOSQL.squish
       INSERT INTO instances(id, product_id, serial_no, slug, created_at, updated_at)
-      SELECT products.id, products.id, 1, lower(encode(gen_random_bytes(6), 'base64')), products.created_at, products.updated_at
+      SELECT products.id, products.id, left(lower(encode(gen_random_bytes(4), 'base64')), 3), lower(encode(gen_random_bytes(6), 'base64')), products.created_at, products.updated_at
       FROM products
     EOSQL
     execute "DROP EXTENSION pgcrypto"
+
+    ids = select_values "SELECT id FROM instances"
+    ids.each do |id|
+      serial_no = SecureRandom.alphanumeric(3).upcase
+      execute "UPDATE instances SET serial_no = #{quote(serial_no)} WHERE id = #{quote(id)}"
+    end
+
+    values = select_rows "SELECT id, serial_no FROM instances WHERE serial_no ~* '[+/]'"
+    raise "Generated serial numbers contain invalid URL characters: #{values.inspect}" if values.any?
 
     add_foreign_key :instances, :products, on_update: :cascade, on_delete: :cascade
 
