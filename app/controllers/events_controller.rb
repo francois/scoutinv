@@ -62,6 +62,12 @@ class EventsController < ApplicationController
     redirect_to events_url, notice: t(".event_successfully_destroyed")
   end
 
+  def notify
+    MemberMailer.notify_event(@event, event_url(@event, manage: 1)).deliver_now
+    flash[:notice] = I18n.t("events.notify.notified")
+    redirect_to @event
+  end
+
   private
 
   def set_event

@@ -104,6 +104,8 @@ fr:
       page_title: "Modification de %{event}"
     new:
       page_title: "Nouvel événement"
+    notify:
+      notified: "Les directeurs du matériel sont informés de votre événement"
     reservations:
       create:
         added: "%{num} produit(s) ajouté(s) à l'événement"
@@ -163,6 +165,7 @@ fr:
       plus_one: "+1"
       plus_one_hover: Réserve une instance de plus de ce produit
     show:
+      notify_button_label: Informer les directeurs
       back_to_list_button_label: Retour à la liste
       bill_of_materials: Liste de matériel
       delete_button_label: Détruire cet événement
@@ -298,3 +301,9 @@ fr:
       time_ago: "il y a %{date}"
 
   serial_number: "N/S:%{no}"
+
+  member_mailer:
+    notify_event:
+      subject: Événement prêt pour le prêt
+    send_authentication:
+      subject: Demande de connexion

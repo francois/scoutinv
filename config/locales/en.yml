@@ -104,6 +104,8 @@ en:
       page_title: "Editing %{event}"
     new:
       page_title: "New Event"
+    notify:
+      notified: "Informed inventory managers about your event"
     reservations:
       create:
         added: "%{num} products added to event"
@@ -163,6 +165,7 @@ en:
       plus_one: "+1"
       plus_one_hover: Reserves one more instance of this product
     show:
+      notify_button_label: Inform directors
       back_to_list_button_label: Back to list
       bill_of_materials: Bill of materials
       delete_button_label: Delete this event
@@ -298,3 +301,9 @@ en:
       time_ago: "%{date} ago"
 
   serial_number: "N/S:%{no}"
+
+  member_mailer:
+    notify_event:
+      subject: Event ready for lease
+    send_authentication:
+      subject: Authentication Request

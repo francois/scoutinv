@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resources :sessions, only: %i[ index new create show destroy ]
 
   resources :events do
+    member do
+      post :notify
+    end
     resources :notes, only: %i[ create ], controller: "events/notes"
     resources :products, only: %i[ show ], controller: "events/products"
     resources :reservations, only: %i[ index create destroy ], controller: "events/reservations"

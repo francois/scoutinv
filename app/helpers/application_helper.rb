@@ -1,25 +1,6 @@
 module ApplicationHelper
   attr_reader :page_title
 
-  def format_serial_no(serial_no)
-    t("serial_number", no: serial_no)
-  end
-
-  def format_date_range(dates)
-    first = dates.first
-    last  = dates.last
-
-    if first.year == last.year && first.month == last.month && first.day == last.day
-      l(first, format: :same_day)
-    elsif first.year == last.year && first.month == last.month
-      l(first, format: :range_same_year_and_month, last_day: last.day)
-    elsif first.year == last.year
-      l(first, format: :range_same_year, last_day: l(last, format: :no_year))
-    else
-      l(first, format: :range_other, last_day: l(last, format: :with_year))
-    end
-  end
-
   def product_reservation_css_class(event, product)
     overlapping_events = product.reservations.select{|res| res.event_overlaps?(event)}.map(&:event)
     if overlapping_events.include?(event) && overlapping_events.size > product.quantity
@@ -30,12 +11,6 @@ module ApplicationHelper
       "product-available"
     else
       "product-busy-other"
-    end
-  end
-
-  def format_product_location(product)
-    content_tag :span, class: "product-location" do
-      [ product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ")
     end
   end
 
