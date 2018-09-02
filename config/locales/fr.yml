@@ -188,6 +188,9 @@ fr:
       product_successfully_created: Produit enregistré avec succès
     destroy:
       product_successfully_destroyed: Produit détruit avec succès
+    images:
+      destroy:
+        notice: Image détruite
     index:
       categories_header: Catégories
       category_label: Catégorie
@@ -212,6 +215,7 @@ fr:
       clone_button_label: Copier ce produit
       dates_header: Dates
       delete_button_label: Détruire ce produit
+      delete_image_button_label: Détruire
       edit_button_label: Modifier ce produit
       event_header: Événement
       instance_serial_nos_header: Numéros de série des instances

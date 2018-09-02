@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :members, only: %i[ edit update ]
 
   resources :products do
+    resources :images, only: %i[ destroy ], controller: "products/images"
     resources :notes, only: %i[ create ], controller: "products/notes"
   end
 end
