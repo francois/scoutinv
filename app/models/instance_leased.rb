@@ -1,0 +1,2 @@
+class InstanceLeased < DomainEvent
+end

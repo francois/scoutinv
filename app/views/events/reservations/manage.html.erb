@@ -1,0 +1,42 @@
+<div class="grid-x grid-margin-x">
+  <div class="large-9 medium-12 cell">
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <div class="cell">
+          <%= form_tag event_reservations_path(@event), method: :post do %>
+            <%= hidden_field_tag "back_to_manage", "1" %>
+            <%= hidden_field_tag "lease_all", "1" %>
+            <%= submit_tag t(".lease_all_button_label"), disabled: @reservations.all?(&:returned?), name: "lease_all", class: "button expanded success hide-for-large" %>
+          <% end %>
+          <%= link_to t(".back_to_event"), @event, class: "button hide-for-large" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-container">
+      <div class="grid-x grid-margin-x">
+        <div class="cell">
+          <table class="hover stack product-list">
+            <thead>
+              <th><%= t(".product_header") %></th>
+              <th><%= t(".serial_no_header") %></th>
+              <th><%= t(".leased_on_header") %></th>
+              <th><%= t(".returned_on_header") %></th>
+            </thead>
+            <%= render partial: "instances" %>
+          </table>
+          <%= paginate @reservations %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="large-3 medium-12 cell show-for-large">
+    <%= form_tag event_reservations_path(@event), method: :post do %>
+      <%= hidden_field_tag "back_to_manage", "1" %>
+      <%= hidden_field_tag "lease_all", "1" %>
+      <%= submit_tag t(".lease_all_button_label"), disabled: @reservations.all?(&:returned?), name: "lease_all", class: "button expanded success" %>
+    <% end %>
+    <%= link_to t(".back_to_event"), @event, class: "button expanded" %>
+  </div>
+</div>

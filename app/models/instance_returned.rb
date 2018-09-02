@@ -1,0 +1,2 @@
+class InstanceReturned < DomainEvent
+end

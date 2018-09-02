@@ -7,7 +7,8 @@
             });
         })();
     <% else %>
-        $("<%= escape_javascript(render(partial: "events/reservations/product", locals: { product: product })) %>").replaceAll("#product-row-<%= product.slug %>");
-        $("<%= escape_javascript(render partial: "events/product", locals: { product: product }) %>").replaceAll("#product-card-<%= product.slug %>");
+        $("<%= escape_javascript render(partial: "events/reservations/product", locals: { product: product }) %>").replaceAll("#product-row-<%= product.slug %>");
+        $("<%= escape_javascript render(partial: "events/product", locals: { product: product }) %>").replaceAll("#product-card-<%= product.slug %>");
+        $("<%= escape_javascript render(partial: "events/reservations/instances") %>").replaceAll("#instances");
     <% end %>
 <% end %>

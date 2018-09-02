@@ -21,15 +21,17 @@ class Reservation < ApplicationRecord
     returned_on.blank? && leased_on
   end
 
-  def lease(date)
-    raise ArgumentError, "Can't lease if product already out" unless leased_on.blank?
+  def returned?
+    returned_on.present?
+  end
 
-    self.leased_on = date
+  def lease(date)
+    self.leased_on ||= date
   end
 
   def return(date)
     raise ArgumentError, "Can't return if not leased" unless leased_on
-    raise ArgumentError, "Can't return if product already returned" unless returned_on.blank?
+    raise ArgumentError, "Can't return if instance already returned" unless returned_on.blank?
 
     self.returned_on = date
   end

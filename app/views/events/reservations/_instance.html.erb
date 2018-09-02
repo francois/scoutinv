@@ -1,0 +1,36 @@
+<tr id="product-<%= product.slug %>-instance-<%= reservation.serial_no %>">
+  <% if index == 0 %>
+    <td rowspan="<%= num_instances %>">
+      <%= link_to product.name, event_product_path(@event, product) %> <br>
+      <%= product_image product, height: 100 %>
+      <%= format_product_location product %>
+    </td>
+  <% end %>
+  <td>
+    <%= format_serial_no(reservation.serial_no) %><br>
+  </td>
+  <td>
+    <% if leased_on = reservation.leased_on %>
+      <span class="hide-for-large"><%= t(".leased_on_header") %></span> <%= l leased_on, format: :default %>
+    <% else %>
+      <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+        <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
+        <%= hidden_field_tag "back_to_manage", "1" %>
+        <%= hidden_field_tag "lease", "1" %>
+        <%= submit_tag t(".lease_button_label"), name: "lease", class: "button expanded primary"%>
+      <% end %>
+    <% end %>
+  </td>
+  <td>
+    <% if returned_on = reservation.returned_on %>
+      <span class="hide-for-large"><%= t(".returned_on_header") %></span> <%= l returned_on, format: :default %>
+    <% elsif leased_on %>
+      <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+        <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
+        <%= hidden_field_tag "back_to_manage", "1" %>
+        <%= hidden_field_tag "return", "1" %>
+        <%= submit_tag t(".return_button_label"), name: "return", class: "button expanded secondary"%>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

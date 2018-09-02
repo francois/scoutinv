@@ -134,6 +134,17 @@ fr:
         search_button_label: Chercher
         sorry_no_elements: Désolé, aucune réservation ne correspond à vos critères de recherche
         view_all_button_label: Afficher tout
+      instance:
+        lease_button_label: Prêter
+        leased_on_header: Prêté le
+        return_button_label: Retourner
+        returned_on_header: Retourné le
+      manage:
+        back_to_event: Retour à l'événement
+        lease_all_button_label: Prêter tous les produits
+        product_header: Produit
+        serial_no_header: No de série
+        sorry_no_elements: Désolé, rien à prêter à l'unité
       product:
         minus_one: "-1"
         minus_one_hover: Réserve une instance de moins de ce produit
@@ -159,6 +170,7 @@ fr:
       edit_button_label: Modifier cet événement
       edit_reservation_button_label: Modifer les réservations
       lease_all_button_label: Tout prêter à l'unité
+      manage_reservations_button_label: Gérer les réservations
       notes_header: Notes
       print_button_label: Imprimer la liste de matériel
     update:

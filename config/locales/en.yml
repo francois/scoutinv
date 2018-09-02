@@ -134,6 +134,17 @@ en:
         search_button_label: Search
         sorry_no_elements: Sorry, no reservations correspond to your search criterias
         view_all_button_label: View all
+      instance:
+        lease_button_label: Lease
+        leased_on_header: Leased on
+        return_button_label: Return
+        returned_on_header: Returned on
+      manage:
+        back_to_event: Back to event
+        lease_all_button_label: Lease all products
+        product_header: Product
+        serial_no_header: Serial Number
+        sorry_no_elements: Sorry, nothing to lease to the troop
       product:
         plus_one: "+1"
         plus_one_hover: Reserves one more instance of this product
@@ -159,6 +170,7 @@ en:
       edit_button_label: Edit this event
       edit_reservation_button_label: Edit reservations
       lease_all_button_label: Lease all products
+      manage_reservations_button_label: Manage reservations
       notes_header: Notes
       print_button_label: Print the bill of materials
     update:

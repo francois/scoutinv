@@ -92,8 +92,7 @@ class Event < ApplicationRecord
   end
 
   def lease_all(date=Date.today, metadata: {})
-    unleased = reservations.reject(&:leased?)
-    unleased.each do |reservation|
+    reservations.each do |reservation|
       reservation.lease(date)
     end
 
@@ -107,28 +106,34 @@ class Event < ApplicationRecord
     )
   end
 
-  def lease(products, date: Date.today, metadata: {})
+  def lease(instances, date: Date.today, metadata: {})
     reservations.each do |reservation|
-      reservation.lease(date) if products.include?(reservation.product)
-      domain_events << ProductLeased.new(
+      next unless instances.include?(reservation.instance)
+
+      reservation.lease(date)
+      domain_events << InstanceLeased.new(
         data: {
           event_slug: slug,
-          lease_on: reservation.product_slug,
-          lease_date: date,
+          instance_slug: reservation.instance_slug,
+          product_slug: reservation.product_slug,
+          leased_on: date,
         },
         metadata: metadata
       )
     end
   end
 
-  def return(products, date: Date.today, metadata: {})
+  def return(instances, date: Date.today, metadata: {})
     reservations.each do |reservation|
-      reservation.return(date) if products.include?(reservation.product)
-      domain_events << ProductReturned.new(
+      next unless instances.include?(reservation.instance)
+
+      reservation.return(date)
+      domain_events << InstanceReturned.new(
         data: {
           event_slug: slug,
-          return_on: date,
+          instance_slug: reservation.instance_slug,
           product_slug: reservation.product_slug,
+          returned_on: date,
         },
         metadata: metadata
       )

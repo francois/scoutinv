@@ -5,6 +5,7 @@
     <%= link_to t(".print_button_label"), event_path(@event, print: 1), class: "button hide-for-large", target: "blank" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary hide-for-large" %>
     <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button secondary alert hide-for-large" %>
+    <%= link_to t(".manage_reservations_button_label"), event_reservations_path(@event, manage: 1), class: "button hide-for-large" %>
 
     <div>
       <strong><%= t("title", scope: "activerecord.attributes.event") %>:</strong>
@@ -40,10 +41,11 @@
     <% if @event.reservations.any? %>
       <hr>
 
+      <%= link_to t(".manage_reservations_button_label"), event_reservations_path(@event, manage: 1), class: "button expanded" %>
       <%= form_tag event_reservations_path(@event), method: :post do %>
         <%= hidden_field_tag "back_to_event", "1" %>
         <%= hidden_field_tag "lease_all", "1" %>
-        <%= submit_tag t(".lease_all_button_label"), name: "lease_all", class: "button expanded success" %>
+        <%= submit_tag t(".lease_all_button_label"), disabled: @event.reservations.all?(&:returned?), name: "lease_all", class: "button expanded success" %>
       <% end %>
     <% end %>
 
