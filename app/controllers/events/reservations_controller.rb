@@ -28,10 +28,12 @@ class Events::ReservationsController < ApplicationController
   end
 
   def create
-    return redirect_to(action: :index) if params[:products].blank?
+    return redirect_to(action: :index) if params[:products].blank? && params[:lease_all].blank?
 
     current_group.transaction do
-      @products = current_group.products.includes(reservations: [:event, :instance]).where(slug: params[:products].keys).to_a
+      if params[:products].present?
+        @products = current_group.products.includes(reservations: [:event, :instance]).where(slug: params[:products].keys).to_a
+      end
 
       if %i[ add remove lease lease_all return ].all?{|key| params[key].blank?}
         # NOP
@@ -46,7 +48,7 @@ class Events::ReservationsController < ApplicationController
         flash[:notice] = t(:leased, scope: "events.reservations.create", num: @products.size)
       elsif params[:lease_all].present?
         @event.lease_all(metadata: domain_event_metadata)
-        flash[:notice] = t(:leased_all, scope: "events.reservations.create", num: @products.size)
+        flash[:notice] = t(:leased_all, scope: "events.reservations.create", num: @event.reservations.size)
       elsif params[:return].present?
         @event.return(@products, metadata: domain_event_metadata)
         flash[:notice] = t(:returned, scope: "events.reservations.create", num: @products.size)
@@ -68,6 +70,7 @@ class Events::ReservationsController < ApplicationController
 
       format.js do
         @double_booked_products = Product.double_booked(@event).to_set
+
         # We must reload products because we worked on the event's products instead
         # This is a limitation of the ActiveRecord implementation
         @products = current_group.products.includes(reservations: [:event, :instance]).where(slug: params[:products].keys).to_a

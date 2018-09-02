@@ -158,6 +158,7 @@ fr:
       double_booked_hover: "Produit réservé en double; plus d'un événement réserve la même instance de ce produit"
       edit_button_label: Modifier cet événement
       edit_reservation_button_label: Modifer les réservations
+      lease_all_button_label: Tout prêter à l'unité
       notes_header: Notes
       print_button_label: Imprimer la liste de matériel
     update:

@@ -158,6 +158,7 @@ en:
       double_booked_hover: "Double reservation error; more than one event reserves the same instance of this product"
       edit_button_label: Edit this event
       edit_reservation_button_label: Edit reservations
+      lease_all_button_label: Lease all products
       notes_header: Notes
       print_button_label: Print the bill of materials
     update:

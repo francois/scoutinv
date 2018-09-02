@@ -37,6 +37,16 @@
     <%= link_to t(".print_button_label"), event_path(@event, print: 1), class: "button expanded", target: "blank" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary expanded" %>
 
+    <% if @event.reservations.any? %>
+      <hr>
+
+      <%= form_tag event_reservations_path(@event), method: :post do %>
+        <%= hidden_field_tag "back_to_event", "1" %>
+        <%= hidden_field_tag "lease_all", "1" %>
+        <%= submit_tag t(".lease_all_button_label"), name: "lease_all", class: "button expanded success" %>
+      <% end %>
+    <% end %>
+
     <hr>
 
     <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button expanded alert" %>
