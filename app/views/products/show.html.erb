@@ -3,10 +3,10 @@
     <%= form_tag event_reservations_path(@event, @product) do %>
       <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button small hide-for-large" %>
     <% end if @event %>
-    <%= link_to t(".edit_button_label"), edit_product_path(@product), class: "button small hide-for-large" %>
-    <%= link_to t(".clone_button_label"), new_product_path(clone_from: @product), class: "button small hide-for-large" %>
+    <%= link_to t(".edit_button_label"), edit_product_path(@product), class: "button small hide-for-large" if current_member.inventory_director? %>
+    <%= link_to t(".clone_button_label"), new_product_path(clone_from: @product), class: "button small hide-for-large" if current_member.inventory_director? %>
     <%= link_to t(".back_to_list_button_label"), products_path, class: "button secondary small hide-for-large" %>
-    <%= link_to t(".delete_button_label"), product_path(@product), method: :delete, class: "button small alert hide-for-large" %>
+    <%= link_to t(".delete_button_label"), product_path(@product), method: :delete, class: "button small alert hide-for-large" if current_member.inventory_director? %>
 
     <div>
       <% @product.images.select(&:blob).each do |image| %>
@@ -79,15 +79,16 @@
       <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button expanded" %>
       <hr>
     <% end if @event %>
-    <%= link_to t(".edit_button_label"), edit_product_path(@product), class: "button expanded" %>
-    <%= link_to t(".clone_button_label"), new_product_path(clone_from: @product), class: "button expanded" %>
+    <%= link_to t(".edit_button_label"), edit_product_path(@product), class: "button expanded" if current_member.inventory_director? %>
+    <%= link_to t(".clone_button_label"), new_product_path(clone_from: @product), class: "button expanded" if current_member.inventory_director? %>
     <%= link_to t(".back_to_list_button_label"), products_path, class: "button secondary expanded" %>
 
     <hr>
 
-    <%= link_to t(".delete_button_label"), product_path(@product), method: :delete, class: "button alert expanded" %>
-
-    <hr>
+    <% if current_member.inventory_director? %>
+      <%= link_to t(".delete_button_label"), product_path(@product), method: :delete, class: "button alert expanded" %>
+      <hr>
+    <% end %>
 
     <%= render partial: "shared/notes", locals: { parent: @product, note: @note, create_note_path: product_notes_path(@product) } %>
   </div>

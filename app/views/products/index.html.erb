@@ -24,13 +24,15 @@
       </div>
     <% end %>
 
-    <div class="grid-container">
-      <div class="grid-x grid-margin-x">
-        <div class="cell">
-          <%= link_to t(".new_product_button_label"), new_product_path, class: "button hide-for-large" %>
+    <% if current_member.inventory_director? %>
+      <div class="grid-container">
+        <div class="grid-x grid-margin-x">
+          <div class="cell">
+            <%= link_to t(".new_product_button_label"), new_product_path, class: "button hide-for-large" %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
 
     <div class="grid-container">
       <div class="grid-x grid-margin-x">
@@ -72,7 +74,9 @@
     </div>
   </div>
 
-  <div class="large-3 medium-12 cell show-for-large">
-    <%= link_to t(".new_product_button_label"), new_product_path, class: "button expanded" %>
-  </div>
+  <% if current_member.inventory_director %>
+    <div class="large-3 medium-12 cell show-for-large">
+      <%= link_to t(".new_product_button_label"), new_product_path, class: "button expanded" %>
+    </div>
+  <% end %>
 </div>
