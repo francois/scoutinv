@@ -25,7 +25,6 @@ class SessionsController < ApplicationController
   def show
     reset_session
     member = Member.authenticate!(slug: params[:member_id], token: params[:id])
-    member.delete_pending_sessions
     sign_in_member!(member)
 
     next_event = member.group.events.after(Date.today + 1).first
