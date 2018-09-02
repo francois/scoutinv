@@ -259,16 +259,17 @@ en:
     send_authentication:
       subject: "[SCOUTINV] Authentication"
   members:
+    destroy:
+      notice: Removed Member from Group
     form:
       cancel_button_label: Cancel
+      delete_button_label: Remove authorizations
       or: or
     index:
       page_title: Members
     create:
       page_title: New Member
       member_successfully_created: Member successfully created
-    destroy:
-      member_successfully_destroyed: Member successfully destroyed
     edit:
       page_title: "Edit %{member_name}"
     new:

@@ -1,20 +1,6 @@
 class MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @page_title = t(".page_title")
-    @members = current_group.members.all
-  end
-
-  def show
-    @page_title = @member.name
-  end
-
-  def new
-    @page_title = t(".page_title")
-    @member = current_group.members.build
-  end
-
   def edit
     @page_title = t(".page_title", member_name: @member.name)
   end
@@ -41,6 +27,11 @@ class MembersController < ApplicationController
         render :edit
       end
     end
+  end
+
+  def destroy
+    @member.destroy
+    redirect_to group_path(current_group), notice: I18n.t("members.destroy.notice")
   end
 
   private

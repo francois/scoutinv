@@ -37,3 +37,12 @@
     </div>
   </div>
 <% end %>
+<% if current_member.inventory_director? %>
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <div class="small-12 cell">
+        <%= button_to t(".delete_button_label"), member_path(@member), method: :delete, class: "button small alert" %>
+      </div>
+    </div>
+  </div>
+<% end %>
