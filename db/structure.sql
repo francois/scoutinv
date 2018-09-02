@@ -396,7 +396,8 @@ CREATE TABLE public.members (
     email character varying NOT NULL,
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL
+    updated_at timestamp with time zone NOT NULL,
+    inventory_director boolean DEFAULT false NOT NULL
 );
 
 
@@ -1081,6 +1082,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180422132241'),
 ('20180717004049'),
 ('20180731025753'),
-('20180803024849');
+('20180803024849'),
+('20180902151206');
 
 
