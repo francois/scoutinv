@@ -96,11 +96,11 @@ class Event < ApplicationRecord
       reservation.lease(date)
     end
 
-    domain_events << EventLeasedAllReservations.new(
+    domain_events << LeasedAllInstances.new(
       data: {
         event_slug: slug,
         leased_on: date,
-        product_slugs: reservations.map(&:product_slug),
+        instance_slugs: reservations.map(&:instance_slug),
       },
       metadata: metadata
     )
@@ -115,7 +115,6 @@ class Event < ApplicationRecord
         data: {
           event_slug: slug,
           instance_slug: reservation.instance_slug,
-          product_slug: reservation.product_slug,
           leased_on: date,
         },
         metadata: metadata
@@ -132,7 +131,6 @@ class Event < ApplicationRecord
         data: {
           event_slug: slug,
           instance_slug: reservation.instance_slug,
-          product_slug: reservation.product_slug,
           returned_on: date,
         },
         metadata: metadata

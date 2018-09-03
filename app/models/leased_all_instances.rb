@@ -1,0 +1,2 @@
+class LeasedAllInstances < DomainEvent
+end
