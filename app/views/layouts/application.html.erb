@@ -9,7 +9,7 @@
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
   </head>
-  <body>
+  <body class="<%= :staging if STAGING %><%= :development if Rails.env.development? %>">
     <div class="top-bar" id="responsive-menu">
       <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu>
@@ -24,6 +24,11 @@
       </div>
       <div class="top-bar-right">
         <ul class="menu">
+          <% if Rails.env.development? || STAGING %>
+            <li>
+              <%= link_to Rails.env.development? ? "DÉVELOPPEMENT" : "TEST", "#", class: "clear button secondary" %>
+            </li>
+          <% end %>
           <% if member_signed_in? && current_member.email == "francois@teksol.info" %>
             <li><%= link_to t("groups", scope: "top-bar"), groups_path %></li>
           <% end %>

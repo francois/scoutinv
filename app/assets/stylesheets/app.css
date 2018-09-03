@@ -15,6 +15,24 @@ body {
   min-height: 60rem;
 }
 
+body.staging {
+  background: #ffe594;
+  background:-webkit-linear-gradient(top, #ffe594, #dbe7eb);
+  background:   -moz-linear-gradient(top, #ffe594, #dbe7eb);
+  background:    -ms-linear-gradient(top, #ffe594, #dbe7eb);
+  background:     -o-linear-gradient(top, #ffe594, #dbe7eb);
+  background:        linear-gradient(to bottom, #ffe594, #dbe7eb);
+}
+
+body.development {
+  background: #e5ff94;
+  background:-webkit-linear-gradient(top, #e5ff94, #dbe7eb);
+  background:   -moz-linear-gradient(top, #e5ff94, #dbe7eb);
+  background:    -ms-linear-gradient(top, #e5ff94, #dbe7eb);
+  background:     -o-linear-gradient(top, #e5ff94, #dbe7eb);
+  background:        linear-gradient(to bottom, #e5ff94, #dbe7eb);
+}
+
 .product-busy-self * {
 }
 
