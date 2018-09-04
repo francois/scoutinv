@@ -10,5 +10,5 @@ namespace :db do
 end
 
 file "latest.dump" do
-  sh "heroku pg:backups:download"
+  sh "heroku pg:backups:download --remote production"
 end
