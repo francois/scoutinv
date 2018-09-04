@@ -1,4 +1,9 @@
 #!/bin/bash
-git push ${1:?Missing ENV as 1st parameter} HEAD:master
+if [[ "x${1}" = "xstaging" ]]
+then
+  FORCE="+"
+fi
+
+git push ${1:?Missing ENV as 1st parameter} ${FORCE}HEAD:master
 heroku run --remote ${1} rails db:migrate
 heroku ps:restart --remote ${1}
