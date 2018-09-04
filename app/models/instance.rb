@@ -22,6 +22,22 @@ class Instance < ApplicationRecord
   end
 
   def generate_serial_no
-    SecureRandom.alphanumeric(3).upcase
+    SecureRandom.alphanumeric(self.class.serial_no_size).upcase
+  end
+
+  # Because of the birthday paradox, the more instances we have, the
+  # longer the size of the serial number must use to have less than
+  # 50% chance of hitting a duplicate key error for the serial no.
+  #
+  # This number is dynamically calculated based on the total number
+  # of instances.
+  #
+  # @see https://en.wikipedia.org/wiki/Birthday_paradox
+  def self.serial_no_size
+    @serial_no_size ||=
+      begin
+        number = Instance.count
+        number.zero? ? 3 : Math.log(number, 10).truncate + 1
+      end
   end
 end
