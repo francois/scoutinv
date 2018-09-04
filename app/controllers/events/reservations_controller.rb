@@ -49,11 +49,11 @@ class Events::ReservationsController < ApplicationController
         # NOP
       elsif params[:add].present?
         Rails.logger.info "Adding #{@products.size} products"
-        @event.add(@products, metadata: domain_event_metadata)
+        @event.reserve(@products, metadata: domain_event_metadata)
         flash[:notice] = t(:added, scope: "events.reservations.create", num: @products.size)
       elsif params[:remove].present?
         Rails.logger.info "Freeing #{@products.size} products"
-        @event.remove(@products, metadata: domain_event_metadata)
+        @event.offer(@products, metadata: domain_event_metadata)
         flash[:notice] = t(:removed, scope: "events.reservations.create", num: @products.size)
       elsif params[:lease].present?
         Rails.logger.info "Leasing #{@instances.map(&:serial_no).inspect}"

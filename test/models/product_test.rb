@@ -65,9 +65,9 @@ class ProductInstanceTest < ActiveSupport::TestCase
   end
 
   test "prefers to destroy instances with no reservations first" do
-    @event.add([@product])
-    @event.add([@product])
-    @event.add([@product])
+    @event.reserve([@product])
+    @event.reserve([@product])
+    @event.reserve([@product])
     @event.save!
 
     have_not, have = @product.reload.instances.partition(&:has_no_reservations?)
@@ -83,8 +83,8 @@ class ProductInstanceTest < ActiveSupport::TestCase
   end
 
   test "destroys an instance with a reservation history if it has to" do
-    @event.add([@product])
-    @event.add([@product])
+    @event.reserve([@product])
+    @event.reserve([@product])
     @event.save!
 
     have_not, have = @product.reload.instances.partition(&:has_no_reservations?)

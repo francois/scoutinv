@@ -34,7 +34,7 @@ class Event < ApplicationRecord
     save
   end
 
-  def add(products, metadata: {})
+  def reserve(products, metadata: {})
     products.each do |product|
       # Attempt to find a free instance, e.g. one that isn't reserved for this event's date range
       my_reserved_instances          = reservations.map(&:instance)
@@ -66,7 +66,7 @@ class Event < ApplicationRecord
     end
   end
 
-  def remove(products, metadata: {})
+  def offer(products, metadata: {})
     double_booking_errors = Product.double_booked(self).to_a
 
     # When removing a product, we attempt to remove any double
