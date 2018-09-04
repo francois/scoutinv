@@ -52,11 +52,12 @@ class ApplicationController < ActionController::Base
   end
 
   def current_member
+    return nil unless member_signed_in?
     @_current_member ||= Member.includes(:group).find(session[:member_id])
   end
 
   def current_group
-    current_member.group
+    current_member&.group
   end
 
   def domain_event_metadata

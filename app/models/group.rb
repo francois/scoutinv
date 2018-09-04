@@ -1,6 +1,8 @@
 class Group < ApplicationRecord
   include HasSlug
 
+  has_one_attached :logo
+
   has_many :products,      dependent: :delete_all, autosave: true
   has_many :events,        dependent: :delete_all, autosave: true
   has_many :members,       dependent: :delete_all, autosave: true
