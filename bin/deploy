@@ -1,9 +1,19 @@
 #!/bin/bash
+set -eu
 if [[ "x${1}" = "xstaging" ]]
 then
   FORCE="+"
 fi
 
-git push ${1:?Missing ENV as 1st parameter} ${FORCE}HEAD:master
-heroku run --remote ${1} rails db:migrate
-heroku ps:restart --remote ${1}
+heroku maintenance:on --remote "${1}"
+git push "${1:?Missing ENV as 1st parameter}" "${FORCE}"HEAD:master
+heroku run --remote "${1}" rails db:migrate
+heroku ps:restart --remote "${1}"
+echo -n "Waiting for server to restart... "
+for SEQ in $( seq 30 -1 1 )
+do
+  echo -n "${SEQ} "
+  sleep 1
+done
+echo
+heroku maintenance:off --remote "${1}"
