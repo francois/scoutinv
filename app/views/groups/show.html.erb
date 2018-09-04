@@ -4,7 +4,7 @@
     <%= link_to t(".back_to_list"), groups_path, class: "button secondary large hide-for-large" %>
 
     <h2>
-      <% if @group.logo.blob %>
+      <% if @group.logo.attached? %>
         <%= image_tag @group.logo.variant(resize: "x55"), alt: "", height: 55, style: "max-height: 55px" %>
       <% end %>
       <%= t(".members") %>

@@ -18,7 +18,7 @@ class HomeController < PublicController
   def apple_touch_icon
     return render text: "not found", type: :text, layout: false, status: :bad_request unless VALID_SIZES.include?(params[:size])
 
-    if current_group && current_group.logo.blob
+    if current_group && current_group.logo.attached?
       redirect_to url_for(current_group.logo.variant(resize: params[:size]))
     else
       render text: "not found", type: :text, layout: false, status: :not_found

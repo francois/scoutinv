@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <% if current_group && current_group.logo.blob %>
+    <% if current_group && current_group.logo.attached? %>
       <link rel="icon" sizes="192x192" href="/apple-touch-icon/192x192">
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon/180x180">
       <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon/152x152">
@@ -33,7 +33,7 @@
             <li class="<%= :active if on_products_page? %>"><%= link_to t("products", scope: "top-bar"), products_path %></li>
             <li class="<%= :active if on_groups_page? %>">
               <%= link_to  current_group do %>
-                <% if current_group.logo.blob %>
+                <% if current_group.logo.attached? %>
                   <%= image_tag current_group.logo.variant(resize: "x15"), alt: "", height: 15, style: "max-height: 15px" %>
                 <% end %>
                 <%= truncate(current_group.name, length: 30) %>
