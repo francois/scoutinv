@@ -16,6 +16,7 @@ fr:
         name: Nom
       product:
         aisle: Allée
+        building: Bâtiment
         categories: Catégories
         description: Description
         images: Images
@@ -23,7 +24,7 @@ fr:
         name: Nom
         quantity: Quantité
         shelf: Tablette
-        unit: Unité
+        unit: Bac
       member:
         email: Adresse courriel
         name: Nom civil

@@ -30,14 +30,17 @@
       <div class="small-12 cell">
         <fieldset class="fieldset">
           <legend><%= t(".location_label") %></legend>
+          <%= form.label :building %>
+          <%= form.text_field :building %>
+
           <%= form.label :aisle %>
-          <%= form.text_field :aisle, autocomplete: false %>
+          <%= form.text_field :aisle %>
 
           <%= form.label :shelf %>
-          <%= form.text_field :shelf, autocomplete: false %>
+          <%= form.text_field :shelf %>
 
           <%= form.label :unit %>
-          <%= form.text_field :unit, autocomplete: false %>
+          <%= form.text_field :unit %>
         </fieldset>
       </div>
 

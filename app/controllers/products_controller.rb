@@ -28,6 +28,7 @@ class ProductsController < ApplicationController
         @clone_from = current_group.products.find_by!(slug: params[:clone_from])
         current_group.products.build(
           aisle: @clone_from.aisle,
+          building: @clone_from.building,
           categories: @clone_from.categories,
           description: @clone_from.description,
           images: @clone_from.images,
@@ -90,7 +91,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :description, :aisle, :shelf, :unit, :quantity, category_slugs: [])
+    params.require(:product).permit(:name, :description, :building, :aisle, :shelf, :unit, :quantity, category_slugs: [])
   end
 
   def load_categories

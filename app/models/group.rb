@@ -30,6 +30,7 @@ class Group < ApplicationRecord
       domain_events << ProductRegistered.new(
         data: {
           aisle: new_product.aisle,
+          building: new_product.building,
           categories: new_product.categories.map(&:name),
           description: new_product.description,
           group_slug: self.slug,

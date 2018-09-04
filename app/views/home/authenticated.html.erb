@@ -25,9 +25,9 @@
             <%= link_to product do %>
               <%= product_image product, height: 250 %>
             <% end %>
-            <% if product.aisle.present? || product.shelf.present? || product.unit.present? || product.description.present? %>
+            <% if product.has_location? || product.description.present? %>
               <div class="card-section">
-                <% if product.aisle.present? || product.shelf.present? || product.unit.present? %>
+                <% if product.has_location? %>
                   <p><strong><%= t("activerecord.attributes.product.location") %></strong>: <%= format_product_location(product) %></p>
                 <% end %>
                 <% if product.description.present? %>

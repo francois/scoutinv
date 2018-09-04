@@ -16,6 +16,7 @@ en:
         name: Name
       product:
         aisle: Aisle
+        building: Building
         categories: Categories
         description: Description
         images: Images
@@ -23,7 +24,7 @@ en:
         name: Name
         quantity: Quantity
         shelf: Shelf
-        unit: Unit
+        unit: Bin
       member:
         email: Email
         name: Name

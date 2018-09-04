@@ -43,12 +43,12 @@
       </div>
       <div class="small-2 cell">&nbsp;</div>
     </div>
-    <% if product.aisle.present? || product.shelf.present? || product.unit.present? || product.description.present? %>
+    <% if %i[building aisle shelf unit description].map{|attr| product.public_send(attr)}.compact.any? %>
       <div class="card-section">
         <% if product.description.present? %>
           <%= simple_format product.description %>
         <% end %>
-        <% if product.aisle.present? || product.shelf.present? || product.unit.present? %>
+        <% if product.has_location? %>
           <p>
           <small>
             <strong><%= t("activerecord.attributes.product.location") %></strong>:

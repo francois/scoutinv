@@ -502,7 +502,8 @@ CREATE TABLE public.products (
     aisle text,
     shelf text,
     unit text,
-    quantity integer DEFAULT 1 NOT NULL
+    quantity integer DEFAULT 1 NOT NULL,
+    building text
 );
 
 
@@ -1083,6 +1084,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180717004049'),
 ('20180731025753'),
 ('20180803024849'),
-('20180902151206');
+('20180902151206'),
+('20180904022551');
 
 

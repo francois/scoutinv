@@ -4,7 +4,7 @@ module ProductHelper
   end
 
   def format_product_location(product, plain: false)
-    plain_text = [ product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ")
+    plain_text = [ product.building, product.aisle, product.shelf, product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ")
     plain ? plain_text : content_tag(:span, plain_text, class: "product-location")
   end
 end

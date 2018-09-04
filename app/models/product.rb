@@ -45,7 +45,7 @@ class Product < ApplicationRecord
               .group("products.id", "events.id")
   }
   scope :search, ->(string){
-    vector = "to_tsvector('fr', coalesce(products.name, '') || ' ' || coalesce(products.description, '') || ' ' || coalesce(products.aisle, ' ') || ' ' || coalesce(products.shelf, ' ') || ' ' || coalesce(products.unit, ' '))"
+    vector = "to_tsvector('fr', coalesce(products.name, '') || ' ' || coalesce(products.description, '') || ' ' || coalesce(products.building, ' ') || ' ' || coalesce(products.aisle, ' ') || ' ' || coalesce(products.shelf, ' ') || ' ' || coalesce(products.unit, ' '))"
     query = "plainto_tsquery('fr', :string)"
     where("#{vector} @@ #{query}", string: string).order(Arel.sql("ts_rank(#{vector}, #{query.sub(":string", Product.connection.quote(string))})"))
   }
@@ -55,6 +55,14 @@ class Product < ApplicationRecord
 
   before_save :manage_instances
   after_touch :update_instances_count
+
+  def has_location?
+    building.present? || aisle.present? || shelf.present? || unit.present?
+  end
+
+  def location_changed?
+    building_changed? || aisle_changed? || shelf_changed? || unit_changed?
+  end
 
   def add_note(attributes, metadata: {})
     notes.build(attributes).tap do |new_note|
@@ -71,8 +79,8 @@ class Product < ApplicationRecord
 
   def change_data(attributes, metadata: {})
     self.attributes = attributes
-    domain_events << ProductNameChanged.new(data: {product_slug: slug, name: name, description: description}, metadata: metadata)       if name_changed? || description_changed?
-    domain_events << ProductLocationChanged.new(data: {product_slug: slug, aisle: aisle, shelf: shelf, unit: unit}, metadata: metadata) if aisle_changed? || shelf_changed? || unit_changed?
+    domain_events << ProductNameChanged.new(data: {product_slug: slug, name: name, description: description}, metadata: metadata)                           if name_changed? || description_changed?
+    domain_events << ProductLocationChanged.new(data: {product_slug: slug, building: building, aisle: aisle, shelf: shelf, unit: unit}, metadata: metadata) if location_changed?
     # domain_events << ProductCategoriesChanged.new(data: {product_slug: slug, categories: categories.map(&:name)}, metadata: metadata)
   end
 
@@ -92,7 +100,7 @@ class Product < ApplicationRecord
   end
 
   def sort_key_for_pickup
-    [aisle, shelf, unit, name, id].map(&:to_s).join(":")
+    [building, aisle, shelf, unit, name, id].map(&:to_s).join(":")
   end
 
   private

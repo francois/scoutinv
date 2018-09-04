@@ -22,7 +22,7 @@
 
     <div>
       <strong><%= t("location", scope: "activerecord.attributes.product") %>:</strong>
-      <%= [ @product.aisle, @product.shelf, @product.unit ].reject(&:blank?).to_sentence(words_connector: " / ", two_words_connector: " / ", last_word_connector: " / ") %>
+      <%= format_product_location(@product) %>
     </div>
 
     <div>
