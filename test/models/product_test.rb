@@ -48,6 +48,8 @@ end
 
 class ProductInstanceTest < ActiveSupport::TestCase
   setup do
+    @event = events(:summer_camp_911_10eme)
+
     @product = groups(:"10eme").products.create!(name: "product 5", quantity: 5)
     assert_equal 5, @product.reload.instances.size
   end
@@ -60,6 +62,42 @@ class ProductInstanceTest < ActiveSupport::TestCase
     @product.attributes = { quantity: 1 }
     @product.save!
     assert_equal 1, @product.reload.instances.size
+  end
+
+  test "prefers to destroy instances with no reservations first" do
+    @event.add([@product])
+    @event.add([@product])
+    @event.add([@product])
+    @event.save!
+
+    have_not, have = @product.reload.instances.partition(&:has_no_reservations?)
+    assert_equal 2, have_not.size
+    assert_equal 3, have.size
+
+    @product.quantity = 4
+    @product.save!
+
+    have_not, have = @product.reload.instances.partition(&:has_no_reservations?)
+    assert_equal 3, have.size
+    assert_equal 1, have_not.size
+  end
+
+  test "destroys an instance with a reservation history if it has to" do
+    @event.add([@product])
+    @event.add([@product])
+    @event.save!
+
+    have_not, have = @product.reload.instances.partition(&:has_no_reservations?)
+    assert_equal 3, have_not.size
+    assert_equal 2, have.size
+
+    @product.quantity = 2
+    @product.save!
+    assert_equal 2, @product.instances.size
+
+    have_not, have = @product.reload.instances.partition(&:has_no_reservations?)
+    assert_equal 2, have.size
+    assert_equal 0, have_not.size
   end
 
   test "refuses to set quantity at or below 0" do
