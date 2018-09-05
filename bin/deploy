@@ -1,19 +1,34 @@
 #!/bin/bash
 set -eu
-if [[ "x${1}" = "xstaging" ]]
+ENV=${1?ENV left unspecified; call $0 ENV}
+
+if [[ "x${ENV}" = "xstaging" ]]
 then
   FORCE="+"
+else
+  FORCE=""
 fi
 
-heroku maintenance:on --remote "${1}"
+heroku maintenance:on --remote "${ENV}"
+git fetch --quiet "${ENV}"
+REMOTE_SHA1=$( git log -n 1 --pretty=format:%H "${ENV}"/master )
+LOCAL_SHA1=$( git log -n 1 --pretty=format:%H HEAD )
+
+echo "Deploying \"$( git log -n 1 --oneline HEAD)\" to \"${ENV}\""
 git push "${1:?Missing ENV as 1st parameter}" "${FORCE}"HEAD:master
-heroku run --remote "${1}" rails db:migrate
-heroku ps:restart --remote "${1}"
+
+if [[ -n "$( git log --oneline -n 1 ${REMOTE_SHA1}..${LOCAL_SHA1} -- db/structure.sql )" ]]
+then
+  heroku run --remote "${ENV}" rails db:migrate
+  heroku ps:restart --remote "${ENV}"
+fi
+
 echo -n "Waiting for server to restart... "
-for SEQ in $( seq 30 -1 1 )
+for SEQ in $( seq 20 -1 1 )
 do
   echo -n "${SEQ} "
   sleep 1
 done
 echo
-heroku maintenance:off --remote "${1}"
+
+heroku maintenance:off --remote "${ENV}"
