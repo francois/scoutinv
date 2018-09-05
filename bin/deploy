@@ -5,8 +5,10 @@ ENV=${1?ENV left unspecified; call $0 ENV}
 if [[ "x${ENV}" = "xstaging" ]]
 then
   FORCE="+"
+  BRANCH="HEAD"
 else
   FORCE=""
+  BRANCH="master"
 fi
 
 heroku maintenance:on --remote "${ENV}"
@@ -15,7 +17,7 @@ REMOTE_SHA1=$( git log -n 1 --pretty=format:%H "${ENV}"/master )
 LOCAL_SHA1=$( git log -n 1 --pretty=format:%H HEAD )
 
 echo "Deploying \"$( git log -n 1 --oneline HEAD)\" to \"${ENV}\""
-git push "${1:?Missing ENV as 1st parameter}" "${FORCE}"HEAD:master
+git push "${1:?Missing ENV as 1st parameter}" "${FORCE}""${BRANCH}":master
 
 if [[ -n "$( git log --oneline -n 1 ${REMOTE_SHA1}..${LOCAL_SHA1} -- db/structure.sql )" ]]
 then
