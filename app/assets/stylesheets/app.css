@@ -85,3 +85,12 @@ footer p {
   text-align: center;
   width: 20%
 }
+
+.product-image {
+  opacity: 1.0;
+}
+
+.connecting {
+  opacity: 0.3333;
+  transition: opacity .25s linear;
+}

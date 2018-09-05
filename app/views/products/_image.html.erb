@@ -1,4 +1,4 @@
-<div class="cell" id="product-<%= @product.slug %>-image-<%= image.id %>">
+<div class="cell product-image" id="product-<%= @product.slug %>-image-<%= image.id %>">
   <div class="card">
     <%= link_to image_tag(image.variant(WEB_IMAGE_CONFIG.merge(resize: "300x225")), alt: "", size: "300x225"), image, class: "thumbnail" %>
     <% if current_member.inventory_director?  %>
