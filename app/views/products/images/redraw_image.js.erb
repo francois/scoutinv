@@ -1,0 +1,7 @@
+$(
+  "<%= escape_javascript(render(partial: "products/image", locals: { image: @new_image })) %>"
+).insertBefore(
+  "#product-<%= @product.slug %>-image-<%= @image.id %>"
+);
+
+$("#product-<%= @product.slug %>-image-<%= @image.id %>").remove();

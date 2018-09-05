@@ -8,10 +8,9 @@
     <%= link_to t(".back_to_list_button_label"), products_path, class: "button secondary small hide-for-large" %>
     <%= link_to t(".delete_button_label"), product_path(@product), method: :delete, class: "button small alert hide-for-large" if current_member.inventory_director? %>
 
-    <div>
-      <% @product.images.select(&:blob).each do |image| %>
-        <%= link_to image_tag(image.variant(resize: "300x225", strip: true, quality: 75), alt: "", size: "300x225"), image %>
-        <%= button_to t(".delete_image_button_label"), product_image_path(@product, image), method: :delete, class: "button tiny alert" if current_member.inventory_director? %>
+    <div class="grid-x grid-padding-x small-up-1 medium-up-3">
+      <% @product.images.select(&:blob).sort_by{|blob| blob.filename.to_s.downcase}.each do |image| %>
+        <%= render partial: "image", locals: { image: image } %>
       <% end %>
     </div>
 

@@ -192,6 +192,10 @@ en:
     images:
       destroy:
         notice: Image destroyed
+    image:
+      delete_image_button_label: Détruire
+      rotate_image_left_button_label_html: "&#8630; left" # ANTICLOCKWISE TOP SEMICIRCLE ARROW
+      rotate_image_right_button_label_html: "&#8631; right" # CLOCKWISE TOP SEMICIRCLE ARROW
     index:
       categories_header: Categories
       category_label: Category
@@ -216,7 +220,6 @@ en:
       clone_button_label: Clone this product
       dates_header: Dates
       delete_button_label: Delete this product
-      delete_image_button_label: Détruire
       edit_button_label: Edit this product
       event_header: Event
       instance_serial_nos_header: Instance Serial Numbers
