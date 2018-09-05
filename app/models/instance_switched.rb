@@ -1,0 +1,2 @@
+class InstanceSwitched < DomainEvent
+end

@@ -114,6 +114,7 @@ fr:
         leased_all: "Prêté tous les produits"
         removed: "%{num} produit(s) retiré(s) de l'événement"
         returned: "%{num} produit(s) retourné(s)"
+        switched: "%{num} instance(s) échangée(s)"
       index:
         add_to_reservation_button_label: Ajouter aux réservations
         animators_people: Animateurs
@@ -142,6 +143,7 @@ fr:
         leased_on_header: Prêté le
         return_button_label: Retourner
         returned_on_header: Retourné le
+        switch_instance_button_label: Échanger
       manage:
         back_to_event: Retour à l'événement
         lease_all_button_label: Prêter tous les produits

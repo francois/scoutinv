@@ -94,3 +94,7 @@ footer p {
   opacity: 0.3333;
   transition: opacity .25s linear;
 }
+
+.product td {
+  vertical-align: top;
+}

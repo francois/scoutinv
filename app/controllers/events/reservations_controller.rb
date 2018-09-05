@@ -45,28 +45,32 @@ class Events::ReservationsController < ApplicationController
         @instances = current_group.instances.includes(reservations: :product).where(serial_no: params[:instances].keys).to_a
       end
 
-      if %i[ add remove lease lease_all return ].all?{|key| params[key].blank?}
+      if %i[ add remove lease lease_all return switch ].all?{|key| params[key].blank?}
         # NOP
       elsif params[:add].present?
-        Rails.logger.info "Adding #{@products.size} products"
+        logger.info "Adding #{@products.size} products"
         @event.reserve(@products, metadata: domain_event_metadata)
         flash[:notice] = t(:added, scope: "events.reservations.create", num: @products.size)
       elsif params[:remove].present?
-        Rails.logger.info "Freeing #{@products.size} products"
+        logger.info "Freeing #{@products.size} products"
         @event.offer(@products, metadata: domain_event_metadata)
         flash[:notice] = t(:removed, scope: "events.reservations.create", num: @products.size)
       elsif params[:lease].present?
-        Rails.logger.info "Leasing #{@instances.map(&:serial_no).inspect}"
+        logger.info "Leasing #{@instances.map(&:serial_no).inspect}"
         @event.lease(@instances, metadata: domain_event_metadata)
         flash[:notice] = t(:leased, scope: "events.reservations.create", num: @instances.size)
       elsif params[:lease_all].present?
-        Rails.logger.info "Leasing all instances"
+        logger.info "Leasing all instances"
         @event.lease_all(metadata: domain_event_metadata)
         flash[:notice] = t(:leased_all, scope: "events.reservations.create", num: @event.reservations.size)
       elsif params[:return].present?
-        Rails.logger.info "Returning #{@instances.map(&:serial_no).inspect}"
+        logger.info "Returning #{@instances.map(&:serial_no).inspect}"
         @event.return(@instances, metadata: domain_event_metadata)
         flash[:notice] = t(:returned, scope: "events.reservations.create", num: @instances.size)
+      elsif params[:switch].present?
+        logger.info "Switching #{@instances.map(&:serial_no).inspect}"
+        @event.switch(@instances, metadata: domain_event_metadata)
+        flash[:notice] = t(:switched, scope: "events.reservations.create", num: @instances.size)
       else
         raise "ASSERTION ERROR: One of add and remove were supposed to be filled in, none were?!?"
       end
@@ -114,6 +118,6 @@ class Events::ReservationsController < ApplicationController
   private
 
   def set_event
-    @event = current_group.events.includes(reservations: [:instance, :product]).find_by!(slug: params[:event_id])
+    @event = current_group.events.includes(reservations: [:product, instance: :reservations]).find_by!(slug: params[:event_id])
   end
 end

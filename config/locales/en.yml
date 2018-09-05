@@ -114,6 +114,7 @@ en:
         leased_all: "All products leased"
         removed: "%{num} products removed from event"
         returned: "%{num} products returned"
+        switched: "%{num} instances switched"
       index:
         add_to_reservation_button_label: Add to reservation
         animators_people: Animators
@@ -142,6 +143,7 @@ en:
         leased_on_header: Leased on
         return_button_label: Return
         returned_on_header: Returned on
+        switch_instance_button_label: Switch
       manage:
         back_to_event: Back to event
         lease_all_button_label: Lease all products

@@ -1,4 +1,4 @@
-<tr id="product-<%= product.slug %>-instance-<%= reservation.serial_no %>">
+<tr id="product-<%= product.slug %>-instance-<%= reservation.serial_no %>" class="product">
   <% if index == 0 %>
     <td rowspan="<%= num_instances %>">
       <%= link_to product.name, event_product_path(@event, product) %> <br>
@@ -7,6 +7,14 @@
     </td>
   <% end %>
   <td>
+    <% if reservation.loanable? && reservation.product.quantity > 1 %>
+      <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+        <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
+        <%= hidden_field_tag "back_to_manage", "1" %>
+        <%= hidden_field_tag "switch", "1" %>
+        <%= submit_tag t(".switch_instance_button_label"), name: "switch", class: "button expanded warning"%>
+      <% end %>
+    <% end %>
     <%= format_serial_no(reservation.serial_no) %><br>
   </td>
   <td>

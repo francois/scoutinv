@@ -137,6 +137,29 @@ class Event < ApplicationRecord
       )
     end
   end
+  
+  NoInstanceAvailable = Class.new(StandardError)
+
+  def switch(instances, date: Date.today, metadata: {})
+    reservations.each do |reservation|
+      next unless instances.include?(reservation.instance)
+
+      candidates = reservation.product.instances.reject{|instance| instance.reserved_on?(date_range)}
+      raise NoInstanceAvailable if candidates.empty?
+
+      reservation.mark_for_destruction
+      new_reservation = reservations.build(instance: candidates.sample)
+
+      domain_events << InstanceSwitched.new(
+        data: {
+          event_slug: slug,
+          new_instance_slug: new_reservation.instance_slug,
+          original_instance_slug: reservation.instance_slug,
+        },
+        metadata: metadata,
+      )
+    end
+  end
 
   def reservations_of(product)
     reservations.select{|reservation| reservation.product == product}
