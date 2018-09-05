@@ -56,11 +56,11 @@ class ProductsController < ApplicationController
         end
       end
 
-      current_group.save
-
-      @attached.each do |image|
-        ShrinkImageJob.perform_later(@product, image)
-      end if @attached
+      current_group.save.tap do
+        @attached.each do |image|
+          ShrinkImageJob.perform_later(@product, image)
+        end if @attached
+      end
     end
 
     if successful
@@ -76,11 +76,11 @@ class ProductsController < ApplicationController
       @product.change_data(product_params, metadata: domain_event_metadata)
       @attached = @product.images.attach(params[:product][:images]) if params[:product][:images].present?
 
-      @product.save
-
-      @attached.each do |image|
-        ShrinkImageJob.perform_later(@product, image)
-      end if @attached
+      @product.save.tap do
+        @attached.each do |image|
+          ShrinkImageJob.perform_later(@product, image)
+        end if @attached
+      end
     end
 
     if successful
