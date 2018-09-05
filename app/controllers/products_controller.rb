@@ -60,7 +60,7 @@ class ProductsController < ApplicationController
 
       @attached.each do |image|
         ShrinkImageJob.perform_later(@product, image)
-      end
+      end if @attached
     end
 
     if successful
@@ -80,7 +80,7 @@ class ProductsController < ApplicationController
 
       @attached.each do |image|
         ShrinkImageJob.perform_later(@product, image)
-      end
+      end if @attached
     end
 
     if successful
