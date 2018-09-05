@@ -40,19 +40,24 @@ class Products::ImagesController < ApplicationController
     basename = Rails.root + "tmp/#{SecureRandom.uuid}.jpg"
     updname  = basename.sub(".jpg", "-updated.jpg")
 
-    tf = File.new(basename, "w:ASCII-8BIT")
-    tf.write(@image.download)
-    tf.close
+    begin
+      tf = File.new(basename, "w:ASCII-8BIT")
+      tf.write(@image.download)
+      tf.close
 
-    img = MiniMagick::Image.new(tf.path)
-    img.strip
-    img.rotate(angle)
-    img.quality(80)
-    img.write(updname)
+      img = MiniMagick::Image.new(tf.path)
+      img.rotate(angle)
+      img.write(updname)
 
-    File.open(updname) do |io|
-      @new_image = @product.images.attach(io: io, filename: @image.filename).first
+      File.open(updname, "r:ASCII-8BIT") do |io|
+        @new_image = @product.images.attach(io: io, filename: @image.filename).first
+      end
+      @image.destroy
+
+      ShrinkImageJob.perform_later(@product, @new_image)
+    ensure
+      File.unlink(basename) if File.exist?(basename)
+      File.unlink(updname) if File.exist?(updname)
     end
-    @image.destroy
   end
 end

@@ -46,9 +46,9 @@ class ProductsController < ApplicationController
   end
 
   def create
-    current_group.transaction do
+    successful = current_group.transaction do
       @product = current_group.register_new_product(product_params, metadata: domain_event_metadata)
-      @product.images.attach(params[:product][:images]) if params[:product][:images].present?
+      @attached = @product.images.attach(params[:product][:images]) if params[:product][:images].present?
       if params[:clone_from].present?
         @clone_from = current_group.products.find_by!(slug: params[:clone_from])
         @clone_from.images.each do |attachment|
@@ -56,26 +56,38 @@ class ProductsController < ApplicationController
         end
       end
 
-      if current_group.save
-        redirect_to @product, notice: t(".product_successfully_created")
-      else
-        @page_title = "New Product"
-        render :new
+      current_group.save
+
+      @attached.each do |image|
+        ShrinkImageJob.perform_later(@product, image)
       end
+    end
+
+    if successful
+      redirect_to @product, notice: t(".product_successfully_created")
+    else
+      @page_title = "New Product"
+      render :new
     end
   end
 
   def update
-    current_group.transaction do
+    successful = current_group.transaction do
       @product.change_data(product_params, metadata: domain_event_metadata)
-      @product.images.attach(params[:product][:images]) if params[:product][:images].present?
+      @attached = @product.images.attach(params[:product][:images]) if params[:product][:images].present?
 
-      if @product.save
-        redirect_to @product, notice: t(".product_successfully_updated")
-      else
-        @page_title = "Edit #{@product.name}"
-        render :edit
+      @product.save
+
+      @attached.each do |image|
+        ShrinkImageJob.perform_later(@product, image)
       end
+    end
+
+    if successful
+      redirect_to @product, notice: t(".product_successfully_updated")
+    else
+      @page_title = "Edit #{@product.name}"
+      render :edit
     end
   end
 

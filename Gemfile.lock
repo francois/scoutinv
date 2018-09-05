@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/chanks/que.git
+  revision: ad5f02cc1ae68c00699d04da8c9c8e5b4262c5a2
+  specs:
+    que (1.0.0.beta3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -244,6 +250,7 @@ DEPENDENCIES
   mini_magick (~> 4.8)
   pg
   puma (~> 3.11)
+  que!
   rails (~> 5.2.1)
   rails-controller-testing
   sass-rails (~> 5.0)

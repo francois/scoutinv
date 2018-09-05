@@ -8,6 +8,12 @@ Bundler.require(*Rails.groups)
 
 STAGING = ENV.fetch("STAGING", "false") == "true"
 
+WEB_IMAGE_CONFIG = {
+  strip: true,
+  quality: 80,
+  resize: 1200,
+}
+
 module Scoutinv
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

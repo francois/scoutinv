@@ -60,4 +60,9 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.active_record.schema_format = :sql
+
+  config.active_job.queue_adapter     = :que
+  config.active_job.queue_name_prefix = "scoutinv_#{Rails.env}"
+
+  config.action_mailer.deliver_later_queue_name = ""
 end
