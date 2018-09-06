@@ -31,6 +31,7 @@ class ProductsController < ApplicationController
           building: @clone_from.building,
           categories: @clone_from.categories,
           description: @clone_from.description,
+          quantity: @clone_from.quantity,
           images: @clone_from.images,
           name: @clone_from.name,
           shelf: @clone_from.shelf,
