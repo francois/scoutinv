@@ -9,7 +9,10 @@ en:
       event:
         dates: Dates
         description: Description
+        email: Email
         end_on: End on
+        name: Name
+        phone: Phone
         start_on: Start on
         title: Title
       group:

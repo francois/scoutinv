@@ -467,7 +467,10 @@ CREATE TABLE public.events (
     end_on date NOT NULL,
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL
+    updated_at timestamp with time zone NOT NULL,
+    name text,
+    email text,
+    phone text
 );
 
 
@@ -1402,6 +1405,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180803024849'),
 ('20180902151206'),
 ('20180904022551'),
-('20180905033203');
+('20180905033203'),
+('20180906032435');
 
 

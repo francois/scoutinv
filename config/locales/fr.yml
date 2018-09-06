@@ -9,7 +9,10 @@ fr:
       event:
         dates: Dates
         description: Description
+        email: Courriel
         end_on: Termine le
+        name: Nom
+        phone: Téléphone
         start_on: Commence le
         title: Titre
       group:
