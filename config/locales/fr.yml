@@ -255,9 +255,10 @@ fr:
     notes:
       add_note_label: Ajouter une note
       by_author_name: par %{author_name}
+      create_note_button_label: Enregistrer la note
+      delete_note_button_label: Détruire
       notes: Notes
       notes_header: Notes
-      create_note_button_label: Enregistrer la note
     or:
       or: ou
   top-bar:

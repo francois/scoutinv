@@ -8,8 +8,13 @@
 
 <% if parent.notes.reject(&:new_record?).any? %>
   <% parent.notes.reject(&:new_record?).sort_by(&:created_at).reverse.each do |note| %>
-    <hr>
-    <%= simple_format note.body %>
-    <p><small><%= t(".by_author_name", author_name: note.author_name) %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= t("date.formats.time_ago", date: time_ago_in_words(note.created_at)) %></span></small></p>
+    <div id="note-<%= note.slug %>">
+      <hr>
+      <% if note.author == current_member %>
+        <%= button_to t(".delete_note_button_label"), note, method: :delete, remote: true, class: "button tiny alert float-right" %>
+      <% end %>
+      <%= simple_format note.body %>
+      <p><small><%= t(".by_author_name", author_name: note.author_name) %>, <span title="<%= note.created_at.to_formatted_s(:iso8601) %>"><%= t("date.formats.time_ago", date: time_ago_in_words(note.created_at)) %></span></small></p>
+    </div>
   <% end %>
 <% end %>

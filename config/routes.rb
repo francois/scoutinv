@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     resources :notes, only: %i[ create ], controller: "products/notes"
   end
 
+  resources :notes
+
   get "/apple-touch-icon/:size.:format", to: "home#apple_touch_icon"
   get "/favicon/:size.:format", to: "home#apple_touch_icon"
 end

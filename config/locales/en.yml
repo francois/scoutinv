@@ -255,9 +255,10 @@ en:
     notes:
       add_note: Add note
       by_author_name: by %{author_name}
+      create_note_button_label: Record note
+      delete_note_button_label: Delete
       notes: Notes
       notes_header: Notes
-      create_note_button_label: Record note
     or:
       or: or
   top-bar:

@@ -11,6 +11,13 @@ class Group < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 2 }
 
+  def find_note_by_slug!(slug)
+    notes = Note.find_by_sql(find_note_by_slug_sql(slug))
+
+    raise ActiveRecord::RecordNotFound if notes.empty?
+    notes.first
+  end
+
   def register_new_event(attributes, metadata: {})
     events.build(attributes).tap do |new_event|
       domain_events << EventRegistered.new(
@@ -58,5 +65,25 @@ class Group < ApplicationRecord
         metadata: metadata
       )
     end
+  end
+
+  private
+
+  def find_note_by_slug_sql(slug)
+    <<~EOSQL.squish.gsub(":quoted_slug", Note.connection.quote(slug)).gsub(":quoted_group_id", Note.connection.quote(id))
+      SELECT notes.*
+      FROM notes
+      JOIN events ON events.id = notes.parent_id AND notes.parent_type = 'Event'
+      WHERE notes.slug = :quoted_slug
+        AND events.group_id = :quoted_group_id
+
+      UNION
+
+      SELECT notes.*
+      FROM notes
+      JOIN products ON products.id = notes.parent_id AND notes.parent_type = 'Product'
+      WHERE notes.slug = :quoted_slug
+        AND products.group_id = :quoted_group_id
+    EOSQL
   end
 end
