@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   def index
     @page_title = I18n.t("events.index.page_title")
 
-    @after = params[:after].present? ? params[:after].to_date : 1.month.ago
+    @after = params[:after].present? ? params[:after].to_date : 10.days.ago
 
     @events = current_group.events.by_date
     @events = @events.after(@after)

@@ -6,7 +6,7 @@ class Event < ApplicationRecord
   has_many :notes,         dependent: :delete_all, autosave: true, as: :parent
   has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
 
-  scope :after, ->(date) { where("start_on >= ?", date).order(:start_on) }
+  scope :after, ->(date) { where("end_on >= ?", date).order(:start_on) }
   scope :by_date, -> { order(:start_on, :id) }
   scope :with_reservations, ->{ includes(reservations: :products) }
 
