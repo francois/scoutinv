@@ -88,6 +88,7 @@ fr:
   events:
     form:
       cancel_button_label: Annuler
+      external_renter: Locateur (seulement requis pour location externe)
       or: ou
     index:
       end_on_header: Se termine le
