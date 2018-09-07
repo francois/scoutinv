@@ -2,26 +2,28 @@
   <td><%= format_serial_no(instance.serial_no) %></td>
   <td><%= t(instance.state, scope: "products.instance.states") %></td>
   <td>
-    <div class="grid-x grid-margin-x">
-      <% if instance.state_events.include?(:hold) %>
-        <div class="auto cell">
-          <%= button_to t(".hold_button_label"), hold_product_instance_path(@product, instance), title: t(".hold_hover_help"), remote: true, method: :patch, class: "button warning small expanded" %>
-        </div>
-      <% end %>
-      <% if instance.state_events.include?(:send_for_repairs) %>
-        <div class="auto cell">
-          <%= button_to t(".send_for_repair_button_label"), send_for_repairs_product_instance_path(@product, instance), title: t(".send_for_repair_hover_help"), remote: true, method: :patch, class: "button warning small expanded" %>
-        </div>
-      <% end %>
-      <% if instance.state_events.include?(:repair) %>
-        <div class="auto cell">
-          <%= button_to t(".repair_button_label"), repair_product_instance_path(@product, instance), title: t(".repair_hover_help"), remote: true, method: :patch, class: "button success small expanded" %>
-        </div>
-      <% end %>
-      <% if instance.state_events.include?(:trash) %>
-        <div class="auto cell">
-          <%= button_to t(".trash_button_label"), product_instance_path(@product, instance), title: t(".trash_hover_help"), remote: true, method: :delete, class: "button alert small expanded" %>
-        </div>
+    <% if current_member.inventory_director? %>
+      <div class="grid-x grid-margin-x">
+        <% if instance.state_events.include?(:hold) %>
+          <div class="auto cell">
+            <%= button_to t(".hold_button_label"), hold_product_instance_path(@product, instance), title: t(".hold_hover_help"), remote: true, method: :patch, class: "button warning small expanded" %>
+          </div>
+        <% end %>
+        <% if instance.state_events.include?(:send_for_repairs) %>
+          <div class="auto cell">
+            <%= button_to t(".send_for_repair_button_label"), send_for_repairs_product_instance_path(@product, instance), title: t(".send_for_repair_hover_help"), remote: true, method: :patch, class: "button warning small expanded" %>
+          </div>
+        <% end %>
+        <% if instance.state_events.include?(:repair) %>
+          <div class="auto cell">
+            <%= button_to t(".repair_button_label"), repair_product_instance_path(@product, instance), title: t(".repair_hover_help"), remote: true, method: :patch, class: "button success small expanded" %>
+          </div>
+        <% end %>
+        <% if instance.state_events.include?(:trash) %>
+          <div class="auto cell">
+            <%= button_to t(".trash_button_label"), product_instance_path(@product, instance), title: t(".trash_hover_help"), remote: true, method: :delete, class: "button alert small expanded" %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </td>
