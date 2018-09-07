@@ -19,6 +19,14 @@ Rails.application.routes.draw do
   resources :members, only: %i[ edit update destroy ]
 
   resources :products do
+    resources :instances, only: %[destroy], controller: "products/instances" do
+      member do
+        patch :hold
+        patch :send_for_repairs
+        patch :repair
+      end
+    end
+
     resources :images, only: %i[ update destroy ], controller: "products/images" do
       member do
         patch :left

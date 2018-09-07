@@ -17,7 +17,7 @@ class Product < ApplicationRecord
   scope :with_instances,        ->{ includes(:instances) }
   scope :not_recently_reserved, ->{ joins("LEFT JOIN instances ON instances.product_id = products.id LEFT JOIN reservations ON reservations.instance_id = instances.id").where("reservations.created_at IS NULL OR reservations.created_at < ?", 12.months.ago).order(Arel.sql("random()")) }
   scope :leased,                ->{ includes(:reservations).references(:reservations).where(reservations: {returned_on: nil}).where.not(reservations: {leased_on: nil}) }
-  scope :available,             ->{ includes(:reservations).references(:reservations).where(reservations: {id: nil}) }
+  scope :available,             ->{ includes(:reservations, :instances).references(:reservations, :instances).where(instances: {state: "available"}, reservations: {id: nil}) }
   scope :in_category,           ->(category){ includes(:categories).where(categories: { slug: category.slug }) }
   scope :reserved,              ->(on_event=nil){
     if on_event
@@ -62,6 +62,10 @@ class Product < ApplicationRecord
 
   def location_changed?
     building_changed? || aisle_changed? || shelf_changed? || unit_changed?
+  end
+
+  def available_quantity
+    instances.select(&:available?).size
   end
 
   def add_note(attributes, metadata: {})

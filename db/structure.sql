@@ -535,7 +535,8 @@ CREATE TABLE public.instances (
     serial_no character varying NOT NULL,
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL
+    updated_at timestamp with time zone NOT NULL,
+    state text DEFAULT 'available'::text NOT NULL
 );
 
 
@@ -1406,6 +1407,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180902151206'),
 ('20180904022551'),
 ('20180905033203'),
+('20180905195512'),
 ('20180906032435');
 
 

@@ -1,0 +1,2 @@
+class InstanceReceivedFromRepairs < DomainEvent
+end

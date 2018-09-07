@@ -215,6 +215,25 @@ en:
       search_button_label: Search
       sorry_no_elements: Sorry, no products correspond to your search criterias
       view_all_button_label: View All
+    instance:
+      hold_button_label: Hold
+      hold_hover_help: "Make this instance unavailable for leasing"
+      repair_button_label: Repair
+      repair_hover_help: "Make this instance available for leasing again"
+      send_for_repair_button_label: Send for repairs
+      send_for_repair_hover_help: "Send this instance for repairs"
+      trash_button_label: Trash
+      trash_hover_help: "Put this instance in the trash"
+      states:
+        available: Available
+        held: Held
+        repairing: Repairing
+        trashed: Trashed
+    instances:
+      held_notice: "%{serial_no} held"
+      repaired_notice: "%{serial_no} repaired"
+      sent_for_repairs_notice: "%{serial_no} sent for repairs"
+      trashed_notice: "%{serial_no} trashed"
     edit:
       page_title: "Edit %{product_name}"
     new:
@@ -231,6 +250,7 @@ en:
       instance_serial_nos_header: Instance Serial Numbers
       product_reservation_history_header: Product Reservation History
       serial_no_header: Serial No
+      state_header: State
     update:
       product_successfully_updated: Product successfully updated
   sessions:

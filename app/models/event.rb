@@ -37,10 +37,11 @@ class Event < ApplicationRecord
   def reserve(products, metadata: {})
     products.each do |product|
       # Attempt to find a free instance, e.g. one that isn't reserved for this event's date range
+      available_instances            = product.instances.select(&:available?)
       my_reserved_instances          = reservations.map(&:instance)
       instances_busy_on_other_events = product.instances.select{|instance| instance.reserved_on?(date_range)}
 
-      candidates = product.instances
+      candidates = available_instances
       candidates = candidates - my_reserved_instances
       candidates = candidates - instances_busy_on_other_events
 
@@ -50,7 +51,7 @@ class Event < ApplicationRecord
       #
       # If we decide to change this decision, we could raise a DoubleBookingError error
       # and let the human take a decision at that time
-      candidates = product.instances - my_reserved_instances if candidates.empty?
+      candidates = available_instances - my_reserved_instances if candidates.empty?
 
       raise "no more instances available globally!" if candidates.empty?
 

@@ -1,0 +1,1 @@
+$("<%= escape_javascript(render(partial: "products/instance", locals: {instance: @instance})) %>").replaceAll("#product-<%= @product.slug %>-instance-<%= @instance.slug %>");

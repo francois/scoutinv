@@ -18,6 +18,21 @@ class ProductTest < ActiveSupport::TestCase
     assert groups(:"41eme").products.in_category(categories(:tent)).include?(products(:prospector_tent_41eme))
   end
 
+  test ".available scope" do
+    # unavailable because it's being repaired
+    refute groups(:"41eme").products.available.include?(products(:prospector_tent_41eme))
+
+    # state == available
+    assert groups(:"10eme").products.available.include?(products(:tent_4x5_10eme))
+
+    # one plate is available, the other is not
+    assert groups(:"10eme").products.available.include?(products(:cooking_plate_10eme))
+  end
+
+  test "#available_quantity" do
+    assert_equal 1, products(:cooking_plate_10eme).available_quantity
+  end
+
   test ".search with ASCII string finds corresponding product" do
     assert @group.products.search("tent").include?(products(:tent_4x5_10eme))
     refute @group.products.search("tent").include?(products(:cooking_plate_10eme))

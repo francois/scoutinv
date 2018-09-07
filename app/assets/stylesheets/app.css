@@ -98,3 +98,19 @@ footer p {
 .product td {
   vertical-align: top;
 }
+
+.instance-available td {
+  background-color: #98ebcf;
+}
+
+.instance-held td {
+  background-color: #55b4d4;
+}
+
+.instance-repairing td {
+  background-color: #b1d5e0;
+}
+
+.instance-trashed td {
+  background-color: #f2727f;
+}

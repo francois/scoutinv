@@ -1,0 +1,23 @@
+tent_4x5_10eme:
+  product: tent_4x5_10eme
+  serial_no: FLJ
+  slug: mqgzo0xt
+  state: available
+
+cooking_plate_10eme_1:
+  product: cooking_plate_10eme
+  serial_no: XUH
+  slug: rokwo1u6
+  state: available
+
+cooking_plate_10eme_2:
+  product: cooking_plate_10eme
+  serial_no: HQ6
+  slug: riofdixv
+  state: held
+
+prospector_tent_41eme:
+  product: prospector_tent_41eme
+  serial_no: MNX
+  slug: tot7knlg
+  state: repairing

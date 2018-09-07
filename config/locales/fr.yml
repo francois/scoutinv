@@ -215,6 +215,25 @@ fr:
       search_button_label: Chercher
       sorry_no_elements: Désolé, aucun produit ne correspond à vos critères de recherche
       view_all_button_label: Afficher tout
+    instance:
+      hold_button_label: Retenir
+      hold_hover_help: "Empêcher les members d'emprunter cette instance"
+      repair_button_label: Réparer
+      repair_hover_help: "Rendre cette instance disponible pour emprunt"
+      send_for_repair_button_label: Envoyer en réparation
+      send_for_repair_hover_help: "Envoyer cette instance en réparation"
+      trash_button_label: Mettre au rebut
+      trash_hover_help: "Mettre cette instance au rebut"
+      states:
+        available: Disponible
+        held: Retenu
+        repairing: En réparation
+        trashed: Mise au rebut
+    instances:
+      held_notice: "%{serial_no} retenu"
+      repaired_notice: "%{serial_no} revenu de réparation"
+      sent_for_repairs_notice: "%{serial_no} envoyé en réparation"
+      trashed_notice: "%{serial_no} mis au rebut"
     edit:
       page_title: "Modification de %{product_name}"
     new:
@@ -231,6 +250,7 @@ fr:
       instance_serial_nos_header: Numéros de série des instances
       product_reservation_history_header: Historique de réservation du produit
       serial_no_header: No série
+      state_header: État
     update:
       product_successfully_updated: Produit mis à jour avec succès
   sessions:

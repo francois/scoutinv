@@ -2,12 +2,94 @@ class Instance < ApplicationRecord
   include HasSlug
 
   belongs_to :product, touch: true
-  has_many :reservations, dependent: :delete_all, autosave: true
+  has_many :reservations,  dependent: :delete_all, autosave: true
+  has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
 
   validates :product, :serial_no, :slug, presence: true
   validates :serial_no, uniqueness: :product_id
 
   after_initialize :assign_serial_no
+
+  # product_slug
+  delegate :slug, to: :product, prefix: :product
+
+  state_machine :state, initial: :available do
+    event :hold do
+      transition %i[available] => :held
+    end
+
+    event :send_for_repairs do
+      transition all - %i[repairing] => :repairing
+    end
+
+    event :repair do
+      transition %i[held repairing] => :available
+    end
+
+    event :trash do
+      transition all - %i[trashed] => :trashed
+    end
+
+    after_transition to: :held do |instance|
+      instance.domain_events << InstanceHeld.new(
+        data: {
+          instance_slug: instance.slug,
+          product_slug: instance.product_slug,
+        },
+        metadata: instance.instance_variable_get(:@action_metadata),
+      )
+    end
+
+    after_transition to: :trashed do |instance|
+      instance.domain_events << InstanceTrashed.new(
+        data: {
+          instance_slug: instance.slug,
+          product_slug: instance.product_slug,
+        },
+        metadata: instance.instance_variable_get(:@action_metadata),
+      )
+    end
+
+    after_transition to: :repairing do |instance|
+      instance.domain_events << InstanceSentForRepairs.new(
+        data: {
+          instance_slug: instance.slug,
+          product_slug: instance.product_slug,
+        },
+        metadata: instance.instance_variable_get(:@action_metadata),
+      )
+    end
+
+    after_transition to: :available do |instance|
+      instance.domain_events << InstanceReceivedFromRepairs.new(
+        data: {
+          instance_slug: instance.slug,
+          product_slug: instance.product_slug,
+        },
+        metadata: instance.instance_variable_get(:@action_metadata),
+      )
+    end
+  end
+
+  def hold(metadata: {})
+    @action_metadata = metadata
+    super()
+  end
+
+  def send_for_repairs(metadata: {})
+    @action_metadata = metadata
+    super()
+  end
+
+  def repair(metadata: {})
+    @action_metadata = metadata
+    super()
+  end
+
+  def trash(metadata: {})
+    @action_metadata = metadata
+    super()
+  end
 
   def has_no_reservations?
     reservations.empty?
@@ -37,7 +119,7 @@ class Instance < ApplicationRecord
     @serial_no_size ||=
       begin
         number = Instance.count
-        number.zero? ? 3 : Math.log(number, 10).truncate + 1
+        number.zero? ? 3 : [3, Math.log(number, 10).truncate + 1].max
       end
   end
 end

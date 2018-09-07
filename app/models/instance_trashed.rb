@@ -1,0 +1,2 @@
+class InstanceTrashed < DomainEvent
+end

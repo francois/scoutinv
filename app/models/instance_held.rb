@@ -1,0 +1,2 @@
+class InstanceHeld < DomainEvent
+end
