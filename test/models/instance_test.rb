@@ -20,5 +20,6 @@ class InstanceTest < ActiveSupport::TestCase
     @instance.trash
     assert @instance.trashed?
     assert_raises{ @instance.hold! }
+    refute @instance.state_events.include?(:trash)
   end
 end

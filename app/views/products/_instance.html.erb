@@ -18,9 +18,11 @@
           <%= button_to t(".repair_button_label"), repair_product_instance_path(@product, instance), title: t(".repair_hover_help"), remote: true, method: :patch, class: "button success small expanded" %>
         </div>
       <% end %>
-      <div class="auto cell">
-        <%= button_to t(".trash_button_label"), product_instance_path(@product, instance), title: t(".trash_hover_help"), remote: true, method: :delete, class: "button alert small expanded" %>
-      </div>
+      <% if instance.state_events.include?(:trash) %>
+        <div class="auto cell">
+          <%= button_to t(".trash_button_label"), product_instance_path(@product, instance), title: t(".trash_hover_help"), remote: true, method: :delete, class: "button alert small expanded" %>
+        </div>
+      <% end %>
     </div>
   </td>
 </tr>
