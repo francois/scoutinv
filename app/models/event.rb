@@ -1,6 +1,8 @@
 class Event < ApplicationRecord
   include HasSlug
 
+  DoubleBookingError = Class.new(RuntimeError)
+
   belongs_to :group
   belongs_to :troop, optional: true
   has_many :reservations,  dependent: :delete_all, autosave: true
@@ -51,15 +53,9 @@ class Event < ApplicationRecord
       candidates = candidates - my_reserved_instances
       candidates = candidates - instances_busy_on_other_events
 
-      # If we couldn't find a free instance, fallback to any instance
-      # It is a conscious decision to let humans take the correct decision in this case
-      # The UI will inform people that an instance is double booked
-      #
-      # If we decide to change this decision, we could raise a DoubleBookingError error
-      # and let the human take a decision at that time
-      candidates = available_instances - my_reserved_instances if candidates.empty?
-
-      raise "no more instances available globally!" if candidates.empty?
+      if candidates.empty?
+        raise DoubleBookingError, "There are no free instances of #{product.name} available between #{start_on} and #{end_on}"
+      end
 
       reservation = reservations.build(instance: candidates.sample)
       domain_events << InstanceReserved.new(

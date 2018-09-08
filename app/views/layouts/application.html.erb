@@ -62,20 +62,14 @@
           <h1><%= page_title || "Scoutinv" %></h1>
         </div>
 
-        <% if alert.present? || notice.present? %>
-          <div class="large-12 cell">
-            <% if notice.present? %>
-              <div class="callout success" data-closeable>
-                <p><%= notice %></p>
-              </div>
-            <% end %>
-            <% if alert.present? %>
-              <div class="callout alert" data-closeable>
-                <p><%= alert %></p>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
+        <div id="notices" class="large-12 cell">
+          <% if notice.present? %>
+            <%= render partial: "shared/notice", locals: {notice: notice} %>
+          <% end %>
+          <% if alert.present? %>
+            <%= render partial: "shared/alert", locals: {alert: alert} %>
+          <% end %>
+        </div>
       </div>
     </div>
 

@@ -121,6 +121,7 @@ fr:
     reservations:
       create:
         added: "%{num} produit(s) ajouté(s) à l'événement"
+        double_booking_error_alert: "Impossible de réserver une instance déjà réservée de ce produit"
         leased: "%{num} produit(s) prêté(s)"
         leased_all: "Prêté tous les produits"
         removed: "%{num} produit(s) retiré(s) de l'événement"

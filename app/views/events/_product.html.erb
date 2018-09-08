@@ -25,7 +25,7 @@
           <%= hidden_field_tag "back_to_event", "1" %>
           <%= hidden_field_tag "add", "1" %>
           <%= button_tag class: "button primary small expanded",
-            disabled: @double_booked_products.include?(product) || product.quantity == reservations.size,
+            disabled: product.available_quantity - product.reserved_quantity_on(@event.date_range) <= 0,
             title: t(".plus_one_hover") do %>
             <%= t(".plus_one") %>
           <% end %>
@@ -36,7 +36,7 @@
           <%= hidden_field_tag "products[#{product.slug}]", "1" %>
           <%= hidden_field_tag "back_to_event", "1" %>
           <%= hidden_field_tag "remove", "1" %>
-          <%= button_tag title: t(".minus_one_hover"), class: "button secondary small expanded" do %>
+          <%= button_tag title: t(".minus_one_hover"), class: "button secondary small expanded", disabled: @event.reservations.select{|reservation| reservation.product == product}.empty? do %>
             <%= t(".minus_one") %>
           <% end %>
         <% end %>

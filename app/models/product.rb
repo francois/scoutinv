@@ -68,6 +68,12 @@ class Product < ApplicationRecord
     instances.select(&:available?).size
   end
 
+  def reserved_quantity_on(date_range)
+    instances.select do |instance|
+      instance.reserved_on?(date_range)
+    end.size
+  end
+
   def add_note(attributes, metadata: {})
     notes.build(attributes).tap do |new_note|
       domain_events << NoteAddedToProduct.new(

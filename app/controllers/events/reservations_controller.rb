@@ -113,6 +113,24 @@ class Events::ReservationsController < ApplicationController
         render
       end
     end
+
+  rescue Event::DoubleBookingError
+    respond_to do |format|
+      format.html do
+        if params[:back_to_event].present?
+          redirect_to event_path(@event)
+        elsif params[:back_to_manage].present?
+          redirect_to event_reservations_path(@event, manage: 1)
+        else
+          redirect_to action: :index
+        end
+      end
+
+      format.js do
+        @alert = t("events.reservations.create.double_booking_error_alert")
+        render action: :double_booking_error
+      end
+    end
   end
 
   private
