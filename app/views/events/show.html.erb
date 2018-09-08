@@ -3,7 +3,7 @@
     <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button hide-for-large" %>
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button hide-for-large" %>
     <%= link_to t(".notify_button_label"), notify_event_path(@event), method: :post, class: "button warning hide-for-large" %>
-    <%= link_to t(".print_button_label"), event_path(@event, print: 1), class: "button hide-for-large", target: "blank" %>
+    <%= link_to t(".print_button_label"), event_path(@event, format: :pdf), class: "button hide-for-large", target: "blank" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary hide-for-large" %>
     <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button secondary alert hide-for-large" %>
     <%= link_to t(".manage_reservations_button_label"), event_reservations_path(@event, manage: 1), class: "button hide-for-large" %>
@@ -37,7 +37,7 @@
     <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button expanded" %>
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button expanded" %>
     <%= link_to t(".notify_button_label"), notify_event_path(@event), method: :post, class: "button warning expanded" %>
-    <%= link_to t(".print_button_label"), event_path(@event, print: 1), class: "button expanded", target: "blank" %>
+    <%= link_to t(".print_button_label"), event_path(@event, format: :pdf), class: "button expanded" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary expanded" %>
 
     <% if @event.reservations.any? %>

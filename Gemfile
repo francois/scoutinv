@@ -16,6 +16,8 @@ gem 'aws-sdk-s3'
 gem 'kaminari', '~> 1.1.1'
 gem 'que', github: "chanks/que"
 gem 'state_machine'
+gem 'prawn'
+gem 'prawn-table'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
@@ -34,10 +36,11 @@ group :development, :test do
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
+  gem 'bullet'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console', '>= 3.3.0'
 end
 
 group :test do

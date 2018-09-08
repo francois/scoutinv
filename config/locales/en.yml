@@ -334,6 +334,31 @@ en:
       more_pages:
         display_entries: "Displaying %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> in total"
 
+  contract:
+    date: Date
+    email: Email
+    event: Event
+    instructions_title: "Instructions from the renter to %{group_name}"
+    inventory_director_at_group: "Inventory Director at %{group_name}"
+    lease_end_on_title: Lease end on
+    lease_start_on_title: Lease start on
+    lender: Lender
+    not_available: "N/A"
+    page_numbering: "– <page> of <total> –"
+    phone: Phone
+    product_header: Product
+    quality_control_at_lease_end_header: "Quality Control at Lease End"
+    quality_control_at_lease_start_header: "Quality Control at Lease Start"
+    quantity_header: Quantity
+    renter: Renter
+    subtotal_header: Subtotal
+    terms_and_conditions_for_external_renter: "I, %{name}, agree to take responsibility for the equipment that is being lent to me. I agree to immediately inform the Inventory Directors of any breakage and to pay fees that are deemed necessary to put the equipment back into condition."
+    terms_and_conditions_for_troop: "As part of the %{troop_name} troop, I acknowledge that the equipment was leased in working condition. I also agree to return the equipment promptly and to notify inventory directors of any problems with the equipment."
+    terms_and_conditions_header: "Terms & Conditions"
+    title: Rental Contract
+    total_header: Total
+    unit_price_header: Unit price
+
   date:
     formats:
       range_same_year_and_month: "%b %-d–%{last_day}, %Y"
@@ -343,6 +368,7 @@ en:
       no_year: "%b %-d"
       with_year: "%b %-d %Y"
       time_ago: "%{date} ago"
+      iso8601: "%Y-%m-%d"
 
   serial_number: "N/S:%{no}"
 

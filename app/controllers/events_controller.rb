@@ -17,10 +17,17 @@ class EventsController < ApplicationController
 
     @double_booked_products = Product.double_booked(@event).to_set
 
-    if params[:print].blank?
-      render action: :show
-    else
-      render action: :print
+    respond_to do |format|
+      format.html { render action: :show }
+      format.pdf do
+        generator =
+          if @event.troop
+            TroopContractPdfPrinter.new(@event, author: current_member)
+          else
+            ExternalRenterContractPdfPrinter.new(@event, author: current_member)
+          end
+        send_data generator.print, filename: generator.filename, type: :pdf, disposition: :inline
+      end
     end
   end
 
@@ -71,7 +78,7 @@ class EventsController < ApplicationController
   private
 
   def set_event
-    @event = current_group.events.includes(:group, notes: :author, reservations: :product).find_by!(slug: params[:id])
+    @event = current_group.events.includes(reservations: [:product, :instance]).find_by!(slug: params[:id])
   end
 
   def event_params

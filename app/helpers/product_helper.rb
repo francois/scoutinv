@@ -1,6 +1,6 @@
 module ProductHelper
   def format_serial_no(serial_no)
-    t("serial_number", no: serial_no)
+    I18n.t("serial_number", no: serial_no)
   end
 
   def format_product_location(product, plain: false)

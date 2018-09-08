@@ -334,6 +334,31 @@ fr:
       more_pages:
         display_entries: "Affiche %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> de <b>%{total}</b> au total"
 
+  contract:
+    date: Date
+    email: Courriel
+    event: Événement
+    instructions_title: "Instructions du locataire au %{group_name}"
+    inventory_director_at_group: "Responsable du matériel au %{group_name}"
+    lease_end_on_title: Date de retour prévue du matériel
+    lease_start_on_title: Date de sortie du matériel
+    lender: Locateur
+    not_available: "N/A"
+    page_numbering: "– <page> de <total> –"
+    phone: Téléphone
+    product_header: Produit
+    quality_control_at_lease_end_header: "Contrôle qualité du matériel au retour"
+    quality_control_at_lease_start_header: "Contrôle qualité du matériel au départ"
+    quantity_header: Quantité
+    renter: Locataire
+    subtotal_header: Sous-total
+    terms_and_conditions_for_external_renter: "Je, %{name}, prend la responsabilité du matériel durant sa sortie des locaux du %{group_name}. Je m’engage à indiquer immédiatement aux responsables du matériel si un bris est survenu et à payer les frais jugés nécessaires."
+    terms_and_conditions_for_troop: "En tant que membre de l'unité %{troop_name}, je reconnais que tout le matériel a été prêté en parfait état de marche. J'accepte aussi de rapidement retourner l'équipement et d'immédiatement avertir les directeurs du matériel en cas de bris."
+    terms_and_conditions_header: "Termes et conditions"
+    title: Contrat de location
+    total_header: Total
+    unit_price_header: Prix unitaire
+
   date:
     formats:
       range_same_year_and_month: "%-d au %{last_day} %B %Y"
@@ -343,6 +368,7 @@ fr:
       no_year: "%-d %B"
       with_year: "%-d %B %Y"
       time_ago: "il y a %{date}"
+      iso8601: "%Y-%m-%d"
 
   serial_number: "N/S:%{no}"
 

@@ -65,4 +65,11 @@ Rails.application.configure do
   config.active_job.queue_name_prefix = "scoutinv_#{Rails.env}"
 
   config.action_mailer.deliver_later_queue_name = ""
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.rails_logger = true
+    # Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
+    # Bullet.stacktrace_excludes = [ 'their_gem', 'their_middleware', ['my_file.rb', 'my_method'], ['my_file.rb', 16..20] ]
+  end
 end
