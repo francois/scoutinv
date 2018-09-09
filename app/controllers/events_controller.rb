@@ -6,7 +6,7 @@ class EventsController < ApplicationController
 
     @after = params[:after].present? ? params[:after].to_date : 10.days.ago
 
-    @events = current_group.events.by_date
+    @events = current_group.events.includes(:troop).by_date
     @events = @events.after(@after)
     @events = @events.all
   end
@@ -75,6 +75,6 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:title, :description, :start_on, :end_on, :name, :email, :phone)
+    params.require(:event).permit(:title, :description, :start_on, :end_on, :name, :email, :phone, :troop_id)
   end
 end

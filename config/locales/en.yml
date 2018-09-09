@@ -3,8 +3,9 @@ en:
     models:
       event: Event
       group: Group
-      product: Product
       member: Member
+      product: Product
+      troop: Troop
     attributes:
       event:
         dates: Dates
@@ -15,7 +16,11 @@ en:
         phone: Phone
         start_on: Start on
         title: Title
+        troop_id: Troop
       group:
+        name: Name
+      member:
+        email: Email
         name: Name
       product:
         aisle: Aisle
@@ -28,9 +33,9 @@ en:
         quantity: Quantity
         shelf: Shelf
         unit: Bin
-      member:
-        email: Email
+      troop:
         name: Name
+        position: Position
   categories:
     camping: Encampment
     kitchen: Kitchen
@@ -58,11 +63,13 @@ en:
       page_title: New Group
     show:
       add_member_header: "Add a member"
+      add_troop_header: "Add a troop"
       back_to_list_button_label: Back to list
       edit_button_label: Edit
       email_header: Email
-      name_header: Name
       members: People in this Group
+      name_header: Name
+      unattached: Unattached to a Troop
     update:
       group_successfully_updated: Group updated successfully
       page_title: "Edit %{group_name}"
@@ -88,7 +95,7 @@ en:
   events:
     form:
       cancel_button_label: Cancel
-      external_renter: Renter (only required for external leasing)
+      external_renter: Troop or person that is renting the equipment
       or: or
     index:
       end_on_header: End On

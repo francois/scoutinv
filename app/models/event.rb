@@ -2,6 +2,7 @@ class Event < ApplicationRecord
   include HasSlug
 
   belongs_to :group
+  belongs_to :troop, optional: true
   has_many :reservations,  dependent: :delete_all, autosave: true
   has_many :notes,         dependent: :delete_all, autosave: true, as: :parent
   has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
@@ -13,6 +14,11 @@ class Event < ApplicationRecord
   validates :title, presence: true, length: { minimum: 2 }
   validates :start_on, :end_on, presence: true
   validate :ends_after_it_starts
+  validate :troop_or_name_filled_in
+
+  def renter_name
+    troop && troop.name || name
+  end
 
   def add_note(attributes, metadata: {})
     notes.build(attributes).tap do |new_note|
@@ -176,7 +182,14 @@ class Event < ApplicationRecord
 
   def ends_after_it_starts
     return unless start_on && end_on
-    errors.add("Events must end on or after they start") unless end_on >= start_on
+    errors.add(:base, "Events must end on or after they start") unless end_on >= start_on
+  end
+
+  def troop_or_name_filled_in
+    return if troop.present? && name.blank?   && phone.blank?   && email.blank? \
+    ||        troop.blank?   && name.present? && phone.present? && email.present?
+
+    errors.add(:base, "Troop OR name + email + phone required")
   end
 
   private

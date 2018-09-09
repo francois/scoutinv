@@ -3,6 +3,7 @@ class Group < ApplicationRecord
 
   has_one_attached :logo
 
+  has_many :troops,        dependent: :delete_all, autosave: true
   has_many :products,      dependent: :delete_all, autosave: true
   has_many :events,        dependent: :delete_all, autosave: true
   has_many :members,       dependent: :delete_all, autosave: true
@@ -16,6 +17,17 @@ class Group < ApplicationRecord
 
     raise ActiveRecord::RecordNotFound if notes.empty?
     notes.first
+  end
+
+  def register_new_troop(attributes, metadata: {})
+    troops.build(attributes).tap do |new_troop|
+      domain_events << TroopRegistered.new(
+        data: {
+          name: new_troop.name,
+        },
+        metadata: metadata
+      )
+    end
   end
 
   def register_new_event(attributes, metadata: {})

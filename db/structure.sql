@@ -470,7 +470,8 @@ CREATE TABLE public.events (
     updated_at timestamp with time zone NOT NULL,
     name text,
     email text,
-    phone text
+    phone text,
+    troop_id integer
 );
 
 
@@ -624,6 +625,39 @@ CREATE SEQUENCE public.members_id_seq
 --
 
 ALTER SEQUENCE public.members_id_seq OWNED BY public.members.id;
+
+
+--
+-- Name: memberships; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.memberships (
+    id bigint NOT NULL,
+    troop_id bigint NOT NULL,
+    member_id bigint NOT NULL,
+    slug character varying(8) NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.memberships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.memberships_id_seq OWNED BY public.memberships.id;
 
 
 --
@@ -825,6 +859,40 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: troops; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.troops (
+    id bigint NOT NULL,
+    group_id bigint NOT NULL,
+    "position" integer DEFAULT 1 NOT NULL,
+    name character varying NOT NULL,
+    slug character varying(8) NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: troops_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.troops_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: troops_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.troops_id_seq OWNED BY public.troops.id;
+
+
+--
 -- Name: active_storage_attachments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -888,6 +956,13 @@ ALTER TABLE ONLY public.members ALTER COLUMN id SET DEFAULT nextval('public.memb
 
 
 --
+-- Name: memberships id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.memberships ALTER COLUMN id SET DEFAULT nextval('public.memberships_id_seq'::regclass);
+
+
+--
 -- Name: notes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -920,6 +995,13 @@ ALTER TABLE ONLY public.que_jobs ALTER COLUMN id SET DEFAULT nextval('public.que
 --
 
 ALTER TABLE ONLY public.reservations ALTER COLUMN id SET DEFAULT nextval('public.reservations_id_seq'::regclass);
+
+
+--
+-- Name: troops id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.troops ALTER COLUMN id SET DEFAULT nextval('public.troops_id_seq'::regclass);
 
 
 --
@@ -1003,6 +1085,14 @@ ALTER TABLE ONLY public.members
 
 
 --
+-- Name: memberships memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.memberships
+    ADD CONSTRAINT memberships_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: notes notes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1064,6 +1154,14 @@ ALTER TABLE ONLY public.reservations
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: troops troops_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.troops
+    ADD CONSTRAINT troops_pkey PRIMARY KEY (id);
 
 
 --
@@ -1172,6 +1270,34 @@ CREATE UNIQUE INDEX index_members_on_slug ON public.members USING btree (slug);
 
 
 --
+-- Name: index_memberships_on_member_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_memberships_on_member_id ON public.memberships USING btree (member_id);
+
+
+--
+-- Name: index_memberships_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_memberships_on_slug ON public.memberships USING btree (slug);
+
+
+--
+-- Name: index_memberships_on_troop_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_memberships_on_troop_id ON public.memberships USING btree (troop_id);
+
+
+--
+-- Name: index_memberships_on_troop_id_and_member_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_memberships_on_troop_id_and_member_id ON public.memberships USING btree (troop_id, member_id);
+
+
+--
 -- Name: index_notes_on_author_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1263,6 +1389,20 @@ CREATE UNIQUE INDEX index_reservations_on_slug ON public.reservations USING btre
 
 
 --
+-- Name: index_troops_on_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_troops_on_group_id ON public.troops USING btree (group_id);
+
+
+--
+-- Name: index_troops_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_troops_on_slug ON public.troops USING btree (slug);
+
+
+--
 -- Name: que_jobs_args_gin_idx; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1346,6 +1486,14 @@ ALTER TABLE ONLY public.member_sessions
 
 
 --
+-- Name: events fk_rails_7dc2bd559e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT fk_rails_7dc2bd559e FOREIGN KEY (troop_id) REFERENCES public.troops(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
 -- Name: instances fk_rails_85c17470c8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1408,6 +1556,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180904022551'),
 ('20180905033203'),
 ('20180905195512'),
-('20180906032435');
+('20180906032435'),
+('20180909163014'),
+('20180909163128'),
+('20180909170934');
 
 

@@ -3,17 +3,21 @@ class GroupsController < ApplicationController
 
   def index
     @page_title = t(".page_title")
+
     @groups = Group.all
   end
 
   def show
     @page_title = @group.name
-    @member     = @group.members.build
+
+    @member = @group.members.build
+    @troop  = @group.troops.build
   end
 
   def new
     @page_title = t(".page_title")
-    @group      = Group.new
+
+    @group = Group.new
   end
 
   def edit
@@ -48,8 +52,9 @@ class GroupsController < ApplicationController
   end
 
   private
+
   def set_group
-    @group = Group.find_by!(slug: params[:id])
+    @group = current_group
   end
 
   def group_params

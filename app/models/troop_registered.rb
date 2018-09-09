@@ -1,0 +1,2 @@
+class TroopRegistered < DomainEvent
+end

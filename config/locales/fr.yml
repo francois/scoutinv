@@ -3,8 +3,9 @@ fr:
     models:
       event: Événement
       group: Groupe
-      product: Produit
       member: Membre
+      product: Produit
+      troop: Unité
     attributes:
       event:
         dates: Dates
@@ -15,8 +16,12 @@ fr:
         phone: Téléphone
         start_on: Commence le
         title: Titre
+        troop_id: Unité
       group:
         name: Nom
+      member:
+        email: Adresse courriel
+        name: Nom civil
       product:
         aisle: Allée
         building: Bâtiment
@@ -28,9 +33,9 @@ fr:
         quantity: Quantité
         shelf: Tablette
         unit: Bac
-      member:
-        email: Adresse courriel
-        name: Nom civil
+      troop:
+        name: Nom
+        position: Position
   categories:
     camping: Campement
     kitchen: Cuisine
@@ -58,11 +63,13 @@ fr:
       page_title: Nouveau groupe
     show:
       add_member_header: "Ajouter un membre"
+      add_troop_header: "Ajouter une unité"
       back_to_list_button_label: Retour à la liste
       edit_button_label: Modifier
       email_header: Adresse courriel
-      name_header: Nom civil
       members: Membres du groupe
+      name_header: Nom civil
+      unattached: Non rattaché à une unité
     update:
       group_successfully_updated: Groupe mis à jour avec succès
       page_title: "Modifier %{group_name}"
@@ -88,7 +95,7 @@ fr:
   events:
     form:
       cancel_button_label: Annuler
-      external_renter: Locateur (seulement requis pour location externe)
+      external_renter: Unité ou personne qui emprunte le matériel
       or: ou
     index:
       end_on_header: Se termine le

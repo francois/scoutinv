@@ -31,6 +31,7 @@
             <thead>
               <tr>
                 <th><%= t(".title_header") %></th>
+                <th><%= t(".renter_header") %></th>
                 <th><%= t(".start_on_header") %></th>
                 <th><%= t(".end_on_header") %></th>
               </tr>
@@ -38,16 +39,17 @@
 
             <tbody>
               <tr>
-                <td colspan="6"><%= link_to t(".include_previous_year_html"), events_path(after: (@after - 1.year).to_formatted_s(:iso8601)) %></td>
+                <td colspan="4"><%= link_to t(".include_previous_year_html"), events_path(after: (@after - 1.year).to_formatted_s(:iso8601)) %></td>
               </tr>
               <% if @events.empty? %>
                 <tr>
-                  <td colspan="3"><%= t(".sorry_no_elements") %></td>
+                  <td colspan="4"><%= t(".sorry_no_elements") %></td>
                 </tr>
               <% end %>
               <% @events.each do |event| %>
                 <tr>
                   <td><%= link_to event.title, event %></td>
+                  <td><%= event.renter_name %></td>
                   <td><span class="hide-for-large"><%= t(".start_on_header") %></span> <%= event.start_on %></td>
                   <td><span class="hide-for-large"><%= t(".end_on_header") %></span> <%= event.end_on %></td>
                 </tr>

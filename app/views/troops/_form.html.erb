@@ -1,0 +1,39 @@
+<%= form_with(model: troop, local: true) do |form| %>
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <% if troop.errors.any? %>
+        <div class="small-12 cell">
+          <div id="error_explanation">
+            <h2><%= pluralize(troop.errors.count, "error") %> prohibited this troop from being saved:</h2>
+
+            <ul>
+              <% troop.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="small-12 cell">
+        <%= form.label :name %>
+        <%= form.text_field :name, autocomplete: false %>
+      </div>
+
+      <div class="small-12 cell">
+        <%= form.label :position %>
+        <%= form.number_field :position, autocomplete: false %>
+      </div>
+
+      <div class="small-12 cell">
+        <%= form.submit class: "button primary" %>
+        <%= render partial: "shared/or" %>
+        <% if @troop.new_record? %>
+          <%= link_to t(".cancel_button_label"), troops_path, class: "button secondary" %>
+        <% else %>
+          <%= link_to t(".cancel_button_label"), @troop, class: "button secondary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

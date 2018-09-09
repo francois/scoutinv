@@ -9,27 +9,62 @@
       <% end %>
       <%= t(".members") %>
     </h2>
-    <table class="hover stack">
-      <thead>
-        <tr>
-          <th><%= t(".name_header") %></th>
-          <th><%= t(".email_header") %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @group.members.reject(&:new_record?).sort_by(&:sort_key).each do |member| %>
+    <% @group.troops.reject(&:new_record?).sort_by(&:sort_key).each do |troop| %>
+      <table class="hover stack">
+        <caption><%= link_to troop.name, edit_troop_path(troop) %></caption>
+        <thead>
           <tr>
-            <td><%= link_to member.name, edit_member_path(member) %></td>
-            <td><%= mail_to member.email %></td>
+            <th><%= t(".name_header") %></th>
+            <th><%= t(".email_header") %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% troop.members.reject(&:new_record?).sort_by(&:sort_key).each do |member| %>
+            <tr>
+              <td><%= link_to member.name, edit_member_path(member) %></td>
+              <td><%= mail_to member.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <% if (@group.members.reject(&:new_record?) - @group.troops.map(&:members).flatten).any? %>
+      <table class="hover stack">
+        <caption><%= t(".unattached") %></caption>
+        <thead>
+          <tr>
+            <th><%= t(".name_header") %></th>
+            <th><%= t(".email_header") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% (@group.members.reject(&:new_record?) - @group.troops.map(&:members).flatten).sort_by(&:sort_key).each do |member| %>
+            <tr>
+              <td><%= link_to member.name, edit_member_path(member) %></td>
+              <td><%= mail_to member.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 
   <div class="large-3 medium-12 cell show-for-large">
     <%= link_to t(".edit_button_label"), edit_group_path(@group), class: "button expanded" %>
     <%= link_to t(".back_to_list_button_label"), groups_path, class: "button secondary expanded" %>
+
+    <hr>
+
+    <h3><%= t(".add_troop_header") %></h3>
+    <%= form_for @troop, url: group_troops_path(@group) do |form| %>
+      <%= form.label :name %>
+      <%= form.text_field :name, autocomplete: false %>
+
+      <%= form.label :position %>
+      <%= form.number_field :position, autocomplete: false %>
+
+      <%= form.submit class: "button primary" %>
+    <% end %>
 
     <hr>
 
