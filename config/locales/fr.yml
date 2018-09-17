@@ -262,6 +262,26 @@ fr:
       state_header: État
     update:
       product_successfully_updated: Produit mis à jour avec succès
+  reports:
+    page_title: Liste des rapports
+    index:
+      list_of_leased_instances: Liste des instances en prêt
+      list_of_unavailable_instances: Liste des instances non-disponibles
+    leased:
+      event_header: Événement
+      leased_on_header: Prêté le
+      no_instances_leased: Aucune instance en prêt
+      page_title: Liste des instances en prêt
+      product_header: Produit
+      serial_no_header: No de série
+      state_header: État
+    unavailable:
+      instance_state_header: État
+      last_returned_on_header: Date du dernier retour
+      no_unavailable_instances: Aucune instance non-disponible
+      page_title: Liste des instances non-disponibles
+      product_header: Produit
+      serial_no_header: No de série
   sessions:
     authentication_form:
       email: Adresse courriel
@@ -295,6 +315,7 @@ fr:
     groups: Groupes
     home: Tableau de bord
     products: Inventaire
+    reports: Rapports
   member_mailer:
     send_authentication:
       subject: "[SCOUTINV] Identification"

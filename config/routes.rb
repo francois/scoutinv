@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   resources :troops, only: %i[ edit update destroy ]
 
+  resources :reports, only: %i[ index show ]
+
   resources :products do
     resources :instances, only: %[destroy], controller: "products/instances" do
       member do

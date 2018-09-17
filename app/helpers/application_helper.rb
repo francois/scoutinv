@@ -26,6 +26,10 @@ module ApplicationHelper
     %w(products).include?(params[:controller])
   end
 
+  def on_reports_page?
+    %w(reports).include?(params[:controller])
+  end
+
   def on_groups_page?
     %w(groups members).include?(params[:controller])
   end

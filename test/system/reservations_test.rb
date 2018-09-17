@@ -10,7 +10,7 @@ class ReservationsTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Reservations"
   end
 
-  test "creating a Reservation" do
+  test "creating a reservation" do
     visit reservations_url
     click_on "New Reservation"
 
@@ -25,7 +25,7 @@ class ReservationsTest < ApplicationSystemTestCase
     click_on "Back"
   end
 
-  test "updating a Reservation" do
+  test "updating a reservation" do
     visit reservations_url
     click_on "Edit", match: :first
 
@@ -40,7 +40,7 @@ class ReservationsTest < ApplicationSystemTestCase
     click_on "Back"
   end
 
-  test "destroying a Reservation" do
+  test "destroying a reservation" do
     visit reservations_url
     page.accept_confirm do
       click_on "Destroy", match: :first

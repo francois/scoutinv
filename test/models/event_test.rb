@@ -8,7 +8,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "assigns a slug on create" do
-    event = groups(:"41eme").events.create!(title: "Summer Camp", start_on: Date.today, end_on: Date.today)
+    event = groups(:"41eme").events.create!(title: "Summer Camp", troop: troops(:cubs_41eme), start_on: Date.today, end_on: Date.today)
     assert_not_nil event.slug
   end
 

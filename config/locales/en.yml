@@ -262,6 +262,26 @@ en:
       state_header: State
     update:
       product_successfully_updated: Product successfully updated
+  reports:
+    page_title: Available Reports
+    index:
+      list_of_leased_instances: List of leased instances
+      list_of_unavailable_instances: List of unavailable instances
+    leased:
+      event_header: Event
+      leased_on_header: Leased on
+      no_instances_leased: No leased instances
+      page_title: List of leased instances
+      product_header: Product
+      serial_no_header: Serial No
+      state_header: State
+    unavailable:
+      instance_state_header: State
+      last_returned_on_header: Last returned on
+      no_unavailable_instances: No unavailable instances
+      page_title: List of unavailable instances
+      product_header: Product
+      serial_no_header: Serial No
   sessions:
     authentication_form:
       email: Email
@@ -295,6 +315,7 @@ en:
     groups: Groups
     home: Home
     products: Products
+    reports: Reports
   member_mailer:
     send_authentication:
       subject: "[SCOUTINV] Authentication"

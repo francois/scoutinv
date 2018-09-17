@@ -1,0 +1,28 @@
+<table>
+  <thead>
+    <tr>
+      <th><%= t(".product_header") %></th>
+      <th><%= t(".serial_no_header") %></th>
+      <th><%= t(".leased_on_header") %></th>
+      <th><%= t(".state_header") %></th>
+      <th><%= t(".event_header") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @report.rows.empty? %>
+      <tr>
+        <td colspan="5"><%= t(".no_instances_leased") %></td>
+      </tr>
+    <% else %>
+      <% @report.rows.each do |row| %>
+        <tr id="product-<%= row.product_slug %>-instance-<%= row.instance_slug %>">
+          <td><%= link_to row.product_name, product_path(id: row.product_slug) %></td>
+          <td><%= format_serial_no(row.instance_serial_no) %></td>
+          <td><%= l row.reservation_leased_on.to_date, format: :with_year %></td>
+          <td><%= t row.instance_state, scope: "products.instance.states" %></td>
+          <td><%= link_to row.event_title, event_path(id: row.event_slug) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

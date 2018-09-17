@@ -10,8 +10,9 @@ class Instance < ApplicationRecord
 
   after_initialize :assign_serial_no
 
+  # product_name
   # product_slug
-  delegate :slug, to: :product, prefix: :product
+  delegate :name, :slug, to: :product, prefix: :product
 
   state_machine :state, initial: :available do
     event :hold do

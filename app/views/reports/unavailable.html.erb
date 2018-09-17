@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <th><%= t(".product_header") %></th>
+      <th><%= t(".serial_no_header") %></th>
+      <th><%= t(".instance_state_header") %></th>
+      <th><%= t(".last_returned_on_header") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @report.rows.empty? %>
+      <tr>
+        <td colspan="4"><%= t(".no_unavailable_instances") %></td>
+      </tr>
+    <% else %>
+      <% @report.rows.each do |row| %>
+        <tr id="product-<%= row.product_slug %>-instance-<%= row.instance_slug %>">
+          <td><%= link_to row.product_name, product_path(id: row.product_slug) %></td>
+          <td><%= format_serial_no(row.instance_serial_no) %></td>
+          <td><%= t row.instance_state, scope: "products.instance.states" %></td>
+          <td><%= l row.last_returned_on.to_date, format: :with_year if row.last_returned_on %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
