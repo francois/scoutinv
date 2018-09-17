@@ -5,13 +5,14 @@ baloo_10eme:
   slug: zk9kzn1p
 
 akela_10eme:
-  group_id: 10eme
+  group: 10eme
   name: Akela
   email: akela@teksol.info
   slug: 4f3dxsmn
+  inventory_director: true
 
 baloo_41eme:
-  group_id: 41eme
+  group: 41eme
   name: Baloo
   email: baloo1@teksol.info
   slug: pjfvs2hj
