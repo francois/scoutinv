@@ -151,6 +151,7 @@ fr:
         sorry_no_elements: Désolé, aucune réservation ne correspond à vos critères de recherche
         view_all_button_label: Afficher tout
       instance:
+        hold_button_label: Retourner et retenir
         lease_button_label: Prêter
         leased_on_header: Prêté le
         return_button_label: Retourner

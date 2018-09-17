@@ -151,6 +151,7 @@ en:
         sorry_no_elements: Sorry, no reservations correspond to your search criterias
         view_all_button_label: View all
       instance:
+        hold_button_label: "Return & hold"
         lease_button_label: Lease
         leased_on_header: Leased on
         return_button_label: Return

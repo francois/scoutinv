@@ -6,7 +6,7 @@ class Events::ReservationsController < ApplicationController
 
     @double_booked_products = Product.double_booked(@event).to_set
 
-    if params[:manage].blank?
+    if current_member.inventory_director && params[:manage].blank?
       @filter = params[:filter]
       @only_show_available_products   = params[:only_show_available_products]   == "1"
       @only_show_leased_products      = params[:only_show_leased_products]      == "1"
@@ -45,7 +45,7 @@ class Events::ReservationsController < ApplicationController
         @instances = current_group.instances.includes(reservations: :product).where(serial_no: params[:instances].keys).to_a
       end
 
-      if %i[ add remove lease lease_all return switch ].all?{|key| params[key].blank?}
+      if %i[ add remove lease lease_all hold return switch ].all?{|key| params[key].blank?}
         # NOP
       elsif params[:add].present?
         logger.info "Adding #{@products.size} products"
@@ -67,6 +67,14 @@ class Events::ReservationsController < ApplicationController
         logger.info "Returning #{@instances.map(&:serial_no).inspect}"
         @event.return(@instances, metadata: domain_event_metadata)
         flash[:notice] = t(:returned, scope: "events.reservations.create", num: @instances.size)
+      elsif params[:hold].present?
+        logger.info "Returning #{@instances.map(&:serial_no).inspect}"
+        @event.return(@instances, metadata: domain_event_metadata)
+        flash[:notice] = t(:returned, scope: "events.reservations.create", num: @instances.size)
+
+        # Mark all returned instances as held as well
+        logger.info "Holding #{@instances.map(&:serial_no).inspect}"
+        @instances.each{|instance| instance.hold!(metadata: domain_event_metadata)}
       elsif params[:switch].present?
         logger.info "Switching #{@instances.map(&:serial_no).inspect}"
         @event.switch(@instances, metadata: domain_event_metadata)
@@ -99,8 +107,8 @@ class Events::ReservationsController < ApplicationController
         end
 
         if params[:instances].present?
-          @instances    = current_group.instances.includes(reservations: :product).where(serial_no: params[:instances].keys).to_a
-          @products     = @instances.map(&:product)
+          @instances = current_group.instances.includes(reservations: :product).where(serial_no: params[:instances].keys).to_a
+          @products  = @instances.map(&:product)
         end
 
         @reservations = @event.reservations.with_product.page(params[:page])
@@ -110,6 +118,7 @@ class Events::ReservationsController < ApplicationController
         # is getting a flash message when they navigate away from the page.
         flash[:notice] = nil
 
+        @products = @instances.map(&:product).uniq
         render
       end
     end

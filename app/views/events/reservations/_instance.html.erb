@@ -36,6 +36,13 @@
       <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
         <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
         <%= hidden_field_tag "back_to_manage", "1" %>
+        <%= hidden_field_tag "hold", "1" %>
+        <%= submit_tag t(".hold_button_label"), name: "hold", class: "button expanded warning"%>
+      <% end %>
+
+      <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+        <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
+        <%= hidden_field_tag "back_to_manage", "1" %>
         <%= hidden_field_tag "return", "1" %>
         <%= submit_tag t(".return_button_label"), name: "return", class: "button expanded secondary"%>
       <% end %>
