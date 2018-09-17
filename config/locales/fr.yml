@@ -344,6 +344,7 @@ fr:
     lease_start_on_title: Date de sortie du matériel
     lender: Locateur
     not_available: "N/A"
+    notes_header: Notes
     page_numbering: "– <page> de <total> –"
     phone: Téléphone
     product_header: Produit
@@ -369,6 +370,10 @@ fr:
       with_year: "%-d %B %Y"
       time_ago: "il y a %{date}"
       iso8601: "%Y-%m-%d"
+
+  time:
+    formats:
+      with_year: "%-d %B %Y, %H:%M"
 
   serial_number: "N/S:%{no}"
 

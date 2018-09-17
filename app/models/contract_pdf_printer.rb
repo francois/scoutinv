@@ -121,6 +121,8 @@ class ContractPdfPrinter
   end
 
   def render_tail(pdf)
+    render_event_notes(pdf) if event.notes.reject(&:new_record?).any?
+
     pdf.start_new_page if pdf.cursor < 300
     pdf.move_down 24
     pdf.fill_color "EEEEEE"
@@ -148,6 +150,19 @@ class ContractPdfPrinter
     pdf.move_down 40
     pdf.text_box t(:inventory_director_at_group, group_name: event.group_name), size: 10, style: :italic, at: [0, pdf.cursor]
     pdf.text_box t(:date), size: 10, at: [400, pdf.cursor]
+  end
+
+  def render_event_notes(pdf)
+    pdf.move_down 24
+    pdf.text t(:notes_header), size: 12, style: :bold
+    pdf.move_down 4
+    event.notes.reject(&:new_record?).sort_by(&:created_at).each do |note|
+      pdf.text note.body
+      pdf.formatted_text [{text: note.author_name, size: 8, styles: [:bold]}, {text: " ", size: 8}, {text: I18n.l(note.created_at, format: :with_year), size: 8, styles: [:italic]}]
+      pdf.move_down 4
+      pdf.stroke_horizontal_rule
+      pdf.move_down 4
+    end
   end
 
   def render_page_numbers(pdf)

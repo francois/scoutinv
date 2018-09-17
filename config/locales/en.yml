@@ -344,6 +344,7 @@ en:
     lease_start_on_title: Lease start on
     lender: Lender
     not_available: "N/A"
+    notes_header: Notes
     page_numbering: "– <page> of <total> –"
     phone: Phone
     product_header: Product
@@ -369,6 +370,10 @@ en:
       with_year: "%b %-d %Y"
       time_ago: "%{date} ago"
       iso8601: "%Y-%m-%d"
+
+  time:
+    formats:
+      with_year: "%l:%M %P, %b %-d %Y"
 
   serial_number: "N/S:%{no}"
 
