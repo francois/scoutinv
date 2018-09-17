@@ -31,7 +31,9 @@
           <% if member_signed_in? %>
             <li class="<%= :active if on_events_page? %>"><%= link_to t("events", scope: "top-bar"), events_path %></li>
             <li class="<%= :active if on_products_page? %>"><%= link_to t("products", scope: "top-bar"), products_path %></li>
-            <li class="<%= :active if on_reports_page? %>"><%= link_to t("reports", scope: "top-bar"), reports_path %></li>
+            <% if current_member.inventory_director? %>
+              <li class="<%= :active if on_reports_page? %>"><%= link_to t("reports", scope: "top-bar"), reports_path %></li>
+            <% end %>
             <li class="<%= :active if on_groups_page? %>">
               <%= link_to  current_group do %>
                 <% if current_group.logo.attached? %>
