@@ -40,6 +40,8 @@ en:
     camping: Encampment
     kitchen: Kitchen
     miscellaneous: Misc
+    non_perishable: Non perishable
+    perishable: Perishable
     tent: Tent
     tools: Tools
   footer:

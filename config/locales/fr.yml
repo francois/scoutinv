@@ -40,6 +40,8 @@ fr:
     camping: Campement
     kitchen: Cuisine
     miscellaneous: Divers
+    non_perishable: Non périssable
+    perishable: Périssable
     tent: Tente
     tools: Outils
   footer:
