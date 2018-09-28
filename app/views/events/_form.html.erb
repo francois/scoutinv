@@ -20,31 +20,42 @@
         <%= form.text_field :title, autocomplete: false %>
       </div>
 
-      <fieldset class="fieldset">
-        <legend><%= t(".external_renter") %></legend>
+      <div class="small-12 cell">
+        <p><%= t ".help" %></p>
 
-        <div class="grid-x grid-margin-x">
-          <div class="small-12 cell">
-            <%= form.label :troop_id %>
-            <%= form.select :troop_id, options_from_collection_for_select(current_group.troops.sort_by(&:sort_key), :id, :name, @event.troop_id), include_blank: true %>
-          </div>
+        <div class="grid-container">
+          <div class="grid-x grid-margin-x">
+            <fieldset class="fieldset small-12 medium-6 cell">
+              <legend><%= t(".internal_renter") %></legend>
 
-          <div class="small-12 cell">
-            <%= form.label :name %>
-            <%= form.text_field :name %>
-          </div>
+              <div class="grid-x grid-margin-x">
+                <div class="small-12 cell">
+                  <%= form.label :troop_id %>
+                  <%= form.select :troop_id, options_from_collection_for_select(current_group.troops.sort_by(&:sort_key), :id, :name, @event.troop_id), include_blank: true %>
+                </div>
+            </fieldset>
 
-          <div class="small-12 cell">
-            <%= form.label :email %>
-            <%= form.email_field :email %>
-          </div>
+            <fieldset class="fieldset small-12 medium-6 cell">
+              <legend><%= t(".external_renter") %></legend>
 
-          <div class="small-12 cell">
-            <%= form.label :phone %>
-            <%= form.phone_field :phone %>
+              <div class="small-12 cell">
+                <%= form.label :name %>
+                <%= form.text_field :name, disabled: !current_member.inventory_director? %>
+              </div>
+
+              <div class="small-12 cell">
+                <%= form.label :email %>
+                <%= form.email_field :email, disabled: !current_member.inventory_director? %>
+              </div>
+
+              <div class="small-12 cell">
+                <%= form.label :phone %>
+                <%= form.phone_field :phone, disabled: !current_member.inventory_director? %>
+              </div>
+            </fieldset>
           </div>
         </div>
-      </fieldset>
+      </div>
 
       <div class="small-12 cell">
         <%= form.label :description %>

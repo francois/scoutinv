@@ -97,7 +97,12 @@ en:
   events:
     form:
       cancel_button_label: Cancel
-      external_renter: Troop or person that is renting the equipment
+      external_renter: External renter
+      help: |
+        Either a Troop rents equipment, in which case only the Troop
+        section needs to be filled in, or, an inventory director
+        fills out the external renter section.
+      internal_renter: Troop renting the equipment
       or: or
     index:
       end_on_header: End On
