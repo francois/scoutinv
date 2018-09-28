@@ -1235,6 +1235,13 @@ CREATE UNIQUE INDEX index_instances_on_product_id_and_serial_no ON public.instan
 
 
 --
+-- Name: index_instances_on_serial_no; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_instances_on_serial_no ON public.instances USING btree (serial_no);
+
+
+--
 -- Name: index_instances_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1560,6 +1567,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180909163014'),
 ('20180909163128'),
 ('20180909170934'),
-('20180917024410');
+('20180917024410'),
+('20180928030106');
 
 

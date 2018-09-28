@@ -6,7 +6,7 @@ class Instance < ApplicationRecord
   has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
 
   validates :product, :serial_no, :slug, presence: true
-  validates :serial_no, uniqueness: :product_id
+  validates :serial_no, uniqueness: true
 
   after_initialize :assign_serial_no
 
@@ -120,7 +120,7 @@ class Instance < ApplicationRecord
     @serial_no_size ||=
       begin
         number = Instance.count
-        number.zero? ? 3 : [3, Math.log(number, 10).truncate + 1].max
+        number.zero? ? 4 : [4, Math.log(number, 10).truncate + 1].max
       end
   end
 end
