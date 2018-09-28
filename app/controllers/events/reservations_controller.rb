@@ -108,7 +108,7 @@ class Events::ReservationsController < ApplicationController
 
         if params[:instances].present?
           @instances = current_group.instances.includes(reservations: :product).where(serial_no: params[:instances].keys).to_a
-          @products  = @instances.map(&:product)
+          @products  = @instances.map(&:product).uniq
         end
 
         @reservations = @event.reservations.with_product.page(params[:page])
@@ -118,7 +118,6 @@ class Events::ReservationsController < ApplicationController
         # is getting a flash message when they navigate away from the page.
         flash[:notice] = nil
 
-        @products = @instances.map(&:product).uniq
         render
       end
     end
