@@ -828,7 +828,8 @@ CREATE TABLE public.reservations (
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    leased_on date
+    leased_on date,
+    unit_price numeric DEFAULT 0 NOT NULL
 );
 
 
@@ -1571,6 +1572,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180909170934'),
 ('20180917024410'),
 ('20180928030106'),
-('20181001022110');
+('20181001022110'),
+('20181001023801');
 
 

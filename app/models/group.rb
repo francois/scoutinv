@@ -9,6 +9,7 @@ class Group < ApplicationRecord
   has_many :members,       dependent: :delete_all, autosave: true
   has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
   has_many :instances,     through: :products
+  has_many :reservations,  through: :instances
 
   validates :name, presence: true, length: { minimum: 2 }
 

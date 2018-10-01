@@ -175,6 +175,7 @@ fr:
         product_header: Produit
         serial_no_header: No de série
         sorry_no_elements: Désolé, rien à prêter à l'unité
+        unit_price_header: Prix unitaire
       product:
         minus_one: "-1"
         minus_one_hover: Réserve une instance de moins de ce produit

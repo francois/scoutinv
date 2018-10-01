@@ -57,6 +57,10 @@ class Product < ApplicationRecord
   before_save :manage_instances
   after_touch :update_instances_count
 
+  def unit_price(internal: false)
+    internal ? internal_unit_price : external_unit_price
+  end
+
   def has_location?
     building.present? || aisle.present? || shelf.present? || unit.present?
   end

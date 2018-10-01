@@ -11,6 +11,7 @@ class Reservation < ApplicationRecord
 
   validates :instance, :event, presence: true
   validates :instance, uniqueness: { scope: :event }
+  validates :unit_price, numericality: { greater_than_or_equal_to: 0, allow_blank: false }
 
   delegate :title, :start_on, :end_on, :date_range, :real_date_range, to: :event
   delegate :name, :slug, :sort_key_for_pickup, prefix: :product, to: :product

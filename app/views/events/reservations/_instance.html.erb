@@ -6,6 +6,19 @@
       <%= format_product_location product %>
     </td>
   <% end %>
+  <td class="text-right">
+    <%= form_for reservation, remote: true do |f| %>
+      <div class="grid-x grid-margin-x">
+        <div class="small-9 medium-8 cell">
+          <span class="hide-for-medium"><%= t ".unit_price" %></span>
+          <%= f.number_field :unit_price, class: "text-right", min: 0, step: BigDecimal("0.01") %>
+        </div>
+        <div class="small-3 medium-4 cell">
+          <%= submit_tag "Save", class: "button tiny" %>
+        </div>
+      </div>
+    <% end %>
+  </td>
   <td>
     <% if reservation.loanable? && reservation.product.quantity > 1 %>
       <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>

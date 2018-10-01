@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :reservations, only: %i[ index create destroy ], controller: "events/reservations"
   end
 
+  resources :reservations, only: %i[ update ]
+
   resources :groups do
     resources :members, only: %i[ create ]
     resources :troops,  only: %i[ create ]

@@ -21,6 +21,10 @@ class Event < ApplicationRecord
   delegate :name, to: :group, prefix: :group
   delegate :name, to: :troop, prefix: :troop
 
+  def internal?
+    !!troop
+  end
+
   def renter_name
     troop && troop.name || name
   end
@@ -60,7 +64,8 @@ class Event < ApplicationRecord
         raise DoubleBookingError, "There are no free instances of #{product.name} available between #{start_on} and #{end_on}"
       end
 
-      reservation = reservations.build(instance: candidates.sample)
+      unit_price  = product.unit_price(internal: internal?)
+      reservation = reservations.build(instance: candidates.sample, unit_price: unit_price)
       domain_events << InstanceReserved.new(
         data: {
           event_slug: slug,

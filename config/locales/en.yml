@@ -175,6 +175,7 @@ en:
         product_header: Product
         serial_no_header: Serial Number
         sorry_no_elements: Sorry, nothing to lease to the troop
+        unit_price_header: Unit Price
       product:
         plus_one: "+1"
         plus_one_hover: Reserves one more instance of this product
