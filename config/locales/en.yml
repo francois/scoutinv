@@ -27,12 +27,17 @@ en:
         building: Building
         categories: Categories
         description: Description
+        external: External
+        external_unit_price: External Unit Price
         images: Images
+        internal: Internal
+        internal_unit_price: Internal Unit Price
         location: Location
         name: Name
         quantity: Quantity
         shelf: Shelf
         unit: Bin
+        unit_prices: Unit Prices
       troop:
         name: Name
         position: Position

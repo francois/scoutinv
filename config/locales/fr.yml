@@ -27,12 +27,17 @@ fr:
         building: Bâtiment
         categories: Catégories
         description: Description
+        external: Externe
+        external_unit_price: Prix unitaire externe
         images: Images
+        internal: Interne
+        internal_unit_price: Prix unitaire interne
         location: Localisation
         name: Nom
         quantity: Quantité
         shelf: Tablette
         unit: Bac
+        unit_prices: Prix unitaires
       troop:
         name: Nom
         position: Position

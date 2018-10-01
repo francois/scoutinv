@@ -52,6 +52,7 @@ class Product < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 2 }
   validates :quantity, numericality: { only_integer: true, greater_than: 0, less_than: 100 }
+  validates :internal_unit_price, :external_unit_price, numericality: { greater_than_or_equal_to: 0, allow_blank: false }
 
   before_save :manage_instances
   after_touch :update_instances_count

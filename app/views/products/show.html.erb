@@ -30,6 +30,13 @@
     </div>
 
     <div>
+      <strong><%= t("unit_prices", scope: "activerecord.attributes.product") %>:</strong>
+      <%= t("internal", scope: "activerecord.attributes.product") %> @ <%= number_to_currency @product.internal_unit_price %>
+      /
+      <%= t("external", scope: "activerecord.attributes.product") %> @ <%= number_to_currency @product.external_unit_price %>
+    </div>
+
+    <div>
       <strong><%= t("description", scope: "activerecord.attributes.product") %>:</strong>
       <%= simple_format @product.description %>
     </div>

@@ -50,8 +50,26 @@
       </div>
 
       <div class="small-12 cell">
-        <%= form.label :quantity %>
-        <%= form.number_field :quantity %>
+        <div class="grid-x grid-margin-x">
+          <div class="small-12 medium-2 cell">
+            <%= form.label :quantity %>
+            <%= form.number_field :quantity, min: 0, step: 1 %>
+          </div>
+
+          <div class="small-12 medium-3 cell">
+            <div class="grid-x grid-margin-x">
+              <div class="small-auto cell">
+                <%= form.label :internal_unit_price %>
+                <%= form.number_field :internal_unit_price, min: 0, step: BigDecimal("0.01") %>
+              </div>
+
+              <div class="small-auto cell">
+                <%= form.label :external_unit_price %>
+                <%= form.number_field :external_unit_price, min: 0, step: BigDecimal("0.01") %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="small-12 cell">

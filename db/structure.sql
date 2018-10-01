@@ -743,7 +743,9 @@ CREATE TABLE public.products (
     shelf text,
     unit text,
     quantity integer DEFAULT 1 NOT NULL,
-    building text
+    building text,
+    internal_unit_price numeric DEFAULT 0 NOT NULL,
+    external_unit_price numeric DEFAULT 0 NOT NULL
 );
 
 
@@ -1568,6 +1570,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180909163128'),
 ('20180909170934'),
 ('20180917024410'),
-('20180928030106');
+('20180928030106'),
+('20181001022110');
 
 
