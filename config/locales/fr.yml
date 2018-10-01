@@ -105,7 +105,7 @@ fr:
       external_renter: Locataire externe
       help: |
         Soit une unité emprunte du matériel, auquel cas seule la
-        section Unité doit être renseigneé, soit un directeur du
+        section Unité doit être renseignée, soit un directeur du
         matériel renseigne la section sur le locataire externe.
       internal_renter: Unité locataire
       or: ou
