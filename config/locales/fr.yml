@@ -194,7 +194,6 @@ fr:
       plus_one: "+1"
       plus_one_hover: Réserve une instance de plus de ce produit
     show:
-      notify_button_label: Informer les directeurs
       back_to_list_button_label: Retour à la liste
       bill_of_materials: Liste de matériel
       delete_button_label: Détruire cet événement
@@ -204,7 +203,9 @@ fr:
       lease_all_button_label: Tout prêter à l'unité
       manage_reservations_button_label: Gérer les réservations
       notes_header: Notes
+      notify_button_label: Informer les directeurs
       print_button_label: Imprimer la liste de matériel
+      total: Total pour l'événement
     update:
       event_successfully_updated: Événement mis à jour avec succès
   products:

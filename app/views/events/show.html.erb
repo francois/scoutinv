@@ -30,6 +30,12 @@
           <%= render partial: "product", locals: { product: product, reservations: reservations } %>
         <% end %>
       </div>
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 cell">
+          <hr>
+          <%= render partial: "total", locals: { event: @event } %>
+        </div>
+      </div>
     </div>
   </div>
 

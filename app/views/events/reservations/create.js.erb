@@ -12,3 +12,4 @@
         $("<%= escape_javascript render(partial: "events/reservations/instances") %>").replaceAll("#instances");
     <% end %>
 <% end %>
+$("<%= escape_javascript render(partial: "events/total", locals: { event: @event }) %>").replaceAll("#event-total");

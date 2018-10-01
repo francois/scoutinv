@@ -1,0 +1,3 @@
+<p id="event-total" class="h3">
+<%= t(".total") %>: <%= number_to_currency event.reservations.map(&:unit_price).sum %>
+</p>

@@ -18,6 +18,10 @@ class Reservation < ApplicationRecord
   delegate :slug, prefix: :instance, to: :instance
   delegate :serial_no, to: :instance
 
+  def free?
+    unit_price.zero?
+  end
+
   def loanable?
     !leased? && !returned?
   end
