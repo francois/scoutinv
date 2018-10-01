@@ -382,17 +382,21 @@ fr:
     notes_header: Notes
     page_numbering: "– <page> de <total> –"
     phone: Téléphone
+    product: Produit
     product_header: Produit
     quality_control_at_lease_end_header: "Contrôle qualité du matériel au retour"
     quality_control_at_lease_start_header: "Contrôle qualité du matériel au départ"
+    quantity: Quantité
     quantity_header: Quantité
     renter: Locataire
+    sub_total: Sous-total
     subtotal_header: Sous-total
     terms_and_conditions_for_external_renter: "Je, %{name}, prend la responsabilité du matériel durant sa sortie des locaux du %{group_name}. Je m’engage à indiquer immédiatement aux responsables du matériel si un bris est survenu et à payer les frais jugés nécessaires."
     terms_and_conditions_for_troop: "En tant que membre de l'unité %{troop_name}, je reconnais que tout le matériel a été prêté en parfait état de marche. J'accepte aussi de rapidement retourner l'équipement et d'immédiatement avertir les directeurs du matériel en cas de bris."
     terms_and_conditions_header: "Termes et conditions"
     title: Contrat de location
     total_header: Total
+    unit_price: Prix unitaire
     unit_price_header: Prix unitaire
 
   date:

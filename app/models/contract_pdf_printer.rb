@@ -81,9 +81,10 @@ class ContractPdfPrinter
 
   def render_body(pdf)
     data = [
-      ["Produit", "Quantité", "Prix Unitaire", "Sous-total"],
+      [t(:product), t(:quantity), t(:unit_price), t(:sub_total)],
     ]
 
+    total = BigDecimal(0)
     event.reservations.group_by(&:product).sort_by{|product, _| product.sort_key_for_pickup}.inject(data) do |memo, (product, reservations)|
       text = ""
       text << "<b>#{product.name}</b>"
@@ -96,10 +97,18 @@ class ContractPdfPrinter
       text << reservations.map(&:serial_no).map{|serial_no| format_serial_no(serial_no)}.join("  ") # 2 NON-BREAKING SPACEs
       text << "</font>"
 
-      memo << [text, reservations.size, t(:not_available), t(:not_available)]
+      unit_price = reservations.map(&:unit_price).max
+      subtotal   = reservations.size * unit_price
+      total     += subtotal
+      memo << [
+        text,
+        number_with_delimiter(reservations.size),
+        number_to_currency(unit_price),
+        number_to_currency(subtotal),
+      ]
     end
 
-    data << [nil, nil, t(:total_header), number_to_currency(0)]
+    data << [nil, nil, t(:total_header), number_to_currency(total)]
 
     pdf.table(data, cell_style: {inline_format: true}, header: true, width: pdf.bounds.width) do
       cells.borders = []

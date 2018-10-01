@@ -382,17 +382,21 @@ en:
     notes_header: Notes
     page_numbering: "– <page> of <total> –"
     phone: Phone
+    product: Product
     product_header: Product
     quality_control_at_lease_end_header: "Quality Control at Lease End"
     quality_control_at_lease_start_header: "Quality Control at Lease Start"
+    quantity: Quantité
     quantity_header: Quantity
     renter: Renter
+    sub_total: Subtotal
     subtotal_header: Subtotal
     terms_and_conditions_for_external_renter: "I, %{name}, agree to take responsibility for the equipment that is being lent to me. I agree to immediately inform the Inventory Directors of any breakage and to pay fees that are deemed necessary to put the equipment back into condition."
     terms_and_conditions_for_troop: "As part of the %{troop_name} troop, I acknowledge that the equipment was leased in working condition. I also agree to return the equipment promptly and to notify inventory directors of any problems with the equipment."
     terms_and_conditions_header: "Terms & Conditions"
     title: Rental Contract
     total_header: Total
+    unit_price: Unit price
     unit_price_header: Unit price
 
   date:
