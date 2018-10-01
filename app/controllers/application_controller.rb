@@ -48,16 +48,19 @@ class ApplicationController < ActionController::Base
   end
 
   def member_signed_in?
-    session[:member_id].present?
+    return false unless session[:member_id].present?
+    !!current_member
+  rescue ActiveRecord::RecordNotFound
+    reset_session
+    false
   end
 
   def current_member
-    return nil unless member_signed_in?
     @_current_member ||= Member.includes(:group).find(session[:member_id])
   end
 
   def current_group
-    current_member&.group
+    member_signed_in? ? current_member&.group : nil
   end
 
   def domain_event_metadata
