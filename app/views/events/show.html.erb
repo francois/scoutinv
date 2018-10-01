@@ -6,7 +6,7 @@
     <%= link_to t(".print_button_label"), event_path(@event, format: :pdf), class: "button hide-for-large", target: "blank" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary hide-for-large" %>
     <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button secondary alert hide-for-large" %>
-    <%= link_to t(".manage_reservations_button_label"), event_reservations_path(@event, manage: 1), class: "button hide-for-large" %>
+    <%= link_to t(".manage_reservations_button_label"), event_reservations_path(@event, manage: 1), class: "button hide-for-large" if current_member.inventory_director? %>
 
     <div>
       <strong><%= t("title", scope: "activerecord.attributes.event") %>:</strong>
@@ -46,7 +46,7 @@
     <%= link_to t(".print_button_label"), event_path(@event, format: :pdf), class: "button expanded" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary expanded" %>
 
-    <% if @event.reservations.any? %>
+    <% if @event.reservations.any? && current_member.inventory_director? %>
       <hr>
 
       <%= link_to t(".manage_reservations_button_label"), event_reservations_path(@event, manage: 1), class: "button expanded" %>

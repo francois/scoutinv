@@ -6,32 +6,18 @@ class Events::ReservationsController < ApplicationController
 
     @double_booked_products = Product.double_booked(@event).to_set
 
-    if current_member.inventory_director && params[:manage].blank?
-      @filter = params[:filter]
-      @only_show_available_products   = params[:only_show_available_products]   == "1"
-      @only_show_leased_products      = params[:only_show_leased_products]      == "1"
-      @only_show_reserved_products    = params[:only_show_reserved_products]    == "1"
-      @only_show_my_reserved_products = params[:only_show_my_reserved_products] == "1"
-
-      @categories = Category.by_name.to_a
-      @selected_category = @categories.detect{|category| category.slug == params[:category]}
-
-      @products     = current_group.products.with_attached_images.with_categories.with_reservations
-      @products     = @products.search(@filter)                 if @filter.present?
-      @products     = @products.in_category(@selected_category) if @selected_category
-      @products     = @products.available                       if @only_show_available_products
-      @products     = @products.leased                          if @only_show_leased_products
-      @products     = @products.reserved                        if @only_show_reserved_products
-      @products     = @products.reserved(@event)                if @only_show_my_reserved_products
-      @products     = @products.by_name
-      @products     = @products.page(params[:page])
-
-      @reservations = @event.reservations.with_product.all
-
-      render action: :index
+    if current_member.inventory_director
+      if params[:manage].blank?
+        render_regular
+      else
+        render_manage
+      end
     else
-      @reservations = @event.reservations.with_product.page(params[:page])
-      render action: :manage
+      if params[:manage].blank?
+        render_regular
+      else
+        redirect_to action: :index
+      end
     end
   end
 
@@ -145,5 +131,35 @@ class Events::ReservationsController < ApplicationController
 
   def set_event
     @event = current_group.events.includes(reservations: [:product, instance: :reservations]).find_by!(slug: params[:event_id])
+  end
+
+  def render_regular
+    @filter = params[:filter]
+    @only_show_available_products   = params[:only_show_available_products]   == "1"
+    @only_show_leased_products      = params[:only_show_leased_products]      == "1"
+    @only_show_reserved_products    = params[:only_show_reserved_products]    == "1"
+    @only_show_my_reserved_products = params[:only_show_my_reserved_products] == "1"
+
+    @categories = Category.by_name.to_a
+    @selected_category = @categories.detect{|category| category.slug == params[:category]}
+
+    @products     = current_group.products.with_attached_images.with_categories.with_reservations
+    @products     = @products.search(@filter)                 if @filter.present?
+    @products     = @products.in_category(@selected_category) if @selected_category
+    @products     = @products.available                       if @only_show_available_products
+    @products     = @products.leased                          if @only_show_leased_products
+    @products     = @products.reserved                        if @only_show_reserved_products
+    @products     = @products.reserved(@event)                if @only_show_my_reserved_products
+    @products     = @products.by_name
+    @products     = @products.page(params[:page])
+
+    @reservations = @event.reservations.with_product.all
+
+    render action: :index
+  end
+
+  def render_manage
+    @reservations = @event.reservations.with_product.page(params[:page])
+    render action: :manage
   end
 end
