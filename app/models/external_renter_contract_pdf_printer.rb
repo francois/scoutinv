@@ -1,16 +1,21 @@
 class ExternalRenterContractPdfPrinter < ContractPdfPrinter
   def render_renter_name(pdf)
-    pdf.formatted_text_box [
-      {text: "#{t(:renter)}\n", size: 10, styles: [:italic]},
-      {text: "#{event.name}\n", styles: [:bold], size: 14},
-      {text: "#{t(:email)}: #{event.email}\n#{t(:phone)}: #{event.phone}\n#{t(:event)}: #{event.title}"},
-    ],
-    at: [0, pdf.cursor],
-    width: 300
+    rows = []
+    rows << {text: "#{t(:renter)}\n", size: 10, styles: [:italic]}
+    rows << {text: "#{event.name}\n", styles: [:bold], size: 14}
+    rows << {text: "#{event.address}\n\n"} if event.address.present?
+    rows << {text: "#{t(:email)}: #{event.email}\n"}
+    rows << {text: "#{t(:phone)}: #{event.phone}\n"}
+    rows << {text: "#{t(:event)}: #{event.title}\n"}
+
+    pdf.formatted_text_box rows, at: [0, pdf.cursor], width: 300
   end
 
   def num_lines_for_renter_name
-    5
+    rows = [ 5 ]
+    rows << event.address.to_s.split("\n").size
+    rows << 1 if event.address.present?
+    rows.sum
   end
 
   def render_renter_terms_and_conditions(pdf)

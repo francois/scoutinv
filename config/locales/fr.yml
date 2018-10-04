@@ -18,6 +18,8 @@ fr:
         title: Titre
         troop_id: Unité
       group:
+        address: Adresse
+        logo: Logo
         name: Nom
       member:
         email: Adresse courriel

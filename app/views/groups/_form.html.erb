@@ -26,6 +26,11 @@
       </div>
 
       <div class="small-12 cell">
+        <%= form.label :address %>
+        <%= form.text_area :address, size: "80x5" %>
+      </div>
+
+      <div class="small-12 cell">
         <%= form.submit class: "button primary" %>
         <%= render partial: "shared/or" %>
         <% if @group.new_record? %>

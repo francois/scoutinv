@@ -1,0 +1,5 @@
+class AddAddressOnGroup < ActiveRecord::Migration[5.2]
+  def change
+    add_column :groups, :address, :text
+  end
+end

@@ -472,7 +472,8 @@ CREATE TABLE public.events (
     name text,
     email text,
     phone text,
-    troop_id integer
+    troop_id integer,
+    address text
 );
 
 
@@ -504,7 +505,8 @@ CREATE TABLE public.groups (
     name character varying NOT NULL,
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL
+    updated_at timestamp with time zone NOT NULL,
+    address text
 );
 
 
@@ -1575,6 +1577,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180928030106'),
 ('20181001022110'),
 ('20181001023801'),
-('20181004030547');
+('20181004030547'),
+('20181004031036'),
+('20181004032326');
 
 

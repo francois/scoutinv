@@ -52,6 +52,11 @@
                 <%= form.label :phone %>
                 <%= form.phone_field :phone, disabled: !current_member.inventory_director? %>
               </div>
+
+              <div class="small-12 cell">
+                <%= form.label :address %>
+                <%= form.text_area :address, disabled: !current_member.inventory_director?, size: "80x4" %>
+              </div>
             </fieldset>
           </div>
         </div>

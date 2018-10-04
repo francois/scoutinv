@@ -55,13 +55,14 @@ class ContractPdfPrinter
     pdf.formatted_text_box [
       {text: "#{t(:lender)}\n", size: 10, styles: [:italic]},
       {text: "#{event.group_name}\n", styles: [:bold], size: 14},
-      {text: event.group.members.select(&:inventory_director?).sort_by(&:sort_key).map{|member| "#{member.name} #{member.email}"}.join("\n")},
+      {text: event.group.members.select(&:inventory_director?).sort_by(&:sort_key).map{|member| "#{member.name} #{member.email}"}.join("\n") << "\n"},
+      {text: "#{event.group_address}\n"},
     ],
     at: [400, pdf.cursor],
     width: 300
 
     # That 6 at the end is extra padding to make things look better
-    pdf.move_down 10 + 14 + 12 * [num_lines_for_renter_name, event.group.members.select(&:inventory_director?).size].max + 6
+    pdf.move_down 10 + 14 + 12 * [num_lines_for_renter_name, event.group_address.to_s.split("\n").size + event.group.members.select(&:inventory_director?).size].max + 6
 
     top_pos = pdf.cursor
     pdf.fill_color "EEEEEE"

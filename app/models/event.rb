@@ -18,7 +18,7 @@ class Event < ApplicationRecord
   validate :ends_after_it_starts
   validate :troop_or_name_filled_in
 
-  delegate :name, to: :group, prefix: :group
+  delegate :name, :address, to: :group, prefix: :group
   delegate :name, to: :troop, prefix: :troop
 
   def internal?

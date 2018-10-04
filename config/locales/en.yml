@@ -18,6 +18,8 @@ en:
         title: Title
         troop_id: Troop
       group:
+        address: Address
+        logo: Logo
         name: Name
       member:
         email: Email
