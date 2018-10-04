@@ -17,6 +17,8 @@ class EventsController < ApplicationController
 
     @double_booked_products = Product.double_booked(@event).to_set
 
+    @used_categories = @event.reservations.map(&:product).map(&:categories).flatten.uniq.sort_by(&:name)
+
     respond_to do |format|
       format.html { render action: :show }
       format.pdf do

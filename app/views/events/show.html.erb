@@ -24,17 +24,20 @@
     </div>
 
     <h2><%= t(".bill_of_materials") %></h2>
-    <div class="grid-container bill-of-materials">
-      <div class="grid-x grid-margin-x small-up-2 medium-up-3">
-        <% @event.reservations.group_by(&:product).sort_by{|product, _| product.sort_key_for_pickup}.each do |product, reservations| %>
-          <%= render partial: "product", locals: { product: product, reservations: reservations } %>
-        <% end %>
-      </div>
-      <div class="grid-x grid-margin-x">
-        <div class="small-12 cell">
-          <hr>
-          <%= render partial: "total", locals: { event: @event } %>
+    <% @used_categories.each do |category| %>
+      <h3><%= t(category.name, scope: "categories") %></h3>
+      <div class="grid-container bill-of-materials">
+        <div class="grid-x grid-margin-x small-up-2 medium-up-3">
+          <% @event.reservations.group_by(&:product).select{|product, _| product.categories.include?(category)}.sort_by{|product, _| product.sort_key_for_pickup}.each do |product, reservations| %>
+            <%= render partial: "product", locals: { product: product, reservations: reservations } %>
+          <% end %>
         </div>
+      </div>
+    <% end %>
+    <div class="grid-x grid-margin-x">
+      <div class="small-12 cell">
+        <hr>
+        <%= render partial: "total", locals: { event: @event } %>
       </div>
     </div>
   </div>
