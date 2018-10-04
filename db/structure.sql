@@ -396,7 +396,8 @@ CREATE TABLE public.categories (
     name character varying,
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL
+    updated_at timestamp with time zone NOT NULL,
+    max_quantity integer NOT NULL
 );
 
 
@@ -1573,6 +1574,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180917024410'),
 ('20180928030106'),
 ('20181001022110'),
-('20181001023801');
+('20181001023801'),
+('20181004030547');
 
 
