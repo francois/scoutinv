@@ -31,6 +31,7 @@ en:
         description: Description
         external: External
         external_unit_price: External Unit Price
+        image_url: Image URL
         images: Images
         internal: Internal
         internal_unit_price: Internal Unit Price

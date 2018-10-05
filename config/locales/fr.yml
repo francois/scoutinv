@@ -31,6 +31,7 @@ fr:
         description: Description
         external: Externe
         external_unit_price: Prix unitaire externe
+        image_url: "Adresse web d'une image à copier"
         images: Images
         internal: Interne
         internal_unit_price: Prix unitaire interne

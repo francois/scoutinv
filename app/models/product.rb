@@ -1,3 +1,6 @@
+require "net/http"
+require "stringio"
+
 class Product < ApplicationRecord
   include HasSlug
 
@@ -56,6 +59,10 @@ class Product < ApplicationRecord
 
   before_save :manage_instances
   after_touch :update_instances_count
+
+  # Only used to use the ActionView helpers
+  # In reality, this attribute is absolutely unused
+  attribute :image_url, :string
 
   def unit_price(internal: false)
     internal ? internal_unit_price : external_unit_price

@@ -21,10 +21,15 @@
         <%= form.text_field :name, autocomplete: false %>
       </div>
 
-      <div class="small-12 cell">
+      <div class="small-12 medium-6 cell">
         <%= form.label :images %>
-        <%= form.file_field :images, :multiple => true, :"aria-describedby" => "help-on-images", :autocomplete => false %><br>
+        <%= form.file_field :images, :multiple => true, :"aria-describedby" => "help-on-images", :autocomplete => false %>
         <p id="help-on-images" class="help-text"><%= t(".help_on_images") %></p>
+      </div>
+
+      <div class="small-12 medium-6 cell">
+        <%= form.label :image_url %>
+        <%= form.text_field :image_url, :"aria-describedby" => "help-on-images" %>
       </div>
 
       <div class="small-12 cell">

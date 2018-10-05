@@ -49,7 +49,11 @@ class ProductsController < ApplicationController
   def create
     successful = current_group.transaction do
       @product = current_group.register_new_product(product_params, metadata: domain_event_metadata)
-      @attached = @product.images.attach(params[:product][:images]) if params[:product][:images].present?
+
+      @attached = []
+      @attached.concat(@product.images.attach(params[:product][:images])) if params[:product][:images].present?
+      @attached.concat(import(params[:product][:image_url]))
+
       if params[:clone_from].present?
         @clone_from = current_group.products.find_by!(slug: params[:clone_from])
         @clone_from.images.each do |attachment|
@@ -75,7 +79,10 @@ class ProductsController < ApplicationController
   def update
     successful = current_group.transaction do
       @product.change_data(product_params, metadata: domain_event_metadata)
-      @attached = @product.images.attach(params[:product][:images]) if params[:product][:images].present?
+
+      @attached = []
+      @attached.concat(@product.images.attach(params[:product][:images])) if params[:product][:images].present?
+      @attached.concat(import(params[:product][:image_url]))
 
       @product.save.tap do
         @attached.each do |image|
@@ -120,5 +127,19 @@ class ProductsController < ApplicationController
 
   def load_categories
     @categories = Category.by_name.to_a
+  end
+
+  def import(image_url)
+    return [] if image_url.blank?
+
+    uri = URI.parse(image_url)
+
+    response = Net::HTTP.get_response(uri)
+
+    @product.images.attach(
+      io: StringIO.new(response.body),
+      filename: File.basename(uri.path),
+      content_type: response["Content-Type"],
+    )
   end
 end
