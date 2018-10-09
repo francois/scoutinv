@@ -21,7 +21,7 @@ class TroopContractPdfPrinter < ContractPdfPrinter
     pdf.stroke_horizontal_line   0, 300, at: pdf.cursor - 36
     pdf.stroke_horizontal_line 400, 500, at: pdf.cursor - 36
     pdf.move_down 40
-    pdf.text_box event.name, size: 10, style: :italic, at: [0, pdf.cursor]
+    pdf.text_box event.title, size: 10, style: :italic, at: [0, pdf.cursor]
     pdf.text_box t(:date), size: 10, at: [400, pdf.cursor]
     pdf.move_down 30
   end
