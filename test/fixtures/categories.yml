@@ -1,7 +1,9 @@
 tent:
   name: tent
   slug: xudakehp
+  max_quantity: 20
 
 kitchen:
   name: kitchen
   slug: bzwublg2
+  max_quantity: 10
