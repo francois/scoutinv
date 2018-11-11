@@ -13,6 +13,8 @@ class ContractPdfPrinter
 
   attr_reader :event, :author, :printed_on
 
+  delegate :group, to: :event
+
   def filename
     "#{printed_on}-#{slugify(event.title)}-#{event.slug}.pdf"
   end
@@ -28,14 +30,51 @@ class ContractPdfPrinter
     pdf.font "Helvetica"
     pdf.font_size 12
 
-    render_page_header(pdf)
-    render_head(pdf)
-    render_body(pdf)
-    render_tail(pdf)
+    if group.has_logo?
+      print_with_logo(pdf)
+    else
+      print_without_logo(pdf)
+    end
+  end
 
-    # must be called last, to number existing pages
-    render_page_numbers(pdf)
-    pdf.render
+  def print_with_logo(pdf)
+    blob = group.logo.blob
+    extension = case blob.content_type
+                when "image/jpeg", "image/jpg"
+                  "jpg"
+                when "image/png"
+                  "png"
+                when "image/gif"
+                  "gif"
+                else
+                  raise ArgumentError, "Unable to determine image extension from content type #{blob.content_type.inspect}"
+                end
+
+    Tempfile.open("logo.#{extension}", encoding: "ASCII-8BIT") do |io|
+      io.write(event.group.logo.blob.download)
+      io.close
+
+      render_page_header(pdf)
+      render_head(pdf, io.path)
+      render_body(pdf)
+      render_tail(pdf)
+
+      # must be called last, to number existing pages
+      render_page_numbers(pdf)
+      pdf.render
+    end
+
+  end
+
+  def print_without_logo(pdf)
+      render_page_header(pdf)
+      render_head(pdf)
+      render_body(pdf)
+      render_tail(pdf)
+
+      # must be called last, to number existing pages
+      render_page_numbers(pdf)
+      pdf.render
   end
 
   def render_page_header(pdf)
@@ -45,7 +84,8 @@ class ContractPdfPrinter
     end
   end
 
-  def render_head(pdf)
+  def render_head(pdf, logo_path=nil)
+    pdf.image logo_path, at: [pdf.bounds.width - 48, pdf.bounds.height], fit: [48, 48] if logo_path
     pdf.text t(:title), size: 24, style: :bold
 
     pdf.move_down 10

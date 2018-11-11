@@ -13,6 +13,10 @@ class Group < ApplicationRecord
 
   validates :name, presence: true, length: { minimum: 2 }
 
+  def has_logo?
+    logo.attachment.present?
+  end
+
   def find_note_by_slug!(slug)
     notes = Note.find_by_sql(find_note_by_slug_sql(slug))
 
