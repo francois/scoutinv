@@ -832,7 +832,7 @@ CREATE TABLE public.reservations (
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL,
     leased_on date,
-    unit_price numeric DEFAULT 0 NOT NULL
+    unit_price numeric DEFAULT 0
 );
 
 
@@ -1579,6 +1579,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181001023801'),
 ('20181004030547'),
 ('20181004031036'),
-('20181004032326');
+('20181004032326'),
+('20181111211055');
 
 

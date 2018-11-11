@@ -11,12 +11,16 @@ class Reservation < ApplicationRecord
 
   validates :instance, :event, presence: true
   validates :instance, uniqueness: { scope: :event }
-  validates :unit_price, numericality: { greater_than_or_equal_to: 0, allow_blank: false }
+  validates :unit_price, numericality: { greater_than_or_equal_to: 0, allow_blank: true }
 
   delegate :title, :start_on, :end_on, :date_range, :real_date_range, to: :event
   delegate :name, :slug, :sort_key_for_pickup, prefix: :product, to: :product
   delegate :slug, prefix: :instance, to: :instance
   delegate :serial_no, to: :instance
+
+  def unit_price
+    read_attribute(:unit_price) || product.unit_price(internal: event.internal?) || 0
+  end
 
   def free?
     unit_price.zero?
