@@ -9,9 +9,9 @@ class MemberMailer < ApplicationMailer
     mail to: email
   end
 
-  def notify_event(event, event_url)
+  def notify_event(event)
     @event = event
-    @event_url = event_url
+    @event_url = event_url(event)
     mail to: event.group.members.select(&:inventory_director?).map(&:email)
   end
 end

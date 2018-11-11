@@ -206,7 +206,8 @@ en:
       lease_all_button_label: Lease all products
       manage_reservations_button_label: Manage reservations
       notes_header: Notes
-      notify_button_label: Inform directors
+      finalize_button_label: Finalize event
+      finalize_button_help: Tells the inventory directors that you are finished preparing your event that your are ready for the products to be made available to you.
       print_button_label: Print the bill of materials
       total: Total for event
     update:

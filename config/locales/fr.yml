@@ -206,7 +206,8 @@ fr:
       lease_all_button_label: Tout prêter à l'unité
       manage_reservations_button_label: Gérer les réservations
       notes_header: Notes
-      notify_button_label: Informer les directeurs
+      finalize_button_label: Finaliser l'événement
+      finalize_button_help: Indique que vous avez terminé de préparer votre événement et que vous êtes prêt à ce que les directeurs du matériel mettent vos produits de côté, afin que vous les utilisiez lors de votre événement.
       print_button_label: Imprimer la liste de matériel
       total: Total pour l'événement
     update:

@@ -473,7 +473,8 @@ CREATE TABLE public.events (
     email text,
     phone text,
     troop_id integer,
-    address text
+    address text,
+    state text DEFAULT 'draft'::text NOT NULL
 );
 
 
@@ -1580,6 +1581,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181004030547'),
 ('20181004031036'),
 ('20181004032326'),
-('20181111211055');
+('20181111211055'),
+('20181111211434');
 
 

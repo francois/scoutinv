@@ -66,6 +66,11 @@ Rails.application.configure do
 
   config.action_mailer.deliver_later_queue_name = ""
 
+  config.action_mailer.default_url_options = {
+    host: "localhost",
+    port: 3000
+  }
+
   config.after_initialize do
     Bullet.enable = true
     Bullet.rails_logger = true

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
   resources :events do
     member do
-      post :notify
+      post :finalize
+      post :ready
+      post :audit
     end
     resources :notes, only: %i[ create ], controller: "events/notes"
     resources :products, only: %i[ show ], controller: "events/products"

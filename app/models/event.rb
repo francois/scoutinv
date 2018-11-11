@@ -21,6 +21,36 @@ class Event < ApplicationRecord
   delegate :name, :address, to: :group, prefix: :group
   delegate :name, to: :troop, prefix: :troop
 
+  state_machine :state, initial: :draft do
+    event :finalize do
+      transition :draft => :final
+    end
+
+    event :ready do
+      transition :final => :ready
+    end
+
+    event :audit do
+      transition :ready => :returned
+    end
+
+    event :redraw do
+      transition [:final, :ready] => :draft
+    end
+
+    after_transition to: :final do |event|
+      MemberMailer.notify_event(event).deliver_now
+    end
+
+    after_transition to: :ready do |event|
+      # send email to troop members
+    end
+
+    after_transition to: :returned do |event|
+      # send email to troop & accounting with final invoice
+    end
+  end
+
   def internal?
     !!troop
   end
