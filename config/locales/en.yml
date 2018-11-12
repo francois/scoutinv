@@ -15,6 +15,7 @@ en:
         name: Name
         phone: Phone
         start_on: Start on
+        state: State
         title: Title
         troop_id: Troop
       group:
@@ -102,6 +103,12 @@ en:
       post_signup_instructions: "After signing up, you will be able to invite other people to your Scout Group."
       sign_up: "Sign Up"
       terms_of_service: "I agree to the Terms of Service"
+  event:
+    state:
+      draft: Draft
+      final: Final
+      ready: Ready
+      returned: Returned
   events:
     form:
       cancel_button_label: Cancel
@@ -136,6 +143,7 @@ en:
     reservations:
       create:
         added: "%{num} products added to event"
+        cannot_change_reservations_alert: "Can only change reservations on draft events"
         double_booking_error_alert: "Cannot double book an instance of this product"
         leased: "%{num} products leased"
         leased_all: "All products leased"

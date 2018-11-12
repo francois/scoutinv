@@ -22,6 +22,52 @@ class Events::ReservationsController < ApplicationController
   end
 
   def create
+    if current_member.inventory_director?
+      # NOP
+    elsif @event.can_change_reservations?
+      # NOP
+    else
+      # Cannot change reservations
+      respond_to do |format|
+        format.html do
+          if params[:back_to_event].present?
+            redirect_to event_path(@event), alert: t(".cannot_change_reservations_alert")
+          elsif params[:back_to_manage].present?
+            redirect_to event_reservations_path(@event, manage: 1), alert: t(".cannot_change_reservations_alert")
+          else
+            redirect_to action: :index, alert: t(".cannot_change_reservations_alert")
+          end
+        end
+
+        format.js do
+          @double_booked_products = Product.double_booked(@event).to_set
+
+          # We must reload products because we worked on the event's products instead
+          # This is a limitation of the ActiveRecord implementation
+          if params[:products].present?
+            @products = current_group.products.includes(reservations: [:event, :instance]).where(slug: params[:products].keys).to_a
+          end
+
+          if params[:instances].present?
+            @instances = current_group.instances.includes(reservations: :product).where(serial_no: params[:instances].keys).to_a
+            @products  = @instances.map(&:product).uniq
+          end
+
+          @reservations = @event.reservations.with_product.page(params[:page])
+
+          # Don't prepare a flash, because we won't need to show it: the UI updates
+          # immediately and the end-user can't be surprised. What would be surprising
+          # is getting a flash message when they navigate away from the page.
+          flash[:notice] = nil
+          flash[:alert]  = t(".cannot_change_reservations_alert")
+
+          render
+        end
+      end
+
+      return # prevent double render errors
+    end
+
     current_group.transaction do
       if params[:products].present?
         @products = current_group.products.includes(reservations: [:event, :instance]).where(slug: params[:products].keys).to_a
@@ -103,6 +149,7 @@ class Events::ReservationsController < ApplicationController
         # immediately and the end-user can't be surprised. What would be surprising
         # is getting a flash message when they navigate away from the page.
         flash[:notice] = nil
+        flash[:alert]  = nil
 
         render
       end

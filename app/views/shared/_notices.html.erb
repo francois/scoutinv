@@ -1,0 +1,7 @@
+<% if notice.present? %>
+  <%= render partial: "shared/notice", locals: {notice: notice} %>
+<% end %>
+<% if alert.present? %>
+  <%= render partial: "shared/alert", locals: {alert: alert} %>
+<% end %>
+

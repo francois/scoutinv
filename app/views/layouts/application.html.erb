@@ -66,12 +66,7 @@
         </div>
 
         <div id="notices" class="large-12 cell">
-          <% if notice.present? %>
-            <%= render partial: "shared/notice", locals: {notice: notice} %>
-          <% end %>
-          <% if alert.present? %>
-            <%= render partial: "shared/alert", locals: {alert: alert} %>
-          <% end %>
+          <%= render partial: "shared/notices" %>
         </div>
       </div>
     </div>

@@ -14,14 +14,21 @@
     </div>
 
     <div>
-      <strong><%= t("description", scope: "activerecord.attributes.event") %>:</strong>
-      <%= simple_format @event.description %>
+      <strong><%= t("state", scope: "activerecord.attributes.event") %>:</strong>
+      <%= t(@event.state, scope: "event.state") %>
     </div>
 
     <div>
       <strong><%= t("dates", scope: "activerecord.attributes.event") %>:</strong>
       <%= format_date_range @event.real_date_range %>
     </div>
+
+    <% if @event.description.present? %>
+      <div>
+        <strong><%= t("description", scope: "activerecord.attributes.event") %>:</strong>
+        <%= simple_format @event.description %>
+      </div>
+    <% end %>
 
     <h2><%= t(".bill_of_materials") %></h2>
     <% @used_categories.each do |category| %>

@@ -17,32 +17,34 @@
     <%= link_to product do %>
       <%= product_image product, height: 250 %>
     <% end %>
-    <div class="grid-x grid-margin-x">
-      <div class="small-2 cell">&nbsp;</div>
-      <div class="auto cell">
-        <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
-          <%= hidden_field_tag "products[#{product.slug}]", "1" %>
-          <%= hidden_field_tag "back_to_event", "1" %>
-          <%= hidden_field_tag "add", "1" %>
-          <%= button_tag class: "button primary small expanded",
-            disabled: product.available_quantity - product.reserved_quantity_on(@event.date_range) <= 0,
-            title: t(".plus_one_hover") do %>
-            <%= t(".plus_one") %>
+    <% if @event.can_change_reservations? || current_member.inventory_director? %>
+      <div class="grid-x grid-margin-x">
+        <div class="small-2 cell">&nbsp;</div>
+        <div class="auto cell">
+          <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+            <%= hidden_field_tag "products[#{product.slug}]", "1" %>
+            <%= hidden_field_tag "back_to_event", "1" %>
+            <%= hidden_field_tag "add", "1" %>
+            <%= button_tag class: "button primary small expanded",
+              disabled: product.available_quantity - product.reserved_quantity_on(@event.date_range) <= 0,
+              title: t(".plus_one_hover") do %>
+              <%= t(".plus_one") %>
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
-      <div class="auto cell">
-        <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
-          <%= hidden_field_tag "products[#{product.slug}]", "1" %>
-          <%= hidden_field_tag "back_to_event", "1" %>
-          <%= hidden_field_tag "remove", "1" %>
-          <%= button_tag title: t(".minus_one_hover"), class: "button secondary small expanded", disabled: @event.reservations.select{|reservation| reservation.product == product}.empty? do %>
-            <%= t(".minus_one") %>
+        </div>
+        <div class="auto cell">
+          <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+            <%= hidden_field_tag "products[#{product.slug}]", "1" %>
+            <%= hidden_field_tag "back_to_event", "1" %>
+            <%= hidden_field_tag "remove", "1" %>
+            <%= button_tag title: t(".minus_one_hover"), class: "button secondary small expanded", disabled: @event.reservations.select{|reservation| reservation.product == product}.empty? do %>
+              <%= t(".minus_one") %>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
+        <div class="small-2 cell">&nbsp;</div>
       </div>
-      <div class="small-2 cell">&nbsp;</div>
-    </div>
+    <% end %>
     <% if %i[building aisle shelf unit description].map{|attr| product.public_send(attr)}.compact.any? || reservations.reject(&:free?).any? %>
       <div class="card-section">
         <% if product.description.present? %>

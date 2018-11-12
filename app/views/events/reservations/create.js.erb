@@ -13,3 +13,4 @@
     <% end %>
 <% end %>
 $("<%= escape_javascript render(partial: "events/total", locals: { event: @event }) %>").replaceAll("#event-total");
+$("<%= escape_javascript render(partial: "shared/notices") %>").replaceAll("#notices");
