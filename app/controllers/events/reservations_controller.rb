@@ -24,7 +24,7 @@ class Events::ReservationsController < ApplicationController
   def create
     if current_member.inventory_director?
       # NOP
-    elsif @event.can_change_reservations?
+    elsif @event.can_change_reservations?(current_member)
       # NOP
     else
       # Cannot change reservations

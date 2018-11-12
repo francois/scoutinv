@@ -17,7 +17,7 @@
     <%= link_to product do %>
       <%= product_image product, height: 250 %>
     <% end %>
-    <% if @event.can_change_reservations? || current_member.inventory_director? %>
+    <% if @event.can_change_reservations?(current_member) %>
       <div class="grid-x grid-margin-x">
         <div class="small-2 cell">&nbsp;</div>
         <div class="auto cell">

@@ -28,7 +28,7 @@
   <% end %>
   </td>
   <td>
-    <% if @event.can_change_reservations? || current_member.inventory_director? %>
+    <% if @event.can_change_reservations?(current_member) %>
       <div class="grid-x grid-margin-x">
         <div class="auto cell">
           <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>

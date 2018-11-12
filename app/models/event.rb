@@ -53,7 +53,7 @@ class Event < ApplicationRecord
   end
 
   def can_finalize?(member)
-    state_events.include?(:finalize) && (troop.members.include?(member) || member.inventory_director?)
+    state_events.include?(:finalize) && ((internal? && troop.members.include?(member)) || member.inventory_director?)
   end
 
   def can_ready?(member)
@@ -68,8 +68,8 @@ class Event < ApplicationRecord
     state_events.include?(:redraw) && member.inventory_director?
   end
 
-  def can_change_reservations?
-    draft?
+  def can_change_reservations?(member)
+    draft? && ((internal? && troop.members.include?(member)) || member.inventory_director?)
   end
 
   def internal?
