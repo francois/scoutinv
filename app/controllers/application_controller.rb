@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  before_action :ensure_ssl if ENV["SSL"] == "true"
   before_action :set_timezone
   before_action :set_locale
   before_action :authenticate_member!
@@ -9,11 +8,6 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
   private
-
-  def ensure_ssl
-    return if request.ssl?
-    redirect_to protocol: "https"
-  end
 
   def set_timezone
     Time.zone = "America/Montreal"
