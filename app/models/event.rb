@@ -56,16 +56,16 @@ class Event < ApplicationRecord
     state_events.include?(:finalize) && internal? && troop.members.include?(member) || member.inventory_director?
   end
 
-  def can_ready?
-    state_events.include?(:ready)
+  def can_ready?(member)
+    state_events.include?(:ready) && member.inventory_director?
   end
 
-  def can_audit?
-    state_events.include?(:audit)
+  def can_audit?(member)
+    state_events.include?(:audit) && member.inventory_director?
   end
 
-  def can_redraw?
-    state_events.include?(:redraw)
+  def can_redraw?(member)
+    state_events.include?(:redraw) && member.inventory_director?
   end
 
   def can_change_reservations?

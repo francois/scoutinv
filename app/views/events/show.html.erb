@@ -3,9 +3,9 @@
     <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button hide-for-large" %>
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button hide-for-large" %>
     <%= link_to t(".finalize_button_label"), finalize_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".finalize_button_help") if @event.can_finalize?(current_member) %>
-    <%= link_to t(".ready_button_label"), ready_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".ready_button_help") if @event.can_ready? %>
-    <%= link_to t(".audit_button_label"), audit_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".audit_button_help") if @event.can_audit? %>
-    <%= link_to t(".redraw_button_label"), redraw_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".redraw_button_help") if @event.can_redraw? %>
+    <%= link_to t(".ready_button_label"), ready_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".ready_button_help") if @event.can_ready?(current_member) %>
+    <%= link_to t(".audit_button_label"), audit_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".audit_button_help") if @event.can_audit?(current_member) %>
+    <%= link_to t(".redraw_button_label"), redraw_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".redraw_button_help") if @event.can_redraw?(current_member) %>
     <%= link_to t(".print_button_label"), event_path(@event, format: :pdf), class: "button hide-for-large", target: "blank" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary hide-for-large" %>
     <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button secondary alert hide-for-large" %>
@@ -56,9 +56,9 @@
     <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button expanded" %>
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button expanded" %>
     <%= link_to t(".finalize_button_label"), finalize_event_path(@event), method: :post, class: "button warning expanded", title: t(".finalize_button_help") if @event.can_finalize?(current_member) %>
-    <%= link_to t(".ready_button_label"), ready_event_path(@event), method: :post, class: "button warning expanded", title: t(".ready_button_help") if @event.can_ready? %>
-    <%= link_to t(".audit_button_label"), audit_event_path(@event), method: :post, class: "button warning expanded", title: t(".audit_button_help") if @event.can_audit? %>
-    <%= link_to t(".redraw_button_label"), redraw_event_path(@event), method: :post, class: "button warning expanded", title: t(".redraw_button_help") if @event.can_redraw? %>
+    <%= link_to t(".ready_button_label"), ready_event_path(@event), method: :post, class: "button warning expanded", title: t(".ready_button_help") if @event.can_ready?(current_member) %>
+    <%= link_to t(".audit_button_label"), audit_event_path(@event), method: :post, class: "button warning expanded", title: t(".audit_button_help") if @event.can_audit?(current_member) %>
+    <%= link_to t(".redraw_button_label"), redraw_event_path(@event), method: :post, class: "button warning expanded", title: t(".redraw_button_help") if @event.can_redraw?(current_member) %>
     <%= link_to t(".print_button_label"), event_path(@event, format: :pdf), class: "button expanded" %>
     <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary expanded" %>
 
