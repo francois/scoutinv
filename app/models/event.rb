@@ -52,8 +52,8 @@ class Event < ApplicationRecord
     end
   end
 
-  def can_finalize?
-    state_events.include?(:finalize)
+  def can_finalize?(member)
+    state_events.include?(:finalize) && internal? && troop.members.include?(member) || member.inventory_director?
   end
 
   def can_ready?
