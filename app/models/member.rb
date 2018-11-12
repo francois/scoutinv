@@ -2,6 +2,8 @@ class Member < ApplicationRecord
   include HasSlug
 
   belongs_to :group
+  has_many :memberships,   dependent: :delete_all, autosave: true
+  has_many :troops,                                                           through: :memberships
   has_many :sessions,      dependent: :delete_all, autosave: true,            class_name: "MemberSession"
   has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
 

@@ -31,7 +31,11 @@
               <div class="grid-x grid-margin-x">
                 <div class="small-12 cell">
                   <%= form.label :troop_id %>
-                  <%= form.select :troop_id, options_from_collection_for_select(current_group.troops.sort_by(&:sort_key), :id, :name, @event.troop_id), include_blank: true %>
+                  <% if current_member.inventory_director? %>
+                    <%= form.select :troop_id, options_from_collection_for_select(current_group.troops.sort_by(&:sort_key), :id, :name, @event.troop_id), include_blank: true %>
+                  <% else %>
+                    <%= form.select :troop_id, options_from_collection_for_select(current_member.troops.sort_by(&:sort_key), :id, :name, @event.troop_id), include_blank: true %>
+                  <% end %>
                 </div>
             </fieldset>
 

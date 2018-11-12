@@ -36,6 +36,7 @@ class EventsController < ApplicationController
   def new
     @page_title = I18n.t("events.new.page_title")
     @event = Event.new
+    @event.troop = current_member.troops.first if current_member.troops.size == 1
   end
 
   def edit
