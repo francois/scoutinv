@@ -72,6 +72,10 @@ class Event < ApplicationRecord
     draft? && ((internal? && troop.members.include?(member)) || member.inventory_director?)
   end
 
+  def can_reservations_change?
+    draft?
+  end
+
   def internal?
     !!troop
   end
