@@ -23,7 +23,8 @@ class Event < ApplicationRecord
 
   state_machine :state, initial: :draft do
     event :finalize do
-      transition :draft => :final
+      transition :draft => :final, if: :internal?
+      transition :draft => :ready
     end
 
     event :ready do
@@ -39,16 +40,32 @@ class Event < ApplicationRecord
     end
 
     after_transition to: :final do |event|
-      MemberMailer.notify_event(event).deliver_now
+      MemberMailer.notify_event_finalized(event).deliver_now
     end
 
     after_transition to: :ready do |event|
-      # send email to troop members
+      MemberMailer.notify_event_ready(event).deliver_now
     end
 
     after_transition to: :returned do |event|
-      # send email to troop & accounting with final invoice
+      MemberMailer.notify_event_returned(event).deliver_now
     end
+  end
+
+  def can_finalize?
+    state_events.include?(:finalize)
+  end
+
+  def can_ready?
+    state_events.include?(:ready)
+  end
+
+  def can_audit?
+    state_events.include?(:audit)
+  end
+
+  def can_redraw?
+    state_events.include?(:redraw)
   end
 
   def can_change_reservations?

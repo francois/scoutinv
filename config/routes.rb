@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post :finalize
       post :ready
       post :audit
+      post :redraw
     end
     resources :notes, only: %i[ create ], controller: "events/notes"
     resources :products, only: %i[ show ], controller: "events/products"

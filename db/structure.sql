@@ -608,7 +608,8 @@ CREATE TABLE public.members (
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL,
-    inventory_director boolean DEFAULT false NOT NULL
+    inventory_director boolean DEFAULT false NOT NULL,
+    accountant boolean DEFAULT false NOT NULL
 );
 
 
@@ -1582,6 +1583,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181004031036'),
 ('20181004032326'),
 ('20181111211055'),
-('20181111211434');
+('20181111211434'),
+('20181112011450');
 
 

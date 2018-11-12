@@ -139,7 +139,10 @@ fr:
     new:
       page_title: "Nouvel événement"
     notify:
+      audited: "Le matériel a été vérifié"
       notified: "Les directeurs du matériel sont informés de votre événement"
+      ready: "Le matériel est prêt pour l'unité"
+      redrawn: "L'unité peut à nouveau modifier les réservations"
     reservations:
       create:
         added: "%{num} produit(s) ajouté(s) à l'événement"
@@ -216,6 +219,12 @@ fr:
       notes_header: Notes
       finalize_button_label: Finaliser l'événement
       finalize_button_help: Indique que vous avez terminé de préparer votre événement et que vous êtes prêt à ce que les directeurs du matériel mettent vos produits de côté, afin que vous les utilisiez lors de votre événement.
+      ready_button_label: Produits prêt à être pris
+      ready_button_help: Indique à l'unité que ses produits sont prêts à être utilisés
+      audit_button_label: Produits vérifiés et retournés
+      audit_button_help: Indique que les directeurs du matériel ont vérifiés et retournés les produits
+      redraw_button_label: Retourner à l'unité
+      redraw_button_help: Permet à nouveau à l'unité de modifier ses réservations
       print_button_label: Imprimer la liste de matériel
       total: Total pour l'événement
     update:
@@ -431,7 +440,11 @@ fr:
   serial_number: "N/S:%{no}"
 
   member_mailer:
-    notify_event:
+    notify_event_finalized:
       subject: Événement prêt pour le prêt
+    notify_event_ready:
+      subject: Produits prêts sur l'événement
+    notify_event_returned:
+      subject: Produits retournés sur l'événement
     send_authentication:
       subject: Demande de connexion

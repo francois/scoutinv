@@ -9,9 +9,38 @@ class MemberMailer < ApplicationMailer
     mail to: email
   end
 
-  def notify_event(event)
+  def notify_event_finalized(event)
     @event = event
     @event_url = event_url(event)
-    mail to: event.group.members.select(&:inventory_director?).map(&:email)
+    mail to: event.group.inventory_directors.map(&:email)
+  end
+
+  def notify_event_ready(event)
+    return unless event.internal?
+
+    @event = event
+    @event_url = event_url(event)
+    mail to: event.troop.members.map(&:email)
+  end
+
+  def notify_event_returned(event)
+    return unless event.internal?
+
+    @event = event
+    @event_url = event_url(event)
+
+    author = event.group.inventory_directors.first
+    generator =
+      if @event.internal?
+        TroopContractPdfPrinter.new(@event, author: author)
+      else
+        ExternalRenterContractPdfPrinter.new(@event, author: author)
+      end
+
+    # Attach the contract PDF
+    attachments[generator.filename] = generator.print
+
+    mail to: event.troop.members.map(&:email),
+      cc: (event.group.inventory_directors + event.group.accountants).map(&:email)
   end
 end

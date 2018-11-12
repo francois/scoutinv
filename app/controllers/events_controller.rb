@@ -23,7 +23,7 @@ class EventsController < ApplicationController
       format.html { render action: :show }
       format.pdf do
         generator =
-          if @event.troop
+          if @event.internal?
             TroopContractPdfPrinter.new(@event, author: current_member)
           else
             ExternalRenterContractPdfPrinter.new(@event, author: current_member)
@@ -86,6 +86,12 @@ class EventsController < ApplicationController
   def audit
     @event.audit!
     flash[:notice] = I18n.t("events.notify.audited")
+    redirect_to @event
+  end
+
+  def redraw
+    @event.redraw!
+    flash[:notice] = I18n.t("events.notify.redrawn")
     redirect_to @event
   end
 

@@ -17,6 +17,14 @@ class Group < ApplicationRecord
     logo.attachment.present?
   end
 
+  def inventory_directors
+    members.select(&:inventory_director?)
+  end
+
+  def accountants
+    members.select(&:accountant?)
+  end
+
   def find_note_by_slug!(slug)
     notes = Note.find_by_sql(find_note_by_slug_sql(slug))
 

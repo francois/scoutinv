@@ -1,0 +1,10 @@
+Les directeurs du matériel vous informent que les produits de l'événement "<%= @event.title %>" sont prêts!
+L'événement sera en cours du <%= format_date_range @event.real_date_range %>.
+
+<%= @event_url %>
+
+<% @event.reservations.group_by(&:product).sort_by{|product, _| product.sort_key_for_pickup}.each do |product, reservations| %>
+  <%= "#{product.name}#{" "*100}"[0, 100] %> <%= number_with_delimiter reservations.size %>
+  <%= format_product_location product, plain: true %>
+
+<% end %>

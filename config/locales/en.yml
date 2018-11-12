@@ -139,7 +139,10 @@ en:
     new:
       page_title: "New Event"
     notify:
+      audited: "Products have been audited"
       notified: "Informed inventory managers about your event"
+      ready: "Products are ready to be taken out"
+      redrawn: "The troop may change reservations"
     reservations:
       create:
         added: "%{num} products added to event"
@@ -216,6 +219,12 @@ en:
       notes_header: Notes
       finalize_button_label: Finalize event
       finalize_button_help: Tells the inventory directors that you are finished preparing your event that your are ready for the products to be made available to you.
+      ready_button_label: Products are ready
+      ready_button_help: Tells the troop that its products are ready
+      audit_button_label: Products audited and returned
+      audit_button_help: Indicates that the inventory directors have audited and returned all products
+      redraw_button_label: Return to troop
+      redraw_button_help: Enables the troop to change reservations again
       print_button_label: Print the bill of materials
       total: Total for event
     update:
@@ -431,7 +440,11 @@ en:
   serial_number: "N/S:%{no}"
 
   member_mailer:
-    notify_event:
+    notify_event_finalized:
       subject: Event ready for lease
+    notify_event_ready:
+      subject: Products ready for event
+    notify_event_returned:
+      subject: Products returned for event
     send_authentication:
       subject: Authentication Request
