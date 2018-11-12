@@ -389,6 +389,7 @@ fr:
     phone: Téléphone
     product: Produit
     product_header: Produit
+    provisional: Provisionnel
     quality_control_at_lease_end_header: "Contrôle qualité du matériel au retour"
     quality_control_at_lease_start_header: "Contrôle qualité du matériel au départ"
     quantity: Quantité

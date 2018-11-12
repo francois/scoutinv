@@ -51,6 +51,10 @@ class Event < ApplicationRecord
     end
   end
 
+  def can_change_reservations?
+    draft?
+  end
+
   def internal?
     !!troop
   end

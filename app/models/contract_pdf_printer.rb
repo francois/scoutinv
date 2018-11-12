@@ -81,6 +81,16 @@ class ContractPdfPrinter
     pdf.repeat(:all) do
       pdf.draw_text event.title, at: [                    0, -6], size: 8, width: pdf.bounds.width
       pdf.draw_text printed_on,  at: [pdf.bounds.width - 45, -6], size: 8, width: 45
+
+      if event.can_change_reservations?
+        pdf.rotate 40 do
+          pdf.formatted_text_box [ {text: t(".provisional").upcase, color: "cccccc"} ], at: [0, 12],
+            width: pdf.bounds.width * 1.25,
+            height: pdf.bounds.height * 1.25,
+            align: :center,
+            size: 120
+        end
+      end
     end
   end
 
