@@ -1,6 +1,6 @@
 <div class="grid-x grid-margin-x">
   <div class="large-9 medium-12 cell">
-    <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button hide-for-large" if @event.can_change_reservations(current_member) %>
+    <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button hide-for-large" if @event.can_change_reservations?(current_member) %>
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button hide-for-large" if @event.can_change_reservations?(current_member) %>
     <%= link_to t(".finalize_button_label"), finalize_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".finalize_button_help") if @event.can_finalize?(current_member) %>
     <%= link_to t(".ready_button_label"), ready_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".ready_button_help") if @event.can_ready?(current_member) %>
@@ -53,7 +53,7 @@
   </div>
 
   <div class="large-3 medium-12 cell show-for-large">
-    <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button expanded" if @event.can_change_reservations(current_member) %>
+    <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button expanded" if @event.can_change_reservations?(current_member) %>
     <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button expanded" if @event.can_change_reservations?(current_member) %>
     <%= link_to t(".finalize_button_label"), finalize_event_path(@event), method: :post, class: "button warning expanded", title: t(".finalize_button_help") if @event.can_finalize?(current_member) %>
     <%= link_to t(".ready_button_label"), ready_event_path(@event), method: :post, class: "button warning expanded", title: t(".ready_button_help") if @event.can_ready?(current_member) %>
