@@ -182,6 +182,7 @@ en:
         leased_on_header: Leased on
         return_button_label: Return
         returned_on_header: Returned on
+        save: Save
         switch_instance_button_label: Switch
       manage:
         back_to_event: Back to event

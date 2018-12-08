@@ -182,6 +182,7 @@ fr:
         leased_on_header: Prêté le
         return_button_label: Retourner
         returned_on_header: Retourné le
+        save: Enr.
         switch_instance_button_label: Échanger
       manage:
         back_to_event: Retour à l'événement
