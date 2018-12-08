@@ -14,7 +14,7 @@
           <%= f.number_field :unit_price, class: "text-right", min: 0, step: BigDecimal("0.01") %>
         </div>
         <div class="small-3 medium-4 cell">
-          <%= submit_tag "Save", class: "button tiny" %>
+          <%= submit_tag t(".save"), class: "button tiny" %>
         </div>
       </div>
     <% end %>
@@ -25,6 +25,7 @@
         <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
         <%= hidden_field_tag "back_to_manage", "1" %>
         <%= hidden_field_tag "switch", "1" %>
+        <%= hidden_field_tag "page", @reservations.current_page %>
         <%= submit_tag t(".switch_instance_button_label"), name: "switch", class: "button expanded warning"%>
       <% end %>
     <% end %>
@@ -38,6 +39,7 @@
         <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
         <%= hidden_field_tag "back_to_manage", "1" %>
         <%= hidden_field_tag "lease", "1" %>
+        <%= hidden_field_tag "page", @reservations.current_page %>
         <%= submit_tag t(".lease_button_label"), name: "lease", class: "button expanded primary"%>
       <% end %>
     <% end %>
@@ -50,6 +52,7 @@
         <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
         <%= hidden_field_tag "back_to_manage", "1" %>
         <%= hidden_field_tag "hold", "1" %>
+        <%= hidden_field_tag "page", @reservations.current_page %>
         <%= submit_tag t(".hold_button_label"), name: "hold", class: "button expanded warning"%>
       <% end %>
 
@@ -57,6 +60,7 @@
         <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
         <%= hidden_field_tag "back_to_manage", "1" %>
         <%= hidden_field_tag "return", "1" %>
+        <%= hidden_field_tag "page", @reservations.current_page %>
         <%= submit_tag t(".return_button_label"), name: "return", class: "button expanded secondary"%>
       <% end %>
     <% end %>
