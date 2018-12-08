@@ -19,12 +19,6 @@ LOCAL_SHA1=$( git log -n 1 --pretty=format:%H HEAD )
 echo "Deploying \"$( git log -n 1 --oneline HEAD)\" to \"${ENV}\""
 git push "${1:?Missing ENV as 1st parameter}" "${FORCE}""${BRANCH}":master
 
-if [[ -n "$( git log --oneline -n 1 ${REMOTE_SHA1}..${LOCAL_SHA1} -- db/structure.sql )" ]]
-then
-  heroku run --remote "${ENV}" rails db:migrate
-  heroku ps:restart --remote "${ENV}"
-fi
-
 echo -n "Waiting for server to restart... "
 for SEQ in $( seq 20 -1 1 )
 do
