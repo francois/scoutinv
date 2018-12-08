@@ -5,7 +5,7 @@
     <ul>
       <% @events.each do |event| %>
         <li>
-          <%= link_to event.title, event_reservations_path(event) %>
+          <%= link_to event.title, event_path(event) %>
           <small><%= format_date_range(event.date_range) %></small>
         </li>
       <% end %>
