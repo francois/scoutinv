@@ -421,6 +421,81 @@ ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
 
 
 --
+-- Name: consumable_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.consumable_categories (
+    id bigint NOT NULL,
+    category_id bigint NOT NULL,
+    consumable_id bigint NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: consumable_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.consumable_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: consumable_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.consumable_categories_id_seq OWNED BY public.consumable_categories.id;
+
+
+--
+-- Name: consumables; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.consumables (
+    id bigint NOT NULL,
+    group_id bigint NOT NULL,
+    name character varying NOT NULL,
+    description text,
+    slug character varying NOT NULL,
+    building text,
+    aisle text,
+    shelf text,
+    unit text,
+    base_quantity_value integer DEFAULT 1 NOT NULL,
+    base_quantity_si_prefix text DEFAULT '-'::text NOT NULL,
+    base_quantity_unit text DEFAULT 'unit'::text NOT NULL,
+    internal_unit_price numeric DEFAULT 0 NOT NULL,
+    external_unit_price numeric DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: consumables_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.consumables_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: consumables_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.consumables_id_seq OWNED BY public.consumables.id;
+
+
+--
 -- Name: domain_events; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -922,6 +997,20 @@ ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
+-- Name: consumable_categories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumable_categories ALTER COLUMN id SET DEFAULT nextval('public.consumable_categories_id_seq'::regclass);
+
+
+--
+-- Name: consumables id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumables ALTER COLUMN id SET DEFAULT nextval('public.consumables_id_seq'::regclass);
+
+
+--
 -- Name: domain_events id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1042,6 +1131,22 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.categories
     ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: consumable_categories consumable_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumable_categories
+    ADD CONSTRAINT consumable_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: consumables consumables_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumables
+    ADD CONSTRAINT consumables_pkey PRIMARY KEY (id);
 
 
 --
@@ -1198,6 +1303,27 @@ CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_b
 --
 
 CREATE UNIQUE INDEX index_categories_on_slug ON public.categories USING btree (slug);
+
+
+--
+-- Name: index_consumable_categories_on_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_consumable_categories_on_category_id ON public.consumable_categories USING btree (category_id);
+
+
+--
+-- Name: index_consumable_categories_on_consumable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_consumable_categories_on_consumable_id ON public.consumable_categories USING btree (consumable_id);
+
+
+--
+-- Name: index_consumables_on_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_consumables_on_group_id ON public.consumables USING btree (group_id);
 
 
 --
@@ -1493,6 +1619,14 @@ ALTER TABLE ONLY public.events
 
 
 --
+-- Name: consumable_categories fk_rails_77171b5eb2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumable_categories
+    ADD CONSTRAINT fk_rails_77171b5eb2 FOREIGN KEY (category_id) REFERENCES public.categories(id);
+
+
+--
 -- Name: member_sessions fk_rails_7a5931b641; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1530,6 +1664,22 @@ ALTER TABLE ONLY public.product_categories
 
 ALTER TABLE ONLY public.reservations
     ADD CONSTRAINT fk_rails_af7a37539f FOREIGN KEY (event_id) REFERENCES public.events(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: consumable_categories fk_rails_c76d6455f3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumable_categories
+    ADD CONSTRAINT fk_rails_c76d6455f3 FOREIGN KEY (consumable_id) REFERENCES public.consumables(id);
+
+
+--
+-- Name: consumables fk_rails_d0e616a7b8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumables
+    ADD CONSTRAINT fk_rails_d0e616a7b8 FOREIGN KEY (group_id) REFERENCES public.groups(id);
 
 
 --
@@ -1584,6 +1734,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181004032326'),
 ('20181111211055'),
 ('20181111211434'),
-('20181112011450');
+('20181112011450'),
+('20181231233310'),
+('20190101025658');
 
 

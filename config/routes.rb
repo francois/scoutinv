@@ -28,7 +28,19 @@ Rails.application.routes.draw do
 
   resources :reports, only: %i[ index show ]
 
+  resources :consumables do
+    resources :notes, only: %i[ create ], controller: "consumables/notes"
+
+    resources :images, only: %i[ update destroy ], controller: "entities/images" do
+      member do
+        patch :left
+        patch :right
+      end
+    end
+  end
+
   resources :products do
+    resources :notes, only: %i[ create ], controller: "products/notes"
     resources :instances, only: %[destroy], controller: "products/instances" do
       member do
         patch :hold
@@ -37,13 +49,12 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :images, only: %i[ update destroy ], controller: "products/images" do
+    resources :images, only: %i[ update destroy ], controller: "entities/images" do
       member do
         patch :left
         patch :right
       end
     end
-    resources :notes, only: %i[ create ], controller: "products/notes"
   end
 
   resources :notes

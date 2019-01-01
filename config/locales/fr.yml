@@ -7,6 +7,22 @@ fr:
       product: Produit
       troop: Unité
     attributes:
+      consumable:
+        aisle: Allée
+        base_quantity: Quantité unitaire
+        building: Bâtiment
+        categories: Catégories
+        description: Description
+        external: Externe
+        external_unit_price: Prix unitaire externe
+        image_url: "Adresse web d'une image à copier"
+        images: Images
+        internal: Interne
+        internal_unit_price: Prix unitaire interne
+        location: Localisation
+        name: Nom
+        shelf: Tablette
+        unit: Bac
       event:
         dates: Dates
         description: Description
@@ -41,7 +57,6 @@ fr:
         quantity: Quantité
         shelf: Tablette
         unit: Bac
-        unit_prices: Prix unitaires
       troop:
         name: Nom
         position: Position
@@ -230,6 +245,50 @@ fr:
       total: Total pour l'événement
     update:
       event_successfully_updated: Événement mis à jour avec succès
+  consumables:
+    form:
+      cancel_button_label: Annuler
+      categories_label: Catégories
+      help_on_images: "Tapez sur le bouton pour prendre une photo (sur un cellulaire), ou sélectionnez une photo à partir de votre ordinateur. Si vous clonez un consommable, les images seront aussi copiées."
+      location_label: Localisation
+    create:
+      consumable_successfully_created: Consommable enregistré avec succès
+    destroy:
+      consumable_successfully_destroyed: Consommable détruit avec succès
+    images:
+      destroy:
+        notice: Image détruite
+    index:
+      categories_header: Catégories
+      category_label: Catégorie
+      description_header: Description
+      filter_label: Filtre
+      location_header: Localisation
+      name_header: Nom
+      new_consumable_button_label: Ajouter un consommable
+      page_title: Inventaire
+      quantity_header: Quantité
+      search_button_label: Chercher
+      sorry_no_elements: Désolé, aucun consommable ne correspond à vos critères de recherche
+      view_all_button_label: Afficher tout
+    edit:
+      page_title: "Modification de %{consumable_name}"
+    new:
+      page_title: "Nouveau consommable"
+    show:
+      add_note_label: Ajouter une note
+      add_to_cart_label: Réserver pour cet événement
+      back_to_list_button_label: Retour à la liste
+      clone_button_label: Copier ce consommable
+      dates_header: Dates
+      delete_button_label: Détruire ce consommable
+      edit_button_label: Modifier ce consommable
+      event_header: Événement
+      consumable_reservation_history_header: Historique de réservation du consommable
+      serial_no_header: No série
+      state_header: État
+    update:
+      consumable_successfully_updated: Consommable mis à jour avec succès
   products:
     form:
       cancel_button_label: Annuler
@@ -337,6 +396,10 @@ fr:
       event_starts_in_the_future: "Il reste %{remaining_weeks} semaines avant que  %{event_title} ne commence"
       welcome: Bienvenue! %{extra}
   shared:
+    image:
+      delete_image_button_label: Détruire
+      rotate_image_left_button_label_html: "&#8630; gauche" # ANTICLOCKWISE TOP SEMICIRCLE ARROW
+      rotate_image_right_button_label_html: "&#8631; droite" # CLOCKWISE TOP SEMICIRCLE ARROW
     notes:
       add_note_label: Ajouter une note
       by_author_name: par %{author_name}
@@ -347,6 +410,7 @@ fr:
     or:
       or: ou
   top-bar:
+    consumables: Consommables
     events: Événements
     groups: Groupes
     home: Tableau de bord

@@ -1,5 +1,5 @@
 (function() {
-  var card = $("#product-<%= @product.slug %>-image-<%= @image.id %>");
+  var card = $("#entity-<%= @entity.slug %>-image-<%= @image.id %>");
   card.fadeOut(function(){
     card.remove();
   });

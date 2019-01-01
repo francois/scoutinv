@@ -1,0 +1,2 @@
+class ConsumableRegistered < DomainEvent
+end

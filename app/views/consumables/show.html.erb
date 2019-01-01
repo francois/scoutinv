@@ -1,0 +1,77 @@
+<div class="grid-x grid-margin-x">
+  <div class="large-9 medium-12 cell">
+    <%= form_tag event_reservations_path(@event, @consumable) do %>
+      <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button small hide-for-large" %>
+    <% end if @event %>
+    <%= link_to t(".edit_button_label"), edit_consumable_path(@consumable), class: "button small hide-for-large" if current_member.inventory_director? %>
+    <%= link_to t(".clone_button_label"), new_consumable_path(clone_from: @consumable), class: "button small hide-for-large" if current_member.inventory_director? %>
+    <%= link_to t(".back_to_list_button_label"), consumables_path, class: "button secondary small hide-for-large" %>
+    <%= link_to t(".delete_button_label"), consumable_path(@consumable), method: :delete, class: "button small alert hide-for-large" if current_member.inventory_director? %>
+
+    <div class="grid-x grid-padding-x small-up-1 medium-up-3">
+      <% @consumable.images.select(&:blob).sort_by{|blob| blob.filename.to_s.downcase}.each do |image| %>
+        <%= render partial: "shared/image", locals: { entity: @consumable, image: image } %>
+      <% end %>
+    </div>
+
+    <div>
+      <strong><%= t("name", scope: "activerecord.attributes.consumable") %>:</strong>
+      <%= @consumable.name %>
+    </div>
+
+    <div>
+      <strong><%= t("location", scope: "activerecord.attributes.consumable") %>:</strong>
+      <%= format_product_location(@consumable) %>
+    </div>
+
+    <div>
+      <strong><%= t("base_quantity", scope: "activerecord.attributes.consumable") %>:</strong>
+    </div>
+
+    <div>
+      <strong><%= t("internal_unit_price", scope: "activerecord.attributes.consumable") %>:</strong>
+      <%= number_to_currency @consumable.internal_unit_price %> / <%= format_quantity @consumable.base_quantity %>
+    </div>
+
+    <div>
+      <strong><%= t("external_unit_price", scope: "activerecord.attributes.consumable") %>:</strong>
+      <%= number_to_currency @consumable.external_unit_price %> / <%= format_quantity @consumable.base_quantity %>
+    </div>
+
+    <div>
+      <strong><%= t("description", scope: "activerecord.attributes.consumable") %>:</strong>
+      <%= simple_format @consumable.description %>
+    </div>
+  </div>
+
+  <div class="large-3 medium-12 cell show-for-large">
+    <%= form_tag event_reservations_path(@event, @consumable) do %>
+      <h4><%= @event.title %></h4>
+      <h6><%= format_date_range(@event.real_date_range) %></h6>
+      <%= hidden_field_tag "consumables[#{@consumable.slug}]", "1" %>
+      <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button expanded" %>
+      <hr>
+    <% end if @event %>
+    <%= link_to t(".edit_button_label"), edit_consumable_path(@consumable), class: "button expanded" if current_member.inventory_director? %>
+    <%= link_to t(".clone_button_label"), new_consumable_path(clone_from: @consumable), class: "button expanded" if current_member.inventory_director? %>
+    <%= link_to t(".back_to_list_button_label"), consumables_path, class: "button secondary expanded" %>
+
+    <hr>
+
+    <% if current_member.inventory_director? %>
+      <%= link_to t(".delete_button_label"), consumable_path(@consumable), method: :delete, class: "button alert expanded" %>
+      <hr>
+    <% end %>
+
+    <%= render partial: "shared/notes", locals: { parent: @consumable, note: @note, create_note_path: consumable_notes_path(@consumable) } %>
+  </div>
+
+  <div class="small-12 cell hide-for-large">
+    <hr>
+    <%= render partial: "shared/notes", locals: { parent: @consumable, note: @note, create_note_path: consumable_notes_path(@consumable) } %>
+  </div>
+
+  <div class="small-12 cell hide-for-large">
+    <%= link_to t(".back_to_list_button_label"), consumables_path, class: "button secondary small hide-for-large" %>
+  </div>
+</div>

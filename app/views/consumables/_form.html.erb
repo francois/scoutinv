@@ -1,0 +1,107 @@
+<%= form_with(model: consumable, local: true) do |form| %>
+  <%= hidden_field_tag :clone_from, @clone_from&.to_param %>
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <% if consumable.errors.any? %>
+        <div class="small-12 cell">
+          <div id="error_explanation">
+            <h2><%= pluralize(consumable.errors.count, "error") %> prohibited this consumable from being saved:</h2>
+
+            <ul>
+              <% consumable.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="small-12 cell">
+        <%= form.label :name %>
+        <%= form.text_field :name, autocomplete: false %>
+      </div>
+
+      <div class="small-12 medium-6 cell">
+        <%= form.label :images %>
+        <%= form.file_field :images, :multiple => true, :"aria-describedby" => "help-on-images", :autocomplete => false %>
+        <p id="help-on-images" class="help-text"><%= t(".help_on_images") %></p>
+      </div>
+
+      <div class="small-12 medium-6 cell">
+        <%= form.label :image_url %>
+        <%= form.text_field :image_url, :"aria-describedby" => "help-on-images" %>
+      </div>
+
+      <div class="small-12 cell">
+        <fieldset class="fieldset">
+          <legend><%= t(".location_label") %></legend>
+          <%= form.label :building %>
+          <%= form.text_field :building %>
+
+          <%= form.label :aisle %>
+          <%= form.text_field :aisle %>
+
+          <%= form.label :shelf %>
+          <%= form.text_field :shelf %>
+
+          <%= form.label :unit %>
+          <%= form.text_field :unit %>
+        </fieldset>
+      </div>
+
+      <div class="small-12 cell">
+        <%= form.label :description %>
+        <%= form.text_area :description, size: "10x5" %>
+      </div>
+
+      <div class="small-12 cell">
+        <div class="grid-x grid-margin-x">
+          <div class="small-12 medium-3 cell">
+            <div class="grid-x grid-margin-x">
+              <div class="small-auto cell">
+                <%= form.label :internal_unit_price %>
+                <%= form.number_field :internal_unit_price, min: 0, step: BigDecimal("0.01") %>
+              </div>
+
+              <div class="small-auto cell">
+                <%= form.label :external_unit_price %>
+                <%= form.number_field :external_unit_price, min: 0, step: BigDecimal("0.01") %>
+              </div>
+            </div>
+          </div>
+
+          <div class="small-12 medium-2 cell">
+            <%= form.label :base_quantity %>
+            <%= form.text_field :base_quantity, value: format_quantity(@consumable.base_quantity) %>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="small-12 cell">
+        <fieldset class="fieldset">
+          <legend><%= t(".categories_label") %></legend>
+          <div class="grid-container">
+            <div class="grid-x grid-margin-x small-up-3 medium-up-4">
+              <%= form.collection_check_boxes :category_slugs, @categories, :slug, ->(category){ t(category.name, scope: "categories") } do |b| %>
+                <div class="cell">
+                  <%= b.check_box %> <%= b.label %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="small-12 cell">
+        <%= form.submit class: "button primary" %>
+        <%= render partial: "shared/or" %>
+        <% if @consumable.new_record? %>
+          <%= link_to t(".cancel_button_label"), consumables_path, class: "button secondary" %>
+        <% else %>
+          <%= link_to t(".cancel_button_label"), @consumable, class: "button secondary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

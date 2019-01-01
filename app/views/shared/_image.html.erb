@@ -1,0 +1,23 @@
+<div class="cell entity-image" id="entity-<%= entity.slug %>-image-<%= image.id %>">
+  <div class="card">
+    <%= link_to image_tag(image.variant(WEB_IMAGE_CONFIG.merge(resize: "300x225")), alt: "", size: "300x225"), image, class: "thumbnail" %>
+    <% if current_member.inventory_director?  %>
+      <div class="card-section">
+        <div class="grid-x grid-margin-x">
+          <div class="auto cell">
+            <%= button_to t(".rotate_image_left_button_label_html"), left_product_image_path(entity, image), remote: true, method: :patch, class: "button small primary" if entity.kind_of?(Product) %>
+            <%= button_to t(".rotate_image_left_button_label_html"), left_consumable_image_path(entity, image), remote: true, method: :patch, class: "button small primary" if entity.kind_of?(Consumable) %>
+          </div>
+          <div class="auto cell">
+            <%= button_to t(".rotate_image_right_button_label_html"), right_product_image_path(entity, image), remote: true, method: :patch, class: "button small primary" if entity.kind_of?(Product) %>
+            <%= button_to t(".rotate_image_right_button_label_html"), right_consumable_image_path(entity, image), remote: true, method: :patch, class: "button small primary" if entity.kind_of?(Consumable) %>
+          </div>
+          <div class="auto cell">
+            <%= button_to t(".delete_image_button_label"), product_image_path(entity, image), remote: true, method: :delete, class: "button small alert" if entity.kind_of?(Product) %>
+            <%= button_to t(".delete_image_button_label"), consumable_image_path(entity, image), remote: true, method: :delete, class: "button small alert" if entity.kind_of?(Consumable) %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

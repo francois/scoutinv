@@ -1,0 +1,7 @@
+$(
+  "<%= escape_javascript(render(partial: "shared/image", locals: { entity: @entity, image: @new_image })) %>"
+).insertBefore(
+  "#entity-<%= @entity.slug %>-image-<%= @image.id %>"
+);
+
+$("#entity-<%= @entity.slug %>-image-<%= @image.id %>").remove();

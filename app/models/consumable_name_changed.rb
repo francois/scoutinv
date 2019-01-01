@@ -1,0 +1,2 @@
+class ConsumableNameChanged < DomainEvent
+end

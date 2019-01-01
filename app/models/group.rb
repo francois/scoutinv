@@ -5,6 +5,7 @@ class Group < ApplicationRecord
 
   has_many :troops,        dependent: :delete_all, autosave: true
   has_many :products,      dependent: :delete_all, autosave: true
+  has_many :consumables,   dependent: :delete_all, autosave: true
   has_many :events,        dependent: :delete_all, autosave: true
   has_many :members,       dependent: :delete_all, autosave: true
   has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
@@ -72,6 +73,25 @@ class Group < ApplicationRecord
           product_slug: new_product.slug,
           shelf: new_product.shelf,
           unit: new_product.unit,
+        },
+        metadata: metadata
+      )
+    end
+  end
+
+  def register_new_consumable(attributes, metadata: {})
+    consumables.build(attributes).tap do |new_consumable|
+      domain_events << ConsumableRegistered.new(
+        data: {
+          aisle: new_consumable.aisle,
+          building: new_consumable.building,
+          categories: new_consumable.categories.map(&:name),
+          description: new_consumable.description,
+          group_slug: self.slug,
+          name: new_consumable.name,
+          consumable_slug: new_consumable.slug,
+          shelf: new_consumable.shelf,
+          unit: new_consumable.unit,
         },
         metadata: metadata
       )

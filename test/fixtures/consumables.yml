@@ -1,0 +1,10 @@
+cans_of_soup:
+  group: 10eme
+  name: Tomato soup
+  description: Cans of tomato soup
+  slug: tomato-soup
+  base_quantity_value: 1
+  base_quantity_si_prefix: <%= SI::BASE.inspect %>
+  base_quantity_unit: unit
+  internal_unit_price: "0.75"
+  external_unit_price: "1.15"

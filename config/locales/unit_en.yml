@@ -1,0 +1,21 @@
+en:
+  unit:
+    short:
+      unit: "unit"
+      gram: "g"
+      litre: "l"
+      pound: "lb"
+    long:
+      unit: "unit"
+      gram: "gramme"
+      litre: "litre"
+      pound: "pound"
+  si_prefix:
+    short:
+      milli: "m"
+      "-": ""
+      kilo: "k"
+    long:
+      milli: "milli"
+      "-": ""
+      kilo: "kilo"

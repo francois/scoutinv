@@ -10,7 +10,7 @@
 
     <div class="grid-x grid-padding-x small-up-1 medium-up-3">
       <% @product.images.select(&:blob).sort_by{|blob| blob.filename.to_s.downcase}.each do |image| %>
-        <%= render partial: "image", locals: { image: image } %>
+        <%= render partial: "shared/image", locals: { entity: @product, image: image } %>
       <% end %>
     </div>
 
@@ -30,10 +30,13 @@
     </div>
 
     <div>
-      <strong><%= t("unit_prices", scope: "activerecord.attributes.product") %>:</strong>
-      <%= t("internal", scope: "activerecord.attributes.product") %> @ <%= number_to_currency @product.internal_unit_price %>
-      /
-      <%= t("external", scope: "activerecord.attributes.product") %> @ <%= number_to_currency @product.external_unit_price %>
+      <strong><%= t("internal_unit_price", scope: "activerecord.attributes.product") %>:</strong>
+      <%= number_to_currency @product.internal_unit_price %>
+    </div>
+
+    <div>
+      <strong><%= t("external_unit_price", scope: "activerecord.attributes.product") %>:</strong>
+      <%= number_to_currency @product.external_unit_price %>
     </div>
 
     <div>
