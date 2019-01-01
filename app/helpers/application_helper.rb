@@ -37,4 +37,9 @@ module ApplicationHelper
   def on_groups_page?
     %w(groups members).include?(params[:controller])
   end
+
+  def link_to_entity(entity)
+    path = entity.respond_to?(:reservations) ? product_path(entity) : consumable_path(entity)
+    link_to entity.name, path
+  end
 end

@@ -114,3 +114,32 @@ footer p {
 .instance-trashed td {
   background-color: #f2727f;
 }
+
+.entity .entity-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entity .pricing {
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .entity .pricing {
+    white-space: normal;
+  }
+}
+
+.entity .quantity {
+  display: inline;
+  text-align: right;
+  width: 66%;
+}
+
+.entity .entity-description {
+  height: 3rem;
+  max-height: 3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

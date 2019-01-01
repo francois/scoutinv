@@ -10,7 +10,7 @@ module QuantityHelper
 
     basic_quantity = quantity.to_base
     value, prefix =
-      if basic_quantity.value > 1000
+      if basic_quantity.value >= 1000
         [quantity.to_kilo.value, KILO]
       elsif basic_quantity.value < 1
         [quantity.to_milli.value, MILLI]
@@ -22,13 +22,13 @@ module QuantityHelper
       if short
         I18n.translate(quantity.unit, scope: "unit.short")
       else
-        I18n.translate(quantity.unit, scope: "unit.long").pluralize(value)
+        I18n.translate(quantity.unit, scope: "unit.long")
       end
 
     if value == 1
-      I18n.translate(prefix, scope: "si_prefix.#{short ? :short : :long}") + suffix
+      I18n.translate(prefix, scope: "si_prefix.#{short ? :short : :long}") + suffix.pluralize(value)
     else
-      number_with_precision(value, precision: precision) + NBSP + I18n.translate(prefix, scope: "si_prefix.#{short ? :short : :long}") + suffix
+      number_with_precision(value, precision: precision) + NBSP + I18n.translate(prefix, scope: "si_prefix.#{short ? :short : :long}") + suffix.pluralize(value)
     end
   end
 end

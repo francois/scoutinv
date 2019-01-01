@@ -1,5 +1,5 @@
 <% @products.each do |product| %>
-    $("<%= escape_javascript render(partial: "events/reservations/product", locals: { product: product }) %>").replaceAll("#product-row-<%= product.slug %>");
+    $("<%= escape_javascript render(partial: "events/reservations/entity", locals: { entity: product }) %>").replaceAll("#entity-card-<%= product.slug %>");
     <% if @event.reservations_of(product).empty? %>
         (function() {
             var items = $("#product-card-<%= product.slug %>");
@@ -8,7 +8,7 @@
             });
         })();
     <% else %>
-        $("<%= escape_javascript render(partial: "events/product", locals: { product: product }) %>").replaceAll("#product-card-<%= product.slug %>");
+        $("<%= escape_javascript render(partial: "events/reservations/entity", locals: { entity: product }) %>").replaceAll("#entity-card-<%= product.slug %>");
         $("<%= escape_javascript render(partial: "events/reservations/instances") %>").replaceAll("#instances");
     <% end %>
 <% end %>

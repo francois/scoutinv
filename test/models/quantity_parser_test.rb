@@ -29,4 +29,11 @@ class QuantityParserTest < ActiveSupport::TestCase
     assert_equal Quantity.new(1, SI::BASE, "unit"), QuantityParser.new.parse("unité")
     assert_equal Quantity.new(1, SI::BASE, "unit"), QuantityParser.new.parse("unités")
   end
+
+  test "parses '5 lbs' into '5 pounds'" do
+    assert_equal Quantity.new(5, SI::BASE, "pound"), QuantityParser.new.parse("5 lb")
+    assert_equal Quantity.new(5, SI::BASE, "pound"), QuantityParser.new.parse("5 lbs")
+    assert_equal Quantity.new(5, SI::BASE, "pound"), QuantityParser.new.parse("5 lb") # with NBSP
+    assert_equal Quantity.new(5, SI::BASE, "pound"), QuantityParser.new.parse("5 lbs") # with NBSP
+  end
 end

@@ -23,7 +23,7 @@
               <h4><%= link_to product.name, product_path(product) %></h4>
             </div>
             <%= link_to product do %>
-              <%= product_image product, height: 250 %>
+              <%= entity_image product, height: 250 %>
             <% end %>
             <% if product.has_location? || product.description.present? %>
               <div class="card-section">

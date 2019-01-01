@@ -1,0 +1,97 @@
+<div class="cell entity" id="entity-card-<%= entity.slug %>">
+  <div class="card">
+    <div class="card-divider entity-name" title="<%= entity.name %>">
+      <%= link_to_entity entity %>
+    </div>
+    <div class="show-for-medium float-center">
+      <%= entity_image entity, height: 250 %>
+    </div>
+    <div class="hide-for-medium float-center">
+      <%= entity_image entity, height: 125 %>
+    </div>
+    <div class="card-section">
+      <% if @event.can_change_reservations?(current_member) %>
+        <div class="grid-x grid-padding-x">
+          <% if entity.respond_to?(:reservations) %>
+            <%# PRODUCTS %>
+            <div class="small-12 medium-8 cell">
+              <p class="pricing">
+              <small>
+                <% reservations = entity.reservations.select{|res| res.event == @event} %>
+                <% case [reservations.any?, entity.internal_unit_price.zero?] %>
+                <% when [false, true] %>
+                  &nbsp;<%# no reservations and unit price == 0, force the use of at least one space so cards visually line up %>
+                <% when [false, false] %>
+                  <%= number_to_currency entity.internal_unit_price %>
+                <% when [true,  true] %>
+                  <%= number_with_delimiter reservations.size %>
+                <% when [true,  false] %>
+                  <%= number_with_delimiter reservations.size %>
+                  @
+                  <%= number_to_currency entity.internal_unit_price %>
+                  =
+                  <%= number_to_currency entity.internal_unit_price * reservations.size %>
+                <% end %>
+              </small>
+              </p>
+            </div>
+            <div class="auto cell">
+              <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+                <%= hidden_field_tag "products[#{entity.slug}]", "1" %>
+                <%= hidden_field_tag "add", "1" %>
+                <%= button_tag class: "button primary tiny",
+                  disabled: entity.available_quantity - entity.reserved_quantity_on(@event.date_range) <= 0,
+                  title: t(".plus_one_hover") do %>
+                  <%= t(".plus_one") %>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="auto cell">
+              <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+                <%= hidden_field_tag "products[#{entity.slug}]", "1" %>
+                <%= hidden_field_tag "remove", "1" %>
+                <%= button_tag class: "button secondary tiny",
+                  disabled: @event.reservations.select{|reservation| reservation.product == entity}.empty?,
+                  title: t(".minus_one_hover") do %>
+                  <%= t(".minus_one") %>
+                <% end %>
+              <% end %>
+            </div>
+          <% else %>
+            <%# CONSUMABLES %>
+            <div class="small-8 cell pricing">
+              <small>
+                <span class="show-for-medium">
+                  <% case entity.slug %>
+                  <% when "zajbyrpu" %>
+                    <%= text_field_tag "consumable[#{entity.slug}]", format_quantity(Quantity.new(5, SI::BASE, "pound")), class: "quantity" %>
+                  <% when "w93hcip3" %>
+                    <%= text_field_tag "consumable[#{entity.slug}]", format_quantity(Quantity.new(2, SI::BASE, "unit")), class: "quantity" %>
+                  <% when "ruzfxr7i" %>
+                    <%= text_field_tag "consumable[#{entity.slug}]", format_quantity(Quantity.new(13, SI::BASE, "unit")), class: "quantity" %>
+                  <% else %>
+                    <%= text_field_tag "consumable[#{entity.slug}]", format_quantity(Quantity.zero), class: "quantity" %>
+                  <% end %>
+                </span>
+                <span class="hide-for-medium">
+                  <%= format_quantity Quantity.new(99, SI::BASE, "unit") %>
+                </span>
+                @
+                <%= number_to_currency entity.internal_unit_price %> / <%= format_quantity entity.base_quantity %>
+                =
+                <%= number_to_currency entity.internal_unit_price * 0 %>
+              </small>
+            </div>
+          <% end %>
+          <div class="small-12 cell show-for-medium entity-description">
+            <small title="<%= entity.description %>">
+              <%= simple_format(entity.description.presence || "&nbsp;".html_safe) %>
+            </small>
+          </div>
+        </div>
+      <% else %>
+        <%# Current user is read-only on this reservation %>
+      <% end %>
+    </div>
+  </div>
+</div>

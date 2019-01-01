@@ -168,20 +168,25 @@ fr:
         removed: "%{num} produit(s) retiré(s) de l'événement"
         returned: "%{num} produit(s) retourné(s)"
         switched: "%{num} instance(s) échangée(s)"
+      entity:
+        minus_one: "-1"
+        minus_one_hover: Réserve une instance de moins de ce produit
+        plus_one: "+1"
+        plus_one_hover: Réserve une instance de plus de ce produit
       index:
         add_to_reservation_button_label: Ajouter aux réservations
         animators_people: Animateurs
         back_to_event: Retour à l'événement
-        category: Catégorie
-        filter_label: Filtre
+        categories: Catégories
+        filter_label: Inscrivez un mot...
         inventory_people: Matériel
         lease_all_button_label: Tout prêter à l'unité
         lease_product_button_label: Prêter à l'unité
         leased_on_header: Prêté le
-        only_show_available_products_label: N'afficher que les produits disponibles
-        only_show_leased_products_label: N'afficher que les produits prêtés
-        only_show_my_reserved_products_label: N'afficher que les produits réservés sur cet événement
-        only_show_reserved_products_label: N'afficher que les produits réservés
+        only_show_available_products_help: N'affiche que les produits disponibles pour réservation
+        only_show_available_products_label: Disp. seulement
+        only_show_my_reserved_products_help: N'affiche que les produits réservés sur cet événement
+        only_show_my_reserved_products_label: Mes réservations
         page_title: "Réservations pour l'événement %{event}"
         product_header: Produit
         remove_from_reservation_button_label: Ne plus réserver
@@ -206,11 +211,6 @@ fr:
         serial_no_header: No de série
         sorry_no_elements: Désolé, rien à prêter à l'unité
         unit_price_header: Prix unitaire
-      product:
-        minus_one: "-1"
-        minus_one_hover: Réserve une instance de moins de ce produit
-        plus_one: "+1"
-        plus_one_hover: Réserve une instance de plus de ce produit
     print:
       location_header: Localisation
       note_by_on: Par %{by} le %{on}

@@ -2,7 +2,7 @@
   <% if index == 0 %>
     <td rowspan="<%= num_instances %>">
       <%= link_to product.name, event_product_path(@event, product) %> <br>
-      <%= product_image product, height: 100 %>
+      <%= entity_image product, height: 100 %>
       <%= format_product_location product %>
     </td>
   <% end %>

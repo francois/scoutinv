@@ -58,7 +58,7 @@
                 <tr>
                   <td>
                     <%= link_to product.name, product %> <br>
-                    <%= product_image product, height: 250 %>
+                    <%= entity_image product, height: 250 %>
                   </td>
                   <td><%= number_with_delimiter product.instances.size %></td>
                   <td><%= format_product_location(product) %></td>

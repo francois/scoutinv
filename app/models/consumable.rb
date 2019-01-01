@@ -12,6 +12,11 @@ class Consumable < ApplicationRecord
   scope :by_name,         ->{ order(Arel.sql("LOWER(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
   scope :with_categories, ->{ includes(:categories) }
   scope :in_category,     ->(category){ includes(:categories).where(categories: { slug: category.slug }) }
+  scope :search, ->(string){
+    vector = "to_tsvector('fr', coalesce(consumables.name, '') || ' ' || coalesce(consumables.description, '') || ' ' || coalesce(consumables.building, ' ') || ' ' || coalesce(consumables.aisle, ' ') || ' ' || coalesce(consumables.shelf, ' ') || ' ' || coalesce(consumables.unit, ' '))"
+    query = "plainto_tsquery('fr', :string)"
+    where("#{vector} @@ #{query}", string: string).order(Arel.sql("ts_rank(#{vector}, #{query.sub(":string", Product.connection.quote(string))})"))
+  }
 
   composed_of :base_quantity, class_name: "Quantity", mapping: [%w(base_quantity_value value), %w(base_quantity_si_prefix si_prefix), %w(base_quantity_unit unit)],
     constructor: ->(value, si_prefix, unit){ Quantity.new(value, si_prefix, unit) }

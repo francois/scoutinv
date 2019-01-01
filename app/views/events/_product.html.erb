@@ -15,7 +15,7 @@
       </h4>
     </div>
     <%= link_to product do %>
-      <%= product_image product, height: 250 %>
+      <%= entity_image product, height: 250 %>
     <% end %>
     <% if @event.can_change_reservations?(current_member) %>
       <div class="grid-x grid-margin-x">
