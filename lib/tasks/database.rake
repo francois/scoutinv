@@ -2,6 +2,7 @@ namespace :db do
   task :restore => "latest.dump" do
     Rake::Task["db:drop:all"].invoke
     Rake::Task["db:create:all"].invoke
+    sh "psql --dbname scoutinv_development --command 'DROP SCHEMA public CASCADE' || exit 0"
     sh "pg_restore --no-owner --no-privileges --dbname scoutinv_development latest.dump"
     Rake::Task["db:migrate"].invoke
     sh "psql --dbname scoutinv_development --command \"DELETE FROM active_storage_attachments\""
