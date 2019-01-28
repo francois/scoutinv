@@ -134,7 +134,7 @@ footer p {
 .entity .quantity {
   display: inline;
   text-align: right;
-  width: 66%;
+  width: 5rem;
 }
 
 .entity .entity-description {
@@ -142,4 +142,8 @@ footer p {
   max-height: 3rem;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+td.quantity, input.quantity {
+  text-align: right;
 }

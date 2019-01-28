@@ -9,20 +9,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
 -- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -450,6 +436,42 @@ CREATE SEQUENCE public.consumable_categories_id_seq
 --
 
 ALTER SEQUENCE public.consumable_categories_id_seq OWNED BY public.consumable_categories.id;
+
+
+--
+-- Name: consumable_transactions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.consumable_transactions (
+    id bigint NOT NULL,
+    consumable_id bigint,
+    reason character varying,
+    event_id bigint,
+    quantity_value double precision NOT NULL,
+    quantity_si_prefix character varying NOT NULL,
+    quantity_unit character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: consumable_transactions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.consumable_transactions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: consumable_transactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.consumable_transactions_id_seq OWNED BY public.consumable_transactions.id;
 
 
 --
@@ -1004,6 +1026,13 @@ ALTER TABLE ONLY public.consumable_categories ALTER COLUMN id SET DEFAULT nextva
 
 
 --
+-- Name: consumable_transactions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumable_transactions ALTER COLUMN id SET DEFAULT nextval('public.consumable_transactions_id_seq'::regclass);
+
+
+--
 -- Name: consumables id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1139,6 +1168,14 @@ ALTER TABLE ONLY public.categories
 
 ALTER TABLE ONLY public.consumable_categories
     ADD CONSTRAINT consumable_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: consumable_transactions consumable_transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumable_transactions
+    ADD CONSTRAINT consumable_transactions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1317,6 +1354,20 @@ CREATE INDEX index_consumable_categories_on_category_id ON public.consumable_cat
 --
 
 CREATE INDEX index_consumable_categories_on_consumable_id ON public.consumable_categories USING btree (consumable_id);
+
+
+--
+-- Name: index_consumable_transactions_on_consumable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_consumable_transactions_on_consumable_id ON public.consumable_transactions USING btree (consumable_id);
+
+
+--
+-- Name: index_consumable_transactions_on_event_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_consumable_transactions_on_event_id ON public.consumable_transactions USING btree (event_id);
 
 
 --
@@ -1651,6 +1702,14 @@ ALTER TABLE ONLY public.instances
 
 
 --
+-- Name: consumable_transactions fk_rails_89245bfcd0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumable_transactions
+    ADD CONSTRAINT fk_rails_89245bfcd0 FOREIGN KEY (event_id) REFERENCES public.events(id);
+
+
+--
 -- Name: product_categories fk_rails_98a9a32a41; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1680,6 +1739,14 @@ ALTER TABLE ONLY public.consumable_categories
 
 ALTER TABLE ONLY public.consumables
     ADD CONSTRAINT fk_rails_d0e616a7b8 FOREIGN KEY (group_id) REFERENCES public.groups(id);
+
+
+--
+-- Name: consumable_transactions fk_rails_dfe7c13b34; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.consumable_transactions
+    ADD CONSTRAINT fk_rails_dfe7c13b34 FOREIGN KEY (consumable_id) REFERENCES public.consumables(id);
 
 
 --
@@ -1736,6 +1803,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181111211434'),
 ('20181112011450'),
 ('20181231233310'),
-('20190101025658');
+('20190101025658'),
+('20190128122749');
 
 

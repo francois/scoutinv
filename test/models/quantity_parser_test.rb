@@ -36,4 +36,8 @@ class QuantityParserTest < ActiveSupport::TestCase
     assert_equal Quantity.new(5, SI::BASE, "pound"), QuantityParser.new.parse("5 lb") # with NBSP
     assert_equal Quantity.new(5, SI::BASE, "pound"), QuantityParser.new.parse("5 lbs") # with NBSP
   end
+
+  test "parses '-500g' into '-500 grams'" do
+    assert_equal Quantity.new(-500, SI::BASE, "gram"), QuantityParser.new.parse("-500g")
+  end
 end

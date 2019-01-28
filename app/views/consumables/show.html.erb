@@ -1,7 +1,6 @@
 <div class="grid-x grid-margin-x">
   <div class="large-9 medium-12 cell">
-    <%= form_tag event_reservations_path(@event, @consumable) do %>
-      <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button small hide-for-large" %>
+    <%= form_tag event_reservations_path(@event, @consumable) do %> <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button small hide-for-large" %>
     <% end if @event %>
     <%= link_to t(".edit_button_label"), edit_consumable_path(@consumable), class: "button small hide-for-large" if current_member.inventory_director? %>
     <%= link_to t(".clone_button_label"), new_consumable_path(clone_from: @consumable), class: "button small hide-for-large" if current_member.inventory_director? %>
@@ -42,6 +41,68 @@
       <strong><%= t("description", scope: "activerecord.attributes.consumable") %>:</strong>
       <%= simple_format @consumable.description %>
     </div>
+
+    <%= form_for @consumable_transaction, url: consumable_transactions_path(@consumable) do |f| %>
+      <h3><%= t ".consumable_reservation_history_header" %></h3>
+      <table>
+        <col width="15%"/>
+        <col width="15%"/>
+        <col width="50%"/>
+        <col width="20%"/>
+        <thead>
+          <tr>
+            <th><%= t(".date_header") %></th>
+            <th><%= t(".quantity_header") %></th>
+            <th colspan="2"><%= t(".reason_or_event_header") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @consumable.consumable_transactions.sort_by(&:date).reject(&:new_record?).each do |consumable_transaction| %>
+            <tr>
+              <td><%= l consumable_transaction.date, format: :with_year %></td>
+              <td class="quantity"><%= format_quantity consumable_transaction.quantity, si_prefix: @consumable.si_prefix %></td>
+              <td colspan="2">
+                <% if consumable_transaction.event %>
+                  <%= link_to consumable_transaction.event.title, consumable_transaction.event %>
+                <% else %>
+                  <%= consumable_transaction.reason %>
+                <% end %>
+                <%#=
+                  button_to "X",
+                    consumable_transaction_path(@consumable, consumable_transaction),
+                    class: "button tiny delete alert",
+                    confirm: "Sure?",
+                    method: :delete
+                %>
+              </td>
+            </tr>
+          <% end %>
+          <% if current_member.inventory_director? %>
+            <tr>
+              <td><%= l Date.current, format: :with_year %></td>
+              <td>
+                <%= f.text_field :quantity, value: format_quantity(@consumable_transaction.quantity, si_prefix: SI::BASE), class: "quantity" %>
+              </td>
+              <td>
+                <%= f.text_field :reason %>
+              </td>
+              <td>
+                <%= f.submit class: "button primary small" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td><%= l Date.current, format: :with_year %></td>
+            <td class="quantity">
+              <%= format_quantity @consumable.available_quantity, si_prefix: @consumable.si_prefix %>
+            </td>
+            <td colspan="2"></td>
+          </tr>
+        </tfoot>
+      </table>
+    <% end %>
   </div>
 
   <div class="large-3 medium-12 cell show-for-large">

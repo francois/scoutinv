@@ -5,7 +5,7 @@ class QuantityParser
   O_SPACE   = /[\s\u00a0]*/ # include NBSP in the list of space characters
   SI_PREFIX = /(?:k|kilo|m|milli)/
   UNIT      = /(?:g|grams?|grammes?|l|litres?|u|units?|unités?|pounds?|lbs?|livres?)/
-  VALUE     = /\d+(?:[.,]\d+)?/
+  VALUE     = /-?\d+(?:[.,]\d+)?/
   SLASH     = /\//
 
   UNIT_TO_UNIT = {

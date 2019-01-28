@@ -19,6 +19,7 @@ class ConsumablesController < ApplicationController
   def show
     @page_title = @consumable.name
     @note = @consumable.notes.build
+    @consumable_transaction = @consumable.consumable_transactions.build(quantity: Quantity.zero(@consumable.unit))
   end
 
   def new

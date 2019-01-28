@@ -1,0 +1,5 @@
+cans_of_soup_txn1:
+  reason: store-bought special
+  quantity_value: 96
+  quantity_si_prefix: <%= SI::BASE.inspect %>
+  quantity_unit: "unit"

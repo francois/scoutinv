@@ -173,6 +173,8 @@ en:
         plus_one_hover: Reserves one more instance of this product
         minus_one: "-1"
         minus_one_hover: Reserves one less instance of this product
+        set: "Set"
+        set_hover: "Records the new reserved quantity"
       index:
         add_to_reservation_button_label: Add to reservation
         animators_people: Animators
@@ -280,12 +282,12 @@ en:
       add_to_cart_label: Reserve for this event
       back_to_list_button_label: Back to list
       clone_button_label: Clone this consumable
-      dates_header: Dates
+      consumable_reservation_history_header: Consumable Reservation History
+      date_header: Date
       delete_button_label: Delete this consumable
       edit_button_label: Edit this consumable
-      event_header: Event
-      consumable_reservation_history_header: Consumable Reservation History
-      serial_no_header: Serial No
+      quantity_header: Quantity
+      reason_or_event_header: "Reason / Event"
       state_header: State
     update:
       consumable_successfully_updated: Consumable successfully updated

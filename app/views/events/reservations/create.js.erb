@@ -12,5 +12,8 @@
         $("<%= escape_javascript render(partial: "events/reservations/instances") %>").replaceAll("#instances");
     <% end %>
 <% end %>
+<% @consumables.each do |consumable| %>
+    $("<%= escape_javascript render(partial: "events/reservations/entity", locals: { entity: consumable }) %>").replaceAll("#entity-card-<%= consumable.slug %>");
+<% end %>
 $("<%= escape_javascript render(partial: "events/total", locals: { event: @event }) %>").replaceAll("#event-total");
 $("<%= escape_javascript render(partial: "shared/notices") %>").replaceAll("#notices");

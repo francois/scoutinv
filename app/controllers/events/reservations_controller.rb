@@ -77,8 +77,18 @@ class Events::ReservationsController < ApplicationController
         @instances = current_group.instances.includes(reservations: :product).where(serial_no: params[:instances].keys).to_a
       end
 
-      if %i[ add remove lease lease_all hold return switch ].all?{|key| params[key].blank?}
+      if params[:consumables].present?
+        @consumables = current_group.consumables.includes(consumable_transactions: []).where(slug: params[:consumables].keys).to_a
+      end
+
+      if %i[ add consume remove lease lease_all hold return switch ].all?{|key| params[key].blank?}
         # NOP
+      elsif params[:consume].present?
+        logger.info "Consuming #{@consumables.size} consumables"
+        parser = QuantityParser.new
+        objects = @consumables.map{|c| [c, parser.parse(params[:consumables].fetch(c.slug))]}.to_h
+        @event.consume(objects, metadata: domain_event_metadata)
+        flash[:notice] = t(:consumed, scope: "events.reservations.create", num: @consumables.size)
       elsif params[:add].present?
         logger.info "Adding #{@products.size} products"
         @event.reserve(@products, metadata: domain_event_metadata)
@@ -136,11 +146,18 @@ class Events::ReservationsController < ApplicationController
         # This is a limitation of the ActiveRecord implementation
         if params[:products].present?
           @products = current_group.products.includes(reservations: [:event, :instance]).where(slug: params[:products].keys).to_a
+          @consumables = []
         end
 
         if params[:instances].present?
           @instances = current_group.instances.includes(reservations: :product).where(serial_no: params[:instances].keys).to_a
           @products  = @instances.map(&:product).uniq
+          @consumables = []
+        end
+
+        if params[:consumables].present?
+          @consumables = current_group.consumables.where(slug: params[:consumables].keys).to_a
+          @products = []
         end
 
         @reservations = @event.reservations.with_product.page(params[:page])

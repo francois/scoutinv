@@ -173,6 +173,8 @@ fr:
         minus_one_hover: Réserve une instance de moins de ce produit
         plus_one: "+1"
         plus_one_hover: Réserve une instance de plus de ce produit
+        set: "Set"
+        set_hover: "Enregistre la nouvelle quantité réservée"
       index:
         add_to_reservation_button_label: Ajouter aux réservations
         animators_people: Animateurs
@@ -280,12 +282,12 @@ fr:
       add_to_cart_label: Réserver pour cet événement
       back_to_list_button_label: Retour à la liste
       clone_button_label: Copier ce consommable
-      dates_header: Dates
+      consumable_reservation_history_header: Historique de réservation du consommable
+      date_header: Date
       delete_button_label: Détruire ce consommable
       edit_button_label: Modifier ce consommable
-      event_header: Événement
-      consumable_reservation_history_header: Historique de réservation du consommable
-      serial_no_header: No série
+      quantity_header: Quantité
+      reason_or_event_header: "Raison ou événement"
       state_header: État
     update:
       consumable_successfully_updated: Consommable mis à jour avec succès

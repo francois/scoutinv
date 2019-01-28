@@ -1,7 +1,12 @@
 <div class="cell entity" id="entity-card-<%= entity.slug %>">
   <div class="card">
     <div class="card-divider entity-name" title="<%= entity.name %>">
-      <%= link_to_entity entity %>
+      <h4>
+        <%= link_to_entity entity %>
+        <small>
+          <%= format_quantity entity.available_quantity, precision: 0 %>
+        </small>
+      </h4>
     </div>
     <div class="show-for-medium float-center">
       <%= entity_image entity, height: 250 %>
@@ -60,27 +65,36 @@
           <% else %>
             <%# CONSUMABLES %>
             <div class="small-8 cell pricing">
-              <small>
-                <span class="show-for-medium">
-                  <% case entity.slug %>
-                  <% when "zajbyrpu" %>
-                    <%= text_field_tag "consumable[#{entity.slug}]", format_quantity(Quantity.new(5, SI::BASE, "pound")), class: "quantity" %>
-                  <% when "w93hcip3" %>
-                    <%= text_field_tag "consumable[#{entity.slug}]", format_quantity(Quantity.new(2, SI::BASE, "unit")), class: "quantity" %>
-                  <% when "ruzfxr7i" %>
-                    <%= text_field_tag "consumable[#{entity.slug}]", format_quantity(Quantity.new(13, SI::BASE, "unit")), class: "quantity" %>
-                  <% else %>
-                    <%= text_field_tag "consumable[#{entity.slug}]", format_quantity(Quantity.zero), class: "quantity" %>
-                  <% end %>
-                </span>
-                <span class="hide-for-medium">
-                  <%= format_quantity Quantity.new(99, SI::BASE, "unit") %>
-                </span>
-                @
-                <%= number_to_currency entity.internal_unit_price %> / <%= format_quantity entity.base_quantity %>
-                =
-                <%= number_to_currency entity.internal_unit_price * 0 %>
-              </small>
+              <span class="show-for-medium">
+                <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+                  <%= hidden_field_tag "consume", "1" %>
+                  <div class="grid-x">
+                    <div class="small-12 cell">
+                      <%= text_field_tag "consumables[#{entity.slug}]", format_quantity(entity.quantity_on(@event), si_prefix: SI::BASE), class: "quantity", autocomplete: false %>
+                      <%= label_tag "consumables[#{entity.slug}]", style: "display:inline" do %>
+                        @
+                        <%= number_to_currency entity.internal_unit_price %> / <%= format_quantity entity.base_quantity %>
+                        =
+                        <%= number_to_currency entity.internal_unit_price * 0 %>
+                      <% end %>
+                      <%= button_tag class: "button primary tiny",
+                        style: "display: inline",
+                        title: t(".set_hover") do %>
+                        <%= t(".set") %>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              </span>
+              <span class="hide-for-medium">
+                <small>
+                  <%= format_quantity(entity.quantity_on(@event), si_prefix: SI::BASE) %>
+                  @
+                  <%= number_to_currency entity.internal_unit_price %> / <%= format_quantity entity.base_quantity %>
+                  =
+                  <%= number_to_currency entity.internal_unit_price * 0 %>
+                </small>
+              </span>
             </div>
           <% end %>
           <div class="small-12 cell show-for-medium entity-description">

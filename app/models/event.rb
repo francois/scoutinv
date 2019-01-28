@@ -5,9 +5,10 @@ class Event < ApplicationRecord
 
   belongs_to :group
   belongs_to :troop, optional: true
-  has_many :reservations,  dependent: :delete_all, autosave: true
-  has_many :notes,         dependent: :delete_all, autosave: true, as: :parent
-  has_many :domain_events, dependent: :delete_all, autosave: true, as: :model
+  has_many :reservations,             dependent: :delete_all, autosave: true
+  has_many :consumable_transactions,  dependent: :delete_all, autosave: true
+  has_many :notes,                    dependent: :delete_all, autosave: true, as: :parent
+  has_many :domain_events,            dependent: :delete_all, autosave: true, as: :model
 
   scope :after, ->(date) { where("end_on >= ?", date).order(:start_on) }
   scope :by_date, -> { order(:start_on, :id) }
@@ -106,6 +107,18 @@ class Event < ApplicationRecord
     domain_events << EventIdentificationChanged.new(data: {event_slug: slug, title: title, description: description}, metadata: metadata) if title_changed? || description_changed?
     domain_events << EventDatesChanged.new(data: {event_slug: slug, start_on: start_on, end_on: end_on}, metadata: metadata)              if start_on_changed? || end_on_changed?
     save
+  end
+
+  def consume(consumables, metadata: {})
+    consumables.each do |consumable, quantity|
+      ct   = consumable_transactions.detect{|ct| ct.event == self && ct.consumable == consumable }
+      ct ||= consumable_transactions.build(consumable: consumable)
+      if quantity.zero?
+        ct.mark_for_destruction
+      else
+        ct.quantity = quantity.scale(-1)
+      end
+    end
   end
 
   def reserve(products, metadata: {})

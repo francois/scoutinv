@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
   resources :consumables do
     resources :notes, only: %i[ create ], controller: "consumables/notes"
+    resources :transactions, only: %i[ create destroy ], controller: "consumable_transactions"
 
     resources :images, only: %i[ update destroy ], controller: "entities/images" do
       member do

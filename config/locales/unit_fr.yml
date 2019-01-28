@@ -1,15 +1,39 @@
 fr:
   unit:
     short:
-      unit: "unité"
-      gram: "g"
-      litre: "l"
-      pound: "lb"
+      unit:
+        zero: ""
+        one: ""
+        other: ""
+      gram:
+        zero: "g"
+        one: "g"
+        other: "g"
+      litre:
+        zero: "l"
+        one: "l"
+        other: "l"
+      pound:
+        zero: "lbs"
+        one: "lb"
+        other: "lbs"
     long:
-      unit: "unité"
-      gram: "gramme"
-      litre: "litre"
-      pound: "livre"
+      unit:
+        zero: "unités"
+        one: "unité"
+        other: "unités"
+      gram:
+        zero: "grammes"
+        one: "gramme"
+        other: "grammes"
+      litre:
+        zero: "litres"
+        one: "litre"
+        other: "litres"
+      pound:
+        zero: "livres"
+        one: "livre"
+        other: "livres"
   si_prefix:
     short:
       milli: "m"
