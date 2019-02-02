@@ -10,7 +10,7 @@ class Consumable < ApplicationRecord
   has_many :domain_events,           dependent: :delete_all, autosave: true, as: :model
   has_many :categories,              dependent: :delete_all, autosave: true,              through: :consumable_categories
 
-  scope :by_name,         ->{ order(Arel.sql("LOWER(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
+  scope :by_name,         ->{ order(Arel.sql("UNACCENT(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
   scope :with_categories, ->{ includes(:categories) }
   scope :in_category,     ->(category){ includes(:categories).where(categories: { slug: category.slug }) }
   scope :search, ->(string){

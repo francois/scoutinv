@@ -4,15 +4,21 @@
       <h4>
         <%= link_to_entity entity %>
         <small>
-          <%= format_quantity entity.available_quantity, precision: 0 %>
+          <% if entity.kind_of?(Product) %>
+            <% if entity.available_quantity != 1 %>
+              <%= format_quantity entity.available_quantity, precision: 0 %>
+            <% end %>
+          <% else %>
+            <%= format_quantity entity.available_quantity, precision: 1, si_prefix: entity.base_quantity_si_prefix %>
+          <% end %>
         </small>
       </h4>
     </div>
     <div class="show-for-medium float-center">
-      <%= entity_image entity, height: 250 %>
+      <%= entity_image entity, height: 300 %>
     </div>
     <div class="hide-for-medium float-center">
-      <%= entity_image entity, height: 125 %>
+      <%= entity_image entity, height: 200 %>
     </div>
     <div class="card-section">
       <% if @event.can_change_reservations?(current_member) %>
@@ -75,7 +81,7 @@
                         @
                         <%= number_to_currency entity.internal_unit_price %> / <%= format_quantity entity.base_quantity %>
                         =
-                        <%= number_to_currency entity.internal_unit_price * 0 %>
+                        <%= number_to_currency entity.internal_unit_price * entity.quantity_on(@event).to(entity.base_quantity_si_prefix).value %>
                       <% end %>
                       <%= button_tag class: "button primary tiny",
                         style: "display: inline",
@@ -92,7 +98,7 @@
                   @
                   <%= number_to_currency entity.internal_unit_price %> / <%= format_quantity entity.base_quantity %>
                   =
-                  <%= number_to_currency entity.internal_unit_price * 0 %>
+                  <%= number_to_currency entity.internal_unit_price * entity.quantity_on(@event).to(entity.base_quantity_si_prefix).value %>
                 </small>
               </span>
             </div>

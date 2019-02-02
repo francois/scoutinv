@@ -445,8 +445,10 @@ en:
     pagination:
       first: "&laquo; First"
       last: "Last &raquo;"
-      previous: "&lsaquo; Prev"
       next: "Next &rsaquo;"
+      next_html: "Next &rsaquo;"
+      previous: "&lsaquo; Prev"
+      previous_html: "&lsaquo; Prev"
       truncate: "&hellip;"
   helpers:
     page_entries_info:

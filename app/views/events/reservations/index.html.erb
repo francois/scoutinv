@@ -1,21 +1,15 @@
 <div class="grid-x grid-margin-x">
-	<div class="large-2 medium-4 cell show-for-medium">
+  <div class="large-2 medium-4 cell show-for-medium">
+
+    <%= link_to t(".back_to_event"), @event, class: "button expanded" %>
+
+    <hr>
 
     <%= form_tag event_reservations_path(@event), method: :get, class: "search-form" do %>
 
       <div class="auto cell">
         <%= label_tag :filter, t(".filter_label"), class: "show-for-sr" %>
         <%= text_field_tag :filter, @filter, placeholder: t(".filter_label"), autocomplete: false %>
-      </div>
-
-      <div class="auto cell">
-        <%= check_box_tag :only_show_available_products, "1", @only_show_available_products %>
-        <%= label_tag :only_show_available_products, t(".only_show_available_products_label"), title: t(".only_show_available_products_help") %>
-      </div>
-
-      <div class="auto cell">
-        <%= check_box_tag :only_show_my_reserved_products, "1", @only_show_my_reserved_products %>
-        <%= label_tag :only_show_my_reserved_products, t(".only_show_my_reserved_products_label"), title: t(".only_show_my_reserved_products_help") %>
       </div>
 
       <%= label_tag :category, t(".categories"), class: "h3" %>
@@ -26,26 +20,33 @@
         </div>
       <% end %>
 
-      <%= submit_tag t(".search_button_label"), class: "button primary expanded" %>
+      <%= submit_tag t(".search_button_label"), class: "button primary expanded", name: nil %>
       <%= link_to t(".view_all_button_label"), event_reservations_path(@event), class: "button secondary expanded" %>
 
     <% end %>
 
-	</div>
+  </div>
   <div class="large-10 medium-8 small-12 cell">
-    <div class="show-for-medium">
-      <%= paginate @products %>
+    <div class="small-12 cell">
+      <%= link_to t(".back_to_event"), @event, class: "button hide-for-medium" %>
+
+      <%= link_to t(:previous_html, scope: "views.pagination"), @prev_page_path, class: "button large" if @prev_page_path %>
+
+      <%= link_to t(:next_html, scope: "views.pagination"), @next_page_path, class: "button large" if @next_page_path %>
     </div>
 
-    <div class="grid-x grid-margin-x small-up-2 medium-up-2 large-up-4">
-      <% @consumables.each do |product| %>
-        <%= render partial: "entity", object: product %>
-      <% end %>
-      <% @products.each do |product| %>
-        <%= render partial: "entity", object: product %>
+    <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-3">
+      <% @entities.each do |entity| %>
+        <%= render partial: "entity", object: entity %>
       <% end %>
     </div>
 
-    <%= paginate @products %>
+    <div class="small-12 cell">
+      <%= link_to t(".back_to_event"), @event, class: "button hide-for-medium" %>
+
+      <%= link_to t(:previous_html, scope: "views.pagination"), @prev_page_path, class: "button large" if @prev_page_path %>
+
+      <%= link_to t(:next_html, scope: "views.pagination"), @next_page_path, class: "button large" if @next_page_path %>
+    </div>
   </div>
 </div>

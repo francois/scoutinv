@@ -18,9 +18,9 @@ module QuantityHelper
       if si_prefix
         [quantity.to(si_prefix).value, si_prefix]
       else
-        if basic_quantity.value >= 1000
+        if basic_quantity.value.abs >= 1000
           [quantity.to_kilo.value, KILO]
-        elsif basic_quantity.value < 1
+        elsif basic_quantity.value.abs < 1
           [quantity.to_milli.value, MILLI]
         else
           [basic_quantity.value, BASE]

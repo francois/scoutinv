@@ -199,26 +199,27 @@ class Events::ReservationsController < ApplicationController
 
   def render_regular
     @filter = params[:filter]
-    @only_show_available_products   = params[:only_show_available_products]   == "1"
-    @only_show_leased_products      = params[:only_show_leased_products]      == "1"
-    @only_show_reserved_products    = params[:only_show_reserved_products]    == "1"
-    @only_show_my_reserved_products = params[:only_show_my_reserved_products] == "1"
 
     @categories = Category.by_name.to_a
-    @selected_categories = @categories.to_set
+    @selected_categories = @categories.select{|category| params[category.name] == "1"}.to_set
 
-    @products    = current_group.products.with_attached_images.with_categories.with_reservations.by_name
-    @products    = @products.search(@filter)                 if @filter.present?
-    @products    = @products.in_category(@selected_category) if @selected_category
-    @products    = @products.available                       if @only_show_available_products
-    @products    = @products.reserved(@event)                if @only_show_my_reserved_products
-    @products    = @products.page(params[:page]).per(24)
+    service = EntitySearchService.new(
+      category_ids:  @selected_categories.map(&:id),
+      current_group: current_group,
+      page:          params[:page] || 1,
+      per_page:      24,
+      q:             @filter,
+    )
 
-    @consumables = current_group.consumables.with_attached_images.with_categories.by_name
-    @consumables = @consumables.search(@filter)                 if @filter.present?
-    @consumables = @consumables.in_category(@selected_category) if @selected_category
+    @entities = service.entities[0, 24]
+    @has_next_page = service.has_next_page?
 
     @reservations = @event.reservations.with_product.all
+
+    options = @selected_categories.map{|key| [key.name, "1"]}.to_h
+    options = options.merge(filter: params[:filter])
+    @prev_page_path = event_reservations_path(@event, options.merge(page: service.page - 1)) if service.page > 1
+    @next_page_path = event_reservations_path(@event, options.merge(page: service.page + 1)) if @has_next_page
 
     render action: :index
   end

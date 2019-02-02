@@ -14,7 +14,7 @@ class Product < ApplicationRecord
   has_many :instances,          dependent: :delete_all, autosave: true
   has_many :reservations,       dependent: :delete_all, autosave: true,              through: :instances
 
-  scope :by_name,               ->{ order(Arel.sql("LOWER(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
+  scope :by_name,               ->{ order(Arel.sql("UNACCENT(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
   scope :with_reservations,     ->{ includes(reservations: :event) }
   scope :with_categories,       ->{ includes(:categories) }
   scope :with_instances,        ->{ includes(:instances) }

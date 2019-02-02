@@ -9,6 +9,20 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
 -- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -481,7 +495,7 @@ ALTER SEQUENCE public.consumable_transactions_id_seq OWNED BY public.consumable_
 CREATE TABLE public.consumables (
     id bigint NOT NULL,
     group_id bigint NOT NULL,
-    name character varying NOT NULL,
+    name public.citext NOT NULL,
     description text,
     slug character varying NOT NULL,
     building text,
@@ -836,7 +850,7 @@ ALTER SEQUENCE public.product_categories_id_seq OWNED BY public.product_categori
 CREATE TABLE public.products (
     id bigint NOT NULL,
     group_id bigint NOT NULL,
-    name character varying NOT NULL,
+    name public.citext NOT NULL,
     description text,
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
@@ -1542,7 +1556,7 @@ CREATE INDEX index_products_on_group_id ON public.products USING btree (group_id
 -- Name: index_products_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_products_on_name ON public.products USING gin (to_tsvector('public.fr'::regconfig, (((((((((COALESCE(name, ''::character varying))::text || ' '::text) || COALESCE(description, ''::text)) || ' '::text) || COALESCE(aisle, ' '::text)) || ' '::text) || COALESCE(shelf, ' '::text)) || ' '::text) || COALESCE(unit, ' '::text))));
+CREATE INDEX index_products_on_name ON public.products USING gin (to_tsvector('public.fr'::regconfig, (((((((((COALESCE((name)::character varying, ''::character varying))::text || ' '::text) || COALESCE(description, ''::text)) || ' '::text) || COALESCE(aisle, ' '::text)) || ' '::text) || COALESCE(shelf, ' '::text)) || ' '::text) || COALESCE(unit, ' '::text))));
 
 
 --
@@ -1804,6 +1818,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181112011450'),
 ('20181231233310'),
 ('20190101025658'),
-('20190128122749');
+('20190128122749'),
+('20190128235529');
 
 

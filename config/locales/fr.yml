@@ -173,7 +173,7 @@ fr:
         minus_one_hover: Réserve une instance de moins de ce produit
         plus_one: "+1"
         plus_one_hover: Réserve une instance de plus de ce produit
-        set: "Set"
+        set: "Réserver"
         set_hover: "Enregistre la nouvelle quantité réservée"
       index:
         add_to_reservation_button_label: Ajouter aux réservations
@@ -445,8 +445,10 @@ fr:
     pagination:
       first: "&laquo; Première"
       last: "Dernière &raquo;"
-      previous: "&lsaquo; Préc."
       next: "Suivant &rsaquo;"
+      next_html: "Suivant &rsaquo;"
+      previous: "&lsaquo; Préc."
+      previous_html: "&lsaquo; Préc."
       truncate: "&hellip;"
   helpers:
     page_entries_info:
