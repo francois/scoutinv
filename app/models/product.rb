@@ -12,7 +12,7 @@ class Product < ApplicationRecord
   has_many :domain_events,      dependent: :delete_all, autosave: true, as: :model
   has_many :categories,         dependent: :delete_all, autosave: true,              through: :product_categories
   has_many :instances,          dependent: :delete_all, autosave: true
-  has_many :reservations,       dependent: :delete_all, autosave: true,              through: :instances
+  has_many :reservations,                               autosave: true,              through: :instances
 
   scope :by_name,               ->{ order(Arel.sql("UNACCENT(#{quoted_table_name}.name), #{quoted_table_name}.id")) }
   scope :with_reservations,     ->{ includes(reservations: :event) }

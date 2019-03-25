@@ -60,20 +60,13 @@
           <% @consumable.consumable_transactions.sort_by(&:date).reject(&:new_record?).each do |consumable_transaction| %>
             <tr>
               <td><%= l consumable_transaction.date, format: :with_year %></td>
-              <td class="quantity"><%= format_quantity consumable_transaction.quantity, si_prefix: @consumable.si_prefix %></td>
+              <td class="quantity"><%= format_quantity consumable_transaction.quantity %></td>
               <td colspan="2">
                 <% if consumable_transaction.event %>
                   <%= link_to consumable_transaction.event.title, consumable_transaction.event %>
                 <% else %>
                   <%= consumable_transaction.reason %>
                 <% end %>
-                <%#=
-                  button_to "X",
-                    consumable_transaction_path(@consumable, consumable_transaction),
-                    class: "button tiny delete alert",
-                    confirm: "Sure?",
-                    method: :delete
-                %>
               </td>
             </tr>
           <% end %>
@@ -96,7 +89,7 @@
           <tr>
             <td><%= l Date.current, format: :with_year %></td>
             <td class="quantity">
-              <%= format_quantity @consumable.available_quantity, si_prefix: @consumable.si_prefix %>
+              <%= format_quantity @consumable.available_quantity %>
             </td>
             <td colspan="2"></td>
           </tr>

@@ -41,6 +41,10 @@ Rails.application.routes.draw do
   end
 
   resources :products do
+    member do
+      post :convert
+    end
+
     resources :notes, only: %i[ create ], controller: "products/notes"
     resources :instances, only: %[destroy], controller: "products/instances" do
       member do

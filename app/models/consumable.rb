@@ -2,6 +2,7 @@ class Consumable < ApplicationRecord
   include HasSlug
 
   has_many_attached :images
+  after_save :update_unit_on_conversion
 
   belongs_to :group
   has_many :consumable_categories,   dependent: :delete_all, autosave: true
@@ -120,5 +121,13 @@ class Consumable < ApplicationRecord
 
   def zero_quantity
     Quantity.zero(unit)
+  end
+
+  def update_unit_on_conversion
+    return unless base_quantity_unit_previously_changed?
+
+    consumable_transactions.each do |ct|
+      ct.update(quantity_unit: base_quantity_unit)
+    end
   end
 end

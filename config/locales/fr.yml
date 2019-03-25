@@ -297,6 +297,9 @@ fr:
       categories_label: Catégories
       help_on_images: "Tapez sur le bouton pour prendre une photo (sur un cellulaire), ou sélectionnez une photo à partir de votre ordinateur. Si vous clonez un produit, les images seront aussi copiées."
       location_label: Localisation
+    convert:
+      conversion_reason: "Conversion d'un produit"
+      product_successfully_converted: Produit convertit en consommable avec succès
     create:
       product_successfully_created: Produit enregistré avec succès
     destroy:
@@ -349,6 +352,7 @@ fr:
       add_to_cart_label: Réserver pour cet événement
       back_to_list_button_label: Retour à la liste
       clone_button_label: Copier ce produit
+      convert_to_consumable_label: Convertir en consommable
       dates_header: Dates
       delete_button_label: Détruire ce produit
       edit_button_label: Modifier ce produit

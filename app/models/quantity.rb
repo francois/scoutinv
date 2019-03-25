@@ -104,6 +104,10 @@ Quantity = Struct.new(:value, :si_prefix, :unit) do
     end
   end
 
+  def self.can_convert_between?(unit_a, unit_b)
+    CONVERSIONS.include?([unit_a, unit_b].join(":"))
+  end
+
   def self.zero(unit = "unit")
     Quantity.new(0, SI::BASE, unit)
   end

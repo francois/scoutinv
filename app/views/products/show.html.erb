@@ -6,6 +6,7 @@
     <%= link_to t(".edit_button_label"), edit_product_path(@product), class: "button small hide-for-large" if current_member.inventory_director? %>
     <%= link_to t(".clone_button_label"), new_product_path(clone_from: @product), class: "button small hide-for-large" if current_member.inventory_director? %>
     <%= link_to t(".back_to_list_button_label"), products_path, class: "button secondary small hide-for-large" %>
+    <%= link_to t(".convert_to_consumable_label"), convert_product_path(@product), method: :post, class: "button small warning hide-for-large" if current_member.inventory_director? %>
     <%= link_to t(".delete_button_label"), product_path(@product), method: :delete, class: "button small alert hide-for-large" if current_member.inventory_director? %>
 
     <div class="grid-x grid-padding-x small-up-1 medium-up-3">
@@ -26,7 +27,7 @@
 
     <div>
       <strong><%= t("quantity", scope: "activerecord.attributes.product") %>:</strong>
-      <%= number_with_delimiter @product.quantity %>
+      <%= number_with_delimiter @product.quantity %> / <%= number_with_delimiter @product.available_quantity %>
     </div>
 
     <div>
@@ -94,6 +95,8 @@
     <hr>
 
     <% if current_member.inventory_director? %>
+      <%= link_to t(".convert_to_consumable_label"), convert_product_path(@product), method: :post, class: "button warning expanded" %>
+      <hr>
       <%= link_to t(".delete_button_label"), product_path(@product), method: :delete, class: "button alert expanded" %>
       <hr>
     <% end %>

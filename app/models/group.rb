@@ -112,6 +112,45 @@ class Group < ApplicationRecord
     end
   end
 
+  def convert_product_to_consumable(product_slug, reason, metadata)
+    product = products.detect{|product| product.slug == product_slug}
+    raise ActiveRecord::RecordNotFound, "Could not find product with slug #{product_slug.inspect}" unless product
+
+    attributes = {
+      group: product.group,
+      name: product.name,
+      description: product.description,
+      slug: product.slug,
+      aisle: product.aisle,
+      shelf: product.shelf,
+      unit: product.unit,
+      building: product.building,
+      internal_unit_price: product.internal_unit_price,
+      external_unit_price: product.external_unit_price,
+
+      base_quantity: QuantityParser.new.parse("1 unit"),
+    }
+
+    register_new_consumable(attributes, metadata: metadata).tap do |consumable|
+      consumable.categories = product.categories
+      product.images.detach.each do |image|
+        consumable.images.attach(image.blob)
+      end if product.images.detach&.any?
+
+      quantity = QuantityParser.new.parse("#{product.available_quantity} unit")
+      consumable.change_quantity(quantity, reason: reason)
+      product.destroy
+
+      domain_events << ProductConvertedToConsumable.new(
+        data: {
+          group_slug: self.slug,
+          product_slug: slug,
+        },
+        metadata: metadata
+      )
+    end
+  end
+
   private
 
   def find_note_by_slug_sql(slug)

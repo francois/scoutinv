@@ -1,0 +1,2 @@
+class ProductConvertedToConsumable < DomainEvent
+end

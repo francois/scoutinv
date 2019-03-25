@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :convert]
   before_action :load_categories, except: %i[ destroy ]
 
   def index
@@ -102,6 +102,19 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     redirect_to products_url, notice: t(".product_successfully_destroyed")
+  end
+
+  def convert
+    group = @product.group
+    Group.transaction do
+      consumable = group.convert_product_to_consumable(@product.slug, t(".conversion_reason"), metadata: domain_event_metadata)
+      group.save!
+      consumable.images.each do |image|
+        ShrinkImageJob.perform_later(consumable, image)
+      end
+    end
+
+    redirect_to consumable, notice: t(".product_successfully_converted")
   end
 
   private

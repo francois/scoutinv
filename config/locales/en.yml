@@ -297,6 +297,9 @@ en:
       categories_label: Categories
       help_on_images: "Tap the button to take a picture (if on mobile), or attach any picture from your computer. If you are cloning a product, it's images will be cloned as well."
       location_label: Location
+    convert:
+      conversion_reason: Conversion from product
+      product_successfully_converted: Product successfully converted to consumable
     create:
       product_successfully_created: Product successfully created
     destroy:
@@ -349,6 +352,7 @@ en:
       add_to_cart_label: Reserve for this event
       back_to_list_button_label: Back to list
       clone_button_label: Clone this product
+      convert_to_consumable_label: Convert to consumable
       dates_header: Dates
       delete_button_label: Delete this product
       edit_button_label: Edit this product
