@@ -105,6 +105,17 @@ class Consumable < ApplicationRecord
     base_quantity.unit
   end
 
+  # Returns a string to be used for ordering a list of products consistently
+  #
+  # @return [String] The key to use to order this item consistently
+  def sort_key_for_display
+    [name.downcase, id].map(&:to_s).join(":")
+  end
+
+  def sort_key_for_pickup
+    [building, aisle, shelf, unit, name, id].map(&:to_s).join(":")
+  end
+
   private
 
   def zero_quantity

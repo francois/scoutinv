@@ -13,11 +13,17 @@ class EventsController < ApplicationController
 
   def show
     @page_title = @event.title
-    @note  = @event.notes.build
+    @note = @event.notes.build
 
     @double_booked_products = Product.double_booked(@event).to_set
 
-    @used_categories = @event.reservations.map(&:product).map(&:categories).flatten.uniq.sort_by(&:name)
+    service = EntitySearchService.new(
+      current_group: current_group,
+      event_id: @event.id,
+    )
+    @entities = service.entities
+
+    @used_categories = @entities.map(&:categories).flatten.uniq.sort_by(&:name)
 
     respond_to do |format|
       format.html { render action: :show }
@@ -99,7 +105,7 @@ class EventsController < ApplicationController
   private
 
   def set_event
-    @event = current_group.events.includes(reservations: [:product, :instance]).find_by!(slug: params[:id])
+    @event = current_group.events.includes(consumable_transactions: [:consumable, :categories], reservations: [:product, :instance]).find_by!(slug: params[:id])
   end
 
   def event_params

@@ -89,6 +89,13 @@ class Event < ApplicationRecord
     troop && troop.name || name
   end
 
+  def total
+    [
+      reservations.map(&:unit_price),
+      consumable_transactions.map{|ct| -1 * ct.quantity.to(ct.consumable.base_quantity_si_prefix).value * ct.consumable.internal_unit_price},
+    ].flatten.sum
+  end
+
   def add_note(attributes, metadata: {})
     notes.build(attributes).tap do |new_note|
       domain_events << NoteAddedToEvent.new(
@@ -246,6 +253,13 @@ class Event < ApplicationRecord
 
   def reservations_of(product)
     reservations.select{|reservation| reservation.product == product}
+  end
+
+  def consumption_of(consumable)
+    consumable_transactions.
+      select{|ct| ct.event == self}.
+      map(&:quantity).
+      inject(Quantity.zero(consumable.base_quantity_unit), &:+)
   end
 
   def real_date_range
