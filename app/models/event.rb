@@ -16,7 +16,7 @@ class Event < ApplicationRecord
 
   validates :title, presence: true, length: { minimum: 2 }
   validates :start_on, :end_on, presence: true
-  validate :ends_after_it_starts
+  validate :dates_are_ordered
   validate :troop_or_name_filled_in
 
   delegate :name, :address, to: :group, prefix: :group
@@ -267,12 +267,13 @@ class Event < ApplicationRecord
   end
 
   def date_range
-    (start_on - 1) .. (end_on + 1)
+    pick_up_on .. return_on
   end
 
-  def ends_after_it_starts
-    return unless start_on && end_on
-    errors.add(:base, "Events must end on or after they start") unless end_on >= start_on
+  def dates_are_ordered
+    errors.add(:base, "Must pick up on before start on") unless pick_up_on <= start_on
+    errors.add(:base, "Must start on before end on")     unless start_on <= end_on
+    errors.add(:base, "Must end on before return on")    unless end_on <= return_on
   end
 
   def troop_or_name_filled_in

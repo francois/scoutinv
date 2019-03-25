@@ -30,6 +30,8 @@ fr:
         end_on: Termine le
         name: Nom
         phone: Téléphone
+        pick_up_on: Prise de possession le
+        return_on: Retour le
         start_on: Commence le
         state: État
         title: Titre

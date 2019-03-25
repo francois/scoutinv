@@ -1,5 +1,6 @@
-Products on event "<%= @event.title %>" are all reserved.
+Products on event "<%= @event.title %>" are reserved.
 The event runs from <%= format_date_range @event.real_date_range %>.
+<%= @event.troop ? @event.troop_name : "#{@event.name} (#{ @event.phone })" %> will pick up their material on <%= l @event.pick_up_on, format: :with_year %> and will return it on <%= l @event.return_on, format: :with_year %>.
 
 <%= @event_url %>
 
@@ -8,3 +9,11 @@ The event runs from <%= format_date_range @event.real_date_range %>.
   <%= format_product_location product, plain: true %>
 
 <% end %>
+
+<%- if @event.notes.any? -%>
+# Notes
+
+<%- @event.notes.sort_by(&:created_at).each do |note| -%>
+* <%= note.author_name %>: <%= note.body %> (<%= l note.created_at, format: :with_year %>)
+<%- end -%>
+<%- end -%>

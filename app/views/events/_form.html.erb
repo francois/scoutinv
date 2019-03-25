@@ -75,12 +75,20 @@
         <div class="grid-container">
           <div class="grid-x grid-padding-x">
             <div class="shrink cell">
+              <%= form.label :pick_up_on %>
+              <%= form.date_field :pick_up_on, autocomplete: false %>
+            </div>
+            <div class="shrink cell">
               <%= form.label :start_on %>
               <%= form.date_field :start_on, autocomplete: false %>
             </div>
             <div class="shrink cell">
               <%= form.label :end_on %>
               <%= form.date_field :end_on, autocomplete: false %>
+            </div>
+            <div class="shrink cell">
+              <%= form.label :return_on %>
+              <%= form.date_field :return_on, autocomplete: false %>
             </div>
           </div>
         </div>

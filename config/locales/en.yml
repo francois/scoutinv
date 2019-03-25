@@ -30,6 +30,8 @@ en:
         end_on: End on
         name: Name
         phone: Phone
+        pick_up_on: Pick up on
+        return_on: Return on
         start_on: Start on
         state: State
         title: Title
