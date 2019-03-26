@@ -106,6 +106,7 @@ class ProductsController < ApplicationController
 
   def convert
     group = @product.group
+    consumable = nil
     Group.transaction do
       consumable = group.convert_product_to_consumable(@product.slug, t(".conversion_reason"), metadata: domain_event_metadata)
       group.save!

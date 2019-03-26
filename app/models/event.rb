@@ -92,7 +92,7 @@ class Event < ApplicationRecord
   def total
     [
       reservations.map(&:unit_price),
-      consumable_transactions.map{|ct| -1 * ct.quantity.to(ct.consumable.base_quantity_si_prefix).value * ct.consumable.internal_unit_price},
+      consumable_transactions.map{|ct| (ct.quantity.to(ct.consumable.base_quantity_si_prefix).scale(-1).value / ct.consumable.base_quantity.value) * unit_price_of(ct.consumable) },
     ].flatten.sum
   end
 
@@ -251,6 +251,14 @@ class Event < ApplicationRecord
     end
   end
 
+  def unit_price_of(consumable_or_product)
+    rs = reservations.select{|reservation| reservation.product == consumable_or_product}
+    return rs.map(&:unit_price).max if rs.any?
+
+    consumable_transaction = consumable_transactions.detect{|ct| ct.consumable == consumable_or_product}
+    consumable_transaction.consumable.unit_price(internal: internal?)
+  end
+
   def reservations_of(product)
     reservations.select{|reservation| reservation.product == product}
   end
@@ -258,6 +266,7 @@ class Event < ApplicationRecord
   def consumption_of(consumable)
     consumable_transactions.
       select{|ct| ct.event == self}.
+      select{|ct| ct.consumable == consumable}.
       map(&:quantity).
       inject(Quantity.zero(consumable.base_quantity_unit), &:+)
   end

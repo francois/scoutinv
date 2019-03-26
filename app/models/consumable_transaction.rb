@@ -30,7 +30,7 @@ class ConsumableTransaction < ApplicationRecord
   end
 
   def unit_same_as_parent
-    return if quantity.unit == consumable.unit
-    errors.add(:quantity, "must have same unit as consumable; expected #{consumable.unit}, found #{quantity.unit}")
+    return if quantity.unit == consumable.base_quantity_unit
+    errors.add(:quantity, "must have same unit as consumable; expected #{consumable.base_quantity_unit.inspect}, found #{quantity.unit.inspect}")
   end
 end

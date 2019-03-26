@@ -1,1 +1,29 @@
-<%= consumable.name %> <%= format_quantity quantity.to(consumable.base_quantity_si_prefix), precision: 1 %>
+<div id="product-card-<%= consumable.slug %>" class="cell">
+  <div class="card">
+    <div class="card-divider">
+      <h4 class="auto cell">
+        <%= link_to consumable.name, consumable_path(consumable) %>
+      </h4>
+    </div>
+    <%= link_to consumable do %>
+      <%= entity_image consumable, height: 250 %>
+    <% end %>
+    <div class="card-section">
+      <% if consumable.description.present? %>
+        <%= simple_format consumable.description %>
+      <% end %>
+      <p>
+      <%= format_quantity quantity.to(consumable.base_quantity_si_prefix).scale(-1), precision: 1 %>
+       &times;  <%= number_to_currency @event.unit_price_of(consumable) %> / <%= format_quantity consumable.base_quantity %>  =  <%= number_to_currency((quantity.to(consumable.base_quantity_si_prefix).scale(-1).value / consumable.base_quantity.value) * @event.unit_price_of(consumable)) %>
+      </p>
+      <% if consumable.has_location? %>
+        <p>
+        <small>
+          <strong><%= t("activerecord.attributes.consumable.location") %></strong>:
+          <%= format_product_location(consumable) %>
+        </small>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

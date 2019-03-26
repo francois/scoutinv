@@ -2,7 +2,7 @@ class Consumable < ApplicationRecord
   include HasSlug
 
   has_many_attached :images
-  after_save :update_unit_on_conversion
+  after_save :update_unit_on_conversion, if: :base_quantity_unit_previously_changed?
 
   belongs_to :group
   has_many :consumable_categories,   dependent: :delete_all, autosave: true
@@ -69,6 +69,10 @@ class Consumable < ApplicationRecord
     building_changed? || aisle_changed? || shelf_changed? || unit_changed?
   end
 
+  def unit_price(internal: false)
+    internal ? internal_unit_price : external_unit_price
+  end
+
   def available_quantity
     consumable_transactions.
       reject(&:marked_for_destruction?).
@@ -102,10 +106,6 @@ class Consumable < ApplicationRecord
     base_quantity.si_prefix
   end
 
-  def unit
-    base_quantity.unit
-  end
-
   # Returns a string to be used for ordering a list of products consistently
   #
   # @return [String] The key to use to order this item consistently
@@ -120,13 +120,11 @@ class Consumable < ApplicationRecord
   private
 
   def zero_quantity
-    Quantity.zero(unit)
+    Quantity.zero(base_quantity.unit)
   end
 
   def update_unit_on_conversion
-    return unless base_quantity_unit_previously_changed?
-
-    consumable_transactions.each do |ct|
+    consumable_transactions.reject(&:new_record?).reject(&:marked_for_destruction?).each do |ct|
       ct.update(quantity_unit: base_quantity_unit)
     end
   end

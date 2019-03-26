@@ -47,14 +47,14 @@
         <div class="small-2 cell">&nbsp;</div>
       </div>
     <% end %>
-    <% if %i[building aisle shelf unit description].map{|attr| product.public_send(attr)}.compact.any? || reservations.reject(&:free?).any? %>
+    <% if product.has_location? || reservations.reject(&:free?).any? %>
       <div class="card-section">
         <% if product.description.present? %>
           <%= simple_format product.description %>
         <% end %>
         <% if reservations.reject(&:free?).any? %>
           <p>
-          <%= number_with_delimiter reservations.size %>  &times;  <%= number_to_currency reservations.map(&:unit_price).max %>  =  <%= number_to_currency(reservations.map(&:unit_price).max * reservations.size) %>
+          <%= number_with_delimiter reservations.size %>  &times;  <%= number_to_currency @event.unit_price_of(product) %>  =  <%= number_to_currency(@event.unit_price_of(product) * reservations.size) %>
           </p>
         <% end %>
         <% if product.has_location? %>
