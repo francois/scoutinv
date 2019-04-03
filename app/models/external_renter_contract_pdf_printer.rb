@@ -1,4 +1,8 @@
 class ExternalRenterContractPdfPrinter < ContractPdfPrinter
+  def internal?
+    false
+  end
+
   def render_renter_name(pdf)
     rows = []
     rows << {text: "#{t(:renter)}\n", size: 10, styles: [:italic]}

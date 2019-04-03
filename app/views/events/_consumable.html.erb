@@ -13,8 +13,7 @@
         <%= simple_format consumable.description %>
       <% end %>
       <p>
-      <%= format_quantity quantity.to(consumable.base_quantity_si_prefix).scale(-1), precision: 1 %>
-       &times;  <%= number_to_currency @event.unit_price_of(consumable) %> / <%= format_quantity consumable.base_quantity %>  =  <%= number_to_currency((quantity.to(consumable.base_quantity_si_prefix).scale(-1).value / consumable.base_quantity.value) * @event.unit_price_of(consumable)) %>
+      <%= format_quantity @event.quantity_of(consumable), precision: 1 %>  &times;  <%= number_to_currency @event.unit_price_of(consumable) %> / <%= format_quantity consumable.base_quantity %>  =  <%= number_to_currency @event.subtotal_of(consumable) %>
       </p>
       <% if consumable.has_location? %>
         <p>

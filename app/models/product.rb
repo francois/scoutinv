@@ -64,6 +64,19 @@ class Product < ApplicationRecord
   # In reality, this attribute is absolutely unused
   attribute :image_url, :string
 
+  def quantity_on(event)
+    event.reservations
+      .select{|reservation| reservation.product == self}
+      .size
+  end
+
+  def unit_price_on(event)
+    event.reservations
+      .select{|reservation| reservation.product == self}
+      .map(&:unit_price)
+      .max || unit_price(internal: event.internal?)
+  end
+
   def unit_price(internal: false)
     internal ? internal_unit_price : external_unit_price
   end

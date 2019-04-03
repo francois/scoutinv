@@ -135,27 +135,37 @@ class ContractPdfPrinter
     ]
 
     total = BigDecimal(0)
-    event.reservations.group_by(&:product).sort_by{|product, _| product.sort_key_for_pickup}.inject(data) do |memo, (product, reservations)|
-      text = ""
-      text << "<b>#{product.name}</b>"
-      text << " "
-      text << "<font size='10'><i>"
-      text << format_product_location(product, plain: true)
-      text << "</i></font>"
-      text << "\n"
-      text << "<font size='10'>"
-      text << reservations.map(&:serial_no).map{|serial_no| format_serial_no(serial_no)}.join("  ") # 2 NON-BREAKING SPACEs
-      text << "</font>"
+    service = EntitySearchService.new(current_group: event.group, event_id: event.id)
+    loop do
+      service.entities.each do |entity|
+        text = ""
+        text << "<b>#{entity.name}</b>"
+        text << " "
+        text << "<font size='10'><i>"
+        text << format_product_location(entity, plain: true)
+        text << "</i></font>"
+        text << "\n"
+        if entity.respond_to?(:reservations)
+          text << "<font size='10'>"
+          text << entity.reservations.map(&:serial_no).map{|serial_no| format_serial_no(serial_no)}.join("  ") # 2 NON-BREAKING SPACEs
+          text << "</font>"
+        end
 
-      unit_price = reservations.map(&:unit_price).max
-      subtotal   = reservations.size * unit_price
-      total     += subtotal
-      memo << [
-        text,
-        number_with_delimiter(reservations.size),
-        number_to_currency(unit_price),
-        number_to_currency(subtotal),
-      ]
+        unit_price = event.unit_price_of(entity)
+        quantity   = event.quantity_of(entity)
+        subtotal   = event.subtotal_of(entity)
+
+        total += subtotal
+        data << [
+          text,
+          quantity,
+          number_to_currency(unit_price),
+          number_to_currency(subtotal),
+        ]
+      end
+
+      break unless service.has_next_page?
+      service = EntitySearchService.new(current_group: event.group, event_id: event.id, page: service.page.succ)
     end
 
     data << [nil, nil, t(:total_header), number_to_currency(total)]

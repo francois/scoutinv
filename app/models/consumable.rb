@@ -81,9 +81,10 @@ class Consumable < ApplicationRecord
       inject(zero_quantity, &:+)
   end
 
-  def change_quantity(quantity, reason: nil, event: nil)
+  def change_quantity(quantity, unit_price:, reason: nil, event: nil)
     if reason
       consumable_transactions.build(
+        unit_price: unit_price || BigDecimal(0),
         quantity: quantity,
         reason: reason,
       )
@@ -95,11 +96,18 @@ class Consumable < ApplicationRecord
   end
 
   def quantity_on(event)
-    consumable_transactions.
-      select{|ct| ct.event == event}.
-      map(&:quantity).
-      inject(zero_quantity, &:+).
-      scale(-1)
+    base = consumable_transactions
+      .select{|ct| ct.event == event}
+      .map(&:quantity)
+      .inject(zero_quantity, &:+)
+      .scale(-1)
+
+    base.to(base_quantity.si_prefix).value / base_quantity.value
+  end
+
+  def unit_price_on(event)
+    cts = event.consumable_transactions.select{|ct| ct.consumable == self}
+    cts.map(&:unit_price).max || unit_price(internal: event.internal?)
   end
 
   def si_prefix
@@ -117,11 +125,11 @@ class Consumable < ApplicationRecord
     [building, aisle, shelf, unit, name, id].map(&:to_s).join(":")
   end
 
-  private
-
   def zero_quantity
     Quantity.zero(base_quantity.unit)
   end
+
+  private
 
   def update_unit_on_conversion
     consumable_transactions.reject(&:new_record?).reject(&:marked_for_destruction?).each do |ct|

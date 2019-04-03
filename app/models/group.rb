@@ -138,7 +138,7 @@ class Group < ApplicationRecord
       end if product.images.detach&.any?
 
       quantity = QuantityParser.new.parse("#{product.available_quantity} unit")
-      consumable.change_quantity(quantity, reason: reason)
+      consumable.change_quantity(quantity, unit_price: 0, reason: reason)
       product.destroy
 
       domain_events << ProductConvertedToConsumable.new(

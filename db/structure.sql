@@ -465,7 +465,8 @@ CREATE TABLE public.consumable_transactions (
     quantity_si_prefix character varying NOT NULL,
     quantity_unit character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    unit_price numeric NOT NULL
 );
 
 
@@ -1822,6 +1823,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190101025658'),
 ('20190128122749'),
 ('20190128235529'),
-('20190325233523');
+('20190325233523'),
+('20190403230542');
 
 

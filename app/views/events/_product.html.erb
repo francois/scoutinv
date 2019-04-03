@@ -8,8 +8,8 @@
             <span title="<%= t(".double_booked_hover") %>">X</span>
           </div>
         <% end %>
-        <% if reservations.size > 1 %>
-          (<%= number_with_delimiter reservations.size %>)
+        <% if @event.quantity_of(product).nonzero? %>
+          (<%= number_with_delimiter @event.quantity_of(product) %>)
         <% end %>
         <%= link_to product.name, product_path(product) %>
       </h4>
@@ -54,7 +54,7 @@
         <% end %>
         <% if reservations.reject(&:free?).any? %>
           <p>
-          <%= number_with_delimiter reservations.size %>  &times;  <%= number_to_currency @event.unit_price_of(product) %>  =  <%= number_to_currency(@event.unit_price_of(product) * reservations.size) %>
+          <%= number_with_delimiter @event.quantity_of(product) %>  &times;  <%= number_to_currency @event.unit_price_of(product) %>  =  <%= number_to_currency @event.subtotal_of(product) %>
           </p>
         <% end %>
         <% if product.has_location? %>

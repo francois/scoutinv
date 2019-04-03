@@ -92,7 +92,7 @@ class Event < ApplicationRecord
   def total
     [
       reservations.map(&:unit_price),
-      consumable_transactions.map{|ct| (ct.quantity.to(ct.consumable.base_quantity_si_prefix).scale(-1).value / ct.consumable.base_quantity.value) * unit_price_of(ct.consumable) },
+      consumable_transactions.map{|ct| (ct.quantity.to(ct.consumable.base_quantity_si_prefix).scale(-1).value / ct.consumable.base_quantity.value) * ct.unit_price },
     ].flatten.sum
   end
 
@@ -119,7 +119,7 @@ class Event < ApplicationRecord
   def consume(consumables, metadata: {})
     consumables.each do |consumable, quantity|
       ct   = consumable_transactions.detect{|ct| ct.event == self && ct.consumable == consumable }
-      ct ||= consumable_transactions.build(consumable: consumable)
+      ct ||= consumable_transactions.build(consumable: consumable, unit_price: unit_price_of(consumable))
       if quantity.zero?
         ct.mark_for_destruction
       else
@@ -252,11 +252,22 @@ class Event < ApplicationRecord
   end
 
   def unit_price_of(consumable_or_product)
-    rs = reservations.select{|reservation| reservation.product == consumable_or_product}
-    return rs.map(&:unit_price).max if rs.any?
+    # Double Dispatch! consumable_or_product knows how to calculate
+    # it's quantity, so leverage that by calling into it
+    consumable_or_product.unit_price_on(self)
+  end
 
-    consumable_transaction = consumable_transactions.detect{|ct| ct.consumable == consumable_or_product}
-    consumable_transaction.consumable.unit_price(internal: internal?)
+  def quantity_of(consumable_or_product)
+    # Double Dispatch! consumable_or_product knows how to calculate
+    # it's quantity, so leverage that by calling into it
+    consumable_or_product.quantity_on(self)
+  end
+
+  def subtotal_of(consumable_or_product)
+    unit_price = unit_price_of(consumable_or_product)
+    quantity   = quantity_of(consumable_or_product)
+
+    unit_price * quantity
   end
 
   def reservations_of(product)

@@ -6,6 +6,7 @@ class ConsumableTransaction < ApplicationRecord
   validates :quantity_value, presence: true, numericality: { only_integer: false }
   validates :quantity_si_prefix, presence: true, inclusion: SI::ALL
   validates :quantity_unit, presence: true, inclusion: %w( unit pound litre gram ).freeze
+  validates :unit_price, presence: true, numericality: { only_integer: false }
   validate :reason_or_event
   validate :unit_same_as_parent
 

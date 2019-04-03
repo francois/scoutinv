@@ -4,6 +4,7 @@ class ConsumableTransactionsController < ApplicationController
   def create
     @consumable.change_quantity(
       QuantityParser.new.parse(consumable_transaction_params[:quantity]),
+      unit_price: 0,
       reason: consumable_transaction_params[:reason],
     )
 

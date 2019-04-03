@@ -1,4 +1,8 @@
 class TroopContractPdfPrinter < ContractPdfPrinter
+  def internal?
+    true
+  end
+
   def render_renter_name(pdf)
     members = event.troop.members.map{|member| "#{member.name} #{member.email}"}.join("\n")
     pdf.formatted_text_box [
