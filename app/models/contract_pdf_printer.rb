@@ -63,18 +63,17 @@ class ContractPdfPrinter
       render_page_numbers(pdf)
       pdf.render
     end
-
   end
 
   def print_without_logo(pdf)
-      render_page_header(pdf)
-      render_head(pdf)
-      render_body(pdf)
-      render_tail(pdf)
+    render_page_header(pdf)
+    render_head(pdf)
+    render_body(pdf)
+    render_tail(pdf)
 
-      # must be called last, to number existing pages
-      render_page_numbers(pdf)
-      pdf.render
+    # must be called last, to number existing pages
+    render_page_numbers(pdf)
+    pdf.render
   end
 
   def render_page_header(pdf)
