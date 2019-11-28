@@ -146,8 +146,10 @@ class ContractPdfPrinter
         text << "</i></font>"
         text << "\n"
         if entity.respond_to?(:reservations)
+          reservations = entity.reservations & event.reservations
+
           text << "<font size='10'>"
-          text << entity.reservations.map(&:serial_no).map{|serial_no| format_serial_no(serial_no)}.join("  ") # 2 NON-BREAKING SPACEs
+          text << reservations.map(&:serial_no).map{|serial_no| format_serial_no(serial_no)}.join("  ") # 2 NON-BREAKING SPACEs
           text << "</font>"
         end
 
