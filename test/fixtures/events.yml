@@ -3,8 +3,10 @@ summer_camp_911_10eme:
   title: Summer Camp (9-11)
   description: ""
   troop: cubs_10eme
+  pick_up_on: <%= 17.days.from_now.to_date %>
   start_on: <%= 20.days.from_now.to_date %>
   end_on: <%= 24.days.from_now.to_date %>
+  return_on: <%= 27.days.from_now.to_date %>
   slug: 8p1adklv
 
 summer_camp_911_41eme:
@@ -12,6 +14,8 @@ summer_camp_911_41eme:
   title: Summer Camp (9-11)
   troop: cubs_41eme
   description: ""
+  pick_up_on: 2018-08-02
   start_on: 2018-08-06
   end_on: 2018-08-10
+  return_on: 2018-08-11
   slug: fezk854u

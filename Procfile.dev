@@ -1,0 +1,1 @@
+postgresql: docker run --init -it --rm --mount type=bind,src=${PWD}/db/cluster,dst=/var/lib/postgresql/data,readonly=false -e POSTGRES_HOST_AUTH_METHOD=trust -p 5432:5432/tcp postgres:10

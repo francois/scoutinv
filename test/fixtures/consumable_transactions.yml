@@ -3,3 +3,4 @@ cans_of_soup_txn1:
   quantity_value: 96
   quantity_si_prefix: <%= SI::BASE.inspect %>
   quantity_unit: "unit"
+  unit_price: 0.98
