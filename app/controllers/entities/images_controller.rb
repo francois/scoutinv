@@ -56,7 +56,7 @@ class Entities::ImagesController < ApplicationController
       @image.destroy
 
       # Process this ASAP, because there's a human waiting for it now
-      ShrinkImageJob.set(priority: 0).perform_later(@entity, @new_image)
+      ShrinkImageJob.enqueue(@entity.id, @new_image.id, priority: 0)
     ensure
       File.unlink(basename) if File.exist?(basename)
       File.unlink(updname) if File.exist?(updname)

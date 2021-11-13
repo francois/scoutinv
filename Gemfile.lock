@@ -1,8 +1,9 @@
 GIT
-  remote: https://github.com/chanks/que.git
-  revision: ad5f02cc1ae68c00699d04da8c9c8e5b4262c5a2
+  remote: https://github.com/que-rb/que.git
+  revision: 61e1805deb8161e5c1502e518a9a44fa464d308c
+  ref: master
   specs:
-    que (1.0.0.beta3)
+    que (1.0.0.beta4)
 
 GEM
   remote: https://rubygems.org/

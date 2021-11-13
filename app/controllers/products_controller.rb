@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
 
       current_group.save.tap do
         @attached.each do |image|
-          ShrinkImageJob.perform_later(@product, image)
+          ShrinkImageJob.enqueue(@product.id, image.id)
         end if @attached
       end
     end
@@ -86,7 +86,7 @@ class ProductsController < ApplicationController
 
       @product.save.tap do
         @attached.each do |image|
-          ShrinkImageJob.perform_later(@product, image)
+          ShrinkImageJob.enqueue(@product.id, image.id)
         end if @attached
       end
     end
@@ -111,7 +111,7 @@ class ProductsController < ApplicationController
       consumable = group.convert_product_to_consumable(@product.slug, t(".conversion_reason"), metadata: domain_event_metadata)
       group.save!
       consumable.images.each do |image|
-        ShrinkImageJob.perform_later(consumable, image)
+        ShrinkImageJob.enqueue(consumable.id, image.id)
       end
     end
 

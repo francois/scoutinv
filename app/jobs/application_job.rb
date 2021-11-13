@@ -1,3 +1,3 @@
-class ApplicationJob < ActiveJob::Base
-  queue_as :default
+class ApplicationJob < Que::Job
+  delegate :logger, to: Rails
 end

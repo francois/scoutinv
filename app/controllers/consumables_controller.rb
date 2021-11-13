@@ -63,7 +63,7 @@ class ConsumablesController < ApplicationController
 
       current_group.save.tap do
         @attached.each do |image|
-          ShrinkImageJob.perform_later(@consumable, image)
+          ShrinkImageJob.enqueue(@consumable.id, image.id)
         end if @attached
       end
     end
@@ -86,7 +86,7 @@ class ConsumablesController < ApplicationController
 
       @consumable.save.tap do
         @attached.each do |image|
-          ShrinkImageJob.perform_later(@consumable, image)
+          ShrinkImageJob.perform_later(@consumable.id, image.id)
         end if @attached
       end
     end

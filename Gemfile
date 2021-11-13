@@ -15,7 +15,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'aws-sdk-s3'
 gem 'kaminari', '~> 1.1.1'
-gem 'que', github: "chanks/que"
+gem 'que', github: "que-rb/que", ref: "master"
 gem 'state_machine'
 gem 'prawn'
 gem 'prawn-table'

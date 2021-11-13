@@ -1,8 +1,10 @@
 class ShrinkImageJob < ApplicationJob
-  def perform(product, image)
-    logger.info "Shrinking #{product.slug}:#{image.id}"
-
+  def run(product_or_consumable_id, image_id)
     Product.transaction do
+      product = Product.where(id: product_or_consumable_id).first || Consumable.find(product_or_consumable_id)
+      image = product.images.find(image_id)
+      logger.info "Shrinking #{product.slug}:#{image.id}"
+
       logger.info "Creating highest quality version"
       image.variant(WEB_IMAGE_CONFIG).processed
 

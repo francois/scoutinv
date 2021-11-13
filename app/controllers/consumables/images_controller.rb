@@ -55,7 +55,7 @@ class Consumables::ImagesController < ApplicationController
       @image.destroy
 
       # Process this ASAP, because there's a human waiting for it now
-      ShrinkImageJob.set(priority: 0).perform_later(@consumable, @new_image)
+      ShrinkImageJob.set(priority: 0).enqueue(@consumable.id, @new_image.id)
     ensure
       File.unlink(basename) if File.exist?(basename)
       File.unlink(updname) if File.exist?(updname)
