@@ -1,0 +1,2 @@
+#!/bin/sh
+exec psql --dbname $( grep DATABASE_URL .env.development | cut -d= -f2- ) "$@"
