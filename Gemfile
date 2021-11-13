@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.7'
+ruby '2.7.4'
 
 gem 'rails', '~> 5.2.2.1'
 gem 'pg'
@@ -22,9 +22,6 @@ gem 'prawn-table'
 
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
-
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
 
 # Performance and exception monitoring
 gem 'scout_apm'
