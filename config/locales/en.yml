@@ -92,11 +92,15 @@ en:
     show:
       add_member_header: "Add a member"
       add_troop_header: "Add a troop"
+      attach_button_label: "Attach"
+      attach_member: "Attach person to %{troop_name}"
+      attach_member_email_placeholder: "baloo@example.org"
       back_to_list_button_label: Back to list
       edit_button_label: Edit
       email_header: Email
       members: People in this Group
       name_header: Name
+      unattach: "X"
       unattached: Unattached to a Troop
     update:
       group_successfully_updated: Group updated successfully
@@ -446,6 +450,9 @@ en:
     update:
       page_title: "Edit %{member_name}"
       member_successfully_updated: Member successfully updated
+  memberships:
+    attached_to_troop: "%{email} added to %{troop_name}"
+    removed_from_troop: "%{email} removed from %{troop_name}"
 
   views:
     pagination:

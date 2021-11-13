@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   resources :groups do
     resources :members, only: %i[ create ]
+    resources :memberships, only: %i[ create destroy ]
     resources :troops,  only: %i[ create ]
   end
 

@@ -92,11 +92,15 @@ fr:
     show:
       add_member_header: "Ajouter un membre"
       add_troop_header: "Ajouter une unité"
+      attach_button_label: "Attacher"
+      attach_member: "Attacher cette personne à %{troop_name}"
+      attach_member_email_placeholder: "baloo@example.org"
       back_to_list_button_label: Retour à la liste
       edit_button_label: Modifier
       email_header: Adresse courriel
       members: Membres du groupe
       name_header: Nom civil
+      unattach: "X"
       unattached: Non rattaché à une unité
     update:
       group_successfully_updated: Groupe mis à jour avec succès
@@ -446,6 +450,9 @@ fr:
     update:
       page_title: "Modifier %{member_name}"
       member_successfully_updated: Membre mis à jour avec succès
+  memberships:
+    attached_to_troop: "%{email} ajouté à %{troop_name}"
+    removed_from_troop: "%{email} retiré de %{troop_name}"
 
   views:
     pagination:

@@ -22,10 +22,27 @@
           <% troop.members.reject(&:new_record?).sort_by(&:sort_key).each do |member| %>
             <tr>
               <td><%= link_to member.name, edit_member_path(member) %></td>
-              <td><%= mail_to member.email %></td>
+              <td>
+                <%= form_for :membership, url: group_membership_path(@group, member.memberships.detect{|m| m.troop == troop}), method: :delete do |form| %>
+                  <%= mail_to member.email %>
+                  <%= form.submit t(".unattach"), class: "button alert small" %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">
+              <%= form_for :membership, url: group_memberships_path(@group) do |form| %>
+                <%= form.hidden_field :troop_slug, value: troop.slug %>
+                <%= form.label :email, t(".attach_member", troop_name: troop.name) %>
+                <%= form.text_field :email, autocomplete: false, placeholder: t(".attach_member_email_placeholder") %>
+                <%= form.submit t(".attach_button_label"), class: "button secondary" %>
+              <% end %>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     <% end %>
     <% if (@group.members.reject(&:new_record?) - @group.troops.map(&:members).flatten).any? %>
