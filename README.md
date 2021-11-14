@@ -35,8 +35,6 @@ can do everything: manage inventory, reserve products, create events, etc.
     - Displays a history of this product's reservations
     - Displays any notes associated with each reservation
 * Member reserves Product for Event
-    - Actual dates for reservation are -1 .. +1, meaning if the event is from
-        Thu to Sat, the products will be flagged busy from Wed to Sun
 * Member sends reservation request
     - The reservation request is sent to one or more people
     - The reservation request email has a link to see the list of products
