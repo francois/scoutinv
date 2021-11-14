@@ -41,15 +41,15 @@ class Event < ApplicationRecord
     end
 
     after_transition to: :final do |event|
-      MemberMailer.notify_event_finalized(event).deliver_now
+      NotifyEventFinalizedJob.enqueue(event.id)
     end
 
     after_transition to: :ready do |event|
-      MemberMailer.notify_event_ready(event).deliver_now
+      NotifyEventReadyJob.enqueue(event.id)
     end
 
     after_transition to: :returned do |event|
-      MemberMailer.notify_event_returned(event).deliver_now
+      NotifyEventReturnedJob.enqueue(event.id)
     end
   end
 
