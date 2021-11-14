@@ -81,6 +81,10 @@ class Event < ApplicationRecord
     draft?
   end
 
+  def invoicing_emails
+    event.internal? ? event.troop.members.map(&:email) : [event.email]
+  end
+
   def internal?
     !!troop
   end

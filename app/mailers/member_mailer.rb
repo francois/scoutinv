@@ -24,8 +24,6 @@ class MemberMailer < ApplicationMailer
   end
 
   def notify_event_returned(event)
-    return unless event.internal?
-
     @event = event
     @event_url = event_url(event)
 
@@ -40,7 +38,7 @@ class MemberMailer < ApplicationMailer
     # Attach the contract PDF
     attachments[generator.filename] = generator.print
 
-    mail to: event.troop.members.map(&:email),
+    mail to: event.invoicing_emails,
       cc: (event.group.inventory_directors + event.group.accountants).map(&:email)
   end
 end
