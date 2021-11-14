@@ -87,11 +87,6 @@ class UnitPriceParserTest < ActiveSupport::TestCase
     assert_equal BigDecimal("4.49"), result[:unit_price]
   end
 
-  test "roundtrips 0.01$/unit" do
-    result = @parser.format(@parser.parse("0.01"))
-    assert_equal "$0.01 / unit", result
-  end
-
   test "records '0/1u' as '0 $ / unit'" do
     result = @parser.parse("0/1u")
     refute result.nil?

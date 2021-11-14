@@ -8,7 +8,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test "assigns a slug on create" do
-    event = groups(:"41eme").events.create!(title: "Summer Camp", troop: troops(:cubs_41eme), start_on: Date.today, end_on: Date.today)
+    event = groups(:"41eme").events.create!(title: "Summer Camp", troop: troops(:cubs_41eme), pick_up_on: Date.yesterday, start_on: Date.today, end_on: Date.today, return_on: Date.tomorrow)
     assert_not_nil event.slug
   end
 
@@ -23,6 +23,7 @@ class EventTest < ActiveSupport::TestCase
 
   test "#date_range" do
     event = events(:summer_camp_911_41eme)
-    assert_equal Date.new(2018, 8, 5) .. Date.new(2018, 8, 11), event.date_range
+    assert_equal Date.new(2018, 8, 2) .. Date.new(2018, 8, 11), event.date_range
+    assert_equal Date.new(2018, 8, 6) .. Date.new(2018, 8, 10), event.real_date_range
   end
 end

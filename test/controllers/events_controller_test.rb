@@ -22,8 +22,10 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
       email: "john.smith@example.com",
       address: "1 Infinite Loop\nCupertino CA",
       phone: "1-800-MY-APPLE",
+      pick_up_on: 4.days.from_now,
       start_on: 5.days.from_now,
       end_on: 7.days.from_now,
+      return_on: 8.days.from_now
     )
     group.save!
 

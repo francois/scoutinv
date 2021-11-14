@@ -62,7 +62,16 @@ class UnitPriceParser
   def format(unit_price_value:, unit_price_si_prefix:, unit_price_unit:, unit_price:, verbose: false)
     unit      = I18n.translate(unit_price_unit, scope: "unit.#{verbose ? :long : :short}")
     si_prefix = I18n.translate(unit_price_si_prefix, scope: "si_prefix.#{verbose ? :long : :short}")
-    unit      = unit.pluralize(unit_price_value) if verbose && unit
+    if unit
+      unit =
+        if unit_price_value.zero?
+          unit[:zero]
+        elsif unit_price_value < -1 || unit_price_value > 1
+          unit[:one]
+        else
+          unit[:other]
+        end
+    end
 
     if unit_price_value == 1
       "%s / %s%s" % [number_to_currency(unit_price, precision: 2), si_prefix, unit]
