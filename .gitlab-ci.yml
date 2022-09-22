@@ -10,7 +10,7 @@ services:
   - postgres:13
 
 variables:
-  POSTGRES_DB: database_name
+  POSTGRES_DB: scoutinv_test
 
 # Cache gems in between builds
 cache:
