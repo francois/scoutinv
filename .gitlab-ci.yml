@@ -31,6 +31,7 @@ test:
     RAILS_ENV: "test"
     DATABASE_URL: "postgresql://postgres:postgres@postgres:5432/$POSTGRES_DB"
   script:
+    - env | grep DATABASE_URL
     - bundle exec rails db:create db:structure:load rails test
 
 # This deploy job uses a simple deploy flow to Heroku, other providers, e.g. AWS Elastic Beanstalk
