@@ -24,7 +24,7 @@ before_script:
   - apt-get update -q && apt-get install nodejs -yqq
   - gem install bundler --no-doc              # Bundler is not installed with the image
   - bundle config set --local path 'vendor'   # Install dependencies into ./vendor/ruby
-  - bundle install -j $(nproc)
+  - bundle install -j $(nproc) --quiet
 
 rails:
   variables:
