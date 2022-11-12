@@ -1,0 +1,30 @@
+<%= form_with(model: @instance, local: true) do |form| %>
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <% if @instance.errors.any? %>
+        <div class="small-12 cell">
+          <div id="error_explanation">
+            <h2><%= pluralize(@instance.errors.count, "error") %> prohibited this instance from being saved:</h2>
+
+            <ul>
+              <% @instance.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="small-12 cell">
+        <%= form.label :serial_no %>
+        <%= form.text_field :serial_no, autocomplete: false, required: true %>
+      </div>
+
+      <div class="small-12 cell">
+        <%= form.submit class: "button primary" %>
+        <%= render partial: "shared/or" %>
+        <%= link_to t(".cancel_button_label"), @instance.product, class: "button secondary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -3,6 +3,7 @@ fr:
     models:
       event: Événement
       group: Groupe
+      instance: Instance
       member: Membre
       product: Produit
       troop: Unité
@@ -40,6 +41,8 @@ fr:
         address: Adresse
         logo: Logo
         name: Nom
+      instance:
+        serial_no: No de série
       member:
         email: Adresse courriel
         name: Nom civil
@@ -253,6 +256,9 @@ fr:
       total: Total pour l'événement
     update:
       event_successfully_updated: Événement mis à jour avec succès
+  instances:
+    edit:
+      cancel_button_label: Annuler
   consumables:
     form:
       cancel_button_label: Annuler

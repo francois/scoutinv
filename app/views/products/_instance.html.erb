@@ -1,5 +1,11 @@
 <tr id="product-<%= @product.slug %>-instance-<%= instance.slug %>" class="instance-<%= instance.state %>">
-  <td><%= format_serial_no(instance.serial_no) %></td>
+  <td>
+    <% if current_member.inventory_director? %>
+      <%= link_to format_serial_no(instance.serial_no), [:edit, instance] %>
+    <% else %>
+      <%= format_serial_no(instance.serial_no) %>
+    <% end %>
+  </td>
   <td><%= t(instance.state, scope: "products.instance.states") %></td>
   <td>
     <% if current_member.inventory_director? %>

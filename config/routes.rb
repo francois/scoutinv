@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     end
 
     resources :notes, only: %i[ create ], controller: "products/notes"
-    resources :instances, only: %[destroy], controller: "products/instances" do
+    resources :instances, only: %i[destroy], controller: "products/instances" do
       member do
         patch :hold
         patch :send_for_repairs
@@ -62,6 +62,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :instances, only: %i[ edit update ]
 
   resources :notes
 
