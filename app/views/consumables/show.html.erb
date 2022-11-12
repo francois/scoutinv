@@ -74,10 +74,10 @@
             <tr>
               <td><%= l Date.current, format: :with_year %></td>
               <td>
-                <%= f.text_field :quantity, value: format_quantity(@consumable_transaction.quantity, si_prefix: SI::BASE), class: "quantity" %>
+                <%= f.text_field :quantity, value: format_quantity(@consumable_transaction.quantity, si_prefix: SI::BASE), class: "quantity", required: true %>
               </td>
               <td>
-                <%= f.text_field :reason %>
+                <%= f.text_field :reason, required: true %>
               </td>
               <td>
                 <%= f.submit class: "button primary small" %>

@@ -10,6 +10,8 @@ class ConsumableTransactionsController < ApplicationController
 
     @consumable.save!
     redirect_to @consumable
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to @consumable, alert: e.record.errors.full_messages.to_sentence
   end
 
   def destroy
