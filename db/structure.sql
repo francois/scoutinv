@@ -1,4 +1,4 @@
-\restrict HksAl2VB6bLjiIiZcjSaG8oUsAWODVCzXNE7H2fhkINcnKslGVTx2Q5ZRrBgxf6
+\restrict gDfLRO1DwcfZvR3rRAO6rhiY0ZxmG4IHbOjp6dJhW10CbQLnPVa4NtK9KQOfJZp
 
 -- Dumped from database version 18.4 (Homebrew)
 -- Dumped by pg_dump version 18.4 (Homebrew)
@@ -80,7 +80,8 @@ CREATE TABLE public.que_jobs (
     expired_at timestamp with time zone,
     args jsonb DEFAULT '[]'::jsonb NOT NULL,
     data jsonb DEFAULT '{}'::jsonb NOT NULL,
-    job_schema_version integer DEFAULT 1,
+    job_schema_version integer NOT NULL,
+    kwargs jsonb DEFAULT '{}'::jsonb NOT NULL,
     CONSTRAINT error_length CHECK (((char_length(last_error_message) <= 500) AND (char_length(last_error_backtrace) <= 10000))),
     CONSTRAINT job_class_length CHECK ((char_length(
 CASE job_class
@@ -98,7 +99,7 @@ WITH (fillfactor='90');
 -- Name: TABLE que_jobs; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.que_jobs IS '5';
+COMMENT ON TABLE public.que_jobs IS '7';
 
 
 --
@@ -1691,31 +1692,31 @@ CREATE INDEX que_jobs_data_gin_idx ON public.que_jobs USING gin (data jsonb_path
 
 
 --
+-- Name: que_jobs_kwargs_gin_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX que_jobs_kwargs_gin_idx ON public.que_jobs USING gin (kwargs jsonb_path_ops);
+
+
+--
 -- Name: que_poll_idx; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX que_poll_idx ON public.que_jobs USING btree (queue, priority, run_at, id) WHERE ((finished_at IS NULL) AND (expired_at IS NULL));
-
-
---
--- Name: que_poll_idx_with_job_schema_version; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX que_poll_idx_with_job_schema_version ON public.que_jobs USING btree (job_schema_version, queue, priority, run_at, id) WHERE ((finished_at IS NULL) AND (expired_at IS NULL));
+CREATE INDEX que_poll_idx ON public.que_jobs USING btree (job_schema_version, queue, priority, run_at, id) WHERE ((finished_at IS NULL) AND (expired_at IS NULL));
 
 
 --
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_job_notify();
+CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW WHEN ((NOT (COALESCE(current_setting('que.skip_notify'::text, true), ''::text) = 'true'::text))) EXECUTE FUNCTION public.que_job_notify();
 
 
 --
 -- Name: que_jobs que_state_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_state_notify();
+CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW WHEN ((NOT (COALESCE(current_setting('que.skip_notify'::text, true), ''::text) = 'true'::text))) EXECUTE FUNCTION public.que_state_notify();
 
 
 --
@@ -1866,7 +1867,7 @@ ALTER TABLE ONLY public.products
 -- PostgreSQL database dump complete
 --
 
-\unrestrict HksAl2VB6bLjiIiZcjSaG8oUsAWODVCzXNE7H2fhkINcnKslGVTx2Q5ZRrBgxf6
+\unrestrict gDfLRO1DwcfZvR3rRAO6rhiY0ZxmG4IHbOjp6dJhW10CbQLnPVa4NtK9KQOfJZp
 
 SET search_path TO "$user", public;
 
@@ -1919,6 +1920,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20260731030708'),
 ('20260731030709'),
 ('20260731032000'),
-('20260731033000');
+('20260731033000'),
+('20260731034500');
 
 

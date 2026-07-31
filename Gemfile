@@ -17,7 +17,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'aws-sdk-s3'
 gem 'kaminari', '~> 1.2'
-gem 'que', github: "que-rb/que", ref: "v1.3.1"
+gem 'que', github: "que-rb/que", ref: "v2.4.1"
 # The 0.202 line deadlocks with Rails 7.0 transaction handling.
 gem 'state_machines', '~> 0.20.0'
 gem 'state_machines-activerecord', '~> 0.8.0'
