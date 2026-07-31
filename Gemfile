@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.6'
+ruby '3.0.7'
 
 gem 'rails', '~> 6.0.6.1'
+# Rails 6.0 relies on concurrent-ruby loading Logger during boot.
+gem 'concurrent-ruby', '1.1.9'
 gem 'pg'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
@@ -14,9 +16,9 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'aws-sdk-s3'
-gem 'kaminari', '~> 1.1.1'
+gem 'kaminari', '~> 1.2'
 gem 'que', github: "que-rb/que", ref: "master"
-gem 'state_machine'
+gem 'state_machines-activerecord', '~> 0.8.0'
 gem 'prawn'
 gem 'prawn-table'
 

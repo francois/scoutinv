@@ -260,6 +260,6 @@ class ContractPdfPrinter
   def t(*args)
     options = args.extract_options!
     options.reverse_merge!(scope: "contract")
-    I18n.t(*args, options)
+    I18n.t(*args, **options)
   end
 end
