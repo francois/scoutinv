@@ -6,7 +6,7 @@ Scoutinv is a multi-tenant inventory and rental application for Scout groups. Me
 
 This is a Rails 7.0 monolith, not an API application:
 
-- Ruby is pinned to `3.0.7` in `.ruby-version`; Rails is `~> 7.0.10`.
+- Ruby is pinned to `3.3.11` in `.ruby-version`; Rails is `~> 7.0.10`.
 - PostgreSQL is required. `db/structure.sql` is the schema source and uses the `citext` and `unaccent` extensions.
 - Server-rendered ERB, Sprockets, Foundation 6, jQuery, Rails UJS, and Turbolinks make up the UI. `package.json` has no frontend dependencies or build step.
 - Tests use Minitest fixtures, integration tests, and a small Selenium/Capybara system-test suite.
@@ -27,7 +27,7 @@ bin/rails server
 Use the pinned Ruby runtime when installing or running commands. If the shell is on a newer default Ruby, prefer:
 
 ```sh
-rvm use ruby-3.0.7 do bundle install
+rvm use ruby-3.3.11 do bundle install
 ```
 
 `bin/setup` installs gems, runs `db:setup`, clears logs/tmp files, and restarts Rails. Run the worker alongside the server when exercising email, image processing, or event transitions:
@@ -72,6 +72,6 @@ Tests require a reachable PostgreSQL test database. The Selenium/Capybara system
 ## Change discipline
 
 - Use SQL migrations and update `db/structure.sql` through Rails migration tooling; do not hand-edit generated schema output.
-- Match the repository's Ruby style: simple classes, explicit transactions, keyword metadata arguments, and Minitest `test "..."` cases. Avoid introducing APIs that Rails 7.0 or Ruby 3.0 do not support.
+- Match the repository's Ruby style: simple classes, explicit transactions, keyword metadata arguments, and Minitest `test "..."` cases. Avoid introducing APIs that Rails 7.0 or Ruby 3.3 do not support.
 - Authentication is passwordless and CSRF verification is globally disabled in the legacy application. Do not broaden public access or bypass `current_group` scoping when adding endpoints.
 - Review the deployment-sensitive effects of changes to mail, Active Storage, Que jobs, PDFs, and PostgreSQL full-text search. Validate the narrowest relevant tests before broader suite runs.
