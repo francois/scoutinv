@@ -44,7 +44,7 @@ class Product < ApplicationRecord
               .joins("JOIN events       ON events.id                = reservations.event_id".squish)
               .where.not(reservations: { event_id: event.id })
               .where("reservations.instance_id IN (SELECT instance_id FROM reservations WHERE event_id = ?)", event.id)
-              .where("daterange(events.start_on - 1, events.end_on + 1, '[]') && daterange(date :start_on - 1, date :end_on + 1, '[]')", start_on: event.start_on, end_on: event.end_on)
+              .where("daterange(events.start_on - 1, events.end_on + 1, '[]') && daterange(CAST(:start_on AS date) - 1, CAST(:end_on AS date) + 1, '[]')", start_on: event.start_on, end_on: event.end_on)
               .group("products.id", "events.id")
   }
   scope :search, ->(string){
