@@ -17,7 +17,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'aws-sdk-s3'
 gem 'kaminari', '~> 1.2'
-gem 'que', github: "que-rb/que", ref: "master"
+gem 'que', github: "que-rb/que", ref: "v1.3.1"
+# The 0.202 line deadlocks with Rails 7.0 transaction handling.
+gem 'state_machines', '~> 0.20.0'
 gem 'state_machines-activerecord', '~> 0.8.0'
 gem 'prawn'
 gem 'prawn-table'
@@ -45,6 +47,8 @@ group :development do
 end
 
 group :test do
+  # Rails 7.0's test runner is not compatible with Minitest 6 yet.
+  gem 'minitest', '< 6'
   gem 'capybara', '~> 2.15'
   gem 'webdrivers'
   gem 'rails-controller-testing'

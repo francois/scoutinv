@@ -1,4 +1,4 @@
-\restrict q6DW0b5cTJAsZXsDoOvbWzBl4IzSSg5Aia4Ke3c2AimgXEdZJgTYTvZ2dRC1apA
+\restrict HksAl2VB6bLjiIiZcjSaG8oUsAWODVCzXNE7H2fhkINcnKslGVTx2Q5ZRrBgxf6
 
 -- Dumped from database version 18.4 (Homebrew)
 -- Dumped by pg_dump version 18.4 (Homebrew)
@@ -80,6 +80,7 @@ CREATE TABLE public.que_jobs (
     expired_at timestamp with time zone,
     args jsonb DEFAULT '[]'::jsonb NOT NULL,
     data jsonb DEFAULT '{}'::jsonb NOT NULL,
+    job_schema_version integer DEFAULT 1,
     CONSTRAINT error_length CHECK (((char_length(last_error_message) <= 500) AND (char_length(last_error_backtrace) <= 10000))),
     CONSTRAINT job_class_length CHECK ((char_length(
 CASE job_class
@@ -97,7 +98,7 @@ WITH (fillfactor='90');
 -- Name: TABLE que_jobs; Type: COMMENT; Schema: public; Owner: -
 --
 
-COMMENT ON TABLE public.que_jobs IS '4';
+COMMENT ON TABLE public.que_jobs IS '5';
 
 
 --
@@ -147,7 +148,10 @@ CREATE FUNCTION public.que_job_notify() RETURNS trigger
         FROM (
           SELECT *
           FROM public.que_lockers ql, generate_series(1, ql.worker_count) AS id
-          WHERE listening AND queues @> ARRAY[NEW.queue]
+          WHERE
+            listening AND
+            queues @> ARRAY[NEW.queue] AND
+            ql.job_schema_version = NEW.job_schema_version
           ORDER BY md5(pid::text || id::text)
         ) t1
       ) t2
@@ -956,6 +960,7 @@ CREATE UNLOGGED TABLE public.que_lockers (
     ruby_hostname text NOT NULL,
     queues text[] NOT NULL,
     listening boolean NOT NULL,
+    job_schema_version integer DEFAULT 1,
     CONSTRAINT valid_queues CHECK (((array_ndims(queues) = 1) AND (array_length(queues, 1) IS NOT NULL))),
     CONSTRAINT valid_worker_priorities CHECK (((array_ndims(worker_priorities) = 1) AND (array_length(worker_priorities, 1) IS NOT NULL)))
 );
@@ -1693,6 +1698,13 @@ CREATE INDEX que_poll_idx ON public.que_jobs USING btree (queue, priority, run_a
 
 
 --
+-- Name: que_poll_idx_with_job_schema_version; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX que_poll_idx_with_job_schema_version ON public.que_jobs USING btree (job_schema_version, queue, priority, run_at, id) WHERE ((finished_at IS NULL) AND (expired_at IS NULL));
+
+
+--
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -1854,7 +1866,7 @@ ALTER TABLE ONLY public.products
 -- PostgreSQL database dump complete
 --
 
-\unrestrict q6DW0b5cTJAsZXsDoOvbWzBl4IzSSg5Aia4Ke3c2AimgXEdZJgTYTvZ2dRC1apA
+\unrestrict HksAl2VB6bLjiIiZcjSaG8oUsAWODVCzXNE7H2fhkINcnKslGVTx2Q5ZRrBgxf6
 
 SET search_path TO "$user", public;
 
@@ -1906,6 +1918,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20260731021454'),
 ('20260731030708'),
 ('20260731030709'),
-('20260731032000');
+('20260731032000'),
+('20260731033000');
 
 
