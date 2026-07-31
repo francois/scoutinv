@@ -1,6 +1,12 @@
+\restrict railsupgradescoutinv
+
+-- Dumped from database version 18.4 (Homebrew)
+-- Dumped by pg_dump version 18.4 (Homebrew)
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -55,6 +61,8 @@ $$;
 
 SET default_tablespace = '';
 
+SET default_table_access_method = heap;
+
 --
 -- Name: que_jobs; Type: TABLE; Schema: public; Owner: -
 --
@@ -62,7 +70,7 @@ SET default_tablespace = '';
 CREATE TABLE public.que_jobs (
     priority smallint DEFAULT 100 NOT NULL,
     run_at timestamp with time zone DEFAULT now() NOT NULL,
-    id bigint NOT NULL,
+    id bigint CONSTRAINT que_jobs_job_id_not_null NOT NULL,
     job_class text NOT NULL,
     error_count integer DEFAULT 0 NOT NULL,
     last_error_message text,
@@ -381,8 +389,8 @@ ALTER SEQUENCE public.active_storage_blobs_id_seq OWNED BY public.active_storage
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -505,8 +513,8 @@ CREATE TABLE public.consumables (
     base_quantity_value integer DEFAULT 1 NOT NULL,
     base_quantity_si_prefix text DEFAULT '-'::text NOT NULL,
     base_quantity_unit text DEFAULT 'unit'::text NOT NULL,
-    internal_unit_price numeric DEFAULT 0 NOT NULL,
-    external_unit_price numeric DEFAULT 0 NOT NULL,
+    internal_unit_price numeric DEFAULT 0.0 NOT NULL,
+    external_unit_price numeric DEFAULT 0.0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -682,11 +690,11 @@ ALTER SEQUENCE public.instances_id_seq OWNED BY public.instances.id;
 --
 
 CREATE TABLE public.member_sessions (
-    id bigint NOT NULL,
-    member_id bigint NOT NULL,
-    token character varying NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL
+    id bigint CONSTRAINT user_sessions_id_not_null NOT NULL,
+    member_id bigint CONSTRAINT user_sessions_user_id_not_null NOT NULL,
+    token character varying CONSTRAINT user_sessions_token_not_null NOT NULL,
+    created_at timestamp with time zone CONSTRAINT user_sessions_created_at_not_null NOT NULL,
+    updated_at timestamp with time zone CONSTRAINT user_sessions_updated_at_not_null NOT NULL
 );
 
 
@@ -714,13 +722,13 @@ ALTER SEQUENCE public.member_sessions_id_seq OWNED BY public.member_sessions.id;
 --
 
 CREATE TABLE public.members (
-    id bigint NOT NULL,
-    group_id bigint NOT NULL,
-    name character varying NOT NULL,
-    email character varying NOT NULL,
-    slug character varying(8) NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    updated_at timestamp with time zone NOT NULL,
+    id bigint CONSTRAINT users_id_not_null NOT NULL,
+    group_id bigint CONSTRAINT users_group_id_not_null NOT NULL,
+    name character varying CONSTRAINT users_name_not_null NOT NULL,
+    email character varying CONSTRAINT users_email_not_null NOT NULL,
+    slug character varying(8) CONSTRAINT users_slug_not_null NOT NULL,
+    created_at timestamp with time zone CONSTRAINT users_created_at_not_null NOT NULL,
+    updated_at timestamp with time zone CONSTRAINT users_updated_at_not_null NOT NULL,
     inventory_director boolean DEFAULT false NOT NULL,
     accountant boolean DEFAULT false NOT NULL
 );
@@ -862,8 +870,8 @@ CREATE TABLE public.products (
     unit text,
     quantity integer DEFAULT 1 NOT NULL,
     building text,
-    internal_unit_price numeric DEFAULT 0 NOT NULL,
-    external_unit_price numeric DEFAULT 0 NOT NULL
+    internal_unit_price numeric DEFAULT 0.0 NOT NULL,
+    external_unit_price numeric DEFAULT 0.0 NOT NULL
 );
 
 
@@ -940,14 +948,14 @@ WITH (fillfactor='90');
 
 CREATE TABLE public.reservations (
     id bigint NOT NULL,
-    instance_id bigint NOT NULL,
+    instance_id bigint CONSTRAINT reservations_product_id_not_null NOT NULL,
     event_id bigint NOT NULL,
     returned_on date,
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL,
     leased_on date,
-    unit_price numeric DEFAULT 0
+    unit_price numeric DEFAULT 0.0
 );
 
 
@@ -1635,14 +1643,14 @@ CREATE INDEX que_poll_idx ON public.que_jobs USING btree (queue, priority, run_a
 -- Name: que_jobs que_job_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_job_notify();
+CREATE TRIGGER que_job_notify AFTER INSERT ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_job_notify();
 
 
 --
 -- Name: que_jobs que_state_notify; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE PROCEDURE public.que_state_notify();
+CREATE TRIGGER que_state_notify AFTER INSERT OR DELETE OR UPDATE ON public.que_jobs FOR EACH ROW EXECUTE FUNCTION public.que_state_notify();
 
 
 --
@@ -1742,6 +1750,14 @@ ALTER TABLE ONLY public.reservations
 
 
 --
+-- Name: active_storage_attachments fk_rails_c3b3935057; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_attachments
+    ADD CONSTRAINT fk_rails_c3b3935057 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
 -- Name: consumable_categories fk_rails_c76d6455f3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1776,6 +1792,8 @@ ALTER TABLE ONLY public.products
 --
 -- PostgreSQL database dump complete
 --
+
+\unrestrict railsupgradescoutinv
 
 SET search_path TO "$user", public;
 
@@ -1823,6 +1841,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190128122749'),
 ('20190128235529'),
 ('20190325233523'),
-('20190403230542');
+('20190403230542'),
+('20260731021454');
 
 

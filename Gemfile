@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.6'
 
-gem 'rails', '~> 5.2.2.1'
+gem 'rails', '~> 6.0.6.1'
 gem 'pg'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
@@ -21,6 +21,7 @@ gem 'prawn'
 gem 'prawn-table'
 
 # Use ActiveStorage variant
+gem 'image_processing', '~> 1.2'
 gem 'mini_magick', '~> 4.8'
 
 # Performance and exception monitoring
