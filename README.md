@@ -75,7 +75,7 @@ go on an expedition:
 
 # Technical Notes
 
-This is a Ruby on Rails 7.0.10 application, running on Ruby 3.0.7 and using PostgreSQL.
+This is a Ruby on Rails 7.0.10 application, running on Ruby 3.3.11 and using PostgreSQL.
 The application is styled using [ZURB Foundation 6.4.3](https://foundation.zurb.com/sites/docs/index.html).
 
 The application is deployed to Heroku, on the free tier (10k rows, 18 hours of uptime per day).
@@ -91,8 +91,8 @@ available somewhere, and then run:
     git clone https://gitlab.com/francoisb/scoutinv.git
     cd scoutinv
 
-    # Install dependencies
-    bundle install
+    # Install dependencies with the pinned Ruby version
+    rvm use ruby-3.3.11 do bundle install
 
     # Setup the database
     # NOTE: This is the default database URL, change as you see fit
