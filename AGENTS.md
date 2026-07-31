@@ -24,6 +24,19 @@ bin/rails db:create db:migrate db:seed
 bin/rails server
 ```
 
+Use the pinned Ruby runtime when installing or running commands. If the shell is on a newer default Ruby, prefer:
+
+```sh
+rvm use ruby-2.7.6 do bundle install
+```
+
+On recent macOS/Xcode toolchains, `nio4r` 2.5.8 can fail to build because Apple clang treats an old native-extension function-pointer mismatch as an error. Do not upgrade Ruby, Rails, or `nio4r` just to work around this local install issue. Add a local ignored Bundler config and reinstall:
+
+```sh
+rvm use ruby-2.7.6 do bundle config set --local build.nio4r "--with-cflags=-Wno-error=incompatible-function-pointer-types"
+rvm use ruby-2.7.6 do bundle install
+```
+
 `bin/setup` installs gems, runs `db:setup`, clears logs/tmp files, and restarts Rails. Run the worker alongside the server when exercising email, image processing, or event transitions:
 
 ```sh
