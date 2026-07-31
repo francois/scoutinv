@@ -3,8 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.7'
 
-gem 'rails', '~> 6.0.6.1'
-# Rails 6.0 relies on concurrent-ruby loading Logger during boot.
+gem 'rails', '~> 6.1.7'
+# Rails 6.1 relies on concurrent-ruby loading Logger during boot.
 gem 'concurrent-ruby', '1.1.9'
 gem 'pg'
 gem 'puma', '~> 3.11'
