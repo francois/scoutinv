@@ -7,7 +7,7 @@ gem 'rails', '~> 7.0.10'
 # Rails 7 no longer depends on Sprockets, but this application still uses it.
 gem 'sprockets-rails'
 gem 'pg'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 8.0'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
