@@ -33,7 +33,9 @@ class Group < ApplicationRecord
     notes.first
   end
 
-  def register_new_troop(attributes, metadata: {})
+  def register_new_troop(attributes = nil, metadata: {}, **keyword_attributes)
+    attributes ||= keyword_attributes
+
     troops.build(attributes).tap do |new_troop|
       domain_events << TroopRegistered.new(
         data: {
@@ -44,7 +46,9 @@ class Group < ApplicationRecord
     end
   end
 
-  def register_new_event(attributes, metadata: {})
+  def register_new_event(attributes = nil, metadata: {}, **keyword_attributes)
+    attributes ||= keyword_attributes
+
     events.build(attributes).tap do |new_event|
       domain_events << EventRegistered.new(
         data: {
@@ -60,7 +64,9 @@ class Group < ApplicationRecord
     end
   end
 
-  def register_new_product(attributes, metadata: {})
+  def register_new_product(attributes = nil, metadata: {}, **keyword_attributes)
+    attributes ||= keyword_attributes
+
     products.build(attributes).tap do |new_product|
       domain_events << ProductRegistered.new(
         data: {
@@ -79,7 +85,9 @@ class Group < ApplicationRecord
     end
   end
 
-  def register_new_consumable(attributes, metadata: {})
+  def register_new_consumable(attributes = nil, metadata: {}, **keyword_attributes)
+    attributes ||= keyword_attributes
+
     consumables.build(attributes).tap do |new_consumable|
       domain_events << ConsumableRegistered.new(
         data: {
@@ -98,7 +106,9 @@ class Group < ApplicationRecord
     end
   end
 
-  def register_new_member(attributes, metadata: {})
+  def register_new_member(attributes = nil, metadata: {}, **keyword_attributes)
+    attributes ||= keyword_attributes
+
     members.build(name: attributes.fetch(:name), email: attributes.fetch(:email)).tap do |new_member|
       domain_events << MemberRegistered.new(
         data: {
