@@ -17,10 +17,12 @@ WEB_IMAGE_CONFIG = {
 module Scoutinv
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
 
-    config.active_support.cache_format_version = 7.0
-    config.active_support.disable_to_s_conversion = true
+    config.active_support.cache_format_version = 7.1
+
+    # Rails 7.1 no longer adds autoloaded application directories to $LOAD_PATH.
+    config.add_autoload_paths_to_load_path = false
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

@@ -75,7 +75,7 @@ go on an expedition:
 
 # Technical Notes
 
-This is a Ruby on Rails 7.0.10 application, running on Ruby 3.4.9 and using PostgreSQL.
+This is a Ruby on Rails 7.1.6 application, running on Ruby 3.4.9 and using PostgreSQL.
 The application is styled using [ZURB Foundation 6.4.3](https://foundation.zurb.com/sites/docs/index.html).
 
 The application is deployed to Heroku, on the free tier (10k rows, 18 hours of uptime per day).
@@ -101,3 +101,12 @@ available somewhere, and then run:
     bin/rails server
 
 After that, visit http://localhost:3000/ and start coding.
+
+## Tests
+
+Run the non-system test suite with:
+
+    bin/rails test test/controllers test/integration test/jobs test/models
+
+The Selenium system tests are currently broken and are intentionally excluded from
+the Rails 7.1 upgrade verification.

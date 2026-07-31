@@ -4,9 +4,9 @@
 
 Scoutinv is a multi-tenant inventory and rental application for Scout groups. Members authenticate with a one-time email link, then manage their group's reusable products, consumables, events, reservations, and reports. The default UI locale is French; English is also supported.
 
-This is a Rails 7.0 monolith, not an API application:
+This is a Rails 7.1 monolith, not an API application:
 
-- Ruby is pinned to `3.4.9` in `.ruby-version`; Rails is `~> 7.0.10`.
+- Ruby is pinned to `3.4.9` in `.ruby-version`; Rails is `~> 7.1.6`.
 - PostgreSQL is required. `db/structure.sql` is the schema source and uses the `citext` and `unaccent` extensions.
 - Server-rendered ERB, Sprockets, Foundation 6, jQuery, Rails UJS, and Turbolinks make up the UI. `package.json` has no frontend dependencies or build step.
 - Tests use Minitest fixtures, integration tests, and a small Selenium/Capybara system-test suite.
@@ -41,12 +41,12 @@ The `Procfile` defines the Heroku process types: `web`, `worker`, and a `release
 ## Verification
 
 ```sh
-bin/rails test
+bin/rails test test/controllers test/integration test/jobs test/models
 bin/rails test test/models/event_test.rb
 bin/rails test test/controllers/events/reservations_controller_test.rb
 ```
 
-Tests require a reachable PostgreSQL test database. The Selenium/Capybara system tests are currently broken and are not part of the upgrade verification; the remaining test suite must pass. There is no configured linting or JavaScript test command. Add focused model or integration tests for behavior changes; use existing YAML fixtures in `test/fixtures` and `LoginTestHelper` for authenticated controller flows. Several system tests are legacy-generated and should be treated carefully when expanding coverage.
+Tests require a reachable PostgreSQL test database. The Selenium/Capybara system tests are currently broken and are intentionally excluded; the remaining test suite must pass. There is no configured linting or JavaScript test command. Add focused model or integration tests for behavior changes; use existing YAML fixtures in `test/fixtures` and `LoginTestHelper` for authenticated controller flows. Several system tests are legacy-generated and should be treated carefully when expanding coverage.
 
 ## Structure and domain rules
 
@@ -72,6 +72,7 @@ Tests require a reachable PostgreSQL test database. The Selenium/Capybara system
 ## Change discipline
 
 - Use SQL migrations and update `db/structure.sql` through Rails migration tooling; do not hand-edit generated schema output.
-- Match the repository's Ruby style: simple classes, explicit transactions, keyword metadata arguments, and Minitest `test "..."` cases. Avoid introducing APIs that Rails 7.0 or Ruby 3.4 do not support.
+- Match the repository's Ruby style: simple classes, explicit transactions, keyword metadata arguments, and Minitest `test "..."` cases. Avoid introducing APIs that Rails 7.1 or Ruby 3.4 do not support.
+- `config.load_defaults` and `config.active_support.cache_format_version` are both 7.1.
 - Authentication is passwordless and CSRF verification is globally disabled in the legacy application. Do not broaden public access or bypass `current_group` scoping when adding endpoints.
 - Review the deployment-sensitive effects of changes to mail, Active Storage, Que jobs, PDFs, and PostgreSQL full-text search. Validate the narrowest relevant tests before broader suite runs.
