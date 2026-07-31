@@ -19,8 +19,16 @@
 
     <title><%= page_title.blank? ? nil : page_title + " – ".html_safe %>Scoutinv</title>
     <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag "foundation.min", media: "all", "data-turbolinks-track": "reload" %>
+    <%= stylesheet_link_tag "app", media: "all", "data-turbolinks-track": "reload" %>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "vendor/jquery", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "vendor/what-input", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "vendor/foundation.min", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "rails-ujs", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "activestorage", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "turbolinks", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "app", "data-turbolinks-track": "reload" %>
   </head>
   <body class="<%= :staging if STAGING %><%= :development if Rails.env.development? %>">
     <div class="top-bar" id="responsive-menu">

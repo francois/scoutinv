@@ -6,12 +6,9 @@ ruby '4.0.5'
 gem 'rails', '~> 8.1.0'
 # Ruby 4 no longer includes this as a default gem; MiniMagick requires it at boot.
 gem 'benchmark'
-# Rails 7 no longer depends on Sprockets, but this application still uses it.
-gem 'sprockets-rails'
+gem 'propshaft'
 gem 'pg'
 gem 'puma', '~> 8.0'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
 
 gem 'mimemagic', '> 0.3.4'
 gem 'turbolinks', '~> 5'
