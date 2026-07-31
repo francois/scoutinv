@@ -3,7 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '4.0.5'
 
-gem 'rails', '~> 8.0.0'
+gem 'rails', '~> 8.1.0'
+# Ruby 4 no longer includes this as a default gem; MiniMagick requires it at boot.
+gem 'benchmark'
 # Rails 7 no longer depends on Sprockets, but this application still uses it.
 gem 'sprockets-rails'
 gem 'pg'
