@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '4.0.5'
 
-gem 'rails', '~> 7.2.0'
+gem 'rails', '~> 8.0.0'
 # Rails 7 no longer depends on Sprockets, but this application still uses it.
 gem 'sprockets-rails'
 gem 'pg'
