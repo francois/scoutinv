@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.4.9'
 
-gem 'rails', '~> 7.0.10'
+gem 'rails', '~> 7.1.6'
 # Rails 7 no longer depends on Sprockets, but this application still uses it.
 gem 'sprockets-rails'
 gem 'pg'
@@ -47,7 +47,7 @@ group :development do
 end
 
 group :test do
-  # Rails 7.0's test runner is not compatible with Minitest 6 yet.
+  # Keep Minitest 5 while the legacy test suite is modernized separately.
   gem 'minitest', '< 6'
   gem 'capybara', '~> 2.15'
   gem 'webdrivers'
