@@ -75,7 +75,7 @@ go on an expedition:
 
 # Technical Notes
 
-This is a Ruby on Rails 6.1 application, running on Ruby 3.0.7 and using PostgreSQL.
+This is a Ruby on Rails 7.0.10 application, running on Ruby 3.0.7 and using PostgreSQL.
 The application is styled using [ZURB Foundation 6.4.3](https://foundation.zurb.com/sites/docs/index.html).
 
 The application is deployed to Heroku, on the free tier (10k rows, 18 hours of uptime per day).
@@ -97,7 +97,7 @@ available somewhere, and then run:
     # Setup the database
     # NOTE: This is the default database URL, change as you see fit
     export DATABASE_URL=postgresql://localhost:5432/scoutinv_development
-    rails db:create db:migrate db:seed
-    rails server
+    bin/rails db:create db:migrate db:seed
+    bin/rails server
 
 After that, visit http://localhost:3000/ and start coding.

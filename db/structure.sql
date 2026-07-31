@@ -1,4 +1,4 @@
-\restrict paEmchiQfwOWAyFXFhqr4ih6eqEr3C3p0rkfdKNfdlawqbdG8n2ybqknOSBsP1P
+\restrict q6DW0b5cTJAsZXsDoOvbWzBl4IzSSg5Aia4Ke3c2AimgXEdZJgTYTvZ2dRC1apA
 
 -- Dumped from database version 18.4 (Homebrew)
 -- Dumped by pg_dump version 18.4 (Homebrew)
@@ -358,7 +358,7 @@ CREATE TABLE public.active_storage_blobs (
     content_type character varying,
     metadata text,
     byte_size bigint NOT NULL,
-    checksum character varying NOT NULL,
+    checksum character varying,
     created_at timestamp without time zone NOT NULL,
     service_name character varying NOT NULL
 );
@@ -1854,7 +1854,7 @@ ALTER TABLE ONLY public.products
 -- PostgreSQL database dump complete
 --
 
-\unrestrict paEmchiQfwOWAyFXFhqr4ih6eqEr3C3p0rkfdKNfdlawqbdG8n2ybqknOSBsP1P
+\unrestrict q6DW0b5cTJAsZXsDoOvbWzBl4IzSSg5Aia4Ke3c2AimgXEdZJgTYTvZ2dRC1apA
 
 SET search_path TO "$user", public;
 
@@ -1905,6 +1905,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190403230542'),
 ('20260731021454'),
 ('20260731030708'),
-('20260731030709');
+('20260731030709'),
+('20260731032000');
 
 

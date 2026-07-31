@@ -3,9 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.7'
 
-gem 'rails', '~> 6.1.7'
-# Rails 6.1 relies on concurrent-ruby loading Logger during boot.
-gem 'concurrent-ruby', '1.1.9'
+gem 'rails', '~> 7.0.10'
+# Rails 7 no longer depends on Sprockets, but this application still uses it.
+gem 'sprockets-rails'
 gem 'pg'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
@@ -38,9 +38,9 @@ end
 
 group :development do
   gem 'bullet'
-  gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'listen', '~> 3.5'
+  gem 'spring', '>= 3.0.0'
+  gem 'spring-watcher-listen', '>= 2.1.0'
   gem 'web-console', '>= 3.3.0'
 end
 
