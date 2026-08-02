@@ -18,14 +18,15 @@ gem 'aws-sdk-s3'
 gem 'kaminari', '~> 1.2'
 gem 'que', github: "que-rb/que", ref: "v2.4.1"
 # The 0.202 line deadlocks with Rails 7.0 transaction handling.
-gem 'state_machines', '~> 0.20.0'
-gem 'state_machines-activerecord', '~> 0.8.0'
+gem 'state_machines', '~> 0.202.0'
+gem 'state_machines-activerecord', '~> 0.200.0'
 gem 'prawn'
 gem 'prawn-table'
 
 # Use ActiveStorage variant
-gem 'image_processing', '~> 1.2'
-gem 'mini_magick', '~> 4.8'
+gem 'image_processing', '~> 2.0'
+gem 'mini_magick', '~> 5.3'
+gem 'ruby-vips', '~> 2.0'
 
 # Performance and exception monitoring
 gem 'scout_apm'
@@ -47,7 +48,7 @@ end
 
 group :test do
   # Keep Minitest 5 while the legacy test suite is modernized separately.
-  gem 'minitest', '< 6'
+  gem 'minitest', '< 7'
   gem 'capybara', '~> 3.40'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
