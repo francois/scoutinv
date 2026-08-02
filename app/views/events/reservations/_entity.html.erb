@@ -50,7 +50,7 @@
                 <%= hidden_field_tag "products[#{entity.slug}]", "1" %>
                 <%= hidden_field_tag "add", "1" %>
                 <%= button_tag class: "button primary tiny",
-                  disabled: entity.available_quantity - entity.reserved_quantity_on(@event.date_range) <= 0,
+                  disabled: entity.available_quantity.zero?,
                   title: t(".plus_one_hover") do %>
                   <%= t(".plus_one") %>
                 <% end %>
