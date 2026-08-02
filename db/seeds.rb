@@ -1,6 +1,6 @@
-tent    = Category.create(name: "tent")
-kitchen = Category.create(name: "kitchen")
-misc    = Category.create(name: "miscellaneous")
+tent    = Category.create!(name: "tent", max_quantity: 99)
+kitchen = Category.create!(name: "kitchen", max_quantity: 99)
+misc    = Category.create!(name: "miscellaneous", max_quantity: 99)
 
 fleurimont = Group.create!(name: "10ème Groupe Scout Est-Calade")
 francois   = fleurimont.members.create!(email: "francois@teksol.info",  name: "Le Chouette Baloo")

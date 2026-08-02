@@ -48,8 +48,7 @@ end
 group :test do
   # Keep Minitest 5 while the legacy test suite is modernized separately.
   gem 'minitest', '< 6'
-  gem 'capybara', '~> 2.15'
-  gem 'webdrivers'
+  gem 'capybara', '~> 3.40'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
 end
