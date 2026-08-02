@@ -294,6 +294,9 @@ GEM
     reline (0.6.3)
       io-console (~> 0.5)
     rexml (3.4.4)
+    ruby-vips (2.3.0)
+      ffi (~> 1.12)
+      logger
     rubyzip (3.4.1)
     scout_apm (6.2.0)
       parser
@@ -374,6 +377,7 @@ DEPENDENCIES
   que!
   rails (~> 8.1.0)
   rails-controller-testing
+  ruby-vips (~> 2.0)
   scout_apm
   selenium-webdriver
   sentry-raven

@@ -26,6 +26,7 @@ gem 'prawn-table'
 # Use ActiveStorage variant
 gem 'image_processing', '~> 2.0'
 gem 'mini_magick', '~> 5.3'
+gem 'ruby-vips', '~> 2.0'
 
 # Performance and exception monitoring
 gem 'scout_apm'
