@@ -1,6 +1,6 @@
-tent    = Category.create(name: "tent")
-kitchen = Category.create(name: "kitchen")
-misc    = Category.create(name: "miscellaneous")
+tent    = Category.create!(name: "tent", max_quantity: 99)
+kitchen = Category.create!(name: "kitchen", max_quantity: 99)
+misc    = Category.create!(name: "miscellaneous", max_quantity: 99)
 
 fleurimont = Group.create!(name: "10ème Groupe Scout Est-Calade")
 francois   = fleurimont.members.create!(email: "francois@teksol.info",  name: "Le Chouette Baloo")
@@ -10,12 +10,12 @@ tente1 = fleurimont.products.create!(name: "Tente 4x5 6 personnes (#1)")
 tente1.categories = [ tent ]
 
 tente2 = fleurimont.products.create!(name: "Tente 4x5 6 personnes (#2)")
-tente1.categories = [ tent ]
+tente2.categories = [ tent ]
 
 pot_lait1 = fleurimont.products.create!(name: "Pot à lait #1")
 pot_lait1.categories = [ kitchen ]
 
-pot_lait2 = fleurimont.products.create!(name: "Pot à lait #1")
+pot_lait2 = fleurimont.products.create!(name: "Pot à lait #2")
 pot_lait2.categories = [ kitchen ]
 
 rond_de_feu = fleurimont.products.create!(name: "Rond de feu")
