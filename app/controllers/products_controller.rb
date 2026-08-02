@@ -51,7 +51,7 @@ class ProductsController < ApplicationController
       @product = current_group.register_new_product(product_params, metadata: domain_event_metadata)
 
       @attached = []
-      @attached.concat(@product.images.attach(params[:product][:images])) if params[:product][:images].present?
+      @attached.concat(attach_images(params[:product][:images]))
       @attached.concat(import(params[:product][:image_url]))
 
       if params[:clone_from].present?
@@ -81,7 +81,7 @@ class ProductsController < ApplicationController
       @product.change_data(product_params, metadata: domain_event_metadata)
 
       @attached = []
-      @attached.concat(@product.images.attach(params[:product][:images])) if params[:product][:images].present?
+      @attached.concat(attach_images(params[:product][:images]))
       @attached.concat(import(params[:product][:image_url]))
 
       @product.save.tap do
@@ -150,10 +150,17 @@ class ProductsController < ApplicationController
 
     response = Net::HTTP.get_response(uri)
 
-    @product.images.attach(
+    attach_images(
       io: StringIO.new(response.body),
       filename: File.basename(uri.path),
       content_type: response["Content-Type"],
     )
+  end
+
+  def attach_images(attachables)
+    attachables = Array.wrap(attachables).compact_blank
+    return [] if attachables.empty?
+
+    @product.images.attach(attachables).last(attachables.size)
   end
 end

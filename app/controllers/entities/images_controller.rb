@@ -51,7 +51,7 @@ class Entities::ImagesController < ApplicationController
       img.write(updname)
 
       File.open(updname, "r:ASCII-8BIT") do |io|
-        @new_image = @entity.images.attach(io: io, filename: @image.filename).first
+        @new_image = @entity.images.attach(io: io, filename: @image.filename).last
       end
       @image.destroy
 

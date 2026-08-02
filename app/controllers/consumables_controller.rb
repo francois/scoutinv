@@ -51,7 +51,7 @@ class ConsumablesController < ApplicationController
       @consumable = current_group.register_new_consumable(consumable_params, metadata: domain_event_metadata)
 
       @attached = []
-      @attached.concat(@consumable.images.attach(params[:consumable][:images])) if params[:consumable][:images].present?
+      @attached.concat(attach_images(params[:consumable][:images]))
       @attached.concat(import(params[:consumable][:image_url]))
 
       if params[:clone_from].present?
@@ -81,7 +81,7 @@ class ConsumablesController < ApplicationController
       @consumable.change_data(consumable_params, metadata: domain_event_metadata)
 
       @attached = []
-      @attached.concat(@consumable.images.attach(params[:consumable][:images])) if params[:consumable][:images].present?
+      @attached.concat(attach_images(params[:consumable][:images]))
       @attached.concat(import(params[:consumable][:image_url]))
 
       @consumable.save.tap do
@@ -138,10 +138,17 @@ class ConsumablesController < ApplicationController
 
     response = Net::HTTP.get_response(uri)
 
-    @consumable.images.attach(
+    attach_images(
       io: StringIO.new(response.body),
       filename: File.basename(uri.path),
       content_type: response["Content-Type"],
     )
+  end
+
+  def attach_images(attachables)
+    attachables = Array.wrap(attachables).compact_blank
+    return [] if attachables.empty?
+
+    @consumable.images.attach(attachables).last(attachables.size)
   end
 end
