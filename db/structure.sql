@@ -1,8 +1,3 @@
-\restrict gDfLRO1DwcfZvR3rRAO6rhiY0ZxmG4IHbOjp6dJhW10CbQLnPVa4NtK9KQOfJZp
-
--- Dumped from database version 18.4 (Homebrew)
--- Dumped by pg_dump version 18.4 (Homebrew)
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -27,6 +22,20 @@ CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
 --
 
 COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track planning and execution statistics of all SQL statements executed';
 
 
 --
@@ -70,7 +79,7 @@ SET default_table_access_method = heap;
 CREATE TABLE public.que_jobs (
     priority smallint DEFAULT 100 NOT NULL,
     run_at timestamp with time zone DEFAULT now() NOT NULL,
-    id bigint CONSTRAINT que_jobs_job_id_not_null NOT NULL,
+    id bigint NOT NULL,
     job_class text NOT NULL,
     error_count integer DEFAULT 0 NOT NULL,
     last_error_message text,
@@ -425,8 +434,8 @@ ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.acti
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -549,8 +558,8 @@ CREATE TABLE public.consumables (
     base_quantity_value integer DEFAULT 1 NOT NULL,
     base_quantity_si_prefix text DEFAULT '-'::text NOT NULL,
     base_quantity_unit text DEFAULT 'unit'::text NOT NULL,
-    internal_unit_price numeric DEFAULT 0.0 NOT NULL,
-    external_unit_price numeric DEFAULT 0.0 NOT NULL,
+    internal_unit_price numeric DEFAULT 0 NOT NULL,
+    external_unit_price numeric DEFAULT 0 NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -726,11 +735,11 @@ ALTER SEQUENCE public.instances_id_seq OWNED BY public.instances.id;
 --
 
 CREATE TABLE public.member_sessions (
-    id bigint CONSTRAINT user_sessions_id_not_null NOT NULL,
-    member_id bigint CONSTRAINT user_sessions_user_id_not_null NOT NULL,
-    token character varying CONSTRAINT user_sessions_token_not_null NOT NULL,
-    created_at timestamp with time zone CONSTRAINT user_sessions_created_at_not_null NOT NULL,
-    updated_at timestamp with time zone CONSTRAINT user_sessions_updated_at_not_null NOT NULL
+    id bigint NOT NULL,
+    member_id bigint NOT NULL,
+    token character varying NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL
 );
 
 
@@ -758,13 +767,13 @@ ALTER SEQUENCE public.member_sessions_id_seq OWNED BY public.member_sessions.id;
 --
 
 CREATE TABLE public.members (
-    id bigint CONSTRAINT users_id_not_null NOT NULL,
-    group_id bigint CONSTRAINT users_group_id_not_null NOT NULL,
-    name character varying CONSTRAINT users_name_not_null NOT NULL,
-    email character varying CONSTRAINT users_email_not_null NOT NULL,
-    slug character varying(8) CONSTRAINT users_slug_not_null NOT NULL,
-    created_at timestamp with time zone CONSTRAINT users_created_at_not_null NOT NULL,
-    updated_at timestamp with time zone CONSTRAINT users_updated_at_not_null NOT NULL,
+    id bigint NOT NULL,
+    group_id bigint NOT NULL,
+    name character varying NOT NULL,
+    email character varying NOT NULL,
+    slug character varying(8) NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
     inventory_director boolean DEFAULT false NOT NULL,
     accountant boolean DEFAULT false NOT NULL
 );
@@ -906,8 +915,8 @@ CREATE TABLE public.products (
     unit text,
     quantity integer DEFAULT 1 NOT NULL,
     building text,
-    internal_unit_price numeric DEFAULT 0.0 NOT NULL,
-    external_unit_price numeric DEFAULT 0.0 NOT NULL
+    internal_unit_price numeric DEFAULT 0 NOT NULL,
+    external_unit_price numeric DEFAULT 0 NOT NULL
 );
 
 
@@ -985,14 +994,14 @@ WITH (fillfactor='90');
 
 CREATE TABLE public.reservations (
     id bigint NOT NULL,
-    instance_id bigint CONSTRAINT reservations_product_id_not_null NOT NULL,
+    instance_id bigint NOT NULL,
     event_id bigint NOT NULL,
     returned_on date,
     slug character varying(8) NOT NULL,
     created_at timestamp with time zone NOT NULL,
     updated_at timestamp with time zone NOT NULL,
     leased_on date,
-    unit_price numeric DEFAULT 0.0
+    unit_price numeric DEFAULT 0
 );
 
 
@@ -1867,60 +1876,57 @@ ALTER TABLE ONLY public.products
 -- PostgreSQL database dump complete
 --
 
-\unrestrict gDfLRO1DwcfZvR3rRAO6rhiY0ZxmG4IHbOjp6dJhW10CbQLnPVa4NtK9KQOfJZp
-
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20180322144222'),
-('20180322145102'),
-('20180322145938'),
-('20180322173808'),
-('20180323021501'),
-('20180324014444'),
-('20180324014458'),
-('20180325023913'),
-('20180328011728'),
-('20180328034100'),
-('20180329155019'),
-('20180402014437'),
-('20180402015341'),
-('20180402020351'),
-('20180402205947'),
-('20180416132155'),
-('20180422132241'),
-('20180717004049'),
-('20180731025753'),
-('20180803024849'),
-('20180902151206'),
-('20180904022551'),
-('20180905033203'),
-('20180905195512'),
-('20180906032435'),
-('20180909163014'),
-('20180909163128'),
-('20180909170934'),
-('20180917024410'),
-('20180928030106'),
-('20181001022110'),
-('20181001023801'),
-('20181004030547'),
-('20181004031036'),
-('20181004032326'),
-('20181111211055'),
-('20181111211434'),
-('20181112011450'),
-('20181231233310'),
-('20190101025658'),
-('20190128122749'),
-('20190128235529'),
-('20190325233523'),
-('20190403230542'),
-('20260731021454'),
-('20260731030708'),
-('20260731030709'),
-('20260731032000'),
+('20260731034500'),
 ('20260731033000'),
-('20260731034500');
-
+('20260731032000'),
+('20260731030709'),
+('20260731030708'),
+('20260731021454'),
+('20190403230542'),
+('20190325233523'),
+('20190128235529'),
+('20190128122749'),
+('20190101025658'),
+('20181231233310'),
+('20181112011450'),
+('20181111211434'),
+('20181111211055'),
+('20181004032326'),
+('20181004031036'),
+('20181004030547'),
+('20181001023801'),
+('20181001022110'),
+('20180928030106'),
+('20180917024410'),
+('20180909170934'),
+('20180909163128'),
+('20180909163014'),
+('20180906032435'),
+('20180905195512'),
+('20180905033203'),
+('20180904022551'),
+('20180902151206'),
+('20180803024849'),
+('20180731025753'),
+('20180717004049'),
+('20180422132241'),
+('20180416132155'),
+('20180402205947'),
+('20180402020351'),
+('20180402015341'),
+('20180402014437'),
+('20180329155019'),
+('20180328034100'),
+('20180328011728'),
+('20180325023913'),
+('20180324014458'),
+('20180324014444'),
+('20180323021501'),
+('20180322173808'),
+('20180322145938'),
+('20180322145102'),
+('20180322144222');
 
