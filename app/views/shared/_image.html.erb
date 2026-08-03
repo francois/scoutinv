@@ -1,6 +1,6 @@
 <div class="cell entity-image" id="entity-<%= entity.slug %>-image-<%= image.id %>">
   <div class="card">
-    <%= link_to image_tag(image.variant(WEB_IMAGE_CONFIG.merge(resize: "300x225")), alt: "", size: "300x225"), image, class: "thumbnail" %>
+    <%= link_to image_tag(image.variant(WEB_IMAGE_CONFIG.merge(resize_to_limit: [ 300, 225 ])), alt: "", size: "300x225"), image, class: "thumbnail" %>
     <% if current_member.inventory_director?  %>
       <div class="card-section">
         <div class="grid-x grid-margin-x">

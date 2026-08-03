@@ -9,9 +9,11 @@ Bundler.require(*Rails.groups)
 STAGING = ENV.fetch("STAGING", "false") == "true"
 
 WEB_IMAGE_CONFIG = {
-  strip: true,
-  quality: 80,
-  resize: 1200,
+  resize_to_limit: [ 1200, 1200 ],
+  saver: {
+    strip: true,
+    quality: 80,
+  },
 }
 
 module Scoutinv

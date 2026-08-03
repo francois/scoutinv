@@ -46,7 +46,7 @@
             <li class="<%= :active if on_groups_page? %>">
               <%= link_to  current_group do %>
                 <% if current_group.logo.attached? %>
-                  <%= image_tag current_group.logo.variant(resize: "x15"), alt: "", height: 15, style: "max-height: 15px" %>
+                  <%= image_tag current_group.logo.variant(resize_to_limit: [ nil, 15 ]), alt: "", height: 15, style: "max-height: 15px" %>
                 <% end %>
                 <%= truncate(current_group.name, length: 30) %>
               <% end %>

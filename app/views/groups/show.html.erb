@@ -5,7 +5,7 @@
 
     <h2>
       <% if @group.logo.attached? %>
-        <%= image_tag @group.logo.variant(resize: "x55"), alt: "", height: 55, style: "max-height: 55px" %>
+        <%= image_tag @group.logo.variant(resize_to_limit: [ nil, 55 ]), alt: "", height: 55, style: "max-height: 55px" %>
       <% end %>
       <%= t(".members") %>
     </h2>

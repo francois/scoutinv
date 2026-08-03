@@ -9,13 +9,13 @@ class ShrinkImageJob < ApplicationJob
       image.variant(WEB_IMAGE_CONFIG).processed
 
       logger.info "Creating smallest thumbnail"
-      image.variant(WEB_IMAGE_CONFIG.merge(resize: "x100")).processed
+      image.variant(WEB_IMAGE_CONFIG.merge(resize_to_limit: [ nil, 100 ])).processed
 
       logger.info "Creating medium thumbnail"
-      image.variant(WEB_IMAGE_CONFIG.merge(resize: "x250")).processed
+      image.variant(WEB_IMAGE_CONFIG.merge(resize_to_limit: [ nil, 250 ])).processed
 
       logger.info "Creating largest thumbnail"
-      image.variant(WEB_IMAGE_CONFIG.merge(resize: "300x225")).processed
+      image.variant(WEB_IMAGE_CONFIG.merge(resize_to_limit: [ 300, 225 ])).processed
     end
   end
 end
