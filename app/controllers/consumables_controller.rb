@@ -1,4 +1,6 @@
 class ConsumablesController < ApplicationController
+  include SanitizesImages
+
   before_action :set_consumable, only: [:show, :edit, :update, :destroy]
   before_action :load_categories, except: %i[ destroy ]
 
@@ -74,6 +76,12 @@ class ConsumablesController < ApplicationController
       @page_title = "New Consumable"
       render :new
     end
+  rescue ImageSanitizer::Error
+    @consumable.errors.add(:images, :unsupported_image)
+    @page_title = "New Consumable"
+    render :new, status: :unprocessable_content
+  ensure
+    close_sanitized_images
   end
 
   def update
@@ -97,6 +105,12 @@ class ConsumablesController < ApplicationController
       @page_title = "Edit #{@consumable.name}"
       render :edit
     end
+  rescue ImageSanitizer::Error
+    @consumable.errors.add(:images, :unsupported_image)
+    @page_title = "Edit #{@consumable.name}"
+    render :edit, status: :unprocessable_content
+  ensure
+    close_sanitized_images
   end
 
   def destroy
@@ -146,9 +160,9 @@ class ConsumablesController < ApplicationController
   end
 
   def attach_images(attachables)
-    attachables = Array.wrap(attachables).compact_blank
-    return [] if attachables.empty?
+    sanitized = sanitize_images(attachables)
+    return [] if sanitized.empty?
 
-    @consumable.images.attach(attachables).last(attachables.size)
+    @consumable.images.attach(sanitized).last(sanitized.size)
   end
 end
