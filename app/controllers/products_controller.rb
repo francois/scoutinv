@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  include SanitizesImages
+
   before_action :set_product, only: [:show, :edit, :update, :destroy, :convert]
   before_action :load_categories, except: %i[ destroy ]
 
@@ -74,6 +76,12 @@ class ProductsController < ApplicationController
       @page_title = "New Product"
       render :new
     end
+  rescue ImageSanitizer::Error
+    @product.errors.add(:images, :unsupported_image)
+    @page_title = "New Product"
+    render :new, status: :unprocessable_content
+  ensure
+    close_sanitized_images
   end
 
   def update
@@ -97,6 +105,12 @@ class ProductsController < ApplicationController
       @page_title = "Edit #{@product.name}"
       render :edit
     end
+  rescue ImageSanitizer::Error
+    @product.errors.add(:images, :unsupported_image)
+    @page_title = "Edit #{@product.name}"
+    render :edit, status: :unprocessable_content
+  ensure
+    close_sanitized_images
   end
 
   def destroy
@@ -158,9 +172,9 @@ class ProductsController < ApplicationController
   end
 
   def attach_images(attachables)
-    attachables = Array.wrap(attachables).compact_blank
-    return [] if attachables.empty?
+    sanitized = sanitize_images(attachables)
+    return [] if sanitized.empty?
 
-    @product.images.attach(attachables).last(attachables.size)
+    @product.images.attach(sanitized).last(sanitized.size)
   end
 end

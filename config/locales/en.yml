@@ -1,4 +1,7 @@
 en:
+  errors:
+    messages:
+      unsupported_image: must be a JPEG, PNG, or WebP image
   activerecord:
     models:
       event: Event

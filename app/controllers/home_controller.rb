@@ -19,7 +19,8 @@ class HomeController < PublicController
     return render file: "public/404.html", status: :bad_request unless VALID_SIZES.include?(params[:size])
 
     if current_group && current_group.logo.attached?
-      redirect_to url_for(current_group.logo.variant(resize: params[:size]))
+      width, height = params[:size].split("x").map(&:to_i)
+      redirect_to url_for(current_group.logo.variant(resize_to_limit: [ width, height ]))
     else
       render file: "public/404.html", status: :not_found
     end

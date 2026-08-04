@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  include SanitizesImages
+
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -33,6 +35,13 @@ class GroupsController < ApplicationController
       @page_title = t(".page_title")
       render :new
     end
+  rescue ImageSanitizer::Error
+    @group ||= Group.new
+    @group.errors.add(:logo, :unsupported_image)
+    @page_title = t(".page_title")
+    render :new, status: :unprocessable_content
+  ensure
+    close_sanitized_images
   end
 
   def update
@@ -42,6 +51,12 @@ class GroupsController < ApplicationController
       @page_title = t(".page_title", group_name: @group.name)
       render :edit
     end
+  rescue ImageSanitizer::Error
+    @group.errors.add(:logo, :unsupported_image)
+    @page_title = t(".page_title", group_name: @group.name)
+    render :edit, status: :unprocessable_content
+  ensure
+    close_sanitized_images
   end
 
   def destroy
@@ -58,6 +73,8 @@ class GroupsController < ApplicationController
   end
 
   def group_params
-    params.require(:group).permit(:name, :logo, :address)
+    permitted = params.require(:group).permit(:name, :logo, :address)
+    permitted[:logo] = sanitize_image(permitted[:logo]) if permitted[:logo].present?
+    permitted
   end
 end
