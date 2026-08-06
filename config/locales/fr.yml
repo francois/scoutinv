@@ -76,6 +76,9 @@ fr:
     perishable: Périssable
     tent: Tente
     tools: Outils
+  dev:
+    auth:
+      authenticated_as: "Authentifié en tant que %{email}"
   footer:
     logout: Fermer la session
   groups:

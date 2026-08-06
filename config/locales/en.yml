@@ -73,6 +73,9 @@ en:
     perishable: Perishable
     tent: Tent
     tools: Tools
+  dev:
+    auth:
+      authenticated_as: "Authenticated as %{email}"
   footer:
     logout: Logout
   groups:

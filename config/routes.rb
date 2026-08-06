@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root to: "home#show"
 
+  if Rails.env.development?
+    get "dev/auth", to: "dev/auth#show"
+  end
+
   resources :sessions, only: %i[ index new create show destroy ]
 
   resources :events do
