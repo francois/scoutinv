@@ -9,7 +9,10 @@ class ProductsController < ApplicationController
 
     @filter = params[:filter]
 
-    @selected_category = @categories.detect{|category| category.slug == params[:category]}
+    @category_counts = category_counts
+    @categories = @categories.select { |category| @category_counts[category.id].positive? }
+    @selected_category = @categories.detect { |category| category.slug == params[:category] }
+    @has_active_filters = @filter.present? || @selected_category.present?
 
     @products = current_group.products.with_attached_images.with_categories.with_instances
     @products = @products.search(@filter) if @filter.present?
@@ -155,6 +158,16 @@ class ProductsController < ApplicationController
 
   def load_categories
     @categories = Category.by_name.to_a
+  end
+
+  def category_counts
+    current_group.products
+      .joins(:product_categories)
+      .group("product_categories.category_id")
+      .distinct
+      .count(:id)
+      .with_indifferent_access
+      .tap { |counts| counts.default = 0 }
   end
 
   def import(image_url)

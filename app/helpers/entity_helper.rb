@@ -1,5 +1,5 @@
 module EntityHelper
-  def forest_product_card_image(entity, width: 640, height: 480)
+  def forest_product_card_image(entity, path: entity, width: 640, height: 480)
     content =
       if (image = entity.images.first) && image.blob && image.variable?
         image_tag(
@@ -15,16 +15,16 @@ module EntityHelper
         content_tag(:span, class: "forest-product-card__image-placeholder") do
           safe_join([
             content_tag(:span, entity.name.first.to_s.upcase, class: "forest-product-card__image-initial", aria: { hidden: true }),
-            content_tag(:span, t("events.reservations.product_entity.no_photo")),
+            content_tag(:span, t("products.card.no_photo")),
           ])
         end
       end
 
     link_to(
       content,
-      entity,
+      path,
       class: "forest-product-card__image-link",
-      aria: { label: t("events.reservations.product_entity.view_product", product: entity.name) },
+      aria: { label: t("products.card.view_product", product: entity.name) },
     )
   end
 

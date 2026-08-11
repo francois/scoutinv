@@ -1,105 +1,105 @@
-<%= form_with(model: product, local: true) do |form| %>
+<%= form_with(model: product, local: true, class: "forest-product-form") do |form| %>
   <%= hidden_field_tag :clone_from, @clone_from&.to_param %>
-  <div class="grid-container">
-    <div class="grid-x grid-padding-x">
-      <% if product.errors.any? %>
-        <div class="small-12 cell">
-          <div id="error_explanation">
-            <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
-            <ul>
-              <% product.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
+  <% if product.errors.any? %>
+    <section class="forest-form-errors" aria-labelledby="product-errors-heading" role="alert">
+      <h2 id="product-errors-heading"><%= t(".error_heading", count: product.errors.count) %></h2>
+      <ul>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
 
-      <div class="small-12 cell">
+  <div class="grid-x grid-margin-x">
+    <div class="small-12 large-8 cell">
+      <section class="forest-form-section" aria-labelledby="product-details-heading">
+        <p class="forest-filter-eyebrow"><%= t(".details_eyebrow") %></p>
+        <h2 id="product-details-heading"><%= t(".details_heading") %></h2>
+
         <%= form.label :name %>
         <%= form.text_field :name, autocomplete: false %>
-      </div>
 
-      <div class="small-12 medium-6 cell">
-        <%= form.label :images %>
-        <%= form.file_field :images, :multiple => true, :"aria-describedby" => "help-on-images", :autocomplete => false %>
-        <p id="help-on-images" class="help-text"><%= t(".help_on_images") %></p>
-      </div>
-
-      <div class="small-12 medium-6 cell">
-        <%= form.label :image_url %>
-        <%= form.text_field :image_url, :"aria-describedby" => "help-on-images" %>
-      </div>
-
-      <div class="small-12 cell">
-        <fieldset class="fieldset">
-          <legend><%= t(".location_label") %></legend>
-          <%= form.label :building %>
-          <%= form.text_field :building %>
-
-          <%= form.label :aisle %>
-          <%= form.text_field :aisle %>
-
-          <%= form.label :shelf %>
-          <%= form.text_field :shelf %>
-
-          <%= form.label :unit %>
-          <%= form.text_field :unit %>
-        </fieldset>
-      </div>
-
-      <div class="small-12 cell">
         <%= form.label :description %>
-        <%= form.text_area :description, size: "10x5" %>
-      </div>
+        <%= form.text_area :description, rows: 5 %>
+      </section>
 
-      <div class="small-12 cell">
-        <div class="grid-x grid-margin-x">
-          <div class="small-12 medium-2 cell">
-            <%= form.label :quantity %>
-            <%= form.number_field :quantity, min: 0, step: 1 %>
+      <section class="forest-form-section" aria-labelledby="product-photos-heading">
+        <p class="forest-filter-eyebrow"><%= t(".photos_eyebrow") %></p>
+        <h2 id="product-photos-heading"><%= t(".photos_heading") %></h2>
+
+        <%= form.label :images %>
+        <%= form.file_field :images, multiple: true, aria: { describedby: "help-on-images" }, autocomplete: false %>
+        <p id="help-on-images" class="forest-form-help"><%= t(".help_on_images") %></p>
+
+        <%= form.label :image_url %>
+        <%= form.text_field :image_url, aria: { describedby: "help-on-image-url" }, autocomplete: false %>
+        <p id="help-on-image-url" class="forest-form-help"><%= t(".help_on_image_url") %></p>
+      </section>
+
+      <section class="forest-form-section" aria-labelledby="product-location-heading">
+        <p class="forest-filter-eyebrow"><%= t(".location_eyebrow") %></p>
+        <h2 id="product-location-heading"><%= t(".location_label") %></h2>
+
+        <div class="grid-x grid-margin-x small-up-1 medium-up-2">
+          <div class="cell">
+            <%= form.label :building %>
+            <%= form.text_field :building %>
           </div>
-
-          <div class="small-12 medium-3 cell">
-            <div class="grid-x grid-margin-x">
-              <div class="small-auto cell">
-                <%= form.label :internal_unit_price %>
-                <%= form.number_field :internal_unit_price, min: 0, step: BigDecimal("0.01") %>
-              </div>
-
-              <div class="small-auto cell">
-                <%= form.label :external_unit_price %>
-                <%= form.number_field :external_unit_price, min: 0, step: BigDecimal("0.01") %>
-              </div>
-            </div>
+          <div class="cell">
+            <%= form.label :aisle %>
+            <%= form.text_field :aisle %>
+          </div>
+          <div class="cell">
+            <%= form.label :shelf %>
+            <%= form.text_field :shelf %>
+          </div>
+          <div class="cell">
+            <%= form.label :unit %>
+            <%= form.text_field :unit %>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="small-12 cell">
-        <fieldset class="fieldset">
-          <legend><%= t(".categories_label") %></legend>
-          <div class="grid-container">
-            <div class="grid-x grid-margin-x small-up-3 medium-up-4">
-              <%= form.collection_check_boxes :category_slugs, @categories, :slug, ->(category){ t(category.name, scope: "categories") } do |b| %>
-                <div class="cell">
-                  <%= b.check_box %> <%= b.label %>
-                </div>
-              <% end %>
-            </div>
+      <section class="forest-form-section" aria-labelledby="product-stock-heading">
+        <p class="forest-filter-eyebrow"><%= t(".stock_eyebrow") %></p>
+        <h2 id="product-stock-heading"><%= t(".stock_heading") %></h2>
+
+        <div class="grid-x grid-margin-x small-up-1 medium-up-3">
+          <div class="cell">
+            <%= form.label :quantity %>
+            <%= form.number_field :quantity, min: 1, step: 1 %>
           </div>
-        </fieldset>
-      </div>
+          <div class="cell">
+            <%= form.label :internal_unit_price %>
+            <%= form.number_field :internal_unit_price, min: 0, step: BigDecimal("0.01") %>
+          </div>
+          <div class="cell">
+            <%= form.label :external_unit_price %>
+            <%= form.number_field :external_unit_price, min: 0, step: BigDecimal("0.01") %>
+          </div>
+        </div>
+      </section>
 
-      <div class="small-12 cell">
-        <%= form.submit class: "button primary" %>
-        <%= render partial: "shared/or" %>
-        <% if @product.new_record? %>
-          <%= link_to t(".cancel_button_label"), products_path, class: "button secondary" %>
-        <% else %>
-          <%= link_to t(".cancel_button_label"), @product, class: "button secondary" %>
-        <% end %>
+      <section class="forest-form-section" aria-labelledby="product-categories-heading">
+        <p class="forest-filter-eyebrow"><%= t(".categories_eyebrow") %></p>
+        <h2 id="product-categories-heading"><%= t(".categories_label") %></h2>
+
+        <div class="grid-x grid-margin-x small-up-1 medium-up-2">
+          <%= form.collection_check_boxes :category_slugs, @categories, :slug, ->(category) { t(category.name, scope: "categories") } do |box| %>
+            <div class="cell forest-form-check-option">
+              <%= box.check_box(class: "forest-form-checkbox") %>
+              <%= box.label(class: "forest-form-check-label") %>
+            </div>
+          <% end %>
+        </div>
+      </section>
+
+      <div class="forest-form-actions">
+        <%= form.submit class: "button forest-button-primary" %>
+        <% cancel_path = product.new_record? ? products_path : product_path(product) %>
+        <%= link_to t(".cancel_button_label"), cancel_path, class: "button forest-button-secondary" %>
       </div>
     </div>
   </div>

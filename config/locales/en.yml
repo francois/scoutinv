@@ -358,11 +358,26 @@ en:
     update:
       consumable_successfully_updated: Consumable successfully updated
   products:
+    card:
+      no_photo: No photo
+      view_product: View %{product}
     form:
       cancel_button_label: Cancel
+      categories_eyebrow: Sort
       categories_label: Categories
+      details_eyebrow: Product
+      details_heading: Product details
+      error_heading:
+        one: "1 error stopped this product from being saved"
+        other: "%{count} errors stopped this product from being saved"
+      help_on_image_url: Paste the link to a photo to add it to this product.
       help_on_images: "Tap the button to take a picture (if on mobile), or attach any picture from your computer. If you are cloning a product, it's images will be cloned as well."
+      location_eyebrow: Storage
       location_label: Location
+      photos_eyebrow: Photos
+      photos_heading: Photos
+      stock_eyebrow: Inventory
+      stock_heading: Stock and prices
     convert:
       conversion_reason: Conversion from product
       product_successfully_converted: Product successfully converted to consumable
@@ -378,10 +393,21 @@ en:
       rotate_image_left_button_label_html: "&#8630; left" # ANTICLOCKWISE TOP SEMICIRCLE ARROW
       rotate_image_right_button_label_html: "&#8631; right" # CLOCKWISE TOP SEMICIRCLE ARROW
     index:
+      active_filters: Filters on
+      all_categories: All categories
+      available_badge:
+        one: "1 available"
+        other: "%{count} available"
+      available_count:
+        one: available to lend
+        other: available to lend
       categories_header: Categories
       category_label: Category
       description_header: Description
+      empty_title: No products found
       filter_label: Filter
+      filter_placeholder: "e.g. tent, stove"
+      filters_title: Filter products
       location_header: Location
       name_header: Name
       new_product_button_label: Add a Product
@@ -389,6 +415,10 @@ en:
       quantity_header: Quantity
       search_button_label: Search
       sorry_no_elements: Sorry, no products correspond to your search criterias
+      stock_details: Stock details
+      total_count:
+        one: "1 in total"
+        other: "%{count} in total"
       view_all_button_label: View All
     instance:
       hold_button_label: Hold
@@ -416,17 +446,37 @@ en:
     show:
       add_note_label: Add Note
       add_to_cart_label: Reserve for this event
+      actions_header: Actions
       back_to_list_button_label: Back to list
       clone_button_label: Clone this product
       convert_to_consumable_label: Convert to consumable
+      convert_confirm: Convert this product to a consumable? This cannot be undone.
+      danger_eyebrow: Irreversible actions
+      danger_heading: Take care
       dates_header: Dates
       delete_button_label: Delete this product
+      delete_confirm: Delete this product? This cannot be undone.
+      description_eyebrow: Details
       edit_button_label: Edit this product
+      event_eyebrow: Current event
       event_header: Event
+      history_eyebrow: Past and planned
       instance_serial_nos_header: Instance Serial Numbers
+      instances_eyebrow: Individual items
+      no_categories: No categories
+      no_location: No location set
+      no_reservations: This product has no reservations.
       product_reservation_history_header: Product Reservation History
       serial_no_header: Serial No
       state_header: State
+      stock_eyebrow: Inventory
+      stock_heading: Stock
+      available_count:
+        one: available to lend
+        other: available to lend
+      total_count:
+        one: "1 in total"
+        other: "%{count} in total"
     update:
       product_successfully_updated: Product successfully updated
   reports:

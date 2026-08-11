@@ -13,7 +13,7 @@
     "is-unavailable": card[:remaining_quantity].zero?,
   ) %>" aria-labelledby="<%= card_id %>">
     <div class="forest-product-card__media">
-      <%= forest_product_card_image product %>
+      <%= forest_product_card_image product, path: event_product_path(@event, product) %>
 
       <span class="<%= class_names(
         "forest-product-card__badge",
@@ -40,7 +40,7 @@
       <% end %>
 
       <h3 class="forest-product-card__title" id="<%= card_id %>">
-        <%= link_to product.name, product %>
+        <%= link_to product.name, event_product_path(@event, product) %>
       </h3>
 
       <% if product.description.present? %>
