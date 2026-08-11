@@ -3,16 +3,17 @@
 class EntitySearchService
   def initialize(current_group:, q: nil, page: 1, event_id:nil, category_ids: nil, per_page: 24)
     @category_ids  = Array(category_ids)
+    @category_filter_applied = @category_ids.any?
     @current_group = current_group
     @event_id      = event_id
     @page          = Integer(page)
     @per_page      = Integer(per_page)
     @q             = q.blank? ? "" : q.to_s
 
-    @category_ids = Category.ids if @category_ids.empty?
+    @category_ids = Category.ids unless category_filter_applied
   end
 
-  attr_reader :current_group, :category_ids, :event_id, :page, :per_page, :q
+  attr_reader :current_group, :category_ids, :category_filter_applied, :event_id, :page, :per_page, :q
 
   def has_next_page?
     @entities ||= load_entities
@@ -79,16 +80,23 @@ class EntitySearchService
         }
       end
 
+    product_categories_sql =
+      if category_filter_applied
+        "AND product_categories.category_id IN (#{binds.fetch(:category_ids)})"
+      else
+        ""
+      end
+
     <<-EOSQL.squish
       SELECT 'Product', products.id, lower(unaccent(name)) AS sortable_name
       FROM products
-      INNER JOIN product_categories ON product_categories.product_id = products.id
+      LEFT JOIN product_categories  ON product_categories.product_id = products.id
       INNER JOIN instances          ON instances.product_id          = products.id
       LEFT JOIN reservations        ON reservations.instance_id      = instances.id
       WHERE products.group_id = #{binds.fetch(:group_id)}
         #{fts_sql[:products]}
         #{event_ids_sql[:products]}
-        AND product_categories.category_id IN (#{binds.fetch(:category_ids)})
+        #{product_categories_sql}
 
       UNION
 
