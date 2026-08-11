@@ -199,13 +199,25 @@ class Events::ReservationsController < ApplicationController
 
   def render_regular
     @filter = params[:filter]
+    @only_show_my_reserved_products = params[:only_show_my_reserved_products] == "1"
 
-    @categories = Category.by_name.to_a
+    @category_counts = category_counts
+    @categories = Category.all
+      .select { |category| @category_counts[category.id].positive? }
+      .sort_by { |category| I18n.t(category.name, scope: "categories").downcase }
     @selected_categories = @categories.select{|category| params[category.name] == "1"}.to_set
+    @has_active_filters = @filter.present? || @selected_categories.any? || @only_show_my_reserved_products
+    @active_filter_count = @selected_categories.size
+    @active_filter_count += 1 if @filter.present?
+    @active_filter_count += 1 if @only_show_my_reserved_products
+
+    @reservations = @event.reservations.with_product.all
+    @reserved_product_count = @reservations.size
 
     service = EntitySearchService.new(
       category_ids:  @selected_categories.map(&:id),
       current_group: current_group,
+      event_id:      (@event.id if @only_show_my_reserved_products),
       page:          params[:page] || 1,
       per_page:      24,
       q:             @filter,
@@ -214,14 +226,33 @@ class Events::ReservationsController < ApplicationController
     @entities = service.entities[0, 24]
     @has_next_page = service.has_next_page?
 
-    @reservations = @event.reservations.with_product.all
-
     options = @selected_categories.map{|key| [key.name, "1"]}.to_h
-    options = options.merge(filter: params[:filter])
+    options[:filter] = @filter if @filter.present?
+    options[:only_show_my_reserved_products] = "1" if @only_show_my_reserved_products
     @prev_page_path = event_reservations_path(@event, options.merge(page: service.page - 1)) if service.page > 1
     @next_page_path = event_reservations_path(@event, options.merge(page: service.page + 1)) if @has_next_page
 
     render action: :index
+  end
+
+  def category_counts
+    counts = Hash.new(0)
+
+    current_group.products
+      .joins(:product_categories)
+      .group("product_categories.category_id")
+      .distinct
+      .count(:id)
+      .each { |category_id, count| counts[category_id] += count }
+
+    current_group.consumables
+      .joins(:consumable_categories)
+      .group("consumable_categories.category_id")
+      .distinct
+      .count(:id)
+      .each { |category_id, count| counts[category_id] += count }
+
+    counts
   end
 
   def render_manage

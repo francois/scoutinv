@@ -9,6 +9,18 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     refute response.body.include?(events(:summer_camp_911_10eme).title)
   end
 
+  test "home page uses the forest application shell" do
+    get root_path
+
+    assert_response :success
+    assert_select "body.forest"
+    assert_select "link[rel='stylesheet'][href*='forest']", count: 1
+    assert_select "header.forest-site-header"
+    assert_select "nav.forest-primary-nav"
+    assert_select "main#main-content"
+    assert_select "footer.forest-site-footer"
+  end
+
   test "home page renders when an authenticated person visits" do
     login_as(members(:baloo_10eme))
     get root_path

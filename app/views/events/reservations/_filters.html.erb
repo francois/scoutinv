@@ -1,0 +1,60 @@
+<%= form_tag event_reservations_path(@event),
+             method: :get,
+             id: "#{id_prefix}-reservation-filters",
+             class: "search-form forest-filter-form" do %>
+  <p class="forest-filter-eyebrow"><%= t("events.reservations.filters.title") %></p>
+
+  <div class="forest-filter-section forest-filter-search">
+    <%= label_tag "#{id_prefix}-filter", t("events.reservations.filters.search_label"), class: "forest-filter-section__label" %>
+    <%= search_field_tag :filter,
+                         @filter,
+                         id: "#{id_prefix}-filter",
+                         placeholder: t("events.reservations.filters.search_placeholder"),
+                         autocomplete: false %>
+  </div>
+
+  <fieldset class="forest-filter-section forest-filter-options">
+    <legend class="forest-filter-section__label"><%= t("events.reservations.filters.show") %></legend>
+    <div class="forest-filter-option">
+      <%= check_box_tag :only_show_my_reserved_products,
+                        "1",
+                        @only_show_my_reserved_products,
+                        id: "#{id_prefix}-only-show-my-reserved-products",
+                        class: "forest-filter-checkbox" %>
+      <%= label_tag "#{id_prefix}-only-show-my-reserved-products", class: "forest-filter-option__label" do %>
+        <span class="forest-filter-option__copy">
+          <span><%= t("events.reservations.filters.reserved_for_event") %></span>
+          <small><%= t("events.reservations.filters.reserved_for_event_help") %></small>
+        </span>
+        <span class="forest-filter-option__count"><%= t("events.reservations.filters.reserved_item_count", count: @reserved_product_count) %></span>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <fieldset class="forest-filter-section forest-filter-categories">
+    <legend class="forest-filter-section__label"><%= t("events.reservations.filters.categories") %></legend>
+    <% @categories.each do |category| %>
+      <% category_id = "#{id_prefix}-category-#{category.name}" %>
+      <div class="forest-filter-option">
+        <%= check_box_tag category.name,
+                          "1",
+                          @selected_categories.include?(category),
+                          id: category_id,
+                          class: "forest-filter-checkbox" %>
+        <%= label_tag category_id, class: "forest-filter-option__label" do %>
+          <span class="forest-filter-option__copy"><%= t(category.name, scope: "categories") %></span>
+          <span class="forest-filter-option__count"><%= @category_counts[category.id] %></span>
+        <% end %>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <div class="forest-filter-actions">
+    <%= submit_tag t("events.reservations.filters.apply"), class: "button expanded forest-filter-submit", name: nil %>
+    <% if @has_active_filters %>
+      <%= link_to t("events.reservations.filters.clear"),
+                  event_reservations_path(@event),
+                  class: "forest-filter-clear" %>
+    <% end %>
+  </div>
+<% end %>
