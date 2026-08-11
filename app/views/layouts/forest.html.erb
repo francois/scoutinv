@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="no-js" lang="<%= I18n.locale %>" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#192d28">
+
+    <% if current_group && current_group.logo.attached? %>
+      <link rel="icon" sizes="192x192" href="/apple-touch-icon/192x192.png">
+      <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon/180x180.png">
+      <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/apple-touch-icon/152x152.png">
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon/144x144.png">
+      <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/apple-touch-icon/120x120.png">
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon/114x114.png">
+      <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/apple-touch-icon/76x76.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon/72x72.png">
+      <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon/57x57.png">
+    <% end %>
+
+    <title><%= [page_title.presence, "Scoutinv"].compact.join(" – ") %></title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag "foundation.min", media: "all", "data-turbolinks-track": "reload" %>
+    <%= stylesheet_link_tag "app", media: "all", "data-turbolinks-track": "reload" %>
+    <%= stylesheet_link_tag "forest", media: "all", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "vendor/jquery", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "vendor/what-input", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "vendor/foundation.min", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "rails-ujs", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "activestorage", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "turbolinks", "data-turbolinks-track": "reload" %>
+    <%= javascript_include_tag "app", "data-turbolinks-track": "reload" %>
+  </head>
+  <body class="<%= class_names("forest", "staging": STAGING, "development": Rails.env.development?) %>">
+    <%= link_to t("forest.skip_to_content"), "#main-content", class: "forest-skip-link" %>
+
+    <header class="forest-site-header">
+      <div class="grid-container fluid forest-shell-container">
+        <div class="forest-masthead">
+          <%= link_to root_path, class: "forest-brand", aria: { label: "Scoutinv" } do %>
+            <%= render partial: "layouts/forest_wordmark" %>
+          <% end %>
+
+          <% if member_signed_in? || Rails.env.development? || STAGING %>
+            <div class="forest-header-context">
+              <% if member_signed_in? %>
+                <%= link_to current_group,
+                            class: class_names("forest-group-link", "is-active": on_groups_page?),
+                            aria: { current: ("page" if on_groups_page?) } do %>
+                  <% if current_group.logo.attached? %>
+                    <%= image_tag current_group.logo.variant(resize_to_limit: [ nil, 42 ]),
+                                  alt: "",
+                                  class: "forest-group-logo" %>
+                  <% end %>
+                  <span class="forest-group-copy">
+                    <span class="forest-group-label"><%= t("forest.group") %></span>
+                    <span class="forest-group-name"><%= truncate(current_group.name, length: 36) %></span>
+                  </span>
+                <% end %>
+              <% end %>
+
+              <% if Rails.env.development? || STAGING %>
+                <span class="forest-environment">
+                  <%= t(Rails.env.development? ? "forest.environment.development" : "forest.environment.staging") %>
+                </span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <nav class="top-bar forest-primary-nav" aria-label="<%= t("forest.primary_navigation") %>">
+          <div class="top-bar-left">
+            <ul class="menu">
+              <li class="<%= "is-active" if on_home_page? %>">
+                <%= link_to t("home", scope: "top-bar"),
+                            root_path,
+                            aria: { current: ("page" if on_home_page?) } %>
+              </li>
+              <% if member_signed_in? %>
+                <li class="<%= "is-active" if on_events_page? %>">
+                  <%= link_to t("events", scope: "top-bar"),
+                              events_path,
+                              aria: { current: ("page" if on_events_page?) } %>
+                </li>
+                <li class="<%= "is-active" if on_products_page? %>">
+                  <%= link_to t("products", scope: "top-bar"),
+                              products_path,
+                              aria: { current: ("page" if on_products_page?) } %>
+                </li>
+                <li class="<%= "is-active" if on_consumables_page? %>">
+                  <%= link_to t("consumables", scope: "top-bar"),
+                              consumables_path,
+                              aria: { current: ("page" if on_consumables_page?) } %>
+                </li>
+                <% if current_member.inventory_director? %>
+                  <li class="<%= "is-active" if on_reports_page? %>">
+                    <%= link_to t("reports", scope: "top-bar"),
+                                reports_path,
+                                aria: { current: ("page" if on_reports_page?) } %>
+                  </li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+
+          <% if member_signed_in? && current_member.email == "francois@teksol.info" %>
+            <div class="top-bar-right">
+              <ul class="menu">
+                <li><%= link_to t("groups", scope: "top-bar"), groups_path %></li>
+              </ul>
+            </div>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="forest-main" tabindex="-1">
+      <div class="forest-page-header">
+        <div class="grid-container fluid forest-shell-container">
+          <h1><%= page_title.presence || "Scoutinv" %></h1>
+        </div>
+      </div>
+
+      <div class="grid-container fluid forest-shell-container forest-notices">
+        <div class="grid-x grid-margin-x">
+          <div id="notices" class="small-12 cell">
+            <%= render partial: "shared/notices" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-container fluid forest-shell-container forest-content">
+        <%= yield %>
+      </div>
+    </main>
+
+    <footer class="forest-site-footer">
+      <div class="grid-container fluid forest-shell-container">
+        <div class="grid-x grid-margin-x align-middle forest-footer-grid">
+          <div class="small-12 large-shrink cell">
+            <%= link_to root_path, class: "forest-footer-brand", aria: { label: "Scoutinv" } do %>
+              <%= render partial: "layouts/forest_wordmark" %>
+            <% end %>
+          </div>
+
+          <div class="small-12 large-auto cell forest-footer-copy">
+            <%= render partial: "layouts/footer" %>
+          </div>
+
+          <% if member_signed_in? %>
+            <div class="small-12 large-shrink cell">
+              <%= button_to t("logout", scope: "footer"),
+                            session_path(current_member.slug),
+                            class: "button secondary tiny forest-logout",
+                            method: :delete %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

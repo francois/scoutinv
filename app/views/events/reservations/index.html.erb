@@ -1,39 +1,32 @@
-<div class="grid-x grid-margin-x">
-  <div class="large-2 medium-4 cell show-for-medium">
-
-    <%= link_to t(".back_to_event"), @event, class: "button expanded" %>
-
-    <hr>
-
-    <%= form_tag event_reservations_path(@event), method: :get, class: "search-form" do %>
-
-      <div class="auto cell">
-        <%= label_tag :filter, t(".filter_label"), class: "show-for-sr" %>
-        <%= text_field_tag :filter, @filter, placeholder: t(".filter_label"), autocomplete: false %>
-      </div>
-
-      <%= label_tag :category, t(".categories"), class: "h3" %>
-      <% @categories.each do |category| %>
-        <div class="auto cell">
-          <%= check_box_tag category.name, "1", @selected_categories.include?(category) %>
-          <%= label_tag category.name, t(category.name, scope: "categories") %>
-        </div>
-      <% end %>
-
-      <%= submit_tag t(".search_button_label"), class: "button primary expanded", name: nil %>
-      <%= link_to t(".view_all_button_label"), event_reservations_path(@event), class: "button secondary expanded" %>
-
-    <% end %>
-
-  </div>
-  <div class="large-10 medium-8 small-12 cell">
-    <div class="small-12 cell">
-      <%= link_to t(".back_to_event"), @event, class: "button hide-for-medium" %>
-
-      <%= link_to t(:previous_html, scope: "views.pagination"), @prev_page_path, class: "button large" if @prev_page_path %>
-
-      <%= link_to t(:next_html, scope: "views.pagination"), @next_page_path, class: "button large" if @next_page_path %>
+<div class="grid-x grid-margin-x forest-reservations-layout">
+  <aside class="large-3 medium-4 cell show-for-medium forest-reservation-sidebar-column" aria-label="<%= t("events.reservations.filters.title") %>">
+    <div class="forest-reservation-sidebar">
+      <%= link_to t(".back_to_event"), @event, class: "button expanded forest-filter-back" %>
+      <%= render partial: "filters", locals: { id_prefix: "desktop" } %>
     </div>
+  </aside>
+
+  <div class="large-9 medium-8 small-12 cell">
+    <div class="hide-for-medium forest-reservations-mobile-controls">
+      <%= link_to t(".back_to_event"), @event, class: "button forest-filter-back" %>
+
+      <details class="forest-reservation-mobile-filters" <%= "open" if @has_active_filters %>>
+        <summary>
+          <span><%= t("events.reservations.filters.title") %></span>
+          <% if @active_filter_count.positive? %>
+            <span class="forest-reservation-mobile-filters__count"><%= t("events.reservations.filters.active_count", count: @active_filter_count) %></span>
+          <% end %>
+        </summary>
+        <div class="forest-reservation-mobile-filters__body">
+          <%= render partial: "filters", locals: { id_prefix: "mobile" } %>
+        </div>
+      </details>
+    </div>
+
+    <nav class="forest-reservations-pagination forest-reservations-pagination--top" aria-label="<%= t("events.reservations.filters.pagination") %>">
+      <%= link_to t(:previous_html, scope: "views.pagination"), @prev_page_path, class: "button forest-pagination-button" if @prev_page_path %>
+      <%= link_to t(:next_html, scope: "views.pagination"), @next_page_path, class: "button forest-pagination-button" if @next_page_path %>
+    </nav>
 
     <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-3">
       <% @entities.each do |entity| %>
@@ -41,12 +34,9 @@
       <% end %>
     </div>
 
-    <div class="small-12 cell">
-      <%= link_to t(".back_to_event"), @event, class: "button hide-for-medium" %>
-
-      <%= link_to t(:previous_html, scope: "views.pagination"), @prev_page_path, class: "button large" if @prev_page_path %>
-
-      <%= link_to t(:next_html, scope: "views.pagination"), @next_page_path, class: "button large" if @next_page_path %>
-    </div>
+    <nav class="forest-reservations-pagination forest-reservations-pagination--bottom" aria-label="<%= t("events.reservations.filters.pagination") %>">
+      <%= link_to t(:previous_html, scope: "views.pagination"), @prev_page_path, class: "button forest-pagination-button" if @prev_page_path %>
+      <%= link_to t(:next_html, scope: "views.pagination"), @next_page_path, class: "button forest-pagination-button" if @next_page_path %>
+    </nav>
   </div>
 </div>

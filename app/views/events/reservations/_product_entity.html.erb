@@ -1,0 +1,151 @@
+<% card = product_reservation_card_data(@event, product) %>
+<% card_id = "product-card-title-#{product.slug}" %>
+
+<div class="cell entity forest-product-card-cell"
+     id="entity-card-<%= product.slug %>"
+     data-remaining-quantity="<%= card[:remaining_quantity] %>"
+     data-selected-quantity="<%= card[:selected_quantity] %>"
+     data-total-quantity="<%= card[:total_quantity] %>">
+  <article class="<%= class_names(
+    "card forest-product-card",
+    "has-conflict": card[:conflicts].any?,
+    "is-selected": card[:selected_quantity].positive?,
+    "is-unavailable": card[:remaining_quantity].zero?,
+  ) %>" aria-labelledby="<%= card_id %>">
+    <div class="forest-product-card__media">
+      <%= forest_product_card_image product %>
+
+      <span class="<%= class_names(
+        "forest-product-card__badge",
+        "is-selected": card[:selected_quantity].positive?,
+        "is-unavailable": card[:remaining_quantity].zero?,
+      ) %>">
+        <% if card[:conflicts].any? %>
+          <%= t(".conflict_badge") %>
+        <% elsif card[:selected_quantity].positive? %>
+          <%= t(".reserved_badge", count: card[:selected_quantity]) %>
+        <% elsif card[:remaining_quantity].positive? %>
+          <%= t(".available_badge", count: card[:remaining_quantity]) %>
+        <% else %>
+          <%= t(".unavailable_badge") %>
+        <% end %>
+      </span>
+    </div>
+
+    <div class="card-section forest-product-card__body">
+      <% if product.categories.any? %>
+        <p class="forest-product-card__categories">
+          <%= product.categories.map{|category| t(category.name, scope: "categories")}.join(" · ") %>
+        </p>
+      <% end %>
+
+      <h3 class="forest-product-card__title" id="<%= card_id %>">
+        <%= link_to product.name, product %>
+      </h3>
+
+      <% if product.description.present? %>
+        <div class="forest-product-card__description" title="<%= product.description %>">
+          <%= simple_format product.description %>
+        </div>
+      <% end %>
+
+      <p class="forest-product-card__availability">
+        <strong><%= number_with_delimiter card[:remaining_quantity] %></strong>
+        <span><%= t(".free_for_dates", count: card[:remaining_quantity]) %></span>
+      </p>
+
+      <ul class="forest-product-card__stock-facts" aria-label="<%= t(".stock_details") %>">
+        <li><%= t(".total_count", count: card[:total_quantity]) %></li>
+        <% if card[:unavailable_quantity].positive? %>
+          <li><%= t(".unavailable_count", count: card[:unavailable_quantity]) %></li>
+        <% end %>
+        <% if card[:reserved_elsewhere_quantity].positive? %>
+          <li><%= t(".reserved_elsewhere_count", count: card[:reserved_elsewhere_quantity]) %></li>
+        <% end %>
+      </ul>
+
+      <% if card[:other_bookings].any? %>
+        <details class="forest-product-card__other-bookings">
+          <summary><%= t(".other_bookings", count: card[:reserved_elsewhere_quantity]) %></summary>
+          <ul>
+            <% card[:other_bookings].each do |booking| %>
+              <li>
+                <span><%= booking[:event].title %></span>
+                <small>
+                  <%= format_date_range booking[:event].date_range %>
+                  ·
+                  <%= t(".item_count", count: booking[:quantity]) %>
+                </small>
+              </li>
+            <% end %>
+          </ul>
+        </details>
+      <% end %>
+
+      <% if card[:conflicts].any? %>
+        <div class="forest-product-card__conflict" role="alert">
+          <strong><%= t(".conflict_heading") %></strong>
+          <ul>
+            <% card[:conflicts].each do |conflict| %>
+              <li>
+                <span class="forest-product-card__serial"><%= format_serial_no conflict[:serial_no] %></span>
+                <span><%= conflict[:event].title %> · <%= format_date_range conflict[:event].date_range %></span>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% unless @event.unit_price_of(product).zero? %>
+        <p class="forest-product-card__price">
+          <% if card[:selected_quantity].positive? %>
+            <%= number_with_delimiter card[:selected_quantity] %>
+            ×
+            <%= number_to_currency @event.unit_price_of(product) %>
+            =
+            <strong><%= number_to_currency @event.subtotal_of(product) %></strong>
+          <% else %>
+            <%= number_to_currency @event.unit_price_of(product) %> / <%= t(".item") %>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+
+    <% if @event.can_change_reservations?(current_member) %>
+      <div class="forest-product-card__stepper">
+        <%= form_tag event_reservations_path(@event), remote: true, method: :post, class: "forest-product-card__stepper-form" do %>
+          <%= hidden_field_tag "products[#{product.slug}]", "1" %>
+          <%= hidden_field_tag "remove", "1" %>
+          <%= button_tag class: "button forest-product-card__stepper-button is-remove",
+                         disabled: card[:selected_quantity].zero?,
+                         title: t(".release_one", product: product.name),
+                         aria: { label: t(".release_one", product: product.name) },
+                         data: { disable_with: "…" } do %>
+            <span aria-hidden="true">−</span>
+          <% end %>
+        <% end %>
+
+        <div class="forest-product-card__selected-count" role="status" aria-live="polite">
+          <strong><%= number_with_delimiter card[:selected_quantity] %></strong>
+          <span><%= t(".reserved_for_event", count: card[:selected_quantity]) %></span>
+        </div>
+
+        <%= form_tag event_reservations_path(@event), remote: true, method: :post, class: "forest-product-card__stepper-form" do %>
+          <%= hidden_field_tag "products[#{product.slug}]", "1" %>
+          <%= hidden_field_tag "add", "1" %>
+          <%= button_tag class: "button forest-product-card__stepper-button is-add",
+                         disabled: card[:remaining_quantity].zero?,
+                         title: t(".reserve_one", product: product.name),
+                         aria: { label: t(".reserve_one", product: product.name) },
+                         data: { disable_with: "…" } do %>
+            <span aria-hidden="true">+</span>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="forest-product-card__read-only">
+        <%= t(".reserved_for_event", count: card[:selected_quantity]) %>
+      </div>
+    <% end %>
+  </article>
+</div>

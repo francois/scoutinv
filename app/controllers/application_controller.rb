@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
 
+  layout "forest"
+
   before_action :set_timezone
   before_action :set_locale
   before_action :authenticate_member!

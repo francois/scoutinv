@@ -1,0 +1,1274 @@
+/*
+ * Forest is Scoutinv's application shell. Foundation still supplies the grid
+ * and the base controls; this file adds the brand tokens, type, and chrome.
+ */
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("dm-sans-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("dm-sans-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "DM Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("dm-mono-regular-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "DM Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("dm-mono-regular-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "DM Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("dm-mono-medium-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "DM Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("dm-mono-medium-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("newsreader-semibold-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("newsreader-semibold-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --paper: #f5eee2;
+  --surface: #fffdf8;
+  --ink: #263a56;
+  --action: #bd513e;
+  --sage: #b8d3be;
+  --field: #639078;
+  --forest: #192d28;
+
+  --font-editorial: "Newsreader", Georgia, serif;
+  --font-interface: "DM Sans", system-ui, sans-serif;
+  --font-data: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --shell-width: 90rem;
+  --shell-gutter: clamp(1rem, 3vw, 2.5rem);
+  --rule-soft: rgba(38, 58, 86, 0.2);
+  --rule-strong: rgba(38, 58, 86, 0.72);
+  --ink-muted: rgba(38, 58, 86, 0.72);
+}
+
+html {
+  background: var(--forest);
+}
+
+body.forest {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-interface);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body.forest.development,
+body.forest.staging {
+  background: var(--paper);
+}
+
+body.forest input,
+body.forest select,
+body.forest textarea,
+body.forest button {
+  font-family: inherit;
+}
+
+body.forest h1,
+body.forest h2 {
+  color: var(--ink);
+  font-family: var(--font-editorial);
+  font-optical-sizing: auto;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+body.forest h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+}
+
+body.forest h3,
+body.forest h4,
+body.forest h5,
+body.forest h6 {
+  color: var(--ink);
+  font-family: var(--font-interface);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+body.forest a:not(.button) {
+  color: var(--ink);
+  text-decoration-color: rgba(189, 81, 62, 0.65);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.15em;
+}
+
+body.forest a:not(.button):hover,
+body.forest a:not(.button):focus {
+  color: var(--forest);
+  text-decoration-color: var(--action);
+}
+
+body.forest :focus-visible {
+  outline: 0.2rem solid var(--action);
+  outline-offset: 0.2rem;
+}
+
+body.forest ::selection {
+  background: var(--sage);
+  color: var(--forest);
+}
+
+.forest-shell-container.grid-container {
+  width: 100%;
+  max-width: var(--shell-width);
+  padding-right: var(--shell-gutter);
+  padding-left: var(--shell-gutter);
+}
+
+.forest-skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.7rem 1rem;
+  transform: translateY(-200%);
+  background: var(--surface);
+  border: 0.15rem solid var(--action);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.forest-skip-link:focus {
+  transform: translateY(0);
+}
+
+.forest-site-header {
+  flex: 0 0 auto;
+  background: var(--surface);
+  border-top: 0.4rem solid var(--forest);
+  border-bottom: 0.22rem double var(--ink);
+}
+
+.forest-masthead {
+  display: flex;
+  min-height: 5.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.forest-brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  text-decoration: none;
+}
+
+.forest-wordmark {
+  display: block;
+  width: 9.5rem;
+  height: auto;
+  overflow: visible;
+}
+
+.forest-wordmark text {
+  fill: var(--forest);
+  font-family: var(--font-interface);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.055em;
+}
+
+.forest-wordmark .forest-wordmark-accent {
+  fill: var(--action);
+}
+
+.forest-header-context {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.forest-group-link {
+  display: grid;
+  min-width: 0;
+  max-width: 24rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.45rem 0.55rem;
+  border-bottom: 0.15rem solid transparent;
+  text-decoration: none;
+}
+
+.forest-group-link:hover,
+.forest-group-link:focus,
+.forest-group-link.is-active {
+  background: var(--paper);
+  border-bottom-color: var(--action);
+}
+
+.forest-group-logo {
+  width: 2.1rem;
+  height: 2.1rem;
+  object-fit: contain;
+}
+
+.forest-group-copy {
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.forest-group-label,
+.forest-environment,
+.forest-meta {
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.forest-group-label {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--ink-muted);
+}
+
+.forest-group-name {
+  display: block;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.forest-environment {
+  flex: 0 0 auto;
+  padding: 0.35rem 0.5rem;
+  background: var(--paper);
+  border: 1px solid var(--action);
+  color: var(--ink);
+  line-height: 1;
+}
+
+.forest-primary-nav.top-bar {
+  min-height: 3.25rem;
+  padding: 0;
+  background: transparent;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-primary-nav.top-bar,
+.forest-primary-nav.top-bar ul {
+  background: transparent;
+}
+
+.forest-primary-nav .menu a {
+  padding: 1rem 0.95rem 0.85rem;
+  border-bottom: 0.2rem solid transparent;
+  color: var(--ink);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.forest-primary-nav .menu li:first-child > a {
+  padding-left: 0;
+}
+
+.forest-primary-nav .menu a:hover,
+.forest-primary-nav .menu a:focus {
+  background: var(--paper);
+  color: var(--forest);
+}
+
+.forest-primary-nav .menu .is-active > a {
+  background: transparent;
+  border-bottom-color: var(--action);
+  color: var(--forest);
+}
+
+.forest-primary-nav .top-bar-right .menu li:last-child > a {
+  padding-right: 0;
+}
+
+.forest-main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.forest-page-header {
+  padding-top: clamp(2rem, 5vw, 4.5rem);
+  padding-bottom: clamp(1.35rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.forest-page-header h1 {
+  max-width: 20ch;
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 3.25rem);
+  line-height: 1;
+}
+
+.forest-notices {
+  margin-top: 1rem;
+}
+
+.forest-content {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding-bottom: clamp(3rem, 8vw, 7rem);
+}
+
+.forest-site-footer {
+  flex: 0 0 auto;
+  padding-top: 2.25rem;
+  padding-bottom: 2.25rem;
+  background: var(--forest);
+  border-top: 0.35rem solid var(--field);
+  color: var(--paper);
+}
+
+.forest-footer-grid {
+  row-gap: 1.5rem;
+}
+
+.forest-footer-brand {
+  display: inline-flex;
+  padding: 0.35rem 0.55rem;
+  background: var(--surface);
+}
+
+.forest-footer-brand .forest-wordmark {
+  width: 7.5rem;
+}
+
+.forest-footer-copy {
+  max-width: 58rem;
+  color: var(--paper);
+}
+
+.forest-footer-copy p {
+  margin: 0 0 0.55rem;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.forest-footer-copy p:last-child {
+  margin-bottom: 0;
+}
+
+body.forest .forest-site-footer a:not(.button) {
+  color: var(--surface);
+  text-decoration-color: var(--sage);
+}
+
+body.forest .forest-site-footer a:not(.button):hover,
+body.forest .forest-site-footer a:not(.button):focus {
+  color: var(--surface);
+  text-decoration-color: var(--action);
+}
+
+.forest-site-footer form {
+  margin: 0;
+}
+
+.forest-site-footer .forest-logout.button {
+  margin: 0;
+  background: transparent;
+  border: 1px solid var(--sage);
+  color: var(--surface);
+  font-family: var(--font-interface);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.forest-site-footer .forest-logout.button:hover,
+.forest-site-footer .forest-logout.button:focus {
+  background: var(--surface);
+  color: var(--forest);
+}
+
+/* Image-first product cards on the event reservation screen. */
+
+.forest-product-card-cell {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.forest-product-card.card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--rule-soft);
+  border-radius: 0.2rem;
+  box-shadow: 0 0.35rem 1.25rem rgba(25, 45, 40, 0.12);
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.forest-product-card.card:hover {
+  border-color: var(--rule-strong);
+  box-shadow: 0 0.55rem 1.6rem rgba(25, 45, 40, 0.17);
+  transform: translateY(-0.12rem);
+}
+
+.forest-product-card.card.is-selected {
+  border-color: var(--action);
+  box-shadow: 0 0 0 0.12rem var(--action), 0 0.55rem 1.6rem rgba(25, 45, 40, 0.15);
+}
+
+.forest-product-card.card.has-conflict {
+  border-color: var(--action);
+  box-shadow: 0 0 0 0.18rem var(--action), 0 0.55rem 1.6rem rgba(25, 45, 40, 0.15);
+}
+
+.forest-product-card__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: rgba(184, 211, 190, 0.38);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+body.forest a.forest-product-card__image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--forest);
+  text-decoration: none;
+}
+
+.forest-product-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.forest-product-card.is-unavailable .forest-product-card__image {
+  filter: grayscale(0.55);
+  opacity: 0.72;
+}
+
+.forest-product-card__image-placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.forest-product-card__image-initial {
+  color: var(--forest);
+  font-family: var(--font-editorial);
+  font-size: clamp(4rem, 8vw, 6rem);
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+  opacity: 0.42;
+}
+
+.forest-product-card__badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  max-width: calc(100% - 1rem);
+  padding: 0.45rem 0.65rem 0.4rem;
+  background: var(--sage);
+  border-top: 1px solid var(--forest);
+  border-left: 1px solid var(--forest);
+  color: var(--forest);
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.065em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.forest-product-card__badge.is-selected {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--surface);
+}
+
+.forest-product-card__badge.is-unavailable {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--surface);
+}
+
+.forest-product-card__body.card-section {
+  display: flex;
+  padding: 1.1rem 1.15rem 1.2rem;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.forest-product-card__categories {
+  min-height: 1em;
+  margin: 0 0 0.45rem;
+  overflow: hidden;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.065em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.forest-product-card__title {
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.15;
+}
+
+body.forest .forest-product-card__title a:not(.button) {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+body.forest .forest-product-card__title a:not(.button):hover,
+body.forest .forest-product-card__title a:not(.button):focus {
+  color: var(--forest);
+  text-decoration: underline;
+  text-decoration-color: var(--action);
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.16em;
+}
+
+.forest-product-card__description {
+  display: -webkit-box;
+  min-height: 2.8rem;
+  margin-top: 0.55rem;
+  overflow: hidden;
+  color: var(--ink-muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.forest-product-card__description p {
+  margin: 0;
+}
+
+.forest-product-card__availability {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin: auto 0 0;
+  padding-top: 1rem;
+  border-top: 0.2rem double var(--ink);
+  color: var(--forest);
+}
+
+.forest-product-card__availability strong {
+  font-family: var(--font-editorial);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.forest-product-card__availability span {
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.forest-product-card.is-unavailable .forest-product-card__availability {
+  color: var(--ink-muted);
+}
+
+.forest-product-card__stock-facts {
+  display: flex;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  flex-wrap: wrap;
+  gap: 0.25rem 0;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+  line-height: 1.35;
+  list-style: none;
+}
+
+.forest-product-card__stock-facts li:not(:last-child)::after {
+  padding: 0 0.42rem;
+  color: var(--action);
+  content: "·";
+}
+
+.forest-product-card__other-bookings {
+  margin-top: 0.8rem;
+  padding: 0.65rem 0.75rem;
+  background: rgba(184, 211, 190, 0.35);
+  border-left: 0.2rem solid var(--field);
+  color: var(--ink);
+  font-size: 0.78rem;
+}
+
+.forest-product-card__other-bookings summary {
+  color: var(--forest);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.forest-product-card__other-bookings ul,
+.forest-product-card__conflict ul {
+  margin: 0.55rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.forest-product-card__other-bookings li + li,
+.forest-product-card__conflict li + li {
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-product-card__other-bookings span,
+.forest-product-card__other-bookings small {
+  display: block;
+}
+
+.forest-product-card__other-bookings small {
+  margin-top: 0.15rem;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.66rem;
+}
+
+.forest-product-card__conflict {
+  margin-top: 0.8rem;
+  padding: 0.7rem 0.75rem;
+  background: rgba(189, 81, 62, 0.09);
+  border: 1px solid var(--action);
+  color: var(--ink);
+  font-size: 0.78rem;
+}
+
+.forest-product-card__conflict > strong {
+  color: var(--action);
+  font-size: 0.8rem;
+}
+
+.forest-product-card__conflict li span {
+  display: block;
+}
+
+.forest-product-card__serial {
+  margin-bottom: 0.12rem;
+  color: var(--forest);
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.forest-product-card__price {
+  margin: 0.8rem 0 0;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+}
+
+.forest-product-card__stepper {
+  display: grid;
+  min-height: 4.25rem;
+  grid-template-columns: 4.25rem minmax(0, 1fr) 4.25rem;
+  background: var(--paper);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.forest-product-card__stepper-form {
+  display: flex;
+  margin: 0;
+}
+
+.forest-product-card__stepper-button.button {
+  width: 100%;
+  min-height: 4.25rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  font-family: var(--font-interface);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.forest-product-card__stepper-button.is-remove {
+  background: transparent;
+  border-right: 1px solid var(--rule-soft);
+  color: var(--ink);
+}
+
+.forest-product-card__stepper-button.is-remove:hover,
+.forest-product-card__stepper-button.is-remove:focus {
+  background: var(--sage);
+  color: var(--forest);
+}
+
+.forest-product-card__stepper-button.is-add {
+  background: var(--action);
+  border-left: 1px solid var(--action);
+  color: var(--surface);
+}
+
+.forest-product-card__stepper-button.is-add:hover,
+.forest-product-card__stepper-button.is-add:focus {
+  background: var(--forest);
+  color: var(--surface);
+}
+
+.forest-product-card__stepper-button.button[disabled] {
+  background: rgba(38, 58, 86, 0.08);
+  color: rgba(38, 58, 86, 0.35);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.forest-product-card__selected-count {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.45rem;
+  color: var(--ink);
+  text-align: center;
+}
+
+.forest-product-card__selected-count strong {
+  font-family: var(--font-editorial);
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.forest-product-card__selected-count span {
+  margin-top: 0.2rem;
+  overflow: hidden;
+  font-family: var(--font-data);
+  font-size: 0.61rem;
+  letter-spacing: 0.035em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+}
+
+.forest-product-card.is-selected .forest-product-card__selected-count {
+  background: rgba(184, 211, 190, 0.45);
+  color: var(--forest);
+}
+
+.forest-product-card__read-only {
+  padding: 0.85rem 1rem;
+  background: var(--paper);
+  border-top: 1px solid var(--rule-strong);
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+/* Reservation search and category filters. */
+
+.forest-reservation-sidebar-column {
+  align-self: flex-start;
+}
+
+.forest-reservation-sidebar {
+  position: sticky;
+  top: 1rem;
+  padding: 1rem;
+  background: var(--surface);
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 0.2rem double var(--ink);
+}
+
+.forest-filter-back.button {
+  margin: 0 0 1.2rem;
+  padding: 0.7rem 0.8rem;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  color: var(--ink);
+  font-family: var(--font-interface);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.forest-filter-back.button:hover,
+.forest-filter-back.button:focus {
+  background: var(--forest);
+  color: var(--surface);
+}
+
+.forest-filter-form {
+  margin: 0;
+}
+
+.forest-filter-eyebrow {
+  margin: 0;
+  color: var(--forest);
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.forest-filter-section {
+  min-width: 0;
+  margin: 1rem 0 0;
+  padding: 1rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-filter-section__label {
+  display: block;
+  margin: 0 0 0.55rem;
+  padding: 0;
+  color: var(--ink);
+  font-family: var(--font-interface);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+body.forest .forest-filter-search input[type="search"] {
+  height: auto;
+  margin: 0;
+  padding: 0.72rem 0.7rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--ink);
+  font-size: 0.85rem;
+  line-height: 1.25;
+}
+
+body.forest .forest-filter-search input[type="search"]::placeholder {
+  color: var(--ink-muted);
+  opacity: 1;
+}
+
+body.forest .forest-filter-search input[type="search"]:focus {
+  background: var(--surface);
+  border-color: var(--action);
+  box-shadow: 0 0 0 0.14rem rgba(189, 81, 62, 0.2);
+}
+
+.forest-filter-options {
+  padding-bottom: 0.1rem;
+}
+
+.forest-filter-option + .forest-filter-option {
+  margin-top: 0.25rem;
+}
+
+.forest-filter-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.forest-filter-option__label {
+  display: grid;
+  grid-template-columns: 1rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.4rem;
+  margin: 0;
+  padding: 0.4rem 0.35rem 0.4rem 0.45rem;
+  background: transparent;
+  border-left: 0.2rem solid transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+.forest-filter-option__label::before {
+  display: grid;
+  width: 0.9rem;
+  height: 0.9rem;
+  place-items: center;
+  border: 1px solid var(--rule-strong);
+  color: var(--surface);
+  content: "";
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.forest-filter-option__copy {
+  min-width: 0;
+}
+
+.forest-filter-option__copy small {
+  display: block;
+  margin-top: 0.16rem;
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+  line-height: 1.3;
+}
+
+.forest-filter-option__count {
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.forest-filter-checkbox:checked + .forest-filter-option__label {
+  background: rgba(184, 211, 190, 0.46);
+  border-left-color: var(--field);
+  color: var(--forest);
+}
+
+.forest-filter-checkbox:checked + .forest-filter-option__label::before {
+  background: var(--field);
+  border-color: var(--field);
+  content: "✓";
+}
+
+.forest-filter-checkbox:focus-visible + .forest-filter-option__label {
+  outline: 0.2rem solid var(--action);
+  outline-offset: 0.15rem;
+}
+
+.forest-filter-option__label:hover {
+  background: var(--paper);
+}
+
+.forest-filter-actions {
+  margin-top: 1.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule-soft);
+  text-align: center;
+}
+
+.forest-filter-submit.button {
+  margin: 0;
+  padding: 0.72rem 0.8rem;
+  background: var(--action);
+  border: 1px solid var(--action);
+  border-radius: 0;
+  color: var(--surface);
+  font-family: var(--font-interface);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.forest-filter-submit.button:hover,
+.forest-filter-submit.button:focus {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--surface);
+}
+
+.forest-filter-clear {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+}
+
+.forest-reservations-pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.forest-reservations-pagination:empty {
+  display: none;
+}
+
+.forest-reservations-pagination--top {
+  margin-bottom: 1rem;
+}
+
+.forest-reservations-pagination--bottom {
+  margin-top: 1.25rem;
+}
+
+.forest-pagination-button.button {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  color: var(--ink);
+  font-family: var(--font-interface);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.forest-pagination-button.button:hover,
+.forest-pagination-button.button:focus {
+  background: var(--sage);
+  color: var(--forest);
+}
+
+.forest-reservations-mobile-controls {
+  margin-bottom: 1.25rem;
+}
+
+.forest-reservations-mobile-controls .forest-filter-back.button {
+  margin-bottom: 0.75rem;
+}
+
+.forest-reservation-mobile-filters {
+  background: var(--surface);
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 0.2rem double var(--ink);
+}
+
+.forest-reservation-mobile-filters summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0.95rem;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  list-style: none;
+}
+
+.forest-reservation-mobile-filters summary::-webkit-details-marker {
+  display: none;
+}
+
+.forest-reservation-mobile-filters summary::after {
+  flex: 0 0 auto;
+  color: var(--action);
+  content: "+";
+  font-family: var(--font-data);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.forest-reservation-mobile-filters[open] summary {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.forest-reservation-mobile-filters[open] summary::after {
+  content: "−";
+}
+
+.forest-reservation-mobile-filters__count {
+  margin-left: auto;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.forest-reservation-mobile-filters__body {
+  padding: 0 0.95rem 0.95rem;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .forest-masthead {
+    min-height: auto;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .forest-wordmark {
+    width: 8rem;
+  }
+
+  .forest-header-context {
+    flex: 0 0 auto;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    gap: 0.6rem;
+  }
+
+  .forest-group-link {
+    max-width: 12rem;
+    padding-right: 0;
+  }
+
+  .forest-group-logo {
+    display: none;
+  }
+
+  .forest-group-link {
+    grid-template-columns: minmax(0, 1fr);
+    text-align: right;
+  }
+
+  .forest-primary-nav.top-bar,
+  .forest-primary-nav .top-bar-left,
+  .forest-primary-nav .top-bar-right {
+    display: block;
+    width: 100%;
+  }
+
+  .forest-primary-nav .menu {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .forest-primary-nav .menu a,
+  .forest-primary-nav .menu li:first-child > a,
+  .forest-primary-nav .top-bar-right .menu li:last-child > a {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+  }
+
+  .forest-primary-nav .menu li:first-child > a {
+    padding-left: 0;
+  }
+
+  .forest-primary-nav .top-bar-right {
+    border-top: 1px solid var(--rule-soft);
+  }
+
+  .forest-footer-copy {
+    padding-top: 0.25rem;
+  }
+
+  .forest-product-card-cell {
+    margin-bottom: 1.25rem;
+  }
+
+  .forest-product-card__body.card-section {
+    padding: 1rem;
+  }
+
+  .forest-product-card__description {
+    min-height: auto;
+  }
+
+  .forest-reservations-pagination {
+    justify-content: stretch;
+  }
+
+  .forest-pagination-button.button {
+    flex: 1 1 0;
+    text-align: center;
+  }
+}
+
+@media print {
+  html,
+  body.forest {
+    background: white;
+  }
+
+  .forest-skip-link,
+  .forest-site-header,
+  .forest-site-footer {
+    display: none !important;
+  }
+
+  .forest-page-header {
+    padding-top: 0;
+  }
+
+  .forest-content {
+    padding-top: 1rem;
+    padding-bottom: 0;
+  }
+}

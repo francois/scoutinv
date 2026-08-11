@@ -190,6 +190,60 @@ fr:
         plus_one_hover: Réserve une instance de plus de ce produit
         set: "Réserver"
         set_hover: "Enregistre la nouvelle quantité réservée"
+      product_entity:
+        available_badge:
+          one: "%{count} libre"
+          other: "%{count} libres"
+        conflict_badge: Conflit
+        conflict_heading: Même unité réservée ailleurs
+        free_for_dates:
+          one: libre pour ces dates
+          other: libres pour ces dates
+        item: article
+        item_count:
+          one: "%{count} article"
+          other: "%{count} articles"
+        no_photo: Aucune photo
+        other_bookings:
+          one: Voir la réservation faite ailleurs
+          other: Voir les %{count} réservations faites ailleurs
+        release_one: Retirer un exemplaire de %{product}
+        reserve_one: Réserver un exemplaire de %{product}
+        reserved_badge:
+          one: "%{count} réservé"
+          other: "%{count} réservés"
+        reserved_elsewhere_count:
+          one: "%{count} réservé ailleurs"
+          other: "%{count} réservés ailleurs"
+        reserved_for_event:
+          one: réservé pour cet événement
+          other: réservés pour cet événement
+        stock_details: État du stock
+        total_count:
+          one: "%{count} au total"
+          other: "%{count} au total"
+        unavailable_badge: Indisponible
+        unavailable_count:
+          one: "%{count} non disponible"
+          other: "%{count} non disponibles"
+        view_product: Voir %{product}
+      filters:
+        active_count:
+          one: "%{count} filtre"
+          other: "%{count} filtres"
+        apply: Appliquer les filtres
+        categories: Catégories
+        clear: Effacer les filtres
+        pagination: Pagination des résultats
+        reserved_for_event: Réservés pour cet événement
+        reserved_for_event_help: N’affiche que les articles déjà réservés.
+        reserved_item_count:
+          one: "%{count} article"
+          other: "%{count} articles"
+        search_label: Rechercher du matériel
+        search_placeholder: "ex. bâche, brûleur"
+        show: Afficher
+        title: Recherche et filtres
       index:
         add_to_reservation_button_label: Ajouter aux réservations
         animators_people: Animateurs
@@ -433,6 +487,13 @@ fr:
       notes_header: Notes
     or:
       or: ou
+  forest:
+    environment:
+      development: Développement
+      staging: Test
+    group: Groupe
+    primary_navigation: Navigation principale
+    skip_to_content: Aller au contenu
   top-bar:
     consumables: Consommables
     events: Événements

@@ -187,6 +187,60 @@ en:
         minus_one_hover: Reserves one less instance of this product
         set: "Set"
         set_hover: "Records the new reserved quantity"
+      product_entity:
+        available_badge:
+          one: "%{count} available"
+          other: "%{count} available"
+        conflict_badge: Conflict
+        conflict_heading: Same item booked elsewhere
+        free_for_dates:
+          one: available for these dates
+          other: available for these dates
+        item: item
+        item_count:
+          one: "%{count} item"
+          other: "%{count} items"
+        no_photo: No photo
+        other_bookings:
+          one: View the other booking
+          other: View the %{count} other bookings
+        release_one: Remove one %{product}
+        reserve_one: Reserve one %{product}
+        reserved_badge:
+          one: "%{count} reserved"
+          other: "%{count} reserved"
+        reserved_elsewhere_count:
+          one: "%{count} booked elsewhere"
+          other: "%{count} booked elsewhere"
+        reserved_for_event:
+          one: reserved for this event
+          other: reserved for this event
+        stock_details: Stock details
+        total_count:
+          one: "%{count} total"
+          other: "%{count} total"
+        unavailable_badge: Unavailable
+        unavailable_count:
+          one: "%{count} unavailable"
+          other: "%{count} unavailable"
+        view_product: View %{product}
+      filters:
+        active_count:
+          one: "%{count} filter"
+          other: "%{count} filters"
+        apply: Apply filters
+        categories: Categories
+        clear: Clear filters
+        pagination: Results pagination
+        reserved_for_event: Reserved for this event
+        reserved_for_event_help: Only shows items already reserved for this event.
+        reserved_item_count:
+          one: "%{count} item"
+          other: "%{count} items"
+        search_label: Search equipment
+        search_placeholder: "e.g. tarp, stove"
+        show: Show
+        title: Search and filters
       index:
         add_to_reservation_button_label: Add to reservation
         animators_people: Animators
@@ -427,6 +481,13 @@ en:
       notes_header: Notes
     or:
       or: or
+  forest:
+    environment:
+      development: Development
+      staging: Test
+    group: Group
+    primary_navigation: Main navigation
+    skip_to_content: Skip to content
   top-bar:
     consumables: Consumables
     events: Events
