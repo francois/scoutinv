@@ -1272,3 +1272,762 @@ body.forest .forest-filter-search input[type="search"]:focus {
     padding-bottom: 0;
   }
 }
+
+/* Shared inventory controls and product pages. */
+
+.forest-filter-sidebar-column,
+.forest-product-actions-column {
+  align-self: flex-start;
+}
+
+.forest-filter-sidebar,
+.forest-product-actions {
+  background: var(--surface);
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 0.2rem double var(--ink);
+}
+
+.forest-filter-sidebar {
+  position: sticky;
+  top: 1rem;
+  padding: 1rem;
+}
+
+.forest-products-new-button.button {
+  margin: 0 0 1.2rem;
+}
+
+.forest-products-mobile-controls {
+  margin-bottom: 1.25rem;
+}
+
+.forest-products-mobile-controls .forest-products-new-button.button {
+  margin-bottom: 0.75rem;
+}
+
+.forest-mobile-filters {
+  background: var(--surface);
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 0.2rem double var(--ink);
+}
+
+.forest-mobile-filters summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0.95rem;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  list-style: none;
+}
+
+.forest-mobile-filters summary::-webkit-details-marker {
+  display: none;
+}
+
+.forest-mobile-filters summary::after {
+  flex: 0 0 auto;
+  color: var(--action);
+  content: "+";
+  font-family: var(--font-data);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.forest-mobile-filters[open] summary {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.forest-mobile-filters[open] summary::after {
+  content: "−";
+}
+
+.forest-mobile-filters__count {
+  margin-left: auto;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.forest-mobile-filters__body {
+  padding: 0 0.95rem 0.95rem;
+}
+
+.forest-inventory-product-card .forest-product-card__badge {
+  background: var(--sage);
+}
+
+.forest-inventory-product-card .forest-product-card__badge.is-unavailable {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--surface);
+}
+
+.forest-products-pagination {
+  margin-top: 1.5rem;
+}
+
+.forest-products-pagination .pagination {
+  display: flex;
+  margin: 0;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+.forest-products-pagination .pagination a,
+.forest-products-pagination .pagination .current,
+.forest-products-pagination .pagination .disabled {
+  min-width: 2.35rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  color: var(--ink);
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.forest-products-pagination .pagination a {
+  background: transparent;
+}
+
+.forest-products-pagination .pagination a:hover,
+.forest-products-pagination .pagination a:focus {
+  background: var(--sage);
+  color: var(--forest);
+}
+
+.forest-products-pagination .pagination .current {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--surface);
+}
+
+.forest-products-pagination .pagination .disabled {
+  border-color: var(--rule-soft);
+  color: var(--ink-muted);
+}
+
+.forest-empty-state {
+  max-width: 42rem;
+  padding: clamp(2rem, 5vw, 4rem);
+  background: var(--surface);
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 0.2rem double var(--ink);
+  text-align: center;
+}
+
+.forest-empty-state h2 {
+  margin: 0.5rem 0 0;
+}
+
+.forest-empty-state p:not(.forest-filter-eyebrow) {
+  margin: 1rem auto 1.5rem;
+  color: var(--ink-muted);
+}
+
+.forest-product-form {
+  max-width: 60rem;
+}
+
+.forest-form-errors {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.15rem;
+  background: rgba(189, 81, 62, 0.09);
+  border: 1px solid var(--action);
+}
+
+.forest-form-errors h2 {
+  margin: 0;
+  color: var(--action);
+  font-family: var(--font-interface);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.forest-form-errors ul {
+  margin: 0.65rem 0 0;
+}
+
+.forest-form-section {
+  margin: 0 0 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--surface);
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.forest-form-section h2 {
+  margin: 0.4rem 0 1.35rem;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+}
+
+.forest-product-form label {
+  margin-bottom: 0.4rem;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.forest-product-form input:not([type="checkbox"]):not([type="file"]),
+.forest-product-form textarea,
+.forest-product-form select {
+  height: auto;
+  margin-bottom: 1rem;
+  padding: 0.72rem 0.7rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.forest-product-form textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.forest-product-form input:not([type="checkbox"]):not([type="file"]):focus,
+.forest-product-form textarea:focus,
+.forest-product-form select:focus {
+  background: var(--surface);
+  border-color: var(--action);
+  box-shadow: 0 0 0 0.14rem rgba(189, 81, 62, 0.2);
+}
+
+.forest-product-form input[type="file"] {
+  width: 100%;
+  margin-bottom: 0.25rem;
+  color: var(--ink);
+}
+
+.forest-form-help {
+  margin: 0 0 1rem;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.forest-form-check-option {
+  position: relative;
+  margin-bottom: 0.55rem;
+}
+
+.forest-form-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.forest-form-check-label {
+  display: grid;
+  min-height: 2.7rem;
+  margin: 0 !important;
+  padding: 0.65rem 0.7rem 0.65rem 2.25rem;
+  align-items: center;
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  color: var(--ink);
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.forest-form-check-label::before {
+  position: absolute;
+  top: 50%;
+  left: 0.7rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  transform: translateY(-50%);
+  border: 1px solid var(--rule-strong);
+  content: "";
+}
+
+.forest-form-checkbox:checked + .forest-form-check-label {
+  background: rgba(184, 211, 190, 0.46);
+  border-color: var(--field);
+  color: var(--forest);
+}
+
+.forest-form-checkbox:checked + .forest-form-check-label::before {
+  background: var(--field);
+  border-color: var(--field);
+  box-shadow: inset 0 0 0 0.16rem rgba(255, 253, 248, 0.94);
+}
+
+.forest-form-checkbox:focus-visible + .forest-form-check-label {
+  outline: 0.2rem solid var(--action);
+  outline-offset: 0.15rem;
+}
+
+.forest-form-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.forest-button-primary.button,
+.forest-button-secondary.button,
+.forest-button-warning.button,
+.forest-button-danger.button {
+  margin: 0;
+  border-radius: 0;
+  font-family: var(--font-interface);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.forest-button-primary.button {
+  background: var(--action);
+  border: 1px solid var(--action);
+  color: var(--surface);
+}
+
+.forest-button-primary.button:hover,
+.forest-button-primary.button:focus {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--surface);
+}
+
+.forest-button-secondary.button {
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+}
+
+.forest-button-secondary.button:hover,
+.forest-button-secondary.button:focus {
+  background: var(--sage);
+  color: var(--forest);
+}
+
+.forest-button-warning.button {
+  background: rgba(184, 211, 190, 0.45);
+  border: 1px solid var(--field);
+  color: var(--forest);
+}
+
+.forest-button-warning.button:hover,
+.forest-button-warning.button:focus {
+  background: var(--field);
+  color: var(--surface);
+}
+
+.forest-button-danger.button {
+  background: transparent;
+  border: 1px solid var(--action);
+  color: var(--action);
+}
+
+.forest-button-danger.button:hover,
+.forest-button-danger.button:focus {
+  background: var(--action);
+  color: var(--surface);
+}
+
+.forest-product-summary,
+.forest-product-section {
+  margin-bottom: 1.75rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--surface);
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.forest-product-summary h2,
+.forest-product-section h2,
+.forest-product-actions h2 {
+  margin: 0.4rem 0 1.2rem;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+}
+
+.forest-product-gallery .entity-image {
+  margin-bottom: 1rem;
+}
+
+.forest-product-gallery .card {
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.forest-product-gallery .thumbnail {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border: 0;
+}
+
+.forest-product-gallery .card-section {
+  padding: 0.65rem;
+  background: var(--surface);
+}
+
+.forest-product-gallery .card-section .button {
+  margin: 0.15rem;
+  border-radius: 0;
+}
+
+.forest-product-image-placeholder {
+  display: flex;
+  min-height: 16rem;
+  padding: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: rgba(184, 211, 190, 0.38);
+  border: 1px solid var(--rule-soft);
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.forest-product-stock-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.2rem double var(--ink);
+  color: var(--forest);
+}
+
+.forest-product-stock-total strong {
+  font-family: var(--font-editorial);
+  font-size: clamp(3rem, 7vw, 4.5rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.8;
+}
+
+.forest-product-stock-total span {
+  max-width: 10rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.forest-product-facts {
+  display: grid;
+  margin: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem 1rem;
+}
+
+.forest-product-facts > div {
+  min-width: 0;
+}
+
+.forest-product-facts dt {
+  margin-bottom: 0.25rem;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.forest-product-facts dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.forest-product-facts__wide {
+  grid-column: 1 / -1;
+}
+
+.forest-product-description {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-product-description h2 {
+  margin-bottom: 0.8rem;
+}
+
+.forest-product-description p:last-child {
+  margin-bottom: 0;
+}
+
+.forest-data-table-wrap {
+  overflow-x: auto;
+}
+
+body.forest .forest-data-table {
+  width: 100%;
+  margin: 0;
+  background: transparent;
+  border: 0;
+}
+
+.forest-data-table thead,
+.forest-data-table tbody,
+.forest-data-table tr {
+  background: transparent;
+  border: 0;
+}
+
+.forest-data-table th {
+  padding: 0.65rem 0.7rem;
+  border-bottom: 0.2rem double var(--ink);
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.forest-data-table td {
+  padding: 0.8rem 0.7rem;
+  border-bottom: 1px solid var(--rule-soft);
+  color: var(--ink);
+  font-size: 0.86rem;
+  vertical-align: middle;
+}
+
+body.forest .forest-data-table .instance-available td,
+body.forest .forest-data-table .instance-held td,
+body.forest .forest-data-table .instance-repairing td,
+body.forest .forest-data-table .instance-trashed td {
+  background: transparent;
+}
+
+.forest-instance-serial,
+.forest-instance-state {
+  display: inline-block;
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.forest-instance-state {
+  padding: 0.3rem 0.45rem;
+  background: rgba(184, 211, 190, 0.45);
+  border-left: 0.2rem solid var(--field);
+  color: var(--forest);
+}
+
+.forest-instance-state.is-held {
+  background: rgba(38, 58, 86, 0.1);
+  border-left-color: var(--ink);
+}
+
+.forest-instance-state.is-repairing {
+  background: rgba(189, 81, 62, 0.09);
+  border-left-color: var(--action);
+}
+
+.forest-instance-state.is-trashed {
+  background: rgba(38, 58, 86, 0.1);
+  border-left-color: var(--rule-strong);
+  color: var(--ink-muted);
+}
+
+.forest-instance-actions {
+  display: flex;
+  min-width: 12rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.forest-instance-actions form {
+  margin: 0;
+}
+
+.forest-instance-action.button {
+  padding: 0.45rem 0.55rem;
+  font-size: 0.7rem;
+}
+
+.forest-section-empty {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  background: var(--paper);
+  border-left: 0.2rem solid var(--field);
+  color: var(--ink-muted);
+}
+
+.forest-product-actions {
+  position: sticky;
+  top: 1rem;
+  padding: 1rem;
+}
+
+.forest-product-actions > .button {
+  margin-bottom: 0.65rem;
+}
+
+.forest-product-event-action,
+.forest-product-danger-zone,
+.forest-product-notes {
+  margin-top: 1.2rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-product-event-action {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.forest-product-event-action h2,
+.forest-product-danger-zone h2,
+.forest-product-notes h3 {
+  margin-top: 0.4rem;
+  font-family: var(--font-interface);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.forest-product-event-action p:not(.forest-filter-eyebrow) {
+  margin: -0.55rem 0 1rem;
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+}
+
+.forest-product-danger-zone h2 {
+  color: var(--action);
+}
+
+.forest-product-danger-zone .button {
+  margin-bottom: 0.55rem;
+}
+
+.forest-product-notes form {
+  margin-bottom: 0;
+}
+
+.forest-product-notes label {
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.forest-product-notes textarea {
+  min-height: 5rem;
+  padding: 0.65rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.forest-product-notes textarea:focus {
+  background: var(--surface);
+  border-color: var(--action);
+  box-shadow: 0 0 0 0.14rem rgba(189, 81, 62, 0.2);
+}
+
+.forest-product-notes .button {
+  border-radius: 0;
+}
+
+@media screen and (max-width: 63.9375em) {
+  .forest-product-actions {
+    position: static;
+    margin-top: 0.25rem;
+  }
+}
+
+@media screen and (max-width: 39.9375em) {
+  .forest-products-pagination .pagination {
+    justify-content: stretch;
+  }
+
+  .forest-products-pagination .pagination a,
+  .forest-products-pagination .pagination .current,
+  .forest-products-pagination .pagination .disabled {
+    flex: 1 1 0;
+  }
+
+  .forest-form-section,
+  .forest-product-summary,
+  .forest-product-section {
+    padding: 1rem;
+  }
+
+  .forest-product-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .forest-product-facts__wide {
+    grid-column: auto;
+  }
+
+  .forest-data-table.stack thead {
+    display: none;
+  }
+
+  .forest-data-table.stack tr,
+  .forest-data-table.stack td {
+    display: block;
+  }
+
+  .forest-data-table.stack tr {
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .forest-data-table.stack td {
+    padding: 0.35rem 0;
+    border: 0;
+  }
+
+  .forest-data-table.stack td::before {
+    display: inline-block;
+    min-width: 8.5rem;
+    margin-right: 0.5rem;
+    color: var(--ink-muted);
+    content: attr(data-label);
+    font-family: var(--font-data);
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .forest-data-table.stack td.forest-instance-actions::before {
+    display: block;
+    margin: 0 0 0.4rem;
+  }
+
+  .forest-instance-actions {
+    justify-content: flex-start;
+  }
+}

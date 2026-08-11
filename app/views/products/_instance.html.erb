@@ -1,36 +1,28 @@
 <tr id="product-<%= @product.slug %>-instance-<%= instance.slug %>" class="instance-<%= instance.state %>">
-  <td>
+  <td data-label="<%= t("products.show.serial_no_header") %>">
     <% if current_member.inventory_director? %>
-      <%= link_to format_serial_no(instance.serial_no), [:edit, instance] %>
+      <%= link_to format_serial_no(instance.serial_no), [:edit, instance], class: "forest-instance-serial" %>
     <% else %>
-      <%= format_serial_no(instance.serial_no) %>
+      <span class="forest-instance-serial"><%= format_serial_no(instance.serial_no) %></span>
     <% end %>
   </td>
-  <td><%= t(instance.state, scope: "products.instance.states") %></td>
-  <td>
+  <td data-label="<%= t("products.show.state_header") %>">
+    <span class="forest-instance-state is-<%= instance.state %>"><%= t(instance.state, scope: "products.instance.states") %></span>
+  </td>
+  <td data-label="<%= t("products.show.actions_header") %>" class="forest-instance-actions">
     <% if current_member.inventory_director? %>
-      <div class="grid-x grid-margin-x">
-        <% if instance.state_events.include?(:hold) %>
-          <div class="auto cell">
-            <%= button_to t(".hold_button_label"), hold_product_instance_path(@product, instance), title: t(".hold_hover_help"), remote: true, method: :patch, class: "button warning small expanded" %>
-          </div>
-        <% end %>
-        <% if instance.state_events.include?(:send_for_repairs) %>
-          <div class="auto cell">
-            <%= button_to t(".send_for_repair_button_label"), send_for_repairs_product_instance_path(@product, instance), title: t(".send_for_repair_hover_help"), remote: true, method: :patch, class: "button warning small expanded" %>
-          </div>
-        <% end %>
-        <% if instance.state_events.include?(:repair) %>
-          <div class="auto cell">
-            <%= button_to t(".repair_button_label"), repair_product_instance_path(@product, instance), title: t(".repair_hover_help"), remote: true, method: :patch, class: "button success small expanded" %>
-          </div>
-        <% end %>
-        <% if instance.state_events.include?(:trash) %>
-          <div class="auto cell">
-            <%= button_to t(".trash_button_label"), product_instance_path(@product, instance), title: t(".trash_hover_help"), remote: true, method: :delete, class: "button alert small expanded" %>
-          </div>
-        <% end %>
+      <% if instance.state_events.include?(:hold) %>
+        <%= button_to t(".hold_button_label"), hold_product_instance_path(@product, instance), title: t(".hold_hover_help"), remote: true, method: :patch, class: "button forest-instance-action forest-button-warning" %>
       <% end %>
-    </div>
+      <% if instance.state_events.include?(:send_for_repairs) %>
+        <%= button_to t(".send_for_repair_button_label"), send_for_repairs_product_instance_path(@product, instance), title: t(".send_for_repair_hover_help"), remote: true, method: :patch, class: "button forest-instance-action forest-button-warning" %>
+      <% end %>
+      <% if instance.state_events.include?(:repair) %>
+        <%= button_to t(".repair_button_label"), repair_product_instance_path(@product, instance), title: t(".repair_hover_help"), remote: true, method: :patch, class: "button forest-instance-action forest-button-primary" %>
+      <% end %>
+      <% if instance.state_events.include?(:trash) %>
+        <%= button_to t(".trash_button_label"), product_instance_path(@product, instance), title: t(".trash_hover_help"), remote: true, method: :delete, class: "button forest-instance-action forest-button-danger" %>
+      <% end %>
+    <% end %>
   </td>
 </tr>

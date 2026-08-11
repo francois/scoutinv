@@ -1,82 +1,44 @@
-<div class="grid-x grid-padding-x">
-  <div class="large-9 medium-12 cell">
-    <%= form_tag products_path, method: :get, class: "search-form" do %>
-      <div class="grid-container">
-        <div class="grid-x grid-padding-x">
-          <div class="medium-shrink cell show-for-sr">
-            <%= label_tag :filter, t(".filter_label"), class: "middle" %>
-          </div>
-          <div class="medium-shrink cell">
-            <%= text_field_tag :filter, @filter, placeholder: t(".filter_label"), autocomplete: false %>
-          </div>
-
-          <div class="medium-shrink cell show-for-sr">
-            <%= label_tag :category, t(".category_label"), class: "middle" %>
-          </div>
-          <div class="medium-shrink cell">
-            <%= select_tag :category, options_from_collection_for_select(@categories, :slug, ->(category){ t(category.name, scope: "categories") }, @selected_category ? @selected_category.slug : nil), include_blank: true %>
-          </div>
-
-          <div class="medium-auto cell">
-            <%= submit_tag t(".search_button_label"), name: nil, class: "button" %> <%= link_to t(".view_all_button_label"), products_path, class: "button secondary" %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    <% if current_member.inventory_director? %>
-      <div class="grid-container">
-        <div class="grid-x grid-margin-x">
-          <div class="cell">
-            <%= link_to t(".new_product_button_label"), new_product_path, class: "button hide-for-large" %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-
-    <div class="grid-container">
-      <div class="grid-x grid-margin-x">
-        <div class="cell">
-          <table class="hover stack product-list">
-            <thead>
-              <tr>
-                <th><%= t(".name_header") %></th>
-                <th><%= t(".quantity_header") %></th>
-                <th><%= t(".location_header") %></th>
-                <th><%= t(".description_header") %></th>
-                <th><%= t(".categories_header") %></th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <% if @products.empty? %>
-                <tr>
-                  <td colspan="5"><%= t(".sorry_no_elements") %></td>
-                </tr>
-              <% end %>
-              <% @products.each do |product| %>
-                <tr>
-                  <td>
-                    <%= link_to product.name, product %> <br>
-                    <%= entity_image product, height: 250 %>
-                  </td>
-                  <td><%= number_with_delimiter product.instances.size %></td>
-                  <td><%= format_product_location(product) %></td>
-                  <td><%= product.description %></td>
-                  <td><%= product.categories.map(&:name).map{|name| t(name, scope: "categories") }.sort_by(&:downcase).to_sentence %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-          <%= paginate @products %>
-        </div>
-      </div>
+<div class="grid-x grid-margin-x forest-products-layout">
+  <aside class="large-3 medium-4 cell show-for-medium forest-filter-sidebar-column" aria-label="<%= t(".filters_title") %>">
+    <div class="forest-filter-sidebar">
+      <%= link_to t(".new_product_button_label"), new_product_path, class: "button expanded forest-filter-submit forest-products-new-button" if current_member.inventory_director? %>
+      <%= render partial: "filters", locals: { id_prefix: "desktop" } %>
     </div>
+  </aside>
+
+  <div class="large-9 medium-8 small-12 cell">
+    <div class="hide-for-medium forest-products-mobile-controls">
+      <%= link_to t(".new_product_button_label"), new_product_path, class: "button expanded forest-filter-submit forest-products-new-button" if current_member.inventory_director? %>
+
+      <details class="forest-mobile-filters" <%= "open" if @has_active_filters %>>
+        <summary>
+          <span><%= t(".filters_title") %></span>
+          <% if @has_active_filters %>
+            <span class="forest-mobile-filters__count"><%= t(".active_filters") %></span>
+          <% end %>
+        </summary>
+        <div class="forest-mobile-filters__body">
+          <%= render partial: "filters", locals: { id_prefix: "mobile" } %>
+        </div>
+      </details>
+    </div>
+
+    <% if @products.any? %>
+      <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-3">
+        <% @products.each do |product| %>
+          <%= render partial: "product_card", locals: { product: product } %>
+        <% end %>
+      </div>
+      <div class="forest-products-pagination">
+        <%= paginate @products %>
+      </div>
+    <% else %>
+      <section class="forest-empty-state" aria-labelledby="products-empty-heading">
+        <p class="forest-filter-eyebrow"><%= t(".filters_title") %></p>
+        <h2 id="products-empty-heading"><%= t(".empty_title") %></h2>
+        <p><%= t(".sorry_no_elements") %></p>
+        <%= link_to t(".view_all_button_label"), products_path, class: "button forest-pagination-button" if @has_active_filters %>
+      </section>
+    <% end %>
   </div>
-
-  <% if current_member.inventory_director %>
-    <div class="large-3 medium-12 cell show-for-large">
-      <%= link_to t(".new_product_button_label"), new_product_path, class: "button expanded" %>
-    </div>
-  <% end %>
 </div>

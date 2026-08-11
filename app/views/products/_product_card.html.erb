@@ -1,0 +1,42 @@
+<% card_id = "product-card-title-#{product.slug}" %>
+
+<div class="cell forest-product-card-cell">
+  <article class="card forest-product-card forest-inventory-product-card" aria-labelledby="<%= card_id %>">
+    <div class="forest-product-card__media">
+      <%= forest_product_card_image product %>
+      <span class="forest-product-card__badge <%= "is-unavailable" if product.available_quantity.zero? %>">
+        <%= t("products.index.available_badge", count: product.available_quantity) %>
+      </span>
+    </div>
+
+    <div class="card-section forest-product-card__body">
+      <% if product.categories.any? %>
+        <p class="forest-product-card__categories">
+          <%= product.categories.map { |category| t(category.name, scope: "categories") }.join(" · ") %>
+        </p>
+      <% end %>
+
+      <h3 class="forest-product-card__title" id="<%= card_id %>">
+        <%= link_to product.name, product %>
+      </h3>
+
+      <% if product.description.present? %>
+        <div class="forest-product-card__description" title="<%= product.description %>">
+          <%= simple_format product.description %>
+        </div>
+      <% end %>
+
+      <p class="forest-product-card__availability">
+        <strong><%= number_with_delimiter product.available_quantity %></strong>
+        <span><%= t("products.index.available_count", count: product.available_quantity) %></span>
+      </p>
+
+      <ul class="forest-product-card__stock-facts" aria-label="<%= t("products.index.stock_details") %>">
+        <li><%= t("products.index.total_count", count: product.quantity) %></li>
+        <% if product.has_location? %>
+          <li><%= format_product_location(product, plain: true) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </article>
+</div>

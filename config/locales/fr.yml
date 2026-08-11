@@ -364,11 +364,26 @@ fr:
     update:
       consumable_successfully_updated: Consommable mis à jour avec succès
   products:
+    card:
+      no_photo: Aucune photo
+      view_product: Voir %{product}
     form:
       cancel_button_label: Annuler
+      categories_eyebrow: Classement
       categories_label: Catégories
+      details_eyebrow: Produit
+      details_heading: Détails du produit
+      error_heading:
+        one: "1 erreur empêche l’enregistrement de ce produit"
+        other: "%{count} erreurs empêchent l’enregistrement de ce produit"
+      help_on_image_url: Collez le lien d’une photo pour l’ajouter à ce produit.
       help_on_images: "Tapez sur le bouton pour prendre une photo (sur un cellulaire), ou sélectionnez une photo à partir de votre ordinateur. Si vous clonez un produit, les images seront aussi copiées."
+      location_eyebrow: Rangement
       location_label: Localisation
+      photos_eyebrow: Photos
+      photos_heading: Photos
+      stock_eyebrow: Inventaire
+      stock_heading: Stock et prix
     convert:
       conversion_reason: "Conversion d'un produit"
       product_successfully_converted: Produit convertit en consommable avec succès
@@ -384,10 +399,21 @@ fr:
       rotate_image_left_button_label_html: "&#8630; gauche" # ANTICLOCKWISE TOP SEMICIRCLE ARROW
       rotate_image_right_button_label_html: "&#8631; droite" # CLOCKWISE TOP SEMICIRCLE ARROW
     index:
+      active_filters: Filtres actifs
+      all_categories: Toutes les catégories
+      available_badge:
+        one: "1 disponible"
+        other: "%{count} disponibles"
+      available_count:
+        one: disponible à prêter
+        other: disponibles à prêter
       categories_header: Catégories
       category_label: Catégorie
       description_header: Description
+      empty_title: Aucun produit trouvé
       filter_label: Filtre
+      filter_placeholder: "ex. tente, brûleur"
+      filters_title: Filtrer les produits
       location_header: Localisation
       name_header: Nom
       new_product_button_label: Ajouter un produit
@@ -395,6 +421,10 @@ fr:
       quantity_header: Quantité
       search_button_label: Chercher
       sorry_no_elements: Désolé, aucun produit ne correspond à vos critères de recherche
+      stock_details: Détails du stock
+      total_count:
+        one: "1 au total"
+        other: "%{count} au total"
       view_all_button_label: Afficher tout
     instance:
       hold_button_label: Retenir
@@ -422,17 +452,37 @@ fr:
     show:
       add_note_label: Ajouter une note
       add_to_cart_label: Réserver pour cet événement
+      actions_header: Actions
       back_to_list_button_label: Retour à la liste
       clone_button_label: Copier ce produit
       convert_to_consumable_label: Convertir en consommable
+      convert_confirm: Convertir ce produit en consommable? Cette action ne peut pas être annulée.
+      danger_eyebrow: Actions irréversibles
+      danger_heading: Attention
       dates_header: Dates
       delete_button_label: Détruire ce produit
+      delete_confirm: Détruire ce produit? Cette action ne peut pas être annulée.
+      description_eyebrow: Détails
       edit_button_label: Modifier ce produit
+      event_eyebrow: Événement actuel
       event_header: Événement
+      history_eyebrow: Passé et à venir
       instance_serial_nos_header: Numéros de série des instances
+      instances_eyebrow: Éléments unitaires
+      no_categories: Aucune catégorie
+      no_location: Aucune localisation
+      no_reservations: Ce produit n’a aucune réservation.
       product_reservation_history_header: Historique de réservation du produit
       serial_no_header: No série
       state_header: État
+      stock_eyebrow: Inventaire
+      stock_heading: Stock
+      available_count:
+        one: disponible à prêter
+        other: disponibles à prêter
+      total_count:
+        one: "1 au total"
+        other: "%{count} au total"
     update:
       product_successfully_updated: Produit mis à jour avec succès
   reports:

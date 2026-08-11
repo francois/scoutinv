@@ -1,0 +1,46 @@
+<%= form_tag products_path,
+             method: :get,
+             id: "#{id_prefix}-product-filters",
+             class: "search-form forest-filter-form" do %>
+  <p class="forest-filter-eyebrow"><%= t("products.index.filters_title") %></p>
+
+  <div class="forest-filter-section forest-filter-search">
+    <%= label_tag "#{id_prefix}-filter", t("products.index.filter_label"), class: "forest-filter-section__label" %>
+    <%= search_field_tag :filter,
+                         @filter,
+                         id: "#{id_prefix}-filter",
+                         placeholder: t("products.index.filter_placeholder"),
+                         autocomplete: false %>
+  </div>
+
+  <fieldset class="forest-filter-section forest-filter-options">
+    <legend class="forest-filter-section__label"><%= t("products.index.category_label") %></legend>
+    <div class="forest-filter-option">
+      <%= radio_button_tag :category, "", @selected_category.nil?, id: "#{id_prefix}-category-all", class: "forest-filter-checkbox" %>
+      <%= label_tag "#{id_prefix}-category-all", class: "forest-filter-option__label" do %>
+        <span class="forest-filter-option__copy"><%= t("products.index.all_categories") %></span>
+      <% end %>
+    </div>
+    <% @categories.each do |category| %>
+      <% category_id = "#{id_prefix}-category-#{category.slug}" %>
+      <div class="forest-filter-option">
+        <%= radio_button_tag :category,
+                             category.slug,
+                             @selected_category == category,
+                             id: category_id,
+                             class: "forest-filter-checkbox" %>
+        <%= label_tag category_id, class: "forest-filter-option__label" do %>
+          <span class="forest-filter-option__copy"><%= t(category.name, scope: "categories") %></span>
+          <span class="forest-filter-option__count"><%= @category_counts[category.id] %></span>
+        <% end %>
+      </div>
+    <% end %>
+  </fieldset>
+
+  <div class="forest-filter-actions">
+    <%= submit_tag t("products.index.search_button_label"), class: "button expanded forest-filter-submit", name: nil %>
+    <% if @has_active_filters %>
+      <%= link_to t("products.index.view_all_button_label"), products_path, class: "forest-filter-clear" %>
+    <% end %>
+  </div>
+<% end %>
