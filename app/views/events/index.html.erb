@@ -1,67 +1,69 @@
-<div class="grid-x grid-padding-x">
-  <div class="large-9 medium-12 cell">
-    <%= form_tag events_path, method: :get, class: "search-form" do %>
-      <div class="grid-container">
-        <div class="grid-x grid-padding-x">
-          <div class="medium-shrink cell show-for-sr">
-            <%= label_tag :after, t(".on_or_after_label"), class: "middle" %>
-          </div>
-          <div class="medium-shrink cell">
-            <%= date_field_tag :after, @after.to_date.to_formatted_s(:iso8601), autocomplete: false %>
-          </div>
-          <div class="medium-auto cell">
-            <%= submit_tag t(".search_button_label"), class: "button" %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+<div class="grid-x grid-margin-x forest-events-layout">
+  <aside class="large-3 medium-4 cell show-for-medium forest-events-sidebar-column" aria-label="<%= t(".page_title") %>">
+    <div class="forest-events-sidebar">
+      <%= link_to t(".new_event_button_label"), new_event_path, class: "button expanded forest-button-primary forest-events-new-button" %>
 
-    <div class="grid-container">
-      <div class="grid-x grid-margin-x">
-        <div class="cell">
-          <%= link_to t(".new_event_button_label"), new_event_path, class: "button hide-for-large" %>
+      <%= form_tag events_path, method: :get, class: "forest-events-filter-form" do %>
+        <p class="forest-filter-eyebrow"><%= t(".page_title") %></p>
+        <div class="forest-events-filter-field">
+          <%= label_tag :after, t(".on_or_after_label") %>
+          <%= date_field_tag :after, @after.to_date.to_formatted_s(:iso8601), autocomplete: false %>
         </div>
-      </div>
+        <div class="forest-events-filter-actions">
+          <%= submit_tag t(".search_button_label"), class: "button expanded forest-button-secondary" %>
+          <%= link_to t(".view_all_button_label"), events_path, class: "button expanded forest-button-secondary" %>
+        </div>
+      <% end %>
     </div>
+  </aside>
 
-    <div class="grid-container">
-      <div class="grid-x grid-margin-x">
-        <div class="cell">
-          <table class="hover stack">
-            <thead>
-              <tr>
-                <th><%= t(".title_header") %></th>
-                <th><%= t(".renter_header") %></th>
-                <th><%= t(".start_on_header") %></th>
-                <th><%= t(".end_on_header") %></th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td colspan="4"><%= link_to t(".include_previous_year_html"), events_path(after: (@after - 1.year).to_formatted_s(:iso8601)) %></td>
-              </tr>
-              <% if @events.empty? %>
-                <tr>
-                  <td colspan="4"><%= t(".sorry_no_elements") %></td>
-                </tr>
-              <% end %>
-              <% @events.each do |event| %>
-                <tr>
-                  <td><%= link_to event.title, event %></td>
-                  <td><%= event.renter_name %></td>
-                  <td><span class="hide-for-large"><%= t(".start_on_header") %></span> <%= event.start_on %></td>
-                  <td><span class="hide-for-large"><%= t(".end_on_header") %></span> <%= event.end_on %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+  <div class="small-12 cell hide-for-medium forest-events-mobile-controls">
+    <%= link_to t(".new_event_button_label"), new_event_path, class: "button expanded forest-button-primary forest-events-new-button" %>
+    <details class="forest-events-mobile-filter">
+      <summary><%= t(".search_button_label") %></summary>
+      <%= form_tag events_path, method: :get, class: "forest-events-filter-form" do %>
+        <div class="forest-events-filter-field">
+          <%= label_tag :after, t(".on_or_after_label") %>
+          <%= date_field_tag :after, @after.to_date.to_formatted_s(:iso8601), autocomplete: false %>
         </div>
-      </div>
-    </div>
+        <div class="forest-events-filter-actions">
+          <%= submit_tag t(".search_button_label"), class: "button expanded forest-button-secondary" %>
+          <%= link_to t(".view_all_button_label"), events_path, class: "button expanded forest-button-secondary" %>
+        </div>
+      <% end %>
+    </details>
   </div>
 
-  <div class="large-3 medium-12 cell show-for-large">
-    <%= link_to t(".new_event_button_label"), new_event_path, class: "button expanded" %>
+  <div class="large-9 medium-8 small-12 cell">
+    <div class="forest-data-table-wrap">
+      <table class="stack forest-data-table forest-events-table">
+        <thead>
+          <tr>
+            <th><%= t(".title_header") %></th>
+            <th><%= t(".renter_header") %></th>
+            <th><%= t(".start_on_header") %></th>
+            <th><%= t(".end_on_header") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="forest-events-previous-year">
+            <td colspan="4"><%= link_to t(".include_previous_year_html"), events_path(after: (@after - 1.year).to_formatted_s(:iso8601)) %></td>
+          </tr>
+          <% if @events.empty? %>
+            <tr>
+              <td colspan="4"><p class="forest-section-empty"><%= t(".sorry_no_elements") %></p></td>
+            </tr>
+          <% end %>
+          <% @events.each do |event| %>
+            <tr>
+              <td data-label="<%= t(".title_header") %>"><%= link_to event.title, event, class: "forest-event-row-link forest-event-row-title" %></td>
+              <td data-label="<%= t(".renter_header") %>"><%= link_to event.renter_name, event, class: "forest-event-row-link", aria: { label: event.title } %></td>
+              <td data-label="<%= t(".start_on_header") %>"><%= link_to event.start_on, event, class: "forest-event-row-link", aria: { label: event.title } %></td>
+              <td data-label="<%= t(".end_on_header") %>"><%= link_to event.end_on, event, class: "forest-event-row-link", aria: { label: event.title } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

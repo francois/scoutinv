@@ -1,28 +1,16 @@
-<div id="product-card-<%= consumable.slug %>" class="cell">
-  <div class="card">
-    <div class="card-divider">
-      <h4 class="auto cell">
-        <%= link_to consumable.name, consumable_path(consumable) %>
-      </h4>
-    </div>
-    <%= link_to consumable do %>
-      <%= entity_image consumable, height: 250 %>
-    <% end %>
-    <div class="card-section">
+<div id="product-card-<%= consumable.slug %>" class="cell forest-event-material-card-cell">
+  <article class="card forest-event-material-card">
+    <div class="forest-event-material-card__media"><%= entity_image consumable, height: 250 %></div>
+    <div class="card-section forest-event-material-card__body">
+      <h4><%= link_to consumable.name, consumable_path(consumable) %></h4>
       <% if consumable.description.present? %>
-        <%= simple_format consumable.description %>
+        <div class="forest-event-material-card__description"><%= simple_format consumable.description %></div>
       <% end %>
-      <p>
-      <%= format_quantity @event.quantity_of(consumable), precision: 1 %>  &times;  <%= number_to_currency @event.unit_price_of(consumable) %> / <%= format_quantity consumable.base_quantity %>  =  <%= number_to_currency @event.subtotal_of(consumable) %>
-      </p>
       <% if consumable.has_location? %>
-        <p>
-        <small>
-          <strong><%= t("activerecord.attributes.consumable.location") %></strong>:
-          <%= format_product_location(consumable) %>
-        </small>
-        </p>
+        <p class="forest-event-material-card__location"><%= format_product_location(consumable) %></p>
       <% end %>
+      <p class="forest-event-material-card__quantity"><strong><%= format_quantity quantity, precision: 1 %></strong></p>
+      <p class="forest-event-material-card__price"><%= format_quantity quantity, precision: 1 %> × <%= number_to_currency @event.unit_price_of(consumable) %> / <%= format_quantity consumable.base_quantity %> = <strong><%= number_to_currency @event.subtotal_of(consumable) %></strong></p>
     </div>
-  </div>
+  </article>
 </div>

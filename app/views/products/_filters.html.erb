@@ -38,9 +38,9 @@
   </fieldset>
 
   <div class="forest-filter-actions">
-    <%= submit_tag t("products.index.search_button_label"), class: "button expanded forest-filter-submit", name: nil %>
+    <%= submit_tag t("products.index.search_button_label"), class: "button expanded forest-button-secondary", name: nil %>
     <% if @has_active_filters %>
-      <%= link_to t("products.index.view_all_button_label"), products_path, class: "forest-filter-clear" %>
+      <%= link_to t("products.index.view_all_button_label"), products_path, class: "button expanded forest-button-secondary" %>
     <% end %>
   </div>
 <% end %>

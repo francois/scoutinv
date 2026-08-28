@@ -142,6 +142,8 @@ fr:
   events:
     form:
       cancel_button_label: Annuler
+      dates_heading: Dates
+      details_heading: Détails de l’événement
       external_renter: Locataire externe
       help: |
         Soit une unité emprunte du matériel, auquel cas seule la
@@ -149,12 +151,14 @@ fr:
         matériel renseigne la section sur le locataire externe.
       internal_renter: Unité locataire
       or: ou
+      renter_heading: Locataire
     index:
       end_on_header: Se termine le
       include_previous_year_html: "&laquo; Inclure l'année précédente"
       new_event_button_label: Ajouter un événement
       on_or_after_label: Le ou après le
       page_title: "Événements"
+      renter_header: Locataire
       search_button_label: Chercher
       sorry_no_elements: Désolé, aucun événement ne correspond à vos critères de recherche
       start_on_header: Commence le
@@ -303,6 +307,8 @@ fr:
       edit_reservation_button_label: Modifer les réservations
       lease_all_button_label: Tout prêter à l'unité
       manage_reservations_button_label: Gérer les réservations
+      inventory_actions: Actions du matériel
+      no_materials: Aucun matériel n’est réservé pour cet événement.
       notes_header: Notes
       finalize_button_label: Finaliser l'événement
       finalize_button_help: Indique que vous avez terminé de préparer votre événement et que vous êtes prêt à ce que les directeurs du matériel mettent vos produits de côté, afin que vous les utilisiez lors de votre événement.
