@@ -320,11 +320,26 @@ fr:
     edit:
       cancel_button_label: Annuler
   consumables:
+    card:
+      no_photo: Aucune photo
+      view_consumable: Voir %{consumable}
     form:
       cancel_button_label: Annuler
+      categories_eyebrow: Classement
       categories_label: Catégories
+      details_eyebrow: Consommable
+      details_heading: Détails du consommable
+      error_heading:
+        one: "1 erreur empêche l’enregistrement de ce consommable"
+        other: "%{count} erreurs empêchent l’enregistrement de ce consommable"
+      help_on_image_url: Collez le lien d’une photo pour l’ajouter à ce consommable.
       help_on_images: "Tapez sur le bouton pour prendre une photo (sur un cellulaire), ou sélectionnez une photo à partir de votre ordinateur. Si vous clonez un consommable, les images seront aussi copiées."
+      location_eyebrow: Rangement
       location_label: Localisation
+      photos_eyebrow: Photos
+      photos_heading: Photos
+      stock_eyebrow: Inventaire
+      stock_heading: Stock et prix
     create:
       consumable_successfully_created: Consommable enregistré avec succès
     destroy:
@@ -333,10 +348,18 @@ fr:
       destroy:
         notice: Image détruite
     index:
+      active_filters: Filtres actifs
+      all_categories: Toutes les catégories
+      available_badge: "%{quantity} en stock"
+      available_count: en stock
+      base_quantity: "%{quantity} par unité"
       categories_header: Catégories
       category_label: Catégorie
       description_header: Description
+      empty_title: Aucun consommable trouvé
       filter_label: Filtre
+      filter_placeholder: "ex. soupe, combustible"
+      filters_title: Filtrer les consommables
       location_header: Localisation
       name_header: Nom
       new_consumable_button_label: Ajouter un consommable
@@ -352,15 +375,28 @@ fr:
     show:
       add_note_label: Ajouter une note
       add_to_cart_label: Réserver pour cet événement
+      available_count: en stock
       back_to_list_button_label: Retour à la liste
       clone_button_label: Copier ce consommable
       consumable_reservation_history_header: Historique de réservation du consommable
+      current_stock: Stock actuel
+      danger_eyebrow: Actions irréversibles
+      danger_heading: Attention
       date_header: Date
       delete_button_label: Détruire ce consommable
+      delete_confirm: Détruire ce consommable? Cette action ne peut pas être annulée.
+      description_eyebrow: Détails
       edit_button_label: Modifier ce consommable
+      event_eyebrow: Événement actuel
+      history_eyebrow: Mouvements de stock
+      no_categories: Aucune catégorie
+      no_location: Aucune localisation
       quantity_header: Quantité
+      record_transaction: Enregistrer le mouvement
       reason_or_event_header: "Raison ou événement"
       state_header: État
+      stock_eyebrow: Inventaire
+      stock_heading: Stock
     update:
       consumable_successfully_updated: Consommable mis à jour avec succès
   products:

@@ -1,0 +1,42 @@
+<% card_id = "consumable-card-title-#{consumable.slug}" %>
+
+<div class="cell forest-product-card-cell">
+  <article class="card forest-product-card forest-consumable-card" aria-labelledby="<%= card_id %>">
+    <div class="forest-product-card__media">
+      <%= forest_product_card_image consumable %>
+      <span class="forest-product-card__badge <%= "is-unavailable" if consumable.available_quantity.zero? %>">
+        <%= t("consumables.index.available_badge", quantity: format_quantity(consumable.available_quantity)) %>
+      </span>
+    </div>
+
+    <div class="card-section forest-product-card__body">
+      <% if consumable.categories.any? %>
+        <p class="forest-product-card__categories">
+          <%= consumable.categories.map { |category| t(category.name, scope: "categories") }.join(" · ") %>
+        </p>
+      <% end %>
+
+      <h3 class="forest-product-card__title" id="<%= card_id %>">
+        <%= link_to consumable.name, consumable %>
+      </h3>
+
+      <% if consumable.description.present? %>
+        <div class="forest-product-card__description" title="<%= consumable.description %>">
+          <%= simple_format consumable.description %>
+        </div>
+      <% end %>
+
+      <p class="forest-product-card__availability">
+        <strong><%= format_quantity consumable.available_quantity %></strong>
+        <span><%= t("consumables.index.available_count") %></span>
+      </p>
+
+      <ul class="forest-product-card__stock-facts" aria-label="<%= t("consumables.index.stock_details") %>">
+        <li><%= t("consumables.index.base_quantity", quantity: format_quantity(consumable.base_quantity)) %></li>
+        <% if consumable.has_location? %>
+          <li><%= format_product_location(consumable, plain: true) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </article>
+</div>

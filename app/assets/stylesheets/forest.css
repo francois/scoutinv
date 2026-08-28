@@ -1959,6 +1959,39 @@ body.forest .forest-data-table .instance-trashed td {
   border-radius: 0;
 }
 
+.forest-consumable-transactions-table tfoot td {
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 0;
+  color: var(--forest);
+  font-weight: 700;
+}
+
+.forest-transaction-entry input {
+  min-width: 8rem;
+  margin: 0;
+  padding: 0.55rem 0.6rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--ink);
+  font-size: 0.86rem;
+}
+
+.forest-transaction-entry input:focus {
+  background: var(--surface);
+  border-color: var(--action);
+  box-shadow: 0 0 0 0.14rem rgba(189, 81, 62, 0.2);
+}
+
+.forest-transaction-submit {
+  text-align: right;
+}
+
+.forest-transaction-submit .button {
+  margin: 0;
+}
+
 @media screen and (max-width: 63.9375em) {
   .forest-product-actions {
     position: static;

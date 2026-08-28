@@ -15,7 +15,7 @@ module EntityHelper
         content_tag(:span, class: "forest-product-card__image-placeholder") do
           safe_join([
             content_tag(:span, entity.name.first.to_s.upcase, class: "forest-product-card__image-initial", aria: { hidden: true }),
-            content_tag(:span, t("products.card.no_photo")),
+            content_tag(:span, t("#{entity.model_name.i18n_key.to_s.pluralize}.card.no_photo")),
           ])
         end
       end
@@ -24,7 +24,7 @@ module EntityHelper
       content,
       path,
       class: "forest-product-card__image-link",
-      aria: { label: t("products.card.view_product", product: entity.name) },
+      aria: { label: t("#{entity.model_name.i18n_key.to_s.pluralize}.card.view_#{entity.model_name.i18n_key}", entity.model_name.i18n_key => entity.name) },
     )
   end
 
