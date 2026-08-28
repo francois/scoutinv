@@ -9,7 +9,10 @@ class ConsumablesController < ApplicationController
 
     @filter = params[:filter]
 
+    @category_counts = category_counts
+    @categories = @categories.select { |category| @category_counts[category.id].positive? }
     @selected_category = @categories.detect{|category| category.slug == params[:category]}
+    @has_active_filters = @filter.present? || @selected_category.present?
 
     @consumables = current_group.consumables.with_attached_images.with_categories
     @consumables = @consumables.search(@filter) if @filter.present?
@@ -143,6 +146,16 @@ class ConsumablesController < ApplicationController
 
   def load_categories
     @categories = Category.by_name.to_a
+  end
+
+  def category_counts
+    current_group.consumables
+      .joins(:consumable_categories)
+      .group("consumable_categories.category_id")
+      .distinct
+      .count(:id)
+      .with_indifferent_access
+      .tap { |counts| counts.default = 0 }
   end
 
   def import(image_url)

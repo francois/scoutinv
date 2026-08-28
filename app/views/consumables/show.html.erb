@@ -1,131 +1,156 @@
-<div class="grid-x grid-margin-x">
-  <div class="large-9 medium-12 cell">
-    <%= form_tag event_reservations_path(@event, @consumable) do %> <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button small hide-for-large" %>
-    <% end if @event %>
-    <%= link_to t(".edit_button_label"), edit_consumable_path(@consumable), class: "button small hide-for-large" if current_member.inventory_director? %>
-    <%= link_to t(".clone_button_label"), new_consumable_path(clone_from: @consumable), class: "button small hide-for-large" if current_member.inventory_director? %>
-    <%= link_to t(".back_to_list_button_label"), consumables_path, class: "button secondary small hide-for-large" %>
-    <%= link_to t(".delete_button_label"), consumable_path(@consumable), method: :delete, class: "button small alert hide-for-large" if current_member.inventory_director? %>
+<div class="grid-x grid-margin-x forest-product-show-layout">
+  <div class="large-9 cell">
+    <section class="forest-product-summary" aria-labelledby="consumable-summary-heading">
+      <div class="grid-x grid-margin-x">
+        <div class="small-12 medium-6 cell">
+          <div class="grid-x grid-margin-x small-up-1 medium-up-2 forest-product-gallery">
+            <% @consumable.images.select(&:blob).sort_by { |image| image.blob.filename.to_s.downcase }.each do |image| %>
+              <%= render partial: "shared/image", locals: { entity: @consumable, image: image } %>
+            <% end %>
+            <% if @consumable.images.none?(&:blob) %>
+              <div class="cell">
+                <div class="forest-product-image-placeholder" aria-label="<%= t("consumables.card.no_photo") %>">
+                  <span class="forest-product-card__image-initial" aria-hidden="true"><%= @consumable.name.first.to_s.upcase %></span>
+                  <span><%= t("consumables.card.no_photo") %></span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
 
-    <div class="grid-x grid-padding-x small-up-1 medium-up-3">
-      <% @consumable.images.select(&:blob).sort_by{|blob| blob.filename.to_s.downcase}.each do |image| %>
-        <%= render partial: "shared/image", locals: { entity: @consumable, image: image } %>
+        <div class="small-12 medium-6 cell">
+          <p class="forest-filter-eyebrow"><%= t(".stock_eyebrow") %></p>
+          <h2 id="consumable-summary-heading"><%= t(".stock_heading") %></h2>
+
+          <div class="forest-product-stock-total">
+            <strong><%= format_quantity @consumable.available_quantity %></strong>
+            <span><%= t(".available_count") %></span>
+          </div>
+
+          <dl class="forest-product-facts">
+            <div>
+              <dt><%= t("base_quantity", scope: "activerecord.attributes.consumable") %></dt>
+              <dd><%= format_quantity @consumable.base_quantity %></dd>
+            </div>
+            <div>
+              <dt><%= t("location", scope: "activerecord.attributes.consumable") %></dt>
+              <dd><%= @consumable.has_location? ? format_product_location(@consumable) : t(".no_location") %></dd>
+            </div>
+            <div>
+              <dt><%= t("internal_unit_price", scope: "activerecord.attributes.consumable") %></dt>
+              <dd><%= number_to_currency @consumable.internal_unit_price %> / <%= format_quantity @consumable.base_quantity %></dd>
+            </div>
+            <div>
+              <dt><%= t("external_unit_price", scope: "activerecord.attributes.consumable") %></dt>
+              <dd><%= number_to_currency @consumable.external_unit_price %> / <%= format_quantity @consumable.base_quantity %></dd>
+            </div>
+            <div class="forest-product-facts__wide">
+              <dt><%= t("categories", scope: "consumables.form") %></dt>
+              <dd><%= @consumable.categories.map { |category| t(category.name, scope: "categories") }.to_sentence.presence || t(".no_categories") %></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <% if @consumable.description.present? %>
+        <div class="forest-product-description">
+          <p class="forest-filter-eyebrow"><%= t(".description_eyebrow") %></p>
+          <h2><%= t("description", scope: "activerecord.attributes.consumable") %></h2>
+          <%= simple_format @consumable.description %>
+        </div>
       <% end %>
-    </div>
+    </section>
 
-    <div>
-      <strong><%= t("name", scope: "activerecord.attributes.consumable") %>:</strong>
-      <%= @consumable.name %>
-    </div>
+    <section class="forest-product-section" aria-labelledby="consumable-history-heading">
+      <p class="forest-filter-eyebrow"><%= t(".history_eyebrow") %></p>
+      <h2 id="consumable-history-heading"><%= t(".consumable_reservation_history_header") %></h2>
+      <%= form_for @consumable_transaction, url: consumable_transactions_path(@consumable) do |form| %>
+        <div class="forest-data-table-wrap">
+          <table class="stack forest-data-table forest-consumable-transactions-table">
+            <thead>
+              <tr>
+                <th><%= t(".date_header") %></th>
+                <th><%= t(".quantity_header") %></th>
+                <th colspan="2"><%= t(".reason_or_event_header") %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @consumable.consumable_transactions.sort_by(&:date).reject(&:new_record?).each do |transaction| %>
+                <tr>
+                  <td data-label="<%= t(".date_header") %>"><%= l transaction.date, format: :with_year %></td>
+                  <td data-label="<%= t(".quantity_header") %>" class="quantity"><%= format_quantity transaction.quantity %></td>
+                  <td data-label="<%= t(".reason_or_event_header") %>" colspan="2">
+                    <% if transaction.event %>
+                      <%= link_to transaction.event.title, transaction.event %>
+                    <% else %>
+                      <%= transaction.reason %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if current_member.inventory_director? %>
+                <tr class="forest-transaction-entry">
+                  <td data-label="<%= t(".date_header") %>"><%= l Date.current, format: :with_year %></td>
+                  <td data-label="<%= t(".quantity_header") %>">
+                    <%= form.text_field :quantity, value: format_quantity(@consumable_transaction.quantity, si_prefix: SI::BASE), class: "quantity", required: true %>
+                  </td>
+                  <td data-label="<%= t(".reason_or_event_header") %>">
+                    <%= form.text_field :reason, required: true %>
+                  </td>
+                  <td class="forest-transaction-submit">
+                    <%= form.submit t(".record_transaction"), class: "button forest-button-primary" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td><%= t(".current_stock") %></td>
+                <td class="quantity"><%= format_quantity @consumable.available_quantity %></td>
+                <td colspan="2"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      <% end %>
+    </section>
+  </div>
 
-    <div>
-      <strong><%= t("location", scope: "activerecord.attributes.consumable") %>:</strong>
-      <%= format_product_location(@consumable) %>
-    </div>
-
-    <div>
-      <strong><%= t("base_quantity", scope: "activerecord.attributes.consumable") %>:</strong>
-    </div>
-
-    <div>
-      <strong><%= t("internal_unit_price", scope: "activerecord.attributes.consumable") %>:</strong>
-      <%= number_to_currency @consumable.internal_unit_price %> / <%= format_quantity @consumable.base_quantity %>
-    </div>
-
-    <div>
-      <strong><%= t("external_unit_price", scope: "activerecord.attributes.consumable") %>:</strong>
-      <%= number_to_currency @consumable.external_unit_price %> / <%= format_quantity @consumable.base_quantity %>
-    </div>
-
-    <div>
-      <strong><%= t("description", scope: "activerecord.attributes.consumable") %>:</strong>
-      <%= simple_format @consumable.description %>
-    </div>
-
-    <%= form_for @consumable_transaction, url: consumable_transactions_path(@consumable) do |f| %>
-      <h3><%= t ".consumable_reservation_history_header" %></h3>
-      <table>
-        <col width="15%"/>
-        <col width="15%"/>
-        <col width="50%"/>
-        <col width="20%"/>
-        <thead>
-          <tr>
-            <th><%= t(".date_header") %></th>
-            <th><%= t(".quantity_header") %></th>
-            <th colspan="2"><%= t(".reason_or_event_header") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @consumable.consumable_transactions.sort_by(&:date).reject(&:new_record?).each do |consumable_transaction| %>
-            <tr>
-              <td><%= l consumable_transaction.date, format: :with_year %></td>
-              <td class="quantity"><%= format_quantity consumable_transaction.quantity %></td>
-              <td colspan="2">
-                <% if consumable_transaction.event %>
-                  <%= link_to consumable_transaction.event.title, consumable_transaction.event %>
-                <% else %>
-                  <%= consumable_transaction.reason %>
-                <% end %>
-              </td>
-            </tr>
+  <aside class="large-3 cell forest-product-actions-column">
+    <div class="forest-product-actions">
+      <% if @event %>
+        <section class="forest-product-event-action" aria-labelledby="consumable-event-heading">
+          <p class="forest-filter-eyebrow"><%= t(".event_eyebrow") %></p>
+          <h2 id="consumable-event-heading"><%= @event.title %></h2>
+          <p><%= format_date_range(@event.real_date_range) %></p>
+          <%= form_tag event_reservations_path(@event) do %>
+            <%= hidden_field_tag "consumables[#{@consumable.slug}]", "1" %>
+            <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button expanded forest-button-primary" %>
           <% end %>
-          <% if current_member.inventory_director? %>
-            <tr>
-              <td><%= l Date.current, format: :with_year %></td>
-              <td>
-                <%= f.text_field :quantity, value: format_quantity(@consumable_transaction.quantity, si_prefix: SI::BASE), class: "quantity", required: true %>
-              </td>
-              <td>
-                <%= f.text_field :reason, required: true %>
-              </td>
-              <td>
-                <%= f.submit class: "button primary small" %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td><%= l Date.current, format: :with_year %></td>
-            <td class="quantity">
-              <%= format_quantity @consumable.available_quantity %>
-            </td>
-            <td colspan="2"></td>
-          </tr>
-        </tfoot>
-      </table>
-    <% end %>
-  </div>
+        </section>
+      <% end %>
 
-  <div class="large-3 medium-12 cell show-for-large">
-    <%= form_tag event_reservations_path(@event, @consumable) do %>
-      <h4><%= @event.title %></h4>
-      <h6><%= format_date_range(@event.real_date_range) %></h6>
-      <%= hidden_field_tag "consumables[#{@consumable.slug}]", "1" %>
-      <%= submit_tag t(".add_to_cart_label"), name: :add, class: "button expanded" %>
-      <hr>
-    <% end if @event %>
-    <%= link_to t(".edit_button_label"), edit_consumable_path(@consumable), class: "button expanded" if current_member.inventory_director? %>
-    <%= link_to t(".clone_button_label"), new_consumable_path(clone_from: @consumable), class: "button expanded" if current_member.inventory_director? %>
-    <%= link_to t(".back_to_list_button_label"), consumables_path, class: "button secondary expanded" %>
+      <% if current_member.inventory_director? %>
+        <%= link_to t(".edit_button_label"), edit_consumable_path(@consumable), class: "button expanded forest-button-primary" %>
+        <%= link_to t(".clone_button_label"), new_consumable_path(clone_from: @consumable), class: "button expanded forest-button-secondary" %>
+      <% end %>
+      <%= link_to t(".back_to_list_button_label"), consumables_path, class: "button expanded forest-button-secondary" %>
 
-    <hr>
+      <% if current_member.inventory_director? %>
+        <section class="forest-product-danger-zone" aria-labelledby="consumable-danger-heading">
+          <p class="forest-filter-eyebrow"><%= t(".danger_eyebrow") %></p>
+          <h2 id="consumable-danger-heading"><%= t(".danger_heading") %></h2>
+          <%= link_to t(".delete_button_label"),
+                      consumable_path(@consumable),
+                      method: :delete,
+                      data: { confirm: t(".delete_confirm") },
+                      class: "button expanded forest-button-danger" %>
+        </section>
+      <% end %>
 
-    <% if current_member.inventory_director? %>
-      <%= link_to t(".delete_button_label"), consumable_path(@consumable), method: :delete, class: "button alert expanded" %>
-      <hr>
-    <% end %>
-
-    <%= render partial: "shared/notes", locals: { parent: @consumable, note: @note, create_note_path: consumable_notes_path(@consumable) } %>
-  </div>
-
-  <div class="small-12 cell hide-for-large">
-    <hr>
-    <%= render partial: "shared/notes", locals: { parent: @consumable, note: @note, create_note_path: consumable_notes_path(@consumable) } %>
-  </div>
-
-  <div class="small-12 cell hide-for-large">
-    <%= link_to t(".back_to_list_button_label"), consumables_path, class: "button secondary small hide-for-large" %>
-  </div>
+      <section class="forest-product-notes">
+        <%= render partial: "shared/notes", locals: { parent: @consumable, note: @note, create_note_path: consumable_notes_path(@consumable) } %>
+      </section>
+    </div>
+  </aside>
 </div>
