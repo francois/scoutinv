@@ -1,97 +1,100 @@
-<div class="grid-x grid-margin-x">
-  <div class="large-9 medium-12 cell">
-    <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button hide-for-large" if @event.can_change_reservations?(current_member) %>
-    <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button hide-for-large" if @event.can_change_reservations?(current_member) %>
-    <%= link_to t(".finalize_button_label"), finalize_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".finalize_button_help") if @event.can_finalize?(current_member) %>
-    <%= link_to t(".ready_button_label"), ready_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".ready_button_help") if @event.can_ready?(current_member) %>
-    <%= link_to t(".audit_button_label"), audit_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".audit_button_help") if @event.can_audit?(current_member) %>
-    <%= link_to t(".redraw_button_label"), redraw_event_path(@event), method: :post, class: "button warning hide-for-large", title: t(".redraw_button_help") if @event.can_redraw?(current_member) %>
-    <%= link_to t(".print_button_label"), event_path(@event, format: :pdf), class: "button hide-for-large", target: "blank" %>
-    <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary hide-for-large" %>
-    <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button secondary alert hide-for-large" %>
-    <%= link_to t(".manage_reservations_button_label"), event_reservations_path(@event, manage: 1), class: "button hide-for-large" if current_member.inventory_director? %>
-
-    <div>
-      <strong><%= t("title", scope: "activerecord.attributes.event") %>:</strong>
-      <%= @event.title %>
-    </div>
-
-    <div>
-      <strong><%= t("state", scope: "activerecord.attributes.event") %>:</strong>
-      <%= t(@event.state, scope: "event.state") %>
-    </div>
-
-    <div>
-      <strong><%= t("dates", scope: "activerecord.attributes.event") %>:</strong>
-      <%= format_date_range @event.real_date_range %>
-    </div>
-
-    <% if @event.description.present? %>
-      <div>
-        <strong><%= t("description", scope: "activerecord.attributes.event") %>:</strong>
-        <%= simple_format @event.description %>
-      </div>
-    <% end %>
-
-    <h2><%= t(".bill_of_materials") %></h2>
-    <% @used_categories.each do |category| %>
-      <h3><%= t(category.name, scope: "categories") %></h3>
-      <div class="grid-container bill-of-materials">
-        <div class="grid-x grid-margin-x small-up-2 medium-up-3">
-          <% @entities.select{|entity| entity.categories.include?(category)}.each do |entity| %>
-            <% if entity.respond_to?(:reservations) %>
-              <%= render partial: "product", locals: { product: entity, reservations: @event.reservations_of(entity) } %>
-            <% else %>
-              <%= render partial: "consumable", locals: { consumable: entity, quantity: @event.consumption_of(entity) } %>
-            <% end %>
-          <% end %>
+<div class="grid-x grid-margin-x forest-event-show-layout">
+  <div class="large-9 cell">
+    <section class="forest-event-summary" aria-labelledby="event-summary-heading">
+      <p class="forest-filter-eyebrow"><%= t("state", scope: "activerecord.attributes.event") %></p>
+      <h2 id="event-summary-heading"><%= @event.title %></h2>
+      <dl class="forest-product-facts forest-event-facts">
+        <div>
+          <dt><%= t("state", scope: "activerecord.attributes.event") %></dt>
+          <dd><span class="forest-event-state is-<%= @event.state %>"><%= t(@event.state, scope: "event.state") %></span></dd>
         </div>
-      </div>
-    <% end %>
-    <div class="grid-x grid-margin-x">
-      <div class="small-12 cell">
-        <hr>
+        <div>
+          <dt><%= t("renter_header", scope: "events.index") %></dt>
+          <dd><%= @event.renter_name %></dd>
+        </div>
+        <div class="forest-product-facts__wide">
+          <dt><%= t("dates", scope: "activerecord.attributes.event") %></dt>
+          <dd><%= format_date_range @event.real_date_range %></dd>
+        </div>
+      </dl>
+
+      <% if @event.description.present? %>
+        <div class="forest-product-description">
+          <p class="forest-filter-eyebrow"><%= t("description", scope: "activerecord.attributes.event") %></p>
+          <%= simple_format @event.description %>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="forest-event-materials" aria-labelledby="event-materials-heading">
+      <p class="forest-filter-eyebrow"><%= t(".bill_of_materials") %></p>
+      <h2 id="event-materials-heading"><%= t(".bill_of_materials") %></h2>
+      <% if @used_categories.empty? %>
+        <p class="forest-section-empty"><%= t(".no_materials") %></p>
+      <% end %>
+      <% @used_categories.each do |category| %>
+        <section class="forest-event-material-category" aria-labelledby="event-category-<%= category.id %>">
+          <h3 id="event-category-<%= category.id %>"><%= t(category.name, scope: "categories") %></h3>
+          <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-3">
+            <% @entities.select{|entity| entity.categories.include?(category)}.each do |entity| %>
+              <% if entity.respond_to?(:reservations) %>
+                <%= render partial: "product", locals: { product: entity, reservations: @event.reservations_of(entity) } %>
+              <% else %>
+                <%= render partial: "consumable", locals: { consumable: entity, quantity: @event.consumption_of(entity) } %>
+              <% end %>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+      <div class="forest-event-total">
         <%= render partial: "total", locals: { event: @event } %>
       </div>
-    </div>
+    </section>
   </div>
 
-  <div class="large-3 medium-12 cell show-for-large">
-    <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button expanded" if @event.can_change_reservations?(current_member) %>
-    <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button expanded" if @event.can_change_reservations?(current_member) %>
-    <%= link_to t(".finalize_button_label"), finalize_event_path(@event), method: :post, class: "button warning expanded", title: t(".finalize_button_help") if @event.can_finalize?(current_member) %>
-    <%= link_to t(".ready_button_label"), ready_event_path(@event), method: :post, class: "button warning expanded", title: t(".ready_button_help") if @event.can_ready?(current_member) %>
-    <%= link_to t(".audit_button_label"), audit_event_path(@event), method: :post, class: "button warning expanded", title: t(".audit_button_help") if @event.can_audit?(current_member) %>
-    <%= link_to t(".redraw_button_label"), redraw_event_path(@event), method: :post, class: "button warning expanded", title: t(".redraw_button_help") if @event.can_redraw?(current_member) %>
-    <%= link_to t(".print_button_label"), event_path(@event, format: :pdf), class: "button expanded" %>
-    <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary expanded" %>
-
-    <% if @event.reservations.any? && current_member.inventory_director? %>
-      <hr>
-
-      <%= link_to t(".manage_reservations_button_label"), event_reservations_path(@event, manage: 1), class: "button expanded" %>
-      <%= form_tag event_reservations_path(@event), method: :post do %>
-        <%= hidden_field_tag "back_to_event", "1" %>
-        <%= hidden_field_tag "lease_all", "1" %>
-        <%= submit_tag t(".lease_all_button_label"), disabled: @event.reservations.all?(&:returned?), name: "lease_all", class: "button expanded success" %>
+  <aside class="large-3 cell forest-event-actions-column">
+    <div class="forest-event-actions">
+      <% if @event.can_change_reservations?(current_member) %>
+        <%= link_to t(".edit_reservation_button_label"), event_reservations_path(@event), class: "button expanded forest-button-primary" %>
       <% end %>
-    <% end %>
+      <% if @event.can_change_reservations?(current_member) %>
+        <%= link_to t(".edit_button_label"), edit_event_path(@event), class: "button expanded forest-button-secondary" %>
+      <% end %>
+      <% if @event.can_finalize?(current_member) %>
+        <%= link_to t(".finalize_button_label"), finalize_event_path(@event), method: :post, class: "button expanded forest-button-warning", title: t(".finalize_button_help") %>
+      <% end %>
+      <% if @event.can_ready?(current_member) %>
+        <%= link_to t(".ready_button_label"), ready_event_path(@event), method: :post, class: "button expanded forest-button-warning", title: t(".ready_button_help") %>
+      <% end %>
+      <% if @event.can_audit?(current_member) %>
+        <%= link_to t(".audit_button_label"), audit_event_path(@event), method: :post, class: "button expanded forest-button-warning", title: t(".audit_button_help") %>
+      <% end %>
+      <% if @event.can_redraw?(current_member) %>
+        <%= link_to t(".redraw_button_label"), redraw_event_path(@event), method: :post, class: "button expanded forest-button-warning", title: t(".redraw_button_help") %>
+      <% end %>
+      <%= link_to t(".print_button_label"), event_path(@event, format: :pdf), class: "button expanded forest-button-secondary", target: "_blank" %>
+      <%= link_to t(".back_to_list_button_label"), events_path, class: "button expanded forest-button-secondary" %>
 
-    <hr>
+      <% if @event.reservations.any? && current_member.inventory_director? %>
+        <section class="forest-event-action-section" aria-labelledby="event-inventory-heading">
+          <p class="forest-filter-eyebrow"><%= t(".inventory_actions") %></p>
+          <h3 id="event-inventory-heading"><%= t(".inventory_actions") %></h3>
+          <%= link_to t(".manage_reservations_button_label"), event_reservations_path(@event, manage: 1), class: "button expanded forest-button-secondary" %>
+          <%= form_tag event_reservations_path(@event), method: :post do %>
+            <%= hidden_field_tag "back_to_event", "1" %>
+            <%= hidden_field_tag "lease_all", "1" %>
+            <%= submit_tag t(".lease_all_button_label"), disabled: @event.reservations.all?(&:returned?), name: "lease_all", class: "button expanded forest-button-warning" %>
+          <% end %>
+        </section>
+      <% end %>
 
-    <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button expanded alert" %>
+      <section class="forest-event-action-section forest-event-notes" aria-label="<%= t(".notes_header") %>">
+        <%= render partial: "shared/notes", locals: { parent: @event, note: @note, create_note_path: event_notes_path(@event) } %>
+      </section>
 
-    <hr>
-
-    <%= render partial: "shared/notes", locals: { parent: @event, note: @note, create_note_path: event_notes_path(@event) } %>
-  </div>
-
-  <div class="small-12 cell hide-for-large">
-    <hr>
-    <%= render partial: "shared/notes", locals: { parent: @event, note: @note, create_note_path: event_notes_path(@event) } %>
-  </div>
-
-  <div class="small-12 cell hide-for-large">
-    <%= link_to t(".back_to_list_button_label"), events_path, class: "button secondary hide-for-large" %>
-  </div>
+      <section class="forest-event-action-section forest-event-danger-zone">
+        <%= link_to t(".delete_button_label"), event_path(@event), method: :delete, class: "button expanded forest-button-danger" %>
+      </section>
+    </div>
+  </aside>
 </div>

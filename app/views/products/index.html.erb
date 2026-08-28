@@ -1,14 +1,14 @@
 <div class="grid-x grid-margin-x forest-products-layout">
   <aside class="large-3 medium-4 cell show-for-medium forest-filter-sidebar-column" aria-label="<%= t(".filters_title") %>">
     <div class="forest-filter-sidebar">
-      <%= link_to t(".new_product_button_label"), new_product_path, class: "button expanded forest-filter-submit forest-products-new-button" if current_member.inventory_director? %>
+      <%= link_to t(".new_product_button_label"), new_product_path, class: "button expanded forest-button-primary forest-products-new-button" if current_member.inventory_director? %>
       <%= render partial: "filters", locals: { id_prefix: "desktop" } %>
     </div>
   </aside>
 
   <div class="large-9 medium-8 small-12 cell">
     <div class="hide-for-medium forest-products-mobile-controls">
-      <%= link_to t(".new_product_button_label"), new_product_path, class: "button expanded forest-filter-submit forest-products-new-button" if current_member.inventory_director? %>
+      <%= link_to t(".new_product_button_label"), new_product_path, class: "button expanded forest-button-primary forest-products-new-button" if current_member.inventory_director? %>
 
       <details class="forest-mobile-filters" <%= "open" if @has_active_filters %>>
         <summary>

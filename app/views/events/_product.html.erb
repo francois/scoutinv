@@ -1,71 +1,39 @@
-<% reservations = @event.reservations_of(product) %>
-<div id="product-card-<%= product.slug %>" class="cell">
-  <div class="card">
-    <div class="card-divider">
-      <h4 class="auto cell">
-        <% if @double_booked_products.include?(product) %>
-          <div class="float-right double-booked-icon">
-            <span title="<%= t(".double_booked_hover") %>">X</span>
-          </div>
-        <% end %>
-        <% if @event.quantity_of(product).nonzero? %>
-          (<%= number_with_delimiter @event.quantity_of(product) %>)
-        <% end %>
-        <%= link_to product.name, product_path(product) %>
-      </h4>
-    </div>
-    <%= link_to product do %>
+<div id="product-card-<%= product.slug %>" class="cell forest-event-material-card-cell">
+  <article class="card forest-event-material-card <%= "has-conflict" if @double_booked_products.include?(product) %>">
+    <div class="forest-event-material-card__media">
       <%= entity_image product, height: 250 %>
-    <% end %>
+      <% if @double_booked_products.include?(product) %>
+        <span class="forest-event-material-card__badge" title="<%= t(".double_booked_hover") %>">!</span>
+      <% end %>
+    </div>
+    <div class="card-section forest-event-material-card__body">
+      <h4><%= link_to product.name, product_path(product) %></h4>
+      <% if product.description.present? %>
+        <div class="forest-event-material-card__description"><%= simple_format product.description %></div>
+      <% end %>
+      <% if product.has_location? %>
+        <p class="forest-event-material-card__location"><%= format_product_location(product) %></p>
+      <% end %>
+      <p class="forest-event-material-card__quantity"><strong><%= number_with_delimiter @event.quantity_of(product) %></strong> <%= t("events.reservations.product_entity.item", count: @event.quantity_of(product)) %></p>
+      <% if reservations.reject(&:free?).any? %>
+        <p class="forest-event-material-card__price"><%= number_with_delimiter @event.quantity_of(product) %> × <%= number_to_currency @event.unit_price_of(product) %> = <strong><%= number_to_currency @event.subtotal_of(product) %></strong></p>
+      <% end %>
+    </div>
     <% if @event.can_change_reservations?(current_member) %>
-      <div class="grid-x grid-margin-x">
-        <div class="small-2 cell">&nbsp;</div>
-        <% if product.respond_to?(:reserved_quantity_on) %>
-          <div class="auto cell">
-            <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
-              <%= hidden_field_tag "products[#{product.slug}]", "1" %>
-              <%= hidden_field_tag "back_to_event", "1" %>
-              <%= hidden_field_tag "add", "1" %>
-              <%= button_tag class: "button primary small expanded",
-                disabled: product.available_quantity - product.reserved_quantity_on(@event.date_range) <= 0,
-                title: t(".plus_one_hover") do %>
-                <%= t(".plus_one") %>
-              <% end %>
-            <% end %>
-          </div>
-          <div class="auto cell">
-            <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
-              <%= hidden_field_tag "products[#{product.slug}]", "1" %>
-              <%= hidden_field_tag "back_to_event", "1" %>
-              <%= hidden_field_tag "remove", "1" %>
-              <%= button_tag title: t(".minus_one_hover"), class: "button secondary small expanded", disabled: @event.reservations.select{|reservation| reservation.product == product}.empty? do %>
-                <%= t(".minus_one") %>
-              <% end %>
-            <% end %>
-          </div>
+      <div class="forest-event-material-card__stepper">
+        <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+          <%= hidden_field_tag "products[#{product.slug}]", "1" %>
+          <%= hidden_field_tag "back_to_event", "1" %>
+          <%= hidden_field_tag "remove", "1" %>
+          <%= button_tag t(".minus_one"), title: t(".minus_one_hover"), class: "button forest-event-material-card__remove", disabled: reservations.empty? %>
         <% end %>
-        <div class="small-2 cell">&nbsp;</div>
-      </div>
-    <% end %>
-    <% if product.has_location? || reservations.reject(&:free?).any? %>
-      <div class="card-section">
-        <% if product.description.present? %>
-          <%= simple_format product.description %>
-        <% end %>
-        <% if reservations.reject(&:free?).any? %>
-          <p>
-          <%= number_with_delimiter @event.quantity_of(product) %>  &times;  <%= number_to_currency @event.unit_price_of(product) %>  =  <%= number_to_currency @event.subtotal_of(product) %>
-          </p>
-        <% end %>
-        <% if product.has_location? %>
-          <p>
-          <small>
-            <strong><%= t("activerecord.attributes.product.location") %></strong>:
-            <%= format_product_location(product) %>
-          </small>
-          </p>
+        <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
+          <%= hidden_field_tag "products[#{product.slug}]", "1" %>
+          <%= hidden_field_tag "back_to_event", "1" %>
+          <%= hidden_field_tag "add", "1" %>
+          <%= button_tag t(".plus_one"), title: t(".plus_one_hover"), class: "button forest-event-material-card__add", disabled: product.available_quantity - product.reserved_quantity_on(@event.date_range) <= 0 %>
         <% end %>
       </div>
     <% end %>
-  </div>
+  </article>
 </div>

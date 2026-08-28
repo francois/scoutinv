@@ -139,6 +139,8 @@ en:
   events:
     form:
       cancel_button_label: Cancel
+      dates_heading: Dates
+      details_heading: Event details
       external_renter: External renter
       help: |
         Either a Troop rents equipment, in which case only the Troop
@@ -146,12 +148,14 @@ en:
         fills out the external renter section.
       internal_renter: Troop renting the equipment
       or: or
+      renter_heading: Renter
     index:
       end_on_header: End On
       include_previous_year_html: "&laquo; Include previous year"
       new_event_button_label: Add an Event
       on_or_after_label: On or after
       page_title: Events
+      renter_header: Renter
       search_button_label: Search
       sorry_no_elements: Sorry, no events correspond to your search criterias
       start_on_header: Start on
@@ -300,6 +304,8 @@ en:
       edit_reservation_button_label: Edit reservations
       lease_all_button_label: Lease all products
       manage_reservations_button_label: Manage reservations
+      inventory_actions: Inventory actions
+      no_materials: No equipment has been reserved for this event.
       notes_header: Notes
       finalize_button_label: Finalize event
       finalize_button_help: Tells the inventory directors that you are finished preparing your event that your are ready for the products to be made available to you.

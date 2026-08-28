@@ -29,7 +29,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "#desktop-filter[value='Cooking']"
     assert_select "#desktop-category-#{categories(:kitchen).slug}[checked]"
-    assert_select "#desktop-product-filters .forest-filter-clear"
+    assert_select "#desktop-product-filters .forest-filter-actions .button", count: 2
     assert_select "article.forest-inventory-product-card", count: 1
     assert_select ".forest-product-card__title", text: products(:cooking_plate_10eme).name
   end

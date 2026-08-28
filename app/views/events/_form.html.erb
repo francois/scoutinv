@@ -1,108 +1,83 @@
-<%= form_with(model: event, local: true) do |form| %>
-  <div class="grid-container">
-    <div class="grid-x grid-margin-x">
-      <% if event.errors.any? %>
-        <div class="small-12 cell">
-          <div id="error_explanation">
-            <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
-            <ul>
-              <% event.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
-
-      <div class="small-12 cell">
-        <%= form.label :title %>
-        <%= form.text_field :title, autocomplete: false %>
-      </div>
-
-      <div class="small-12 cell">
-        <p><%= t ".help" %></p>
-
-        <div class="grid-container">
-          <div class="grid-x grid-margin-x">
-            <fieldset class="fieldset small-12 medium-6 cell">
-              <legend><%= t(".internal_renter") %></legend>
-
-              <div class="grid-x grid-margin-x">
-                <div class="small-12 cell">
-                  <%= form.label :troop_id %>
-                  <% if current_member.inventory_director? %>
-                    <%= form.select :troop_id, options_from_collection_for_select(current_group.troops.sort_by(&:sort_key), :id, :name, @event.troop_id), include_blank: true %>
-                  <% else %>
-                    <%= form.select :troop_id, options_from_collection_for_select(current_member.troops.sort_by(&:sort_key), :id, :name, @event.troop_id), include_blank: true %>
-                  <% end %>
-                </div>
-            </fieldset>
-
-            <fieldset class="fieldset small-12 medium-6 cell">
-              <legend><%= t(".external_renter") %></legend>
-
-              <div class="small-12 cell">
-                <%= form.label :name %>
-                <%= form.text_field :name, disabled: !current_member.inventory_director? %>
-              </div>
-
-              <div class="small-12 cell">
-                <%= form.label :email %>
-                <%= form.email_field :email, disabled: !current_member.inventory_director? %>
-              </div>
-
-              <div class="small-12 cell">
-                <%= form.label :phone %>
-                <%= form.phone_field :phone, disabled: !current_member.inventory_director? %>
-              </div>
-
-              <div class="small-12 cell">
-                <%= form.label :address %>
-                <%= form.text_area :address, disabled: !current_member.inventory_director?, size: "80x4" %>
-              </div>
-            </fieldset>
-          </div>
-        </div>
-      </div>
-
-      <div class="small-12 cell">
-        <%= form.label :description %>
-        <%= form.text_area :description, size: "10x5" %>
-      </div>
-
-      <div class="small-12 cell">
-        <div class="grid-container">
-          <div class="grid-x grid-padding-x">
-            <div class="shrink cell">
-              <%= form.label :pick_up_on %>
-              <%= form.date_field :pick_up_on, autocomplete: false, required: true %>
-            </div>
-            <div class="shrink cell">
-              <%= form.label :start_on %>
-              <%= form.date_field :start_on, autocomplete: false, required: true %>
-            </div>
-            <div class="shrink cell">
-              <%= form.label :end_on %>
-              <%= form.date_field :end_on, autocomplete: false, required: true %>
-            </div>
-            <div class="shrink cell">
-              <%= form.label :return_on %>
-              <%= form.date_field :return_on, autocomplete: false, required: true %>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="small-12 cell">
-        <%= form.submit class: "button primary middle" %>
-        <%= render partial: "shared/or" %>
-        <% if @event.new_record? %>
-          <%= link_to t(".cancel_button_label"), events_path, class: "button secondary" %>
-        <% else %>
-          <%= link_to t(".cancel_button_label"), @event, class: "button secondary" %>
+<%= form_with(model: event, local: true, class: "forest-event-form") do |form| %>
+  <% if event.errors.any? %>
+    <section class="forest-form-errors" aria-labelledby="event-errors-heading" role="alert">
+      <h2 id="event-errors-heading"><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+      <ul>
+        <% event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
+      </ul>
+    </section>
+  <% end %>
+
+  <section class="forest-form-section" aria-labelledby="event-details-heading">
+    <p class="forest-filter-eyebrow"><%= t("title", scope: "activerecord.attributes.event") %></p>
+    <h2 id="event-details-heading"><%= t(".details_heading") %></h2>
+    <%= form.label :title %>
+    <%= form.text_field :title, autocomplete: false %>
+
+    <%= form.label :description %>
+    <%= form.text_area :description, size: "10x5" %>
+  </section>
+
+  <section class="forest-form-section" aria-labelledby="event-renter-heading">
+    <p class="forest-filter-eyebrow"><%= t(".renter_heading") %></p>
+    <h2 id="event-renter-heading"><%= t(".renter_heading") %></h2>
+    <p class="forest-form-help"><%= t(".help") %></p>
+    <div class="grid-x grid-margin-x">
+      <fieldset class="fieldset small-12 medium-6 cell forest-event-renter-option">
+        <legend><%= t(".internal_renter") %></legend>
+        <%= form.label :troop_id %>
+        <% if current_member.inventory_director? %>
+          <%= form.select :troop_id, options_from_collection_for_select(current_group.troops.sort_by(&:sort_key), :id, :name, @event.troop_id), include_blank: true %>
+        <% else %>
+          <%= form.select :troop_id, options_from_collection_for_select(current_member.troops.sort_by(&:sort_key), :id, :name, @event.troop_id), include_blank: true %>
+        <% end %>
+      </fieldset>
+
+      <fieldset class="fieldset small-12 medium-6 cell forest-event-renter-option">
+        <legend><%= t(".external_renter") %></legend>
+        <%= form.label :name %>
+        <%= form.text_field :name, disabled: !current_member.inventory_director? %>
+        <%= form.label :email %>
+        <%= form.email_field :email, disabled: !current_member.inventory_director? %>
+        <%= form.label :phone %>
+        <%= form.phone_field :phone, disabled: !current_member.inventory_director? %>
+        <%= form.label :address %>
+        <%= form.text_area :address, disabled: !current_member.inventory_director?, size: "80x4" %>
+      </fieldset>
+    </div>
+  </section>
+
+  <section class="forest-form-section" aria-labelledby="event-dates-heading">
+    <p class="forest-filter-eyebrow"><%= t(".dates_heading") %></p>
+    <h2 id="event-dates-heading"><%= t(".dates_heading") %></h2>
+    <div class="grid-x grid-margin-x">
+      <div class="small-12 medium-6 large-3 cell">
+        <%= form.label :pick_up_on %>
+        <%= form.date_field :pick_up_on, autocomplete: false, required: true %>
+      </div>
+      <div class="small-12 medium-6 large-3 cell">
+        <%= form.label :start_on %>
+        <%= form.date_field :start_on, autocomplete: false, required: true %>
+      </div>
+      <div class="small-12 medium-6 large-3 cell">
+        <%= form.label :end_on %>
+        <%= form.date_field :end_on, autocomplete: false, required: true %>
+      </div>
+      <div class="small-12 medium-6 large-3 cell">
+        <%= form.label :return_on %>
+        <%= form.date_field :return_on, autocomplete: false, required: true %>
       </div>
     </div>
+  </section>
+
+  <div class="forest-form-actions">
+    <%= form.submit class: "button forest-button-primary" %>
+    <% if event.new_record? %>
+      <%= link_to t(".cancel_button_label"), events_path, class: "button forest-button-secondary" %>
+    <% else %>
+      <%= link_to t(".cancel_button_label"), event, class: "button forest-button-secondary" %>
+    <% end %>
   </div>
 <% end %>
