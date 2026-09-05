@@ -1,21 +1,25 @@
-<div class="grid-x grid-margin-x">
-  <div class="large-9 medium-12 cell">
-    <%= link_to "Edit", edit_member_path(@member), class: "button large hide-for-large" %>
-    <%= link_to "Back to list", members_path, class: "button secondary large hide-for-large" %>
-
-    <div>
-      <strong>Name:</strong>
-      <%= @member.name %>
-    </div>
-
-    <div>
-      <strong>Email:</strong>
-      <%= mail_to @member.email, @member.email %>
-    </div>
+<div class="grid-x grid-margin-x forest-member-show-layout">
+  <div class="small-12 large-9 cell">
+    <section class="forest-member-summary" aria-labelledby="member-summary-heading">
+      <p class="forest-filter-eyebrow"><%= t("members.show.details_eyebrow", default: t("members.edit.page_title", member_name: @member.name)) %></p>
+      <h2 id="member-summary-heading"><%= @member.name %></h2>
+      <dl class="forest-member-facts">
+        <div>
+          <dt><%= t("activerecord.attributes.member.name") %></dt>
+          <dd><%= @member.name %></dd>
+        </div>
+        <div>
+          <dt><%= t("activerecord.attributes.member.email") %></dt>
+          <dd><%= mail_to @member.email, @member.email %></dd>
+        </div>
+      </dl>
+    </section>
   </div>
 
-  <div class="large-3 medium-12 cell show-for-large">
-    <%= link_to "Edit", edit_member_path(@member), class: "button expanded" %>
-    <%= link_to "Back to list", members_path, class: "button secondary expanded" %>
-  </div>
+  <aside class="small-12 large-3 cell forest-member-actions-column">
+    <div class="forest-member-actions">
+      <%= link_to t("members.show.edit_button_label", default: "Edit"), edit_member_path(@member), class: "button expanded forest-button-primary" %>
+      <%= link_to t("members.show.back_to_list_button_label", default: "Back to list"), current_group, class: "button expanded forest-button-secondary" %>
+    </div>
+  </aside>
 </div>

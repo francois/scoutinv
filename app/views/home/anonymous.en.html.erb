@@ -1,27 +1,35 @@
-<div class="grid-container">
-  <div class="grid-x grid-margin-x">
-    <div class="small-12 cell hide-on-large">
-      <h2>Authenticate</h2>
-      <%= render partial: "sessions/authentication_form" %>
-    </div>
-
-    <div class="small-12 medium-8 cell">
-      <h3>What is Scoutinv?</h3>
+<div class="forest-public-home">
+  <div class="forest-public-home__intro">
+    <section class="forest-public-home__copy" aria-labelledby="public-home-heading">
+      <p class="forest-filter-eyebrow">Scoutinv</p>
+      <h2 id="public-home-heading">What is Scoutinv?</h2>
       <p>Scoutinv is a tool designed to enable a scouts group to better work together. Each scout group has their own workspace.</p>
 
       <h3>Why?</h3>
-      <h4>Managing your inventory</h4>
-      <h4>Preventing two units from renting the same product at the same time</h4>
-      <h4>Improve communication</h4>
+      <ul>
+        <li>Managing your inventory</li>
+        <li>Preventing two units from renting the same product at the same time</li>
+        <li>Improve communication</li>
+      </ul>
+    </section>
 
-      <h3>Registering</h3>
+    <section class="forest-auth-panel hide-for-large" aria-labelledby="mobile-auth-heading">
+      <p class="forest-filter-eyebrow">Authentication</p>
+      <h2 id="mobile-auth-heading">Authenticate</h2>
+      <%= render partial: "sessions/authentication_form" %>
+    </section>
+
+    <section class="forest-public-home__registration" aria-labelledby="registration-heading">
+      <p class="forest-filter-eyebrow">Registering</p>
+      <h2 id="registration-heading">Registering</h2>
       <p>To register for this service, please fill out this form. All fields are required.</p>
       <%= render partial: "registration_form" %>
-    </div>
+    </section>
 
-    <div class="small-12 medium-4 cell show-for-large">
-      <h2>Authenticate</h2>
+    <section class="forest-auth-panel show-for-large" aria-labelledby="auth-heading">
+      <p class="forest-filter-eyebrow">Authentication</p>
+      <h2 id="auth-heading">Authenticate</h2>
       <%= render partial: "sessions/authentication_form" %>
-    </div>
+    </section>
   </div>
 </div>

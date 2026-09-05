@@ -1,48 +1,35 @@
-<%= form_with(model: member, local: true) do |form| %>
-  <div class="grid-container">
-    <div class="grid-x grid-padding-x">
-      <% if member.errors.any? %>
-        <div class="small-12 cell">
-          <div id="error_explanation">
-            <h2><%= pluralize(member.errors.count, "error") %> prohibited this member from being saved:</h2>
+<%= form_with(model: member, local: true, class: "forest-member-form") do |form| %>
+  <% if member.errors.any? %>
+    <section class="forest-form-errors" aria-labelledby="member-errors-heading" role="alert">
+      <h2 id="member-errors-heading"><%= pluralize(member.errors.count, "error") %> prohibited this member from being saved:</h2>
+      <ul>
+        <% member.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
 
-            <ul>
-              <% member.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
-
-      <div class="small-12 cell">
+  <section class="forest-form-section">
+    <div class="grid-x grid-margin-x">
+      <div class="small-12 large-8 cell">
+        <p class="forest-filter-eyebrow"><%= t("members.form.details_heading", default: t("members.edit.page_title", member_name: member.name)) %></p>
+        <h2><%= t("members.form.details_heading", default: t("members.edit.page_title", member_name: member.name)) %></h2>
         <%= form.label :name %>
         <%= form.text_field :name, autocomplete: false %>
-      </div>
-
-      <div class="small-12 cell">
         <%= form.label :email %>
         <%= form.text_field :email, autocomplete: false %>
-      </div>
 
-      <div class="small-12 cell">
-        <%= form.submit class: "button primary" %>
-        <%= render partial: "shared/or" %>
-        <% if @member.new_record? %>
-          <%= link_to t(".cancel_button_label"), members_path, class: "button secondary" %>
-        <% else %>
-          <%= link_to t(".cancel_button_label"), current_group, class: "button secondary" %>
-        <% end %>
+        <div class="forest-form-actions">
+          <%= form.submit class: "button forest-button-primary" %>
+          <%= link_to t(".cancel_button_label"), current_group, class: "button forest-button-secondary" %>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 <% end %>
 <% if current_member.inventory_director? %>
-  <div class="grid-container">
-    <div class="grid-x grid-padding-x">
-      <div class="small-12 cell">
-        <%= button_to t(".delete_button_label"), member_path(@member), method: :delete, class: "button small alert" %>
-      </div>
+  <div class="forest-form-danger-zone">
+    <%= button_to t(".delete_button_label"), member_path(@member), method: :delete, class: "button forest-button-danger" %>
     </div>
-  </div>
 <% end %>

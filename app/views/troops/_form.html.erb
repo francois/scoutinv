@@ -1,39 +1,30 @@
-<%= form_with(model: troop, local: true) do |form| %>
-  <div class="grid-container">
-    <div class="grid-x grid-padding-x">
-      <% if troop.errors.any? %>
-        <div class="small-12 cell">
-          <div id="error_explanation">
-            <h2><%= pluralize(troop.errors.count, "error") %> prohibited this troop from being saved:</h2>
+<%= form_with(model: troop, local: true, class: "forest-troop-form") do |form| %>
+  <% if troop.errors.any? %>
+    <section class="forest-form-errors" aria-labelledby="troop-errors-heading" role="alert">
+      <h2 id="troop-errors-heading"><%= pluralize(troop.errors.count, "error") %> prohibited this troop from being saved:</h2>
+      <ul>
+        <% troop.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </section>
+  <% end %>
 
-            <ul>
-              <% troop.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      <% end %>
-
-      <div class="small-12 cell">
+  <section class="forest-form-section">
+    <div class="grid-x grid-margin-x">
+      <div class="small-12 large-8 cell">
+        <p class="forest-filter-eyebrow"><%= troop.name.presence || t("troops.form.details_heading", default: t("troops.edit.page_title", default: "Troop")) %></p>
+        <h2><%= t("troops.form.details_heading", default: t("troops.edit.page_title", default: "Troop")) %></h2>
         <%= form.label :name %>
         <%= form.text_field :name, autocomplete: false %>
-      </div>
-
-      <div class="small-12 cell">
         <%= form.label :position %>
         <%= form.number_field :position, autocomplete: false %>
-      </div>
 
-      <div class="small-12 cell">
-        <%= form.submit class: "button primary" %>
-        <%= render partial: "shared/or" %>
-        <% if @troop.new_record? %>
-          <%= link_to t(".cancel_button_label"), troops_path, class: "button secondary" %>
-        <% else %>
-          <%= link_to t(".cancel_button_label"), @troop, class: "button secondary" %>
-        <% end %>
+        <div class="forest-form-actions">
+          <%= form.submit class: "button forest-button-primary" %>
+          <%= link_to t(".cancel_button_label"), current_group, class: "button forest-button-secondary" %>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 <% end %>

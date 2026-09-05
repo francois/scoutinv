@@ -7,6 +7,8 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get "/"
     assert_response :success
     refute response.body.include?(events(:summer_camp_911_10eme).title)
+    assert_select ".forest-public-home"
+    assert_select "form.forest-authentication-form"
   end
 
   test "home page uses the forest application shell" do
@@ -25,5 +27,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     login_as(members(:baloo_10eme))
     get root_path
     assert response.body.include?(events(:summer_camp_911_10eme).title)
+    assert_select ".forest-home-dashboard"
+    assert_select ".forest-home-event-list"
   end
 end
