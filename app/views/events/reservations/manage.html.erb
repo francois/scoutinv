@@ -1,43 +1,43 @@
-<div class="grid-x grid-margin-x">
-  <div class="large-9 medium-12 cell">
-    <div class="grid-container">
-      <div class="grid-x grid-margin-x">
-        <div class="cell">
-          <%= form_tag event_reservations_path(@event), method: :post do %>
-            <%= hidden_field_tag "back_to_manage", "1" %>
-            <%= hidden_field_tag "lease_all", "1" %>
-            <%= submit_tag t(".lease_all_button_label"), disabled: @reservations.all?(&:returned?), name: "lease_all", class: "button expanded success hide-for-large" %>
-          <% end %>
-          <%= link_to t(".back_to_event"), @event, class: "button hide-for-large" %>
-        </div>
+<div class="grid-x grid-margin-x forest-reservation-manage-layout">
+  <div class="small-12 large-9 cell">
+    <section class="forest-reservation-manage" aria-labelledby="reservation-manage-heading">
+      <div class="forest-reservation-manage__mobile-actions hide-for-large">
+        <%= form_tag event_reservations_path(@event), method: :post do %>
+          <%= hidden_field_tag "back_to_manage", "1" %>
+          <%= hidden_field_tag "lease_all", "1" %>
+          <%= submit_tag t(".lease_all_button_label"), disabled: @reservations.all?(&:returned?), name: "lease_all", class: "button expanded forest-button-warning" %>
+        <% end %>
+        <%= link_to t(".back_to_event"), @event, class: "button expanded forest-button-secondary" %>
       </div>
-    </div>
 
-    <div class="grid-container">
-      <div class="grid-x grid-margin-x">
-        <div class="cell">
-          <table class="hover stack product-list">
+      <p class="forest-filter-eyebrow"><%= t("events.reservations.index.page_title", event: @event.title) %></p>
+      <h2 id="reservation-manage-heading"><%= t(".product_header") %></h2>
+      <div class="forest-data-table-wrap">
+        <table class="stack forest-data-table forest-reservation-manage-table">
             <thead>
-              <th><%= t(".product_header") %></th>
-              <th><%= t(".unit_price_header") %></th>
-              <th><%= t(".serial_no_header") %></th>
-              <th><%= t(".leased_on_header") %></th>
-              <th><%= t(".returned_on_header") %></th>
+              <tr>
+                <th><%= t(".product_header") %></th>
+                <th><%= t(".unit_price_header") %></th>
+                <th><%= t(".serial_no_header") %></th>
+                <th><%= t(".leased_on_header") %></th>
+                <th><%= t(".returned_on_header") %></th>
+              </tr>
             </thead>
             <%= render partial: "instances" %>
-          </table>
-          <%= paginate @reservations %>
-        </div>
+        </table>
       </div>
-    </div>
+      <div class="forest-reservation-manage__pagination"><%= paginate @reservations %></div>
+    </section>
   </div>
 
-  <div class="large-3 medium-12 cell show-for-large">
-    <%= form_tag event_reservations_path(@event), method: :post do %>
-      <%= hidden_field_tag "back_to_manage", "1" %>
-      <%= hidden_field_tag "lease_all", "1" %>
-      <%= submit_tag t(".lease_all_button_label"), disabled: @reservations.all?(&:returned?), name: "lease_all", class: "button expanded success" %>
-    <% end %>
-    <%= link_to t(".back_to_event"), @event, class: "button expanded" %>
-  </div>
+  <aside class="small-12 large-3 cell show-for-large forest-reservation-manage-actions-column">
+    <div class="forest-reservation-manage-actions">
+      <%= form_tag event_reservations_path(@event), method: :post do %>
+        <%= hidden_field_tag "back_to_manage", "1" %>
+        <%= hidden_field_tag "lease_all", "1" %>
+        <%= submit_tag t(".lease_all_button_label"), disabled: @reservations.all?(&:returned?), name: "lease_all", class: "button expanded forest-button-warning" %>
+      <% end %>
+      <%= link_to t(".back_to_event"), @event, class: "button expanded forest-button-secondary" %>
+    </div>
+  </aside>
 </div>

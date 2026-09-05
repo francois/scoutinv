@@ -11,12 +11,15 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     get reports_path
     assert_response :success
     assert_template "reports/index"
+    assert_select ".forest-report-index"
+    assert_select ".forest-report-link", count: 2
   end
 
   test "GET #leased" do
     get report_path(id: "leased")
     assert_response :success
     assert_template "reports/leased"
+    assert_select "table.forest-report-table"
     assert_select "table tr td[colspan]"
   end
 
@@ -36,6 +39,7 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     get report_path(id: "unavailable")
     assert_response :success
     assert_template "reports/unavailable"
+    assert_select "table.forest-report-table"
     groups(:"10eme").instances.reject(&:available?).each do |instance|
       assert_select "table tr#product-#{instance.product_slug}-instance-#{instance.slug}", count: 1
     end

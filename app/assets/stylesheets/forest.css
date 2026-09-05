@@ -375,6 +375,23 @@ body.forest ::selection {
   margin-top: 1rem;
 }
 
+.forest-notice {
+  margin-bottom: 0.75rem;
+  padding: 0.8rem 1rem;
+  border-left: 0.25rem solid var(--field);
+  background: rgba(184, 211, 190, 0.45);
+  color: var(--ink);
+}
+
+.forest-notice p {
+  margin: 0;
+}
+
+.forest-notice--alert {
+  border-left-color: var(--action);
+  background: rgba(189, 81, 62, 0.09);
+}
+
 .forest-content {
   padding-top: clamp(1.5rem, 3vw, 2.5rem);
   padding-bottom: clamp(3rem, 8vw, 7rem);
@@ -1692,6 +1709,11 @@ body.forest .forest-filter-search input[type="search"]:focus {
   border-radius: 0;
 }
 
+.forest-gallery-image__card form {
+  display: inline-block;
+  margin: 0;
+}
+
 .forest-product-image-placeholder {
   display: flex;
   min-height: 16rem;
@@ -1962,6 +1984,45 @@ body.forest .forest-data-table .instance-trashed td {
 
 .forest-product-notes .button {
   border-radius: 0;
+}
+
+.forest-notes h3 {
+  margin-top: 0;
+}
+
+.forest-notes form {
+  margin-bottom: 1.25rem;
+}
+
+.forest-notes textarea {
+  min-height: 5rem;
+  padding: 0.65rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.forest-notes textarea:focus {
+  background: var(--surface);
+  border-color: var(--action);
+  box-shadow: 0 0 0 0.14rem rgba(189, 81, 62, 0.2);
+}
+
+.forest-note {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-note p:last-child {
+  margin-bottom: 0;
+}
+
+.forest-note small {
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.68rem;
 }
 
 .forest-consumable-transactions-table tfoot td {
@@ -2463,7 +2524,8 @@ body.forest .forest-events-table a.forest-event-row-link:focus {
   border-top: 0.2rem double var(--ink);
 }
 
-.forest-event-total #event-total {
+.forest-event-total #event-total,
+.forest-event-total__value {
   margin: 0;
   color: var(--forest);
   font-family: var(--font-editorial);
@@ -2519,6 +2581,497 @@ body.forest .forest-events-table a.forest-event-row-link:focus {
 
 .forest-event-notes .button {
   border-radius: 0;
+}
+
+/* Remaining application screens. */
+
+.forest-home-dashboard,
+.forest-public-home {
+  max-width: var(--shell-width);
+}
+
+.forest-home-dashboard {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.forest-home-panel,
+.forest-list-panel,
+.forest-group-members,
+.forest-member-summary,
+.forest-report-index,
+.forest-report-panel,
+.forest-auth-panel,
+.forest-reservation-manage {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--surface);
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.forest-home-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.forest-home-panel h2,
+.forest-list-panel h2,
+.forest-group-members h2,
+.forest-member-summary h2,
+.forest-report-index h2,
+.forest-report-panel h2,
+.forest-auth-panel h2,
+.forest-reservation-manage h2 {
+  margin: 0.4rem 0 1.2rem;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+}
+
+.forest-home-panel__header h2 {
+  margin-bottom: 0;
+}
+
+.forest-home-event-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.forest-home-event-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-home-event-list li:first-child {
+  border-top: 0.2rem double var(--ink);
+}
+
+.forest-home-event-list a {
+  font-weight: 700;
+}
+
+.forest-home-event-list span {
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.forest-public-home__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
+  gap: 1.75rem;
+}
+
+.forest-public-home__copy,
+.forest-public-home__registration {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--surface);
+  border-top: 0.2rem double var(--ink);
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.forest-public-home__copy {
+  grid-row: span 2;
+}
+
+.forest-public-home__copy h2,
+.forest-public-home__registration h2 {
+  margin: 0.4rem 0 1rem;
+}
+
+.forest-public-home__copy ul {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.forest-public-home__copy li {
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--rule-soft);
+  font-weight: 700;
+}
+
+.forest-auth-panel {
+  align-self: start;
+}
+
+.forest-auth-panel h2 {
+  font-family: var(--font-interface);
+  font-size: 1.25rem;
+  letter-spacing: 0;
+}
+
+.forest-authentication-form,
+.forest-registration-form {
+  margin: 0;
+}
+
+.forest-authentication-form__field,
+.forest-registration-form .cell {
+  margin-bottom: 1rem;
+}
+
+.forest-authentication-form label,
+.forest-registration-form label,
+.forest-group-form label,
+.forest-entity-form label,
+.forest-member-form label,
+.forest-troop-form label,
+.forest-group-actions label,
+.forest-consumable-reservation-form label {
+  margin-bottom: 0.4rem;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.forest-authentication-form input[type="email"],
+.forest-registration-form input:not([type="checkbox"]),
+.forest-group-form input:not([type="file"]),
+.forest-group-form textarea,
+.forest-entity-form input,
+.forest-member-form input,
+.forest-troop-form input,
+.forest-group-actions input,
+.forest-group-actions textarea,
+.forest-consumable-quantity {
+  height: auto;
+  margin-bottom: 1rem;
+  padding: 0.72rem 0.7rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.forest-group-form textarea,
+.forest-member-form input,
+.forest-troop-form input,
+.forest-group-actions textarea {
+  width: 100%;
+}
+
+.forest-authentication-form input:focus,
+.forest-registration-form input:focus,
+.forest-group-form input:focus,
+.forest-group-form textarea:focus,
+.forest-entity-form input:focus,
+.forest-member-form input:focus,
+.forest-troop-form input:focus,
+.forest-group-actions input:focus,
+.forest-group-actions textarea:focus,
+.forest-consumable-quantity:focus {
+  background: var(--surface);
+  border-color: var(--action);
+  box-shadow: 0 0 0 0.14rem rgba(189, 81, 62, 0.2);
+}
+
+.forest-authentication-form .forest-form-actions,
+.forest-registration-actions {
+  margin-top: 0.5rem;
+}
+
+.forest-registration-actions {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.7rem 1rem;
+}
+
+.forest-registration-actions > div {
+  flex: 1 1 100%;
+}
+
+.forest-registration-actions .forest-form-help {
+  flex: 1 1 16rem;
+  margin: 0;
+}
+
+.forest-group-actions-column,
+.forest-member-actions-column,
+.forest-reservation-manage-actions-column {
+  align-self: flex-start;
+}
+
+.forest-group-actions,
+.forest-member-actions,
+.forest-reservation-manage-actions {
+  position: sticky;
+  top: 1rem;
+}
+
+.forest-group-actions > .button,
+.forest-member-actions > .button,
+.forest-reservation-manage-actions > .button,
+.forest-reservation-manage-actions form > .button {
+  margin-bottom: 0.65rem;
+}
+
+.forest-group-action-section {
+  margin-top: 1.2rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-group-action-section h3 {
+  margin: 0.4rem 0 0.9rem;
+  font-size: 1rem;
+}
+
+.forest-group-action-section form,
+.forest-reservation-manage-actions form,
+.forest-reservation-manage__mobile-actions form,
+.forest-inline-form {
+  margin: 0;
+}
+
+.forest-group-member-table {
+  margin-top: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-group-member-table:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.forest-group-member-table caption {
+  padding: 0 0 0.6rem;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.forest-group-show-logo {
+  max-height: 3.4rem;
+  width: auto;
+  margin-right: 0.45rem;
+  vertical-align: middle;
+  object-fit: contain;
+}
+
+.forest-form-danger-zone {
+  max-width: 60rem;
+  margin-top: 1.2rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-member-facts {
+  display: grid;
+  margin: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.forest-member-facts div {
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.forest-member-facts dt {
+  color: var(--ink-muted);
+  font-family: var(--font-data);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.forest-member-facts dd {
+  margin: 0.25rem 0 0;
+  font-weight: 700;
+}
+
+.forest-report-index,
+.forest-report-panel,
+.forest-auth-page,
+.forest-reservation-manage {
+  max-width: 68rem;
+}
+
+.forest-report-link {
+  display: flex;
+  min-height: 5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  text-decoration: none !important;
+}
+
+.forest-report-link:hover,
+.forest-report-link:focus {
+  background: rgba(184, 211, 190, 0.45);
+  border-color: var(--field);
+}
+
+.forest-report-link__label {
+  font-weight: 700;
+}
+
+.forest-report-link__arrow {
+  color: var(--action);
+  font-family: var(--font-data);
+  font-size: 1.2rem;
+}
+
+.forest-report-table .forest-report-serial {
+  color: var(--forest);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.forest-reservation-manage__mobile-actions {
+  margin-bottom: 1.25rem;
+}
+
+.forest-reservation-manage__mobile-actions .button {
+  margin-bottom: 0.65rem;
+}
+
+.forest-reservation-manage__pagination {
+  margin-top: 1.25rem;
+}
+
+.forest-reservation-manage__pagination .pagination {
+  display: flex;
+  margin: 0;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+.forest-reservation-manage__pagination .pagination a,
+.forest-reservation-manage__pagination .pagination .current,
+.forest-reservation-manage__pagination .pagination .disabled {
+  min-width: 2.35rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 0;
+  color: var(--ink);
+  font-family: var(--font-data);
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.forest-reservation-manage__pagination .pagination .current {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--surface);
+}
+
+.forest-reservation-manage-table .forest-inline-form input {
+  width: 6rem;
+  margin: 0 0.35rem 0 0;
+  padding: 0.45rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+}
+
+.forest-reservation-manage-table .forest-inline-form .button {
+  margin: 0;
+}
+
+.forest-consumable-reservation-controls {
+  padding: 0.85rem 1rem;
+  background: var(--paper);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.forest-consumable-reservation-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.forest-consumable-quantity {
+  min-width: 0;
+  flex: 1 1 auto;
+  margin: 0;
+}
+
+.forest-consumable-reservation-form .button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+@media screen and (max-width: 63.9375em) {
+  .forest-group-actions,
+  .forest-member-actions,
+  .forest-reservation-manage-actions {
+    position: static;
+    margin-top: 0.25rem;
+  }
+}
+
+@media screen and (max-width: 39.9375em) {
+  .forest-home-panel,
+  .forest-public-home__copy,
+  .forest-public-home__registration,
+  .forest-list-panel,
+  .forest-group-members,
+  .forest-member-summary,
+  .forest-report-index,
+  .forest-report-panel,
+  .forest-auth-panel,
+  .forest-reservation-manage {
+    padding: 1rem;
+  }
+
+  .forest-home-panel__header,
+  .forest-home-event-list li {
+    display: block;
+  }
+
+  .forest-home-panel__header .button {
+    margin-top: 0.9rem;
+  }
+
+  .forest-home-event-list span {
+    display: block;
+    margin-top: 0.2rem;
+  }
+
+  .forest-public-home__intro {
+    display: block;
+  }
+
+  .forest-public-home__copy,
+  .forest-public-home__registration,
+  .forest-auth-panel {
+    margin-bottom: 1.25rem;
+  }
+
+  .forest-member-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .forest-consumable-reservation-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .forest-consumable-reservation-form .button {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 63.9375em) {

@@ -1,120 +1,67 @@
 <% if entity.kind_of?(Product) %>
   <%= render partial: "product_entity", locals: { product: entity } %>
 <% else %>
-<div class="cell entity" id="entity-card-<%= entity.slug %>">
-  <div class="card">
-    <div class="card-divider entity-name" title="<%= entity.name %>">
-      <h4>
-        <%= link_to_entity entity %>
-        <small>
-          <% if entity.kind_of?(Product) %>
-            <% if entity.available_quantity != 1 %>
-              <%= format_quantity entity.available_quantity, precision: 0 %>
-            <% end %>
-          <% else %>
-            <%= format_quantity entity.available_quantity, precision: 1, si_prefix: entity.base_quantity_si_prefix %>
-          <% end %>
-        </small>
-      </h4>
-    </div>
-    <div class="show-for-medium float-center">
-      <%= entity_image entity, height: 300 %>
-    </div>
-    <div class="hide-for-medium float-center">
-      <%= entity_image entity, height: 200 %>
-    </div>
-    <div class="card-section">
-      <% if @event.can_change_reservations?(current_member) %>
-        <div class="grid-x grid-padding-x">
-          <% if entity.respond_to?(:reservations) %>
-            <%# PRODUCTS %>
-            <div class="small-12 medium-8 cell">
-              <p class="pricing">
-              <small>
-                <% case [!!@event.quantity_of(entity).nonzero?, !!@event.unit_price_of(entity).zero?] %>
-                <% when [false, true] %>
-                  &nbsp;<%# no reservations and unit price == 0, force the use of at least one space so cards visually line up %>
-                <% when [false, false] %>
-                  <%= number_to_currency @event.unit_price_of(entity) %>
-                <% when [true,  true] %>
-                  <%= number_with_delimiter @event.quantity_of(entity) %>
-                <% when [true,  false] %>
-                  <%= number_with_delimiter @event.quantity_of(entity) %>
-                  @
-                  <%= number_to_currency @event.unit_price_of(entity) %>
-                  =
-                  <%= number_to_currency @event.subtotal_of(entity) %>
-                <% end %>
-              </small>
-              </p>
-            </div>
-            <div class="auto cell">
-              <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
-                <%= hidden_field_tag "products[#{entity.slug}]", "1" %>
-                <%= hidden_field_tag "add", "1" %>
-                <%= button_tag class: "button primary tiny",
-                  disabled: entity.available_quantity.zero?,
-                  title: t(".plus_one_hover") do %>
-                  <%= t(".plus_one") %>
-                <% end %>
-              <% end %>
-            </div>
-            <div class="auto cell">
-              <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
-                <%= hidden_field_tag "products[#{entity.slug}]", "1" %>
-                <%= hidden_field_tag "remove", "1" %>
-                <%= button_tag class: "button secondary tiny",
-                  disabled: @event.quantity_of(entity).zero?,
-                  title: t(".minus_one_hover") do %>
-                  <%= t(".minus_one") %>
-                <% end %>
-              <% end %>
-            </div>
-          <% else %>
-            <%# CONSUMABLES %>
-            <div class="small-8 cell pricing">
-              <span class="show-for-medium">
-                <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
-                  <%= hidden_field_tag "consume", "1" %>
-                  <div class="grid-x">
-                    <div class="small-12 cell">
-                      <%= text_field_tag "consumables[#{entity.slug}]", format_quantity(@event.quantity_of(entity), si_prefix: SI::BASE), class: "quantity", autocomplete: false %>
-                      <%= label_tag "consumables[#{entity.slug}]", style: "display:inline" do %>
-                        @
-                        <%= number_to_currency @event.unit_price_of(entity) %> / <%= format_quantity entity.base_quantity %>
-                        =
-                        <%= number_to_currency @event.subtotal_of(entity) %>
-                      <% end %>
-                      <%= button_tag class: "button primary tiny",
-                        style: "display: inline",
-                        title: t(".set_hover") do %>
-                        <%= t(".set") %>
-                      <% end %>
-                    </div>
-                  </div>
-                <% end %>
-              </span>
-              <span class="hide-for-medium">
-                <small>
-                  <%= format_quantity(@event.quantity_of(entity), si_prefix: SI::BASE) %>
-                  @
-                  <%= number_to_currency @event.unit_price_of(entity) %> / <%= format_quantity entity.base_quantity %>
-                  =
-                  <%= number_to_currency @event.subtotal_of(entity) %>
-                </small>
-              </span>
-            </div>
-          <% end %>
-          <div class="small-12 cell show-for-medium entity-description">
-            <small title="<%= entity.description %>">
-              <%= simple_format(entity.description.presence || "&nbsp;".html_safe) %>
-            </small>
+  <% card_id = "consumable-card-title-#{entity.slug}" %>
+  <div class="cell entity forest-product-card-cell" id="entity-card-<%= entity.slug %>">
+    <article class="card forest-product-card forest-consumable-reservation-card <%= "is-unavailable" if entity.available_quantity.zero? %>" aria-labelledby="<%= card_id %>">
+      <div class="forest-product-card__media">
+        <%= forest_product_card_image entity %>
+        <span class="forest-product-card__badge <%= "is-unavailable" if entity.available_quantity.zero? %>">
+          <%= t("consumables.index.available_badge", quantity: format_quantity(entity.available_quantity)) %>
+        </span>
+      </div>
+
+      <div class="card-section forest-product-card__body">
+        <% if entity.categories.any? %>
+          <p class="forest-product-card__categories">
+            <%= entity.categories.map { |category| t(category.name, scope: "categories") }.join(" · ") %>
+          </p>
+        <% end %>
+
+        <h3 class="forest-product-card__title" id="<%= card_id %>">
+          <%= link_to entity.name, consumable_path(entity) %>
+        </h3>
+
+        <% if entity.description.present? %>
+          <div class="forest-product-card__description" title="<%= entity.description %>">
+            <%= simple_format entity.description %>
           </div>
+        <% end %>
+
+        <p class="forest-product-card__availability">
+          <strong><%= format_quantity entity.available_quantity %></strong>
+          <span><%= t("consumables.index.available_count") %></span>
+        </p>
+
+        <ul class="forest-product-card__stock-facts" aria-label="<%= t("consumables.index.stock_details") %>">
+          <li><%= t("consumables.index.base_quantity", quantity: format_quantity(entity.base_quantity)) %></li>
+          <% if entity.has_location? %>
+            <li><%= format_product_location(entity, plain: true) %></li>
+          <% end %>
+        </ul>
+
+        <p class="forest-product-card__price">
+          <%= format_quantity(@event.quantity_of(entity), precision: 1) %>
+          ×
+          <%= number_to_currency @event.unit_price_of(entity) %> / <%= format_quantity entity.base_quantity %>
+          =
+          <strong><%= number_to_currency @event.subtotal_of(entity) %></strong>
+        </p>
+      </div>
+
+      <% if @event.can_change_reservations?(current_member) %>
+        <div class="forest-consumable-reservation-controls">
+          <%= form_tag event_reservations_path(@event), remote: true, method: :post, class: "forest-consumable-reservation-form" do %>
+            <%= hidden_field_tag "consume", "1" %>
+            <%= text_field_tag "consumables[#{entity.slug}]", format_quantity(@event.quantity_of(entity), si_prefix: SI::BASE), class: "forest-consumable-quantity", autocomplete: false, aria: { label: t(".quantity_label") } %>
+            <%= button_tag t(".set"), class: "button forest-button-primary", title: t(".set_hover") %>
+          <% end %>
         </div>
       <% else %>
-        <%# Current user is read-only on this reservation %>
+        <div class="forest-product-card__read-only">
+          <%= format_quantity(@event.quantity_of(entity), precision: 1) %>
+        </div>
       <% end %>
-    </div>
+    </article>
   </div>
-</div>
 <% end %>

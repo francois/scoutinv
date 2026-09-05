@@ -1,7 +1,7 @@
 <tbody id="instances">
   <% if @reservations.empty? %>
     <tr>
-      <td colspan="5"><%= t(".sorry_no_elements") %></td>
+      <td colspan="5"><p class="forest-section-empty"><%= t(".sorry_no_elements") %></p></td>
     </tr>
   <% end %>
   <% @reservations.group_by(&:product).sort_by{|product, _| product.sort_key_for_pickup}.each do |product, reservations| %>

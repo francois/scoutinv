@@ -1,4 +1,18 @@
-<ul>
-  <li><%= link_to t(".list_of_leased_instances"), report_path(id: "leased") %></li>
-  <li><%= link_to t(".list_of_unavailable_instances"), report_path(id: "unavailable") %></li>
-</ul>
+<section class="forest-report-index" aria-labelledby="reports-heading">
+  <p class="forest-filter-eyebrow"><%= t("reports.page_title") %></p>
+  <h2 id="reports-heading"><%= t("reports.page_title") %></h2>
+  <div class="grid-x grid-margin-x small-up-1 medium-up-2">
+    <div class="cell">
+      <%= link_to report_path(id: "leased"), class: "forest-report-link" do %>
+        <span class="forest-report-link__label"><%= t(".list_of_leased_instances") %></span>
+        <span class="forest-report-link__arrow" aria-hidden="true">→</span>
+      <% end %>
+    </div>
+    <div class="cell">
+      <%= link_to report_path(id: "unavailable"), class: "forest-report-link" do %>
+        <span class="forest-report-link__label"><%= t(".list_of_unavailable_instances") %></span>
+        <span class="forest-report-link__arrow" aria-hidden="true">→</span>
+      <% end %>
+    </div>
+  </div>
+</section>

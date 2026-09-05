@@ -1,27 +1,35 @@
-<div class="grid-container">
-  <div class="grid-x grid-margin-x">
-    <div class="small-12 cell hide-for-large">
-      <h2>Ouvrir une session</h2>
-      <%= render partial: "sessions/authentication_form" %>
-    </div>
-
-    <div class="small-12 medium-8 cell">
-      <h3>Qu'est-ce que Scoutinv?</h3>
+<div class="forest-public-home">
+  <div class="forest-public-home__intro">
+    <section class="forest-public-home__copy" aria-labelledby="public-home-heading">
+      <p class="forest-filter-eyebrow">Scoutinv</p>
+      <h2 id="public-home-heading">Qu'est-ce que Scoutinv?</h2>
       <p>Scoutinv est un outil conçu pour permettre à un groupe Scout de mieux travailler ensemble. Chaque groupe a son propre espace de travail.</p>
 
       <h3>Pourquoi?</h3>
-      <h4>Gestion de votre inventaire</h4>
-      <h4>Empêcher deux unités de louer le même matériel en même temps</h4>
-      <h4>Améliorer les communications</h4>
+      <ul>
+        <li>Gestion de votre inventaire</li>
+        <li>Empêcher deux unités de louer le même matériel en même temps</li>
+        <li>Améliorer les communications</li>
+      </ul>
+    </section>
 
-      <h3>S'enregistrer</h3>
+    <section class="forest-auth-panel hide-for-large" aria-labelledby="mobile-auth-heading">
+      <p class="forest-filter-eyebrow">Ouverture de session</p>
+      <h2 id="mobile-auth-heading">Ouvrir une session</h2>
+      <%= render partial: "sessions/authentication_form" %>
+    </section>
+
+    <section class="forest-public-home__registration" aria-labelledby="registration-heading">
+      <p class="forest-filter-eyebrow">Inscription</p>
+      <h2 id="registration-heading">S'enregistrer</h2>
       <p>Pour enregistrer votre groupe scout, veuillez remplir ce formulaire. Tous les champs sont requis.</p>
       <%= render partial: "registration_form" %>
-    </div>
+    </section>
 
-    <div class="small-12 medium-4 cell show-for-large">
-      <h2>Ouvrir une session</h2>
+    <section class="forest-auth-panel show-for-large" aria-labelledby="auth-heading">
+      <p class="forest-filter-eyebrow">Ouverture de session</p>
+      <h2 id="auth-heading">Ouvrir une session</h2>
       <%= render partial: "sessions/authentication_form" %>
-    </div>
+    </section>
   </div>
 </div>

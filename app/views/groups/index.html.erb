@@ -1,25 +1,31 @@
-<div class="grid-x grid-padding-x">
-  <div class="cell large-9 medium-12">
-    <%= link_to t(".new_group_button_label") , new_group_path, class: "button hide-for-large" %>
+<div class="grid-x grid-margin-x forest-groups-layout">
+  <div class="small-12 large-9 cell">
+    <section class="forest-list-panel" aria-labelledby="groups-heading">
+      <p class="forest-filter-eyebrow"><%= t(".page_title") %></p>
+      <h2 id="groups-heading"><%= t(".page_title") %></h2>
+      <div class="forest-data-table-wrap">
+        <table class="stack forest-data-table forest-groups-table">
+          <thead>
+            <tr>
+              <th><%= t(".name_header") %></th>
+            </tr>
+          </thead>
 
-    <table class="hover stack">
-      <thead>
-        <tr>
-          <th><%= t(".name_header") %></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @groups.each do |group| %>
-          <tr>
-            <td><%= link_to group.name, group %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+          <tbody>
+            <% @groups.each do |group| %>
+              <tr>
+                <td data-label="<%= t(".name_header") %>"><%= link_to group.name, group %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </div>
 
-  <div class="cell large-3 medium-12 show-for-large">
-    <%= link_to t(".new_group_button_label"), new_group_path, class: "button expanded" %>
-  </div>
+  <aside class="small-12 large-3 cell forest-group-actions-column">
+    <div class="forest-group-actions">
+      <%= link_to t(".new_group_button_label"), new_group_path, class: "button expanded forest-button-primary" %>
+    </div>
+  </aside>
 </div>

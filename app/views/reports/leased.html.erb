@@ -1,28 +1,34 @@
-<table>
-  <thead>
-    <tr>
-      <th><%= t(".product_header") %></th>
-      <th><%= t(".serial_no_header") %></th>
-      <th><%= t(".leased_on_header") %></th>
-      <th><%= t(".state_header") %></th>
-      <th><%= t(".event_header") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% if @report.rows.empty? %>
-      <tr>
-        <td colspan="5"><%= t(".no_instances_leased") %></td>
-      </tr>
-    <% else %>
-      <% @report.rows.each do |row| %>
-        <tr id="product-<%= row.product_slug %>-instance-<%= row.instance_slug %>">
-          <td><%= link_to row.product_name, product_path(id: row.product_slug) %></td>
-          <td><%= format_serial_no(row.instance_serial_no) %></td>
-          <td><%= l row.reservation_leased_on.to_date, format: :with_year %></td>
-          <td><%= t row.instance_state, scope: "products.instance.states" %></td>
-          <td><%= link_to row.event_title, event_path(id: row.event_slug) %></td>
+<section class="forest-report-panel" aria-labelledby="leased-report-heading">
+  <p class="forest-filter-eyebrow"><%= t("reports.leased.page_title") %></p>
+  <h2 id="leased-report-heading"><%= t("reports.leased.page_title") %></h2>
+  <div class="forest-data-table-wrap">
+    <table class="stack forest-data-table forest-report-table">
+      <thead>
+        <tr>
+          <th><%= t(".product_header") %></th>
+          <th><%= t(".serial_no_header") %></th>
+          <th><%= t(".leased_on_header") %></th>
+          <th><%= t(".state_header") %></th>
+          <th><%= t(".event_header") %></th>
         </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+        <% if @report.rows.empty? %>
+          <tr>
+            <td colspan="5"><p class="forest-section-empty"><%= t(".no_instances_leased") %></p></td>
+          </tr>
+        <% else %>
+          <% @report.rows.each do |row| %>
+            <tr id="product-<%= row.product_slug %>-instance-<%= row.instance_slug %>">
+              <td data-label="<%= t(".product_header") %>"><%= link_to row.product_name, product_path(id: row.product_slug) %></td>
+              <td data-label="<%= t(".serial_no_header") %>" class="forest-report-serial"><%= format_serial_no(row.instance_serial_no) %></td>
+              <td data-label="<%= t(".leased_on_header") %>"><%= l row.reservation_leased_on.to_date, format: :with_year %></td>
+              <td data-label="<%= t(".state_header") %>"><span class="forest-instance-state is-<%= row.instance_state %>"><%= t row.instance_state, scope: "products.instance.states" %></span></td>
+              <td data-label="<%= t(".event_header") %>"><%= link_to row.event_title, event_path(id: row.event_slug) %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>
