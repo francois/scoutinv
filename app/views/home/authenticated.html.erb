@@ -1,43 +1,38 @@
-<div class="grid-x grid-margin-x">
-  <div class="small-12 medium-6 cell">
-    <h2><%= t ".future_events" %></h2>
-    <%= link_to t(".new_event"), new_event_path, class: "button small" %>
-    <ul>
-      <% @events.each do |event| %>
-        <li>
-          <%= link_to event.title, event_path(event) %>
-          <small><%= format_date_range(event.date_range) %></small>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-
-  <div class="small-12 medium-6 cell">
-    <h2><%= t ".old_gadgets" %></h2>
-    <%= link_to t(".new_product"), new_product_path, class: "button small" %>
-    <div class="grid-container">
-      <div class="grid-x grid-margin-x small-up-2 medium-up-2 large-up-6 bill-of-materials">
-        <% @products.each do |product| %>
-          <div class="card" style="">
-            <div class="card-divider">
-              <h4><%= link_to product.name, product_path(product) %></h4>
-            </div>
-            <%= link_to product do %>
-              <%= entity_image product, height: 250 %>
-            <% end %>
-            <% if product.has_location? || product.description.present? %>
-              <div class="card-section">
-                <% if product.has_location? %>
-                  <p><strong><%= t("activerecord.attributes.product.location") %></strong>: <%= format_product_location(product) %></p>
-                <% end %>
-                <% if product.description.present? %>
-                  <%= simple_format product.description %>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
+<div class="forest-home-dashboard">
+  <section class="forest-home-panel forest-home-events" aria-labelledby="home-events-heading">
+    <div class="forest-home-panel__header">
+      <div>
+        <p class="forest-filter-eyebrow"><%= t ".future_events" %></p>
+        <h2 id="home-events-heading"><%= t ".future_events" %></h2>
       </div>
+      <%= link_to t(".new_event"), new_event_path, class: "button forest-button-primary" %>
     </div>
-  </div>
+
+    <% if @events.any? %>
+      <ul class="forest-home-event-list">
+        <% @events.each do |event| %>
+          <li>
+            <%= link_to event.title, event_path(event) %>
+            <span><%= format_date_range(event.date_range) %></span>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </section>
+
+  <section class="forest-home-panel forest-home-products" aria-labelledby="home-products-heading">
+    <div class="forest-home-panel__header">
+      <div>
+        <p class="forest-filter-eyebrow"><%= t ".old_gadgets" %></p>
+        <h2 id="home-products-heading"><%= t ".old_gadgets" %></h2>
+      </div>
+      <%= link_to t(".new_product"), new_product_path, class: "button forest-button-secondary" %>
+    </div>
+
+    <div class="grid-x grid-margin-x small-up-1 medium-up-2 large-up-3">
+      <% @products.each do |product| %>
+        <%= render partial: "products/product_card", locals: { product: product } %>
+      <% end %>
+    </div>
+  </section>
 </div>

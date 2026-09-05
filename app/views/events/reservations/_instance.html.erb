@@ -1,37 +1,31 @@
-<tr id="product-<%= product.slug %>-instance-<%= reservation.serial_no %>" class="product">
+<tr id="product-<%= product.slug %>-instance-<%= reservation.serial_no %>" class="forest-reservation-instance-row">
   <% if index == 0 %>
-    <td rowspan="<%= num_instances %>">
+    <td rowspan="<%= num_instances %>" data-label="<%= t("events.reservations.manage.product_header") %>">
       <%= link_to product.name, event_product_path(@event, product) %> <br>
       <%= entity_image product, height: 100 %>
       <%= format_product_location product %>
     </td>
   <% end %>
-  <td class="text-right">
-    <%= form_for reservation, remote: true do |f| %>
-      <div class="grid-x grid-margin-x">
-        <div class="small-9 medium-8 cell">
-          <span class="hide-for-medium"><%= t ".unit_price" %></span>
-          <%= f.number_field :unit_price, class: "text-right", min: 0, step: BigDecimal("0.01") %>
-        </div>
-        <div class="small-3 medium-4 cell">
-          <%= submit_tag t(".save"), class: "button tiny" %>
-        </div>
-      </div>
+  <td class="text-right" data-label="<%= t("events.reservations.manage.unit_price_header") %>">
+    <%= form_for reservation, remote: true, html: { class: "forest-inline-form" } do |f| %>
+      <span class="hide-for-medium"><%= t ".unit_price" %></span>
+      <%= f.number_field :unit_price, class: "text-right", min: 0, step: BigDecimal("0.01") %>
+      <%= submit_tag t(".save"), class: "button forest-button-secondary tiny" %>
     <% end %>
   </td>
-  <td>
+  <td data-label="<%= t("events.reservations.manage.serial_no_header") %>">
     <% if reservation.loanable? && reservation.product.quantity > 1 %>
       <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
         <%= hidden_field_tag "instances[#{reservation.serial_no}]", value="1" %>
         <%= hidden_field_tag "back_to_manage", "1" %>
         <%= hidden_field_tag "switch", "1" %>
         <%= hidden_field_tag "page", @reservations.current_page %>
-        <%= submit_tag t(".switch_instance_button_label"), name: "switch", class: "button expanded warning"%>
+        <%= submit_tag t(".switch_instance_button_label"), name: "switch", class: "button expanded forest-button-warning" %>
       <% end %>
     <% end %>
     <%= format_serial_no(reservation.serial_no) %><br>
   </td>
-  <td>
+  <td data-label="<%= t(".leased_on_header") %>">
     <% if leased_on = reservation.leased_on %>
       <span class="hide-for-large"><%= t(".leased_on_header") %></span> <%= l leased_on, format: :default %>
     <% else %>
@@ -40,11 +34,11 @@
         <%= hidden_field_tag "back_to_manage", "1" %>
         <%= hidden_field_tag "lease", "1" %>
         <%= hidden_field_tag "page", @reservations.current_page %>
-        <%= submit_tag t(".lease_button_label"), name: "lease", class: "button expanded primary"%>
+        <%= submit_tag t(".lease_button_label"), name: "lease", class: "button expanded forest-button-primary" %>
       <% end %>
     <% end %>
   </td>
-  <td>
+  <td data-label="<%= t(".returned_on_header") %>">
     <% if returned_on = reservation.returned_on %>
       <span class="hide-for-large"><%= t(".returned_on_header") %></span> <%= l returned_on, format: :default %>
     <% elsif leased_on %>
@@ -53,7 +47,7 @@
         <%= hidden_field_tag "back_to_manage", "1" %>
         <%= hidden_field_tag "hold", "1" %>
         <%= hidden_field_tag "page", @reservations.current_page %>
-        <%= submit_tag t(".hold_button_label"), name: "hold", class: "button expanded warning"%>
+        <%= submit_tag t(".hold_button_label"), name: "hold", class: "button expanded forest-button-warning" %>
       <% end %>
 
       <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
@@ -61,7 +55,7 @@
         <%= hidden_field_tag "back_to_manage", "1" %>
         <%= hidden_field_tag "return", "1" %>
         <%= hidden_field_tag "page", @reservations.current_page %>
-        <%= submit_tag t(".return_button_label"), name: "return", class: "button expanded secondary"%>
+        <%= submit_tag t(".return_button_label"), name: "return", class: "button expanded forest-button-secondary" %>
       <% end %>
     <% end %>
   </td>

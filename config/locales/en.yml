@@ -88,6 +88,7 @@ en:
       page_title: "Edit %{group_name}"
     form:
       cancel_button_label: Cancel
+      details_heading: Group details
       or: or
     index:
       name_header: Name
@@ -191,6 +192,7 @@ en:
         minus_one_hover: Reserves one less instance of this product
         set: "Set"
         set_hover: "Records the new reserved quantity"
+        quantity_label: Quantity
       product_entity:
         available_badge:
           one: "%{count} available"
@@ -541,10 +543,15 @@ en:
       page_title: List of unavailable instances
       product_header: Product
       serial_no_header: Serial No
+  instances:
+    edit:
+      cancel_button_label: Cancel
+      details_heading: Instance details
   sessions:
     authentication_form:
       email: Email
       email_placeholder: baloo@example.org
+      send_authentication_email_button_label: Send authentication email
       send_authentication_email: Send authentication email
     create:
       unknown_email_address: Unknown email address
@@ -559,6 +566,9 @@ en:
       event_starts_shortly: "Only %{remaining_days} days left until %{event_title} starts"
       event_starts_in_the_future: "There are %{remaining_weeks} weeks until %{event_title} starts"
       welcome: Welcome! %{extra}
+  troops:
+    form:
+      details_heading: Troop details
   shared:
     image:
       delete_image_button_label: Détruire
@@ -595,6 +605,7 @@ en:
       notice: Removed Member from Group
     form:
       cancel_button_label: Cancel
+      details_heading: Member details
       delete_button_label: Remove authorizations
       or: or
     index:
@@ -606,6 +617,10 @@ en:
       page_title: "Edit %{member_name}"
     new:
       page_title: New Member
+    show:
+      back_to_list_button_label: Back to group
+      details_eyebrow: Member details
+      edit_button_label: Edit
     update:
       page_title: "Edit %{member_name}"
       member_successfully_updated: Member successfully updated

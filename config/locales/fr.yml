@@ -91,6 +91,7 @@ fr:
       page_title: "Modifier %{group_name}"
     form:
       cancel_button_label: Annuler
+      details_heading: Détails du groupe
       or: ou
     index:
       name_header: Nom
@@ -194,6 +195,7 @@ fr:
         plus_one_hover: Réserve une instance de plus de ce produit
         set: "Réserver"
         set_hover: "Enregistre la nouvelle quantité réservée"
+        quantity_label: Quantité
       product_entity:
         available_badge:
           one: "%{count} libre"
@@ -325,6 +327,7 @@ fr:
   instances:
     edit:
       cancel_button_label: Annuler
+      details_heading: Détails de l’instance
   consumables:
     card:
       no_photo: Aucune photo
@@ -565,6 +568,9 @@ fr:
       event_starts_shortly: "Plus que %{remaining_days} jours avant que %{event_title} ne commence"
       event_starts_in_the_future: "Il reste %{remaining_weeks} semaines avant que  %{event_title} ne commence"
       welcome: Bienvenue! %{extra}
+  troops:
+    form:
+      details_heading: Détails de l’unité
   shared:
     image:
       delete_image_button_label: Détruire
@@ -601,6 +607,7 @@ fr:
       notice: Retiré le Membre du Groupe
     form:
       cancel_button_label: Annuler
+      details_heading: Détails du membre
       delete_button_label: Enlever les autorisations
       or: ou
     index:
@@ -612,6 +619,10 @@ fr:
       page_title: "Modifier %{member_name}"
     new:
       page_title: Nouveau membre
+    show:
+      back_to_list_button_label: Retour au groupe
+      details_eyebrow: Détails du membre
+      edit_button_label: Modifier
     update:
       page_title: "Modifier %{member_name}"
       member_successfully_updated: Membre mis à jour avec succès

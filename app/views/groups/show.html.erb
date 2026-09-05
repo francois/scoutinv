@@ -1,16 +1,16 @@
-<div class="grid-x grid-margin-x">
-  <div class="large-9 medium-12 cell">
-    <%= link_to t(".edit_button_label"), edit_group_path(@group), class: "button large hide-for-large" %>
-    <%= link_to t(".back_to_list"), groups_path, class: "button secondary large hide-for-large" %>
-
-    <h2>
-      <% if @group.logo.attached? %>
-        <%= image_tag @group.logo.variant(resize_to_limit: [ nil, 55 ]), alt: "", height: 55, style: "max-height: 55px" %>
-      <% end %>
-      <%= t(".members") %>
-    </h2>
+<div class="grid-x grid-margin-x forest-group-show-layout">
+  <div class="small-12 large-9 cell">
+    <section class="forest-group-members" aria-labelledby="group-members-heading">
+      <p class="forest-filter-eyebrow"><%= @group.name %></p>
+      <h2 id="group-members-heading">
+        <% if @group.logo.attached? %>
+          <%= image_tag @group.logo.variant(resize_to_limit: [ nil, 55 ]), alt: "", height: 55, class: "forest-group-show-logo" %>
+        <% end %>
+        <%= t(".members") %>
+      </h2>
     <% @group.troops.reject(&:new_record?).sort_by(&:sort_key).each do |troop| %>
-      <table class="hover stack">
+      <div class="forest-group-member-table">
+      <table class="stack forest-data-table">
         <caption><%= link_to troop.name, edit_troop_path(troop) %></caption>
         <thead>
           <tr>
@@ -21,11 +21,11 @@
         <tbody>
           <% troop.members.reject(&:new_record?).sort_by(&:sort_key).each do |member| %>
             <tr>
-              <td><%= link_to member.name, edit_member_path(member) %></td>
+              <td data-label="<%= t(".name_header") %>"><%= link_to member.name, edit_member_path(member) %></td>
               <td>
                 <%= form_for :membership, url: group_membership_path(@group, member.memberships.detect{|m| m.troop == troop}), method: :delete do |form| %>
                   <%= mail_to member.email %>
-                  <%= form.submit t(".unattach"), class: "button alert small" %>
+                  <%= form.submit t(".unattach"), class: "button forest-button-danger tiny" %>
                 <% end %>
               </td>
             </tr>
@@ -38,15 +38,17 @@
                 <%= form.hidden_field :troop_slug, value: troop.slug %>
                 <%= form.label :email, t(".attach_member", troop_name: troop.name) %>
                 <%= form.text_field :email, autocomplete: false, placeholder: t(".attach_member_email_placeholder") %>
-                <%= form.submit t(".attach_button_label"), class: "button secondary" %>
+                <%= form.submit t(".attach_button_label"), class: "button forest-button-secondary" %>
               <% end %>
             </td>
           </tr>
         </tfoot>
       </table>
+      </div>
     <% end %>
     <% if (@group.members.reject(&:new_record?) - @group.troops.map(&:members).flatten).any? %>
-      <table class="hover stack">
+      <div class="forest-group-member-table">
+      <table class="stack forest-data-table">
         <caption><%= t(".unattached") %></caption>
         <thead>
           <tr>
@@ -57,43 +59,49 @@
         <tbody>
           <% (@group.members.reject(&:new_record?) - @group.troops.map(&:members).flatten).sort_by(&:sort_key).each do |member| %>
             <tr>
-              <td><%= link_to member.name, edit_member_path(member) %></td>
-              <td><%= mail_to member.email %></td>
+              <td data-label="<%= t(".name_header") %>"><%= link_to member.name, edit_member_path(member) %></td>
+              <td data-label="<%= t(".email_header") %>"><%= mail_to member.email %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
+      </div>
     <% end %>
+    </section>
   </div>
 
-  <div class="large-3 medium-12 cell show-for-large">
-    <%= link_to t(".edit_button_label"), edit_group_path(@group), class: "button expanded" %>
-    <%= link_to t(".back_to_list_button_label"), groups_path, class: "button secondary expanded" %>
+  <aside class="small-12 large-3 cell forest-group-actions-column">
+    <div class="forest-group-actions">
+      <%= link_to t(".edit_button_label"), edit_group_path(@group), class: "button expanded forest-button-primary" %>
+      <%= link_to t(".back_to_list_button_label"), groups_path, class: "button expanded forest-button-secondary" %>
 
-    <hr>
+      <section class="forest-group-action-section" aria-labelledby="add-troop-heading">
+        <p class="forest-filter-eyebrow"><%= t(".add_troop_header") %></p>
+        <h3 id="add-troop-heading"><%= t(".add_troop_header") %></h3>
+        <%= form_for @troop, url: group_troops_path(@group) do |form| %>
+          <%= form.label :name %>
+          <%= form.text_field :name, autocomplete: false %>
 
-    <h3><%= t(".add_troop_header") %></h3>
-    <%= form_for @troop, url: group_troops_path(@group) do |form| %>
-      <%= form.label :name %>
-      <%= form.text_field :name, autocomplete: false %>
+          <%= form.label :position %>
+          <%= form.number_field :position, autocomplete: false %>
 
-      <%= form.label :position %>
-      <%= form.number_field :position, autocomplete: false %>
+          <%= form.submit class: "button forest-button-primary" %>
+        <% end %>
+      </section>
 
-      <%= form.submit class: "button primary" %>
-    <% end %>
+      <section class="forest-group-action-section" aria-labelledby="add-member-heading">
+        <p class="forest-filter-eyebrow"><%= t(".add_member_header") %></p>
+        <h3 id="add-member-heading"><%= t(".add_member_header") %></h3>
+        <%= form_for @member, url: group_members_path(@group) do |form| %>
+          <%= form.label :name %>
+          <%= form.text_field :name, autocomplete: false %>
 
-    <hr>
+          <%= form.label :email %>
+          <%= form.email_field :email, autocomplete: false %>
 
-    <h3><%= t(".add_member_header") %></h3>
-    <%= form_for @member, url: group_members_path(@group) do |form| %>
-      <%= form.label :name %>
-      <%= form.text_field :name, autocomplete: false %>
-
-      <%= form.label :email %>
-      <%= form.email_field :email, autocomplete: false %>
-
-      <%= form.submit class: "button primary" %>
-    <% end %>
-  </div>
+          <%= form.submit class: "button forest-button-primary" %>
+        <% end %>
+      </section>
+    </div>
+  </aside>
 </div>

@@ -1,5 +1,5 @@
-<tr id="product-row-<%= product.slug %>" class="<%= product_reservation_css_class(@event, product) %>">
-  <td>
+<tr id="product-row-<%= product.slug %>" class="forest-reservation-product-row <%= product_reservation_css_class(@event, product) %>">
+  <td data-label="<%= t(".product_header") %>">
     (<%= number_with_delimiter product.available_quantity %>) <%= link_to product.name, event_product_path(@event, product) %>
     <% if product.internal_unit_price && product.internal_unit_price.nonzero? %>
       <%= number_to_currency product.internal_unit_price %>
@@ -7,7 +7,7 @@
     <br>
     <%= entity_image product, height: 100 %>
   </td>
-  <td>
+  <td data-label="<%= t("events.reservations.manage.product_header") %>">
     <% product.reservations.select{|res| res.event_overlaps?(@event)}.group_by(&:event).each do |group, reservations| %>
       <% reservation = reservations.first %>
       <span title="<%= format_date_range(reservation.date_range) %>"><%= reservation.event.title %></span>
@@ -17,24 +17,24 @@
       <br>
     <% end %>
   </td>
-  <td>
+  <td data-label="<%= t(".leased_on_header") %>">
     <% if leased_on = @event.reservations.detect{|reservation| reservation.product == product}&.leased_on %>
       <span class="hide-for-large"><%= t(".leased_on_header") %></span> <%= l leased_on, format: :default %>
   <% end %>
   </td>
-  <td>
+  <td data-label="<%= t(".returned_on_header") %>">
     <% if returned_on = @event.reservations.detect{|reservation| reservation.product == product}&.returned_on %>
       <span class="hide-for-large"><%= t(".returned_on_header") %></span> <%= l returned_on, format: :default %>
   <% end %>
   </td>
-  <td>
+  <td data-label="<%= t("events.reservations.manage.product_header") %>">
     <% if @event.can_change_reservations?(current_member) %>
       <div class="grid-x grid-margin-x">
         <div class="auto cell">
           <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
             <%= hidden_field_tag "products[#{product.slug}]", "1" %>
             <%= hidden_field_tag "add", "1" %>
-            <%= button_tag class: "button primary small expanded",
+            <%= button_tag class: "button forest-button-primary small expanded",
               disabled: product.available_quantity.zero?,
               title: t(".plus_one_hover") do %>
               <%= t(".plus_one") %>
@@ -45,7 +45,7 @@
           <%= form_tag event_reservations_path(@event), remote: true, method: :post do %>
             <%= hidden_field_tag "products[#{product.slug}]", "1" %>
             <%= hidden_field_tag "remove", "1" %>
-            <%= button_tag title: t(".minus_one_hover"), class: "button secondary small expanded", disabled: @event.reservations.select{|reservation| reservation.product == product}.empty? do %>
+            <%= button_tag title: t(".minus_one_hover"), class: "button forest-button-secondary small expanded", disabled: @event.reservations.select{|reservation| reservation.product == product}.empty? do %>
               <%= t(".minus_one") %>
             <% end %>
           <% end %>
