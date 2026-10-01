@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '4.0.5'
 
-gem 'rails', '~> 8.1.0'
+gem 'rails', '~> 8.1.4'
 # Ruby 4 no longer includes this as a default gem; MiniMagick requires it at boot.
 gem 'benchmark'
 gem 'propshaft'
@@ -24,8 +24,8 @@ gem 'prawn'
 gem 'prawn-table'
 
 # Use ActiveStorage variant
-gem 'image_processing', '~> 2.0'
-gem 'mini_magick', '~> 5.3'
+gem 'image_processing', '~> 2.1'
+gem 'mini_magick', '~> 5.4'
 gem 'ruby-vips', '~> 2.0'
 
 # Performance and exception monitoring
