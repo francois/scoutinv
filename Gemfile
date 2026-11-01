@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '4.0.5'
 
-gem 'rails', '~> 8.1.0'
+gem 'rails', '~> 8.1.4'
 # Ruby 4 no longer includes this as a default gem; MiniMagick requires it at boot.
 gem 'benchmark'
 gem 'propshaft'
@@ -15,7 +15,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'aws-sdk-s3'
-gem 'kaminari', '~> 1.2'
+gem 'kaminari', '~> 1.3'
 gem 'que', github: "que-rb/que", ref: "v2.4.1"
 # The 0.202 line deadlocks with Rails 7.0 transaction handling.
 gem 'state_machines', '~> 0.202.0'
@@ -24,8 +24,8 @@ gem 'prawn'
 gem 'prawn-table'
 
 # Use ActiveStorage variant
-gem 'image_processing', '~> 2.0'
-gem 'mini_magick', '~> 5.3'
+gem 'image_processing', '~> 2.2'
+gem 'mini_magick', '~> 5.4'
 gem 'ruby-vips', '~> 2.0'
 
 # Performance and exception monitoring
@@ -40,7 +40,7 @@ end
 
 group :development do
   gem 'bullet'
-  gem 'listen', '~> 3.5'
+  gem 'listen', '~> 3.10'
   gem 'spring', '>= 3.0.0'
   gem 'spring-watcher-listen', '>= 2.1.0'
   gem 'web-console', '>= 3.3.0'
