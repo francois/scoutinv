@@ -6,6 +6,7 @@ ruby '4.0.9'
 gem 'rails', '~> 8.1.0'
 # Ruby 4 no longer includes this as a default gem; MiniMagick requires it at boot.
 gem 'benchmark'
+gem 'json', '< 3'
 gem 'propshaft'
 gem 'pg'
 gem 'puma', '~> 8.0'
