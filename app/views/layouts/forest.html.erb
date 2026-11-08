@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#192d28">
+    <meta name="theme-color" content="#2d382b">
 
     <% if current_group && current_group.logo.attached? %>
       <link rel="icon" sizes="192x192" href="/apple-touch-icon/192x192.png">
@@ -47,11 +47,15 @@
                 <%= link_to current_group,
                             class: class_names("forest-group-link", "is-active": on_groups_page?),
                             aria: { current: ("page" if on_groups_page?) } do %>
-                  <% if current_group.logo.attached? %>
-                    <%= image_tag current_group.logo.variant(resize_to_limit: [ nil, 42 ]),
-                                  alt: "",
-                                  class: "forest-group-logo" %>
-                  <% end %>
+                  <span class="forest-group-avatar" aria-hidden="true">
+                    <span><%= current_group.name.first.to_s.upcase %></span>
+                    <% if current_group.logo.attached? %>
+                      <%= image_tag current_group.logo.variant(resize_to_limit: [ nil, 42 ]),
+                                    alt: "",
+                                    hidden: true,
+                                    class: "forest-group-logo" %>
+                    <% end %>
+                  </span>
                   <span class="forest-group-copy">
                     <span class="forest-group-label"><%= t("forest.group") %></span>
                     <span class="forest-group-name"><%= truncate(current_group.name, length: 36) %></span>
@@ -117,7 +121,7 @@
     <main id="main-content" class="forest-main" tabindex="-1">
       <div class="forest-page-header">
         <div class="grid-container fluid forest-shell-container">
-          <h1><%= page_title.presence || "Scoutinv" %></h1>
+          <h1 id="page-heading"><%= page_title.presence || "Scoutinv" %></h1>
         </div>
       </div>
 
